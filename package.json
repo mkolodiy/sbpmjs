@@ -1,0 +1,45 @@
+{
+  "name": "sbpmjs",
+  "version": "0.0.0",
+  "description": "A library for managing and modeling of SBPM processes.",
+  "main": "index.js",
+  "scripts": {
+    "commit": "git-cz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkolodiy/sbpmjs.git"
+  },
+  "keywords": [
+    "sbpm"
+  ],
+  "author": "Maksym Kolodiy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mkolodiy/sbpmjs/issues"
+  },
+  "homepage": "https://github.com/mkolodiy/sbpmjs#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2",
+    "husky": "^3.1.0",
+    "lerna": "^3.19.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }  
+  }
+}
