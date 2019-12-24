@@ -38,7 +38,7 @@
     "url": "https://github.com/mkolodiy/sbpmjs/issues"
   },
   "prettier": {
-    "semi": false,
+    "semi": true,
     "singleQuote": true
   },
   "jest": {
@@ -67,5 +67,9 @@
     "collectCoverageFrom": [
       "lib/*.{js,ts}"
     ]
-  }
+  },
+  "dependencies": {
+    "jointjs": "^3.1.1"
+  },
+  "devDependencies": {}
 }
