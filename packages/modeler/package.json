@@ -29,7 +29,8 @@
   },
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc --module commonjs"
+    "build": "tsc --module commonjs",
+    "lint": "tslint  --project tsconfig.json -t codeFrame 'lib/**/*.ts' '__test__/**/*.ts'"
   },
   "bugs": {
     "url": "https://github.com/mkolodiy/sbpmjs/issues"
