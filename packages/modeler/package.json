@@ -33,6 +33,9 @@
     "fix:prettier": "prettier \"lib/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
     "lint": "tslint  --project tsconfig.json -t codeFrame 'lib/**/*.ts' '__test__/**/*.ts' && prettier \"lib/**/*.ts\" --list-different",
+    "test": "jest --coverage",
+    "test:watch": "jest --coverage --watch",
+    "test:prod": "run-s lint test -- --no-cache",
     "prebuild": "run-s clean fix",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file lib"
   },
@@ -42,5 +45,32 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
+      }
+    },
+    "collectCoverageFrom": [
+      "lib/*.{js,ts}"
+    ]
   }
 }
