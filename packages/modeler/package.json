@@ -12,13 +12,8 @@
   "main": "dist/modeler.umd.js",
   "module": "dist/modeler.es5.js",
   "typings": "dist/types/modeler.d.ts",
-  "directories": {
-    "dist": "dist",
-    "lib": "lib",
-    "test": "__tests__"
-  },
   "files": [
-    "lib"
+    "dist/"
   ],
   "publishConfig": {
     "access": "public"
@@ -28,7 +23,7 @@
     "url": "git+https://github.com/mkolodiy/sbpmjs.git"
   },
   "scripts": {
-    "clean": "rimraf dist docs",
+    "clean": "rimraf dist docs coverage",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"lib/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
