@@ -4,7 +4,8 @@
   "description": "A library for managing and modeling of SBPM processes.",
   "main": "index.js",
   "scripts": {
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "lerna": "lerna"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,6 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }  
+    }
   }
 }
