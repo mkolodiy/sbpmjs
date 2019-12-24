@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "commit": "git-cz",
+    "lerna": "lerna",
     "publish": "lerna publish --conventional-commits"
   },
   "repository": {
@@ -26,7 +27,9 @@
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.0.2",
     "husky": "^3.1.0",
-    "lerna": "^3.19.0"
+    "lerna": "^3.19.0",
+    "rimraf": "^3.0.0",
+    "typescript": "^3.7.4"
   },
   "config": {
     "commitizen": {

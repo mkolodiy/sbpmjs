@@ -9,8 +9,11 @@
   "author": "Maksym Kolodiy <mak.kolodiy@gmail.com>",
   "homepage": "https://github.com/mkolodiy/sbpmjs/tree/master/packages/modeler#readme",
   "license": "MIT",
-  "main": "lib/modeler.js",
+  "main": "dist/modeler.umd.js",
+  "module": "dist/modeler.es5.js",
+  "typings": "dist/types/modeler.d.ts",
   "directories": {
+    "dist": "dist",
     "lib": "lib",
     "test": "__tests__"
   },
@@ -25,10 +28,10 @@
     "url": "git+https://github.com/mkolodiy/sbpmjs.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "prebuild": "rimraf dist",
+    "build": "tsc --module commonjs"
   },
   "bugs": {
     "url": "https://github.com/mkolodiy/sbpmjs/issues"
-  },
-  "gitHead": "cc65a7733ffc8ade11e39761a088dd70a8308ef8"
+  }
 }
