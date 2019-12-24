@@ -28,11 +28,15 @@
     "url": "git+https://github.com/mkolodiy/sbpmjs.git"
   },
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "tsc --module commonjs",
+    "prebuild": "rimraf dist docs",
+    "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file lib",
     "lint": "tslint  --project tsconfig.json -t codeFrame 'lib/**/*.ts' '__test__/**/*.ts'"
   },
   "bugs": {
     "url": "https://github.com/mkolodiy/sbpmjs/issues"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   }
 }
