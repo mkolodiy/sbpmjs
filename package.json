@@ -6,7 +6,9 @@
   "scripts": {
     "commit": "git-cz",
     "lerna": "lerna",
-    "publish": "lerna publish --conventional-commits"
+    "publish": "lerna publish --conventional-commits",
+    "build": "lerna run build",
+    "clean": "lerna run clean"
   },
   "repository": {
     "type": "git",
