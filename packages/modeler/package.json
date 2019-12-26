@@ -28,9 +28,9 @@
     "fix:prettier": "prettier \"lib/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
     "lint": "tslint  --project tsconfig.json -t codeFrame 'lib/**/*.ts' '__test__/**/*.ts' && prettier \"lib/**/*.ts\" --list-different",
-    "test": "jest --coverage",
+    "test": "jest --coverage ",
     "test:watch": "jest --coverage --watch",
-    "test:prod": "run-s lint test -- --no-cache",
+    "test:prod": "run-s test -- --no-cache",
     "prebuild": "run-s clean fix",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file lib"
   },
@@ -45,7 +45,7 @@
     "transform": {
       ".(ts|tsx)": "ts-jest"
     },
-    "testEnvironment": "node",
+    "testEnvironment": "jsdom",
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "moduleFileExtensions": [
       "ts",
@@ -66,10 +66,15 @@
     },
     "collectCoverageFrom": [
       "lib/*.{js,ts}"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less)$": "identity-obj-proxy"
+    }
   },
   "dependencies": {
-    "jointjs": "^3.1.1"
+    "@types/lodash": "^4.14.149",
+    "jointjs": "^3.1.1",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {}
 }
