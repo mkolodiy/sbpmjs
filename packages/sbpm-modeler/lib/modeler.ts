@@ -5,6 +5,7 @@ import { ModelerOptions } from './types';
 import { paperDefaults } from './options';
 import { Errors } from './variables';
 import { isValidObject } from './utils';
+import { createOrigin } from './shapes';
 
 export default class Modeler {
   private static _instance: Modeler;
@@ -58,5 +59,7 @@ export default class Modeler {
       ...options,
       model: this._graph
     });
+
+    this._graph.addCell(createOrigin());
   }
 }

@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import { isPlainObject, isEmpty } from 'lodash';
 
 /**
  * Checks if a value is an object and if it has values in it.
@@ -6,5 +6,5 @@ import * as _ from 'lodash';
  * @param obj An object that should be validated.
  */
 export const isValidObject = (obj: any) => {
-  return _.isPlainObject(obj) && !_.isEmpty(obj);
+  return isPlainObject(obj) && !isEmpty(obj);
 };

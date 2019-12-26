@@ -21,7 +21,7 @@ export default {
     },
     { file: pkg.module, format: 'es', sourcemap: true }
   ],
-  external: [],
+  external: ['jointjs', 'lodash'],
   watch: {
     include: 'lib/**'
   },
