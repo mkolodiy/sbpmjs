@@ -21,7 +21,6 @@ export default {
     },
     { file: pkg.module, format: 'es', sourcemap: true }
   ],
-  external: ['jointjs', 'lodash'],
   watch: {
     include: 'lib/**'
   },
@@ -31,7 +30,11 @@ export default {
     }),
     json(),
     typescript({ useTsconfigDeclarationDir: true }),
-    commonjs(),
+    commonjs({
+      namedExports: {
+        'node_modules/lodash/lodash.js': ['isPlainObject', 'isEmpty']
+      }
+    }),
     resolve(),
     sourceMaps()
   ]
