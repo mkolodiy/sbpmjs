@@ -7,3 +7,17 @@ export interface ModelerOptions {
    */
   el: Element;
 }
+
+/**
+ * Representation of the coordinates.
+ */
+export interface Coordinates {
+  /**
+   * Defines x position.
+   */
+  x: number;
+  /**
+   * Defines y position.
+   */
+  y: number;
+}

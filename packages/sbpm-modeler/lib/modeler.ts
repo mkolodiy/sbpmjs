@@ -1,16 +1,17 @@
 import * as joint from 'jointjs';
 import '../node_modules/jointjs/dist/joint.min.css';
 
-import { ModelerOptions } from './types';
+import { ModelerOptions, Coordinates } from './types';
 import { paperDefaults } from './options';
-import { Errors } from './variables';
-import { isValidObject } from './utils';
+import { Errors, EventTypes } from './variables';
+import { isValidObject, combineStrings } from './utils';
 import { createOrigin } from './shapes';
 
 export default class Modeler {
   private static _instance: Modeler;
   private _graph: joint.dia.Graph;
   private _paper: joint.dia.Paper;
+  private _dragStartPosition: Coordinates = null;
 
   /**
    * Creates a new modeler instance.
@@ -61,5 +62,44 @@ export default class Modeler {
     });
 
     this._graph.addCell(createOrigin());
+    this.addDragging(options.el);
+  }
+
+  /**
+   * Add dragging to the canvas.
+   *
+   * @param container - HTML element where the modeler is rendered.
+   */
+  private addDragging(container: Element) {
+    this._paper.on(
+      EventTypes.BLANK_POINTERDOWN,
+      (event: MouseEvent, x: number, y: number) => {
+        console.log(event);
+        this._dragStartPosition = { x: x, y: y };
+      }
+    );
+
+    const pointerupEvents = combineStrings([
+      EventTypes.CELL_POINTERUP,
+      EventTypes.BLANK_POINTERUP
+    ]);
+    this._paper.on(pointerupEvents, () => {
+      this._dragStartPosition = null;
+    });
+
+    container.addEventListener(
+      EventTypes.MOUSEMOVE,
+      (event: MouseEvent) => {
+        if (this._dragStartPosition !== null) {
+          const scale = this._paper.scale();
+
+          const x = event.offsetX - this._dragStartPosition.x * scale.sx;
+          const y = event.offsetY - this._dragStartPosition.y * scale.sy;
+
+          this._paper.translate(x, y);
+        }
+      },
+      true
+    );
   }
 }

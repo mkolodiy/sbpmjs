@@ -7,3 +7,11 @@ export enum Errors {
 export enum ShapeTypes {
   ORIGIN = 'sbpm.common.Origin'
 }
+
+export enum EventTypes {
+  CELL_POINTERUP = 'cell:pointerup',
+  BLANK_POINTERUP = 'blank:pointerup',
+  BLANK_POINTERDOWN = 'blank:pointerdown',
+  MOUSEMOVE = 'mousemove',
+  POINTERDOWN = 'pointerdown'
+}
