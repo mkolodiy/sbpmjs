@@ -1,5 +1,7 @@
 import * as joint from 'jointjs';
 import { ShapeTypes } from './variables';
+import { SubjectOptions } from './types';
+import { standardSubjectHumanIcon } from './icons';
 
 export const createOrigin = () => {
   const Origin = joint.shapes.standard.Rectangle.define(
@@ -62,4 +64,38 @@ export const createOrigin = () => {
   origin.resize(40, 40);
 
   return origin;
+};
+
+export const createStandardSubject = (options: SubjectOptions) => {
+  const standardSubject = new joint.shapes.basic.Image({
+    position: {
+      x: 0,
+      y: 50
+    },
+    size: {
+      width: 80,
+      height: 160
+    },
+    attrs: {
+      image: {
+        'xlink:href': standardSubjectHumanIcon(),
+        width: 80,
+        height: 160,
+        cursor: 'pointer'
+      },
+      text: {
+        textWrap: {
+          text: options.description,
+          width: 150
+        },
+        xAlignment: '-52%',
+        yAlignment: -100,
+        pointerEvents: 'none',
+        fontWeight: 'bold',
+        lineHeight: 18
+      }
+    }
+  });
+
+  return standardSubject;
 };

@@ -21,3 +21,8 @@ export interface Coordinates {
    */
   y: number;
 }
+
+export interface SubjectOptions {
+  description: string;
+  position: Coordinates;
+}

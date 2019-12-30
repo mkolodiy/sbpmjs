@@ -5,7 +5,7 @@ import { ModelerOptions, Coordinates } from './types';
 import { paperDefaults } from './options';
 import { Errors, EventTypes } from './variables';
 import { isValidObject, combineStrings } from './utils';
-import { createOrigin } from './shapes';
+import { createOrigin, createStandardSubject } from './shapes';
 
 export default class Modeler {
   private static _instance: Modeler;
@@ -74,7 +74,6 @@ export default class Modeler {
     this._paper.on(
       EventTypes.BLANK_POINTERDOWN,
       (event: MouseEvent, x: number, y: number) => {
-        console.log(event);
         this._dragStartPosition = { x: x, y: y };
       }
     );
@@ -100,6 +99,20 @@ export default class Modeler {
         }
       },
       true
+    );
+  }
+
+  /** PUBLIC METHODS */
+
+  public addStandardSubject() {
+    this._graph.addCell(
+      createStandardSubject({
+        description: 'Standard Subject',
+        position: {
+          x: 100,
+          y: 100
+        }
+      })
     );
   }
 }

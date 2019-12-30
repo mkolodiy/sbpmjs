@@ -21,15 +21,14 @@ export default {
     },
     { file: pkg.module, format: 'es', sourcemap: true }
   ],
-  watch: {
-    include: 'lib/**'
-  },
   plugins: [
     postcss({
       extensions: ['.css']
     }),
     json(),
-    typescript({ useTsconfigDeclarationDir: true }),
+    typescript({
+      useTsconfigDeclarationDir: true
+    }),
     commonjs({
       namedExports: {
         'node_modules/lodash/lodash.js': ['isPlainObject', 'isEmpty']

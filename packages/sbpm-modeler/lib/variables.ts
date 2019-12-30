@@ -15,3 +15,5 @@ export enum EventTypes {
   MOUSEMOVE = 'mousemove',
   POINTERDOWN = 'pointerdown'
 }
+
+export const SVG_PREFIX = 'data:image/svg+xml;utf8,';
