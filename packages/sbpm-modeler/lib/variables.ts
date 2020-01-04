@@ -5,13 +5,15 @@ export enum Errors {
 }
 
 export enum ShapeTypes {
-  ORIGIN = 'sbpm.common.Origin'
+  ORIGIN = 'sbpm.common.Origin',
+  STANDARD_SUBJECT = 'sbpm.sid.StandardSubject'
 }
 
 export enum EventTypes {
-  CELL_POINTERUP = 'cell:pointerup',
   BLANK_POINTERUP = 'blank:pointerup',
   BLANK_POINTERDOWN = 'blank:pointerdown',
+  CELL_POINTERUP = 'cell:pointerup',
+  ELEMENT_POINTERDOWN = 'element:pointerdown',
   MOUSEMOVE = 'mousemove',
   POINTERDOWN = 'pointerdown'
 }

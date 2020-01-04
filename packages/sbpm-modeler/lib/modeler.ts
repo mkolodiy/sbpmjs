@@ -1,11 +1,15 @@
 import * as joint from 'jointjs';
 import '../node_modules/jointjs/dist/joint.min.css';
 
-import { ModelerOptions, Coordinates } from './types';
+import { ModelerOptions, Coordinates, SubjectOptions } from './types';
 import { paperDefaults } from './options';
 import { Errors, EventTypes } from './variables';
 import { isValidObject, combineStrings } from './utils';
-import { createOrigin, createStandardSubject } from './shapes';
+import {
+  createOrigin,
+  createStandardSubject,
+  createElementTools
+} from './shapes';
 
 export default class Modeler {
   private static _instance: Modeler;
@@ -63,7 +67,11 @@ export default class Modeler {
 
     this._graph.addCell(createOrigin());
     this.addDragging(options.el);
+
+    this.registerPaperEvents();
   }
+
+  /** GENERAL FUNCTIONALITY */
 
   /**
    * Add dragging to the canvas.
@@ -102,17 +110,34 @@ export default class Modeler {
     );
   }
 
+  /** PRIVATE METHODS */
+
+  private addObject(object: joint.dia.Element) {
+    this._graph.addCell(object);
+    object.toFront();
+  }
+
+  private registerPaperEvents() {
+    this._paper.on(EventTypes.BLANK_POINTERDOWN, () => {
+      this._paper.hideTools();
+    });
+
+    this._paper.on(
+      EventTypes.ELEMENT_POINTERDOWN,
+      this.paperOnElementPointerdown
+    );
+  }
+
+  private paperOnElementPointerdown = (cellView: joint.dia.CellView) => {
+    this._paper.hideTools();
+    cellView.model.toFront();
+    const type = cellView.model.attributes.type;
+    cellView.addTools(createElementTools());
+  };
+
   /** PUBLIC METHODS */
 
-  public addStandardSubject() {
-    this._graph.addCell(
-      createStandardSubject({
-        description: 'Standard Subject',
-        position: {
-          x: 100,
-          y: 100
-        }
-      })
-    );
+  public addStandardSubject(options: SubjectOptions) {
+    this.addObject(createStandardSubject(options));
   }
 }

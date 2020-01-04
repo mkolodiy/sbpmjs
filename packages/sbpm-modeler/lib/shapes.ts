@@ -1,7 +1,11 @@
 import * as joint from 'jointjs';
 import { ShapeTypes } from './variables';
 import { SubjectOptions } from './types';
-import { standardSubjectHumanIcon } from './icons';
+import { standardSubjectHuman } from './icons/standardSubjectHuman';
+import { standardSubjectHumanDefaults } from './options';
+import { deleteIcon } from './icons/delete';
+import { callMadeIcon } from './icons/call';
+import { openInNewIcon } from './icons/openInNew';
 
 export const createOrigin = () => {
   const Origin = joint.shapes.standard.Rectangle.define(
@@ -68,34 +72,73 @@ export const createOrigin = () => {
 
 export const createStandardSubject = (options: SubjectOptions) => {
   const standardSubject = new joint.shapes.basic.Image({
-    position: {
-      x: 0,
-      y: 50
-    },
-    size: {
-      width: 80,
-      height: 160
-    },
-    attrs: {
-      image: {
-        'xlink:href': standardSubjectHumanIcon(),
-        width: 80,
-        height: 160,
-        cursor: 'pointer'
-      },
-      text: {
-        textWrap: {
-          text: options.description,
-          width: 150
-        },
-        xAlignment: '-52%',
-        yAlignment: -100,
-        pointerEvents: 'none',
-        fontWeight: 'bold',
-        lineHeight: 18
-      }
-    }
+    ...standardSubjectHumanDefaults,
+    type: ShapeTypes.STANDARD_SUBJECT
   });
 
+  const { description, position } = options;
+  standardSubject.position(position.x, position.y);
+  standardSubject.attr('image/xlinkHref', standardSubjectHuman());
+  standardSubject.attr('text/textWrap/text', description);
+
   return standardSubject;
+};
+
+export const createElementTools = () => {
+  const boundaryTool = new joint.elementTools.Boundary({
+    focusOpacity: 1,
+    useModelGeometry: true
+  });
+
+  const removeButton = new joint.elementTools.Remove({
+    rotate: true,
+    x: '48.5%',
+    y: '-9%',
+    markup: [
+      {
+        tagName: 'image',
+        attributes: {
+          'xlink:href': deleteIcon(),
+          cursor: 'pointer'
+        }
+      }
+    ]
+  });
+
+  const openInNewButton = new joint.elementTools.Button({
+    x: '60%',
+    y: '-9%',
+    action: function(evt) {},
+    markup: [
+      {
+        tagName: 'image',
+        attributes: {
+          'xlink:href': openInNewIcon(),
+          cursor: 'pointer'
+        }
+      }
+    ]
+  });
+
+  const linkButton = new joint.elementTools.Button({
+    x: '71.5%',
+    y: '-9%',
+    action: function(evt) {},
+    markup: [
+      {
+        tagName: 'image',
+        attributes: {
+          'xlink:href': callMadeIcon(),
+          cursor: 'pointer'
+        }
+      }
+    ]
+  });
+
+  const toolsView = new joint.dia.ToolsView({
+    name: 'elementTools',
+    tools: [boundaryTool, removeButton, openInNewButton, linkButton]
+  });
+
+  return toolsView;
 };
