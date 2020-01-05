@@ -1,8 +1,9 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, ShapeTypes } from '../variables';
+import { SVG_PREFIX, ShapeTypes, EventTypes } from '../variables';
 import Canvas from './canvas';
-import { SubjectOptions } from '../types';
+import { SubjectOptions, ElementToolsOptions } from '../types';
+import { createElementTools } from '../common/element-tools';
 
 /**
  * Default options used to create a new human subject.
@@ -58,14 +59,44 @@ const machineSubjectDefaults = {
   }
 };
 
+const humanElementToolsOptions: ElementToolsOptions = {
+  removeButtonOptions: {
+    x: '48.5%',
+    y: '-9%'
+  },
+  openInNewButtonOptions: {
+    x: '60%',
+    y: '-9%'
+  },
+  linkButtonOptions: {
+    x: '71.5%',
+    y: '-9%'
+  }
+};
+
+const machineElementToolsOptions: ElementToolsOptions = {
+  removeButtonOptions: {
+    x: '48.5%',
+    y: '-9%'
+  },
+  openInNewButtonOptions: {
+    x: '60%',
+    y: '-9%'
+  },
+  linkButtonOptions: {
+    x: '71.5%',
+    y: '-9%'
+  }
+};
+
 export default class StandardSubject {
   public static add(canvas: Canvas, options: SubjectOptions) {
     new StandardSubject(canvas, options);
   }
 
   constructor(canvas: Canvas, options: SubjectOptions) {
-    const standardSubject = this.create(options);
-    standardSubject.addTo(canvas.graph);
+    this.create(options).addTo(canvas.graph);
+    this.registerEvents(canvas);
   }
 
   private create(options: SubjectOptions) {
@@ -75,7 +106,8 @@ export default class StandardSubject {
 
     const standardSubject = new joint.shapes.basic.Image({
       ...defaults,
-      type: ShapeTypes.STANDARD_SUBJECT
+      type: ShapeTypes.STANDARD_SUBJECT,
+      isMachine: Boolean(machine)
     });
 
     standardSubject.position(position.x, position.y);
@@ -83,6 +115,21 @@ export default class StandardSubject {
     standardSubject.attr('text/textWrap/text', description);
 
     return standardSubject;
+  }
+
+  private registerEvents(canvas: Canvas) {
+    const { paper } = canvas;
+    paper.on(EventTypes.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
+      const { type, isMachine } = cellView.model.attributes;
+
+      if (type === ShapeTypes.STANDARD_SUBJECT && !isMachine) {
+        cellView.addTools(createElementTools(humanElementToolsOptions));
+      }
+
+      if (type === ShapeTypes.STANDARD_SUBJECT && isMachine) {
+        cellView.addTools(createElementTools(machineElementToolsOptions));
+      }
+    });
   }
 
   private getDefaults(machine: boolean) {

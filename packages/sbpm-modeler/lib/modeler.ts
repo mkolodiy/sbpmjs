@@ -1,10 +1,10 @@
 import * as joint from 'jointjs';
 import '../node_modules/jointjs/dist/joint.min.css';
 
-import { ModelerOptions, SubjectOptions, StateOptions } from './types';
+import { ModelerOptions, SubjectOptions } from './types';
 import { Errors, EventTypes } from './variables';
 import { isValidObject } from './common/utils';
-import { createElementTools, createSendState } from './shapes';
+import { createElementTools } from './common/element-tools';
 import Canvas from './elements/canvas';
 import StandardSubject from './elements/standard-subject';
 
@@ -83,17 +83,11 @@ export default class Modeler {
   private paperOnElementPointerdown = (cellView: joint.dia.CellView) => {
     this._paper.hideTools();
     cellView.model.toFront();
-    const type = cellView.model.attributes.type;
-    cellView.addTools(createElementTools());
   };
 
   /** PUBLIC METHODS */
 
   public addStandardSubject(options: SubjectOptions) {
     StandardSubject.add(this._canvas, options);
-  }
-
-  public addSendState(options: StateOptions) {
-    this.addObject(createSendState(options));
   }
 }

@@ -22,6 +22,11 @@ export interface Coordinates {
   y: number;
 }
 
+export interface PercentageCoordinates {
+  x: string;
+  y: string;
+}
+
 export interface SubjectOptions {
   machine?: boolean;
   description: string;
@@ -33,4 +38,10 @@ export interface StateOptions {
   endState?: boolean;
   description: string;
   position: Coordinates;
+}
+
+export interface ElementToolsOptions {
+  removeButtonOptions?: PercentageCoordinates;
+  openInNewButtonOptions?: PercentageCoordinates;
+  linkButtonOptions?: PercentageCoordinates;
 }
