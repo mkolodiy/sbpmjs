@@ -1,8 +1,21 @@
 import * as joint from 'jointjs';
 import { EventTypes, Errors, ShapeTypes } from '../variables';
 import { combineStrings } from '../common/utils';
-import { paperDefaults } from '../options';
 import { Coordinates } from '../types';
+
+/**
+ * Default options used to create a new paper instance.
+ */
+const paperDefaults = {
+  width: '100%',
+  height: '100%',
+  gridSize: 1,
+  linkPinning: false,
+  origin: {
+    x: 0,
+    y: 0
+  }
+};
 
 export default class Canvas {
   private static _instance: Canvas = null;

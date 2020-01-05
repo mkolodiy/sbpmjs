@@ -1,36 +1,11 @@
 import * as joint from 'jointjs';
 import { ShapeTypes } from './variables';
-import { SubjectOptions, StateOptions } from './types';
-import { standardSubjectHuman } from './icons/standardSubjectHuman';
-import { standardSubjectMachine } from './icons/standardSubjectMachine';
-import {
-  standardSubjectHumanDefaults,
-  standardSubjectMachineDefaults,
-  sendStateDefaults
-} from './options';
+import { StateOptions } from './types';
+import { sendStateDefaults } from './defaults';
 import { deleteIcon } from './icons/delete';
 import { callMadeIcon } from './icons/call';
 import { openInNewIcon } from './icons/openInNew';
 import { sendStateIcon } from './icons/sendState';
-
-export const createStandardSubject = (options: SubjectOptions) => {
-  const { description, position, machine } = options;
-  const defaults = machine
-    ? standardSubjectMachineDefaults
-    : standardSubjectHumanDefaults;
-
-  const standardSubject = new joint.shapes.basic.Image({
-    ...defaults,
-    type: ShapeTypes.STANDARD_SUBJECT
-  });
-
-  const icon = machine ? standardSubjectMachine() : standardSubjectHuman();
-  standardSubject.position(position.x, position.y);
-  standardSubject.attr('image/xlinkHref', icon);
-  standardSubject.attr('text/textWrap/text', description);
-
-  return standardSubject;
-};
 
 export const createSendState = (options: StateOptions) => {
   const { description, position, startState, endState } = options;

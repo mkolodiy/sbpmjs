@@ -4,15 +4,13 @@ import '../node_modules/jointjs/dist/joint.min.css';
 import { ModelerOptions, SubjectOptions, StateOptions } from './types';
 import { Errors, EventTypes } from './variables';
 import { isValidObject } from './common/utils';
-import {
-  createStandardSubject,
-  createElementTools,
-  createSendState
-} from './shapes';
+import { createElementTools, createSendState } from './shapes';
 import Canvas from './elements/canvas';
+import StandardSubject from './elements/standard-subject';
 
 export default class Modeler {
   private static _instance: Modeler;
+  private _canvas: Canvas;
   private _graph: joint.dia.Graph;
   private _paper: joint.dia.Paper;
 
@@ -57,9 +55,9 @@ export default class Modeler {
    * @param options [[ModelerOptions]] object containing values needed for creating new modeler instance.
    */
   constructor(options: ModelerOptions) {
-    const canvas = Canvas.create(options.el);
-    this._graph = canvas.graph;
-    this._paper = canvas.paper;
+    this._canvas = Canvas.create(options.el);
+    this._graph = this._canvas.graph;
+    this._paper = this._canvas.paper;
 
     this.registerPaperEvents();
   }
@@ -92,7 +90,7 @@ export default class Modeler {
   /** PUBLIC METHODS */
 
   public addStandardSubject(options: SubjectOptions) {
-    this.addObject(createStandardSubject(options));
+    StandardSubject.add(this._canvas, options);
   }
 
   public addSendState(options: StateOptions) {
