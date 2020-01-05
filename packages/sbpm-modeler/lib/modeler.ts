@@ -1,17 +1,10 @@
 import * as joint from 'jointjs';
 import '../node_modules/jointjs/dist/joint.min.css';
 
+import { ModelerOptions, SubjectOptions, StateOptions } from './types';
+import { Errors, EventTypes } from './variables';
+import { isValidObject } from './common/utils';
 import {
-  ModelerOptions,
-  Coordinates,
-  SubjectOptions,
-  StateOptions
-} from './types';
-import { paperDefaults } from './options';
-import { Errors, EventTypes, ShapeTypes } from './variables';
-import { isValidObject, combineStrings } from './utils';
-import {
-  createOrigin,
   createStandardSubject,
   createElementTools,
   createSendState
@@ -22,7 +15,6 @@ export default class Modeler {
   private static _instance: Modeler;
   private _graph: joint.dia.Graph;
   private _paper: joint.dia.Paper;
-  private _dragStartPosition: Coordinates = null;
 
   /**
    * Creates a new modeler instance.
