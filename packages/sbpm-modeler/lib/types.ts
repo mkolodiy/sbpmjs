@@ -23,6 +23,14 @@ export interface Coordinates {
 }
 
 export interface SubjectOptions {
+  machine?: boolean;
+  description: string;
+  position: Coordinates;
+}
+
+export interface StateOptions {
+  startState?: boolean;
+  endState?: boolean;
   description: string;
   position: Coordinates;
 }

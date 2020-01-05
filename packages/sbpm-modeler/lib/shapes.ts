@@ -1,11 +1,17 @@
 import * as joint from 'jointjs';
 import { ShapeTypes } from './variables';
-import { SubjectOptions } from './types';
+import { SubjectOptions, StateOptions } from './types';
 import { standardSubjectHuman } from './icons/standardSubjectHuman';
-import { standardSubjectHumanDefaults } from './options';
+import { standardSubjectMachine } from './icons/standardSubjectMachine';
+import {
+  standardSubjectHumanDefaults,
+  standardSubjectMachineDefaults,
+  sendStateDefaults
+} from './options';
 import { deleteIcon } from './icons/delete';
 import { callMadeIcon } from './icons/call';
 import { openInNewIcon } from './icons/openInNew';
+import { sendStateIcon } from './icons/sendState';
 
 export const createOrigin = () => {
   const Origin = joint.shapes.standard.Rectangle.define(
@@ -71,17 +77,37 @@ export const createOrigin = () => {
 };
 
 export const createStandardSubject = (options: SubjectOptions) => {
+  const { description, position, machine } = options;
+  const defaults = machine
+    ? standardSubjectMachineDefaults
+    : standardSubjectHumanDefaults;
+
   const standardSubject = new joint.shapes.basic.Image({
-    ...standardSubjectHumanDefaults,
+    ...defaults,
     type: ShapeTypes.STANDARD_SUBJECT
   });
 
-  const { description, position } = options;
+  const icon = machine ? standardSubjectMachine() : standardSubjectHuman();
   standardSubject.position(position.x, position.y);
-  standardSubject.attr('image/xlinkHref', standardSubjectHuman());
+  standardSubject.attr('image/xlinkHref', icon);
   standardSubject.attr('text/textWrap/text', description);
 
   return standardSubject;
+};
+
+export const createSendState = (options: StateOptions) => {
+  const { description, position, startState, endState } = options;
+
+  const sendState = new joint.shapes.basic.Image({
+    ...sendStateDefaults,
+    type: ShapeTypes.SEND_STATE
+  });
+
+  sendState.position(position.x, position.y);
+  sendState.attr('image/xlinkHref', sendStateIcon());
+  sendState.attr('text/textWrap/text', description);
+
+  return sendState;
 };
 
 export const createElementTools = () => {
