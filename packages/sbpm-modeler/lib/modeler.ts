@@ -6,12 +6,14 @@ import { Errors } from './variables';
 import { isValidObject } from './common/utils';
 import Canvas from './elements/canvas';
 import StandardSubject from './elements/standard-subject';
+import Message from './elements/message';
 
 export default class Modeler {
   private static _instance: Modeler;
   private _canvas: Canvas;
   private _graph: joint.dia.Graph;
   private _paper: joint.dia.Paper;
+  private _lastCreatedMessage: joint.dia.Link = null;
 
   /**
    * Creates a new modeler instance.
@@ -57,9 +59,39 @@ export default class Modeler {
     this._canvas = Canvas.create(options.el);
     this._graph = this._canvas.graph;
     this._paper = this._canvas.paper;
+
+    this._paper.on('element:addMessage', (evt: joint.dia.Event, view) => {
+      evt.stopPropagation();
+      console.log('element:addMessage');
+      console.log(evt);
+      console.log(view);
+
+      this._lastCreatedMessage = Message.add(this._canvas, {
+        source: view.model,
+        target: {
+          x: evt.clientX,
+          y: evt.clientY
+        }
+      });
+    });
+
+    const { el } = options;
+    el.addEventListener('mousemove', (evt: MouseEvent) => {
+      if (this._lastCreatedMessage !== null) {
+        console.log(evt.clientX + ' ' + evt.clientY);
+        this._lastCreatedMessage.target({
+          x: evt.clientX,
+          y: evt.clientY
+        });
+      }
+    });
   }
 
   /** PUBLIC METHODS */
+
+  public get canvas() {
+    return this._canvas;
+  }
 
   public addStandardSubject(options: SubjectOptions) {
     StandardSubject.add(this._canvas, options);

@@ -4,6 +4,7 @@ import { deleteIcon } from '../icons/delete';
 import { callMadeIcon } from '../icons/call-made';
 import { openInNewIcon } from '../icons/open-in-new';
 import { Coordinates, ElementToolsOptions } from '../types';
+import Modeler from '../modeler';
 
 export const createElementTools = (options: ElementToolsOptions) => {
   const {
@@ -83,7 +84,10 @@ const createLinkButton = (options: Coordinates) => {
   return new joint.elementTools.Button({
     x,
     y,
-    action: function(evt) {},
+    action: (evt: joint.dia.Event, view: joint.dia.LinkView) => {
+      const paper = Modeler.getInstance().canvas.paper;
+      paper.trigger('element:addMessage', evt, view);
+    },
     markup: [
       {
         tagName: 'image',

@@ -40,3 +40,8 @@ export interface ElementToolsOptions {
   openInNewButtonOptions?: Coordinates;
   linkButtonOptions?: Coordinates;
 }
+
+export interface MessageOptions {
+  source: joint.dia.Cell | Coordinates;
+  target: joint.dia.Cell | Coordinates;
+}

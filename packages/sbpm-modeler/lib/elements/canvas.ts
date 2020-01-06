@@ -179,7 +179,7 @@ export default class Canvas {
 
   private registerPaperEvents() {
     this._paper.on(EventTypes.BLANK_POINTERDOWN, () => {
-      this._paper.hideTools();
+      // this._paper.hideTools();
     });
 
     this._paper.on(
@@ -189,7 +189,7 @@ export default class Canvas {
   }
 
   private paperOnElementPointerdown = (cellView: joint.dia.CellView) => {
-    this._paper.hideTools();
+    // this._paper.hideTools();
     cellView.model.toFront();
   };
 }
