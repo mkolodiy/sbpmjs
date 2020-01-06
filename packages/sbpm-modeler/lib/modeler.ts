@@ -2,9 +2,8 @@ import * as joint from 'jointjs';
 import '../node_modules/jointjs/dist/joint.min.css';
 
 import { ModelerOptions, SubjectOptions } from './types';
-import { Errors, EventTypes } from './variables';
+import { Errors } from './variables';
 import { isValidObject } from './common/utils';
-import { createElementTools } from './common/element-tools';
 import Canvas from './elements/canvas';
 import StandardSubject from './elements/standard-subject';
 
@@ -58,32 +57,7 @@ export default class Modeler {
     this._canvas = Canvas.create(options.el);
     this._graph = this._canvas.graph;
     this._paper = this._canvas.paper;
-
-    this.registerPaperEvents();
   }
-
-  /** PRIVATE METHODS */
-
-  private addObject(object: joint.dia.Element) {
-    this._graph.addCell(object);
-    object.toFront();
-  }
-
-  private registerPaperEvents() {
-    this._paper.on(EventTypes.BLANK_POINTERDOWN, () => {
-      this._paper.hideTools();
-    });
-
-    this._paper.on(
-      EventTypes.ELEMENT_POINTERDOWN,
-      this.paperOnElementPointerdown
-    );
-  }
-
-  private paperOnElementPointerdown = (cellView: joint.dia.CellView) => {
-    this._paper.hideTools();
-    cellView.model.toFront();
-  };
 
   /** PUBLIC METHODS */
 

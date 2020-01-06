@@ -3,7 +3,7 @@ import * as joint from 'jointjs';
 import { deleteIcon } from '../icons/delete';
 import { callMadeIcon } from '../icons/call-made';
 import { openInNewIcon } from '../icons/open-in-new';
-import { PercentageCoordinates, ElementToolsOptions } from '../types';
+import { Coordinates, ElementToolsOptions } from '../types';
 
 export const createElementTools = (options: ElementToolsOptions) => {
   const {
@@ -42,7 +42,7 @@ const createBoundaryTool = () => {
   });
 };
 
-const createRemoveButton = (options: PercentageCoordinates) => {
+const createRemoveButton = (options: Coordinates) => {
   const { x, y } = options;
   return new joint.elementTools.Remove({
     rotate: true,
@@ -60,7 +60,7 @@ const createRemoveButton = (options: PercentageCoordinates) => {
   });
 };
 
-const createOpenInNewButton = (options: PercentageCoordinates) => {
+const createOpenInNewButton = (options: Coordinates) => {
   const { x, y } = options;
   return new joint.elementTools.Button({
     x,
@@ -78,7 +78,7 @@ const createOpenInNewButton = (options: PercentageCoordinates) => {
   });
 };
 
-const createLinkButton = (options: PercentageCoordinates) => {
+const createLinkButton = (options: Coordinates) => {
   const { x, y } = options;
   return new joint.elementTools.Button({
     x,

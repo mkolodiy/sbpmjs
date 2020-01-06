@@ -23,8 +23,8 @@ const humanSubjectDefaults = {
       textWrap: {
         width: 150
       },
-      xAlignment: '-60%',
-      yAlignment: -90,
+      xAlignment: 65,
+      yAlignment: -80,
       pointerEvents: 'none',
       fontWeight: 'bold',
       lineHeight: 18
@@ -50,8 +50,8 @@ const machineSubjectDefaults = {
       textWrap: {
         width: 150
       },
-      xAlignment: '-52%',
-      yAlignment: -100,
+      xAlignment: 75,
+      yAlignment: -80,
       pointerEvents: 'none',
       fontWeight: 'bold',
       lineHeight: 18
@@ -61,31 +61,31 @@ const machineSubjectDefaults = {
 
 const humanElementToolsOptions: ElementToolsOptions = {
   removeButtonOptions: {
-    x: '48.5%',
-    y: '-9%'
+    x: 105,
+    y: -13
   },
   openInNewButtonOptions: {
-    x: '60%',
-    y: '-9%'
+    x: 130,
+    y: -13
   },
   linkButtonOptions: {
-    x: '71.5%',
-    y: '-9%'
+    x: 155,
+    y: -13
   }
 };
 
 const machineElementToolsOptions: ElementToolsOptions = {
   removeButtonOptions: {
-    x: '48.5%',
-    y: '-9%'
+    x: 125,
+    y: -13
   },
   openInNewButtonOptions: {
-    x: '60%',
-    y: '-9%'
+    x: 150,
+    y: -13
   },
   linkButtonOptions: {
-    x: '71.5%',
-    y: '-9%'
+    x: 175,
+    y: -13
   }
 };
 

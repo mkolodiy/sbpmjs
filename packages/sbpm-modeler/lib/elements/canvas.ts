@@ -75,6 +75,7 @@ export default class Canvas {
 
     this.addDragging(container);
     this.addOrigin();
+    this.registerPaperEvents();
   }
 
   /**
@@ -175,4 +176,20 @@ export default class Canvas {
     origin.resize(40, 40);
     origin.addTo(this._graph);
   }
+
+  private registerPaperEvents() {
+    this._paper.on(EventTypes.BLANK_POINTERDOWN, () => {
+      this._paper.hideTools();
+    });
+
+    this._paper.on(
+      EventTypes.ELEMENT_POINTERDOWN,
+      this.paperOnElementPointerdown
+    );
+  }
+
+  private paperOnElementPointerdown = (cellView: joint.dia.CellView) => {
+    this._paper.hideTools();
+    cellView.model.toFront();
+  };
 }
