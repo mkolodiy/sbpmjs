@@ -1,7 +1,7 @@
 import * as joint from 'jointjs';
 import '../node_modules/jointjs/dist/joint.min.css';
 
-import { ModelerOptions, SubjectOptions } from './types';
+import { ModelerOptions, SubjectOptions, Coordinates } from './types';
 import { Errors } from './variables';
 import { isValidObject } from './common/utils';
 import Canvas from './elements/canvas';
@@ -14,6 +14,7 @@ export default class Modeler {
   private _graph: joint.dia.Graph;
   private _paper: joint.dia.Paper;
   private _lastCreatedMessage: joint.dia.Link = null;
+  private _drawConnection: boolean = false;
 
   /**
    * Creates a new modeler instance.
@@ -65,7 +66,8 @@ export default class Modeler {
       console.log('element:addMessage');
       console.log(evt);
       console.log(view);
-
+      this._drawConnection = true;
+      const target = this._graph.getElements()[2];
       this._lastCreatedMessage = Message.add(this._canvas, {
         source: view.model,
         target: {
@@ -76,13 +78,43 @@ export default class Modeler {
     });
 
     const { el } = options;
+
     el.addEventListener('mousemove', (evt: MouseEvent) => {
-      if (this._lastCreatedMessage !== null) {
-        console.log(evt.clientX + ' ' + evt.clientY);
-        this._lastCreatedMessage.target({
+      const coordinates: Coordinates = {
+        x: evt.clientX,
+        y: evt.clientY
+      };
+
+      if (this._lastCreatedMessage !== null && this._drawConnection) {
+        this._lastCreatedMessage.target(coordinates);
+        const views = this._paper.findViewsFromPoint(coordinates);
+        const view: joint.dia.ElementView = views[0] || null;
+
+        if (view !== null) {
+          view.highlight();
+        } else {
+          this._graph.getElements().forEach((el: joint.dia.Element) => {
+            this._paper.findViewByModel(el).unhighlight();
+          });
+        }
+      }
+    });
+
+    el.addEventListener('mouseup', (evt: MouseEvent) => {
+      if (this._drawConnection) {
+        const coordinates: Coordinates = {
           x: evt.clientX,
           y: evt.clientY
-        });
+        };
+        const elements = this._graph.findModelsFromPoint(coordinates);
+        const element: joint.dia.Element = elements[0] || null;
+        if (element !== null) {
+          element.findView(this._paper).unhighlight();
+          this._lastCreatedMessage.target(element);
+        } else {
+          this._lastCreatedMessage.remove();
+        }
+        this._drawConnection = false;
       }
     });
   }

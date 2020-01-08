@@ -17,6 +17,7 @@ export enum EventTypes {
   BLANK_POINTERDOWN = 'blank:pointerdown',
   CELL_POINTERUP = 'cell:pointerup',
   ELEMENT_POINTERDOWN = 'element:pointerdown',
+  LINK_POINTERDOWN = 'link:pointerdown',
   MOUSEMOVE = 'mousemove',
   POINTERDOWN = 'pointerdown'
 }
