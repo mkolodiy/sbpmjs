@@ -37,7 +37,7 @@ export default class Canvas {
    * @param container HTML element where the canvas will be rendered.
    * @returns New canvas instance.
    */
-  public static create = (container: Element) => {
+  public static initialize = (container: Element) => {
     if (!Canvas._instance) {
       Canvas._instance = new Canvas(container);
       return Canvas._instance;

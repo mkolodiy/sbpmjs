@@ -84,7 +84,7 @@ const createLinkButton = (options: Coordinates) => {
   return new joint.elementTools.Button({
     x,
     y,
-    action: (evt: joint.dia.Event, view: joint.dia.LinkView) => {
+    action: (evt: joint.dia.Event, view: joint.dia.CellView) => {
       const paper = Modeler.getInstance().canvas.paper;
       paper.trigger('element:addMessage', evt, view);
     },

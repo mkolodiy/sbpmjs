@@ -5,23 +5,24 @@ import { ModelerOptions, SubjectOptions, Coordinates } from './types';
 import { Errors } from './variables';
 import { isValidObject } from './common/utils';
 import Canvas from './elements/canvas';
-import StandardSubject from './elements/standard-subject';
+import StandardSubjectFactory from './elements/standard-subject-factory';
 import Message from './elements/message';
 
 export default class Modeler {
   private static _instance: Modeler;
   private _canvas: Canvas;
+  private _ssf: StandardSubjectFactory;
   private _graph: joint.dia.Graph;
   private _paper: joint.dia.Paper;
   private _lastCreatedMessage: joint.dia.Link = null;
   private _drawConnection: boolean = false;
 
   /**
-   * Creates a new modeler instance.
+   * Creates a new [[Modeler]] instance.
    *
-   * @param options [[ModelerOptions]] object containing values needed for creating new modeler instance.
-   * @returns A new instance of the modeler.
-   * @throws Error when the modeler instance is already initialized.
+   * @param options [[ModelerOptions]] object containing values needed to create a new [[Modeler]] instance.
+   * @returns A new [[Modeler]] instance.
+   * @throws Error when the [[Modeler]] instance is already initialized.
    * @throws Error when the modeler options are not valid.
    */
   public static initialize(options: ModelerOptions): Modeler {
@@ -38,9 +39,9 @@ export default class Modeler {
   }
 
   /**
-   * Retrieved the modeler instance.
+   * Retrieves the [[Modeler]] instance.
    *
-   * @returns Modeler instance.
+   * @returns [[Modeler]] instance.
    * @throws Error when the modeler instance is not initialized.
    */
   public static getInstance(): Modeler {
@@ -54,12 +55,13 @@ export default class Modeler {
   /**
    * Create and configures jointjs paper and graph.
    *
-   * @param options [[ModelerOptions]] object containing values needed for creating new modeler instance.
+   * @param options [[ModelerOptions]] object containing values needed to create a new [[Modeler]] instance.
    */
   constructor(options: ModelerOptions) {
-    this._canvas = Canvas.create(options.el);
+    this._canvas = Canvas.initialize(options.el);
     this._graph = this._canvas.graph;
     this._paper = this._canvas.paper;
+    this._ssf = StandardSubjectFactory.initialize();
 
     this._paper.on('element:addMessage', (evt: joint.dia.Event, view) => {
       evt.stopPropagation();
@@ -119,13 +121,11 @@ export default class Modeler {
     });
   }
 
-  /** PUBLIC METHODS */
-
   public get canvas() {
     return this._canvas;
   }
 
   public addStandardSubject(options: SubjectOptions) {
-    StandardSubject.add(this._canvas, options);
+    this._ssf.add(options);
   }
 }

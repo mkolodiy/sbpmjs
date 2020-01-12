@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, ShapeTypes, EventTypes } from '../variables';
+import { SVG_PREFIX, ShapeTypes, EventTypes, Errors } from '../variables';
 import Canvas from './canvas';
 import { SubjectOptions, ElementToolsOptions } from '../types';
 import { createElementTools } from '../common/element-tools';
@@ -59,6 +59,9 @@ const machineSubjectDefaults = {
   }
 };
 
+/**
+ * Options used to create element tools for a human subject.
+ */
 const humanElementToolsOptions: ElementToolsOptions = {
   removeButtonOptions: {
     x: 105,
@@ -74,6 +77,9 @@ const humanElementToolsOptions: ElementToolsOptions = {
   }
 };
 
+/**
+ * Options used to create element tools for a machine subject.
+ */
 const machineElementToolsOptions: ElementToolsOptions = {
   removeButtonOptions: {
     x: 125,
@@ -89,17 +95,45 @@ const machineElementToolsOptions: ElementToolsOptions = {
   }
 };
 
-export default class StandardSubject {
-  public static add(canvas: Canvas, options: SubjectOptions) {
-    new StandardSubject(canvas, options);
+export default class StandardSubjectFactory {
+  private static _instance: StandardSubjectFactory;
+  private canvas: Canvas;
+
+  /**
+   * Creates a new [[StandardSubjectFactory]] instance.
+   *
+   * @throws Error when the [[StandardSubjectFactory]] instance is already initialized.
+   */
+  public static initialize(): StandardSubjectFactory {
+    if (!StandardSubjectFactory._instance) {
+      StandardSubjectFactory._instance = new StandardSubjectFactory();
+      return StandardSubjectFactory._instance;
+    }
+
+    throw new Error(Errors.SSF_INITIALIZATION);
   }
 
-  constructor(canvas: Canvas, options: SubjectOptions) {
-    this.create(options).addTo(canvas.graph);
-    this.registerEvents(canvas);
+  /**
+   * Retrieves the [[StandardSubjectFactory]] instance.
+   *
+   * @returns [[StandardSubjectFactory]] instance.
+   * @throws Error when the [[StandardSubjectFactory]] instance is not initialized.
+   */
+  public static getInstance(): StandardSubjectFactory {
+    if (!StandardSubjectFactory._instance) {
+      throw new Error(Errors.SSF_INSTANCE_RETRIEVAL);
+    }
+
+    return StandardSubjectFactory._instance;
   }
 
-  private create(options: SubjectOptions) {
+  /**
+   * Creates a new subject.
+   *
+   * @param options [[SubjectOptions]] object containing options used to create a new subject.
+   * @returns A new subject object.
+   */
+  public create(options: SubjectOptions) {
     const { description, position, machine } = options;
     const defaults = this.getDefaults(machine);
     const icon = this.getIcon(machine);
@@ -117,8 +151,26 @@ export default class StandardSubject {
     return standardSubject;
   }
 
-  private registerEvents(canvas: Canvas) {
-    const { paper } = canvas;
+  /**
+   * Creates and adds a new subject to the canvas.
+   *
+   * @param options [[SubjectOptions]] object containing options used to create a new subject.
+   * @returns A new subject object.
+   */
+  public add(options: SubjectOptions) {
+    this.create(options).addTo(this.canvas.graph);
+  }
+
+  constructor() {
+    this.canvas = Canvas.getInstance();
+    this.registerEvents();
+  }
+
+  /**
+   * Registers all necessary events needed for the interaction with a subject.
+   */
+  private registerEvents() {
+    const { paper } = this.canvas;
     paper.on(EventTypes.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
       const { type, isMachine } = cellView.model.attributes;
 
@@ -132,14 +184,29 @@ export default class StandardSubject {
     });
   }
 
+  /**
+   * Retrieves subject defaults.
+   *
+   * @param machine Defines if a subject is human or machine.
+   * @returns Object with subject defaults.
+   */
   private getDefaults(machine: boolean) {
     return machine ? machineSubjectDefaults : humanSubjectDefaults;
   }
 
+  /**
+   * Retrieves a SVG icon used to display a subject.
+   *
+   * @param machine Defines if a subject is human or machine.
+   * @returns SVG icon.
+   */
   private getIcon(machine: boolean) {
     return machine ? this.machineSubjectIcon() : this.humanSubjectIcon();
   }
 
+  /**
+   * SVG icon for human subject.
+   */
   private humanSubjectIcon() {
     const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg
@@ -1993,6 +2060,9 @@ export default class StandardSubject {
     return `${SVG_PREFIX}${encodeURIComponent(template)}`;
   }
 
+  /**
+   * SVG icon for machine subject.
+   */
   private machineSubjectIcon() {
     const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg
