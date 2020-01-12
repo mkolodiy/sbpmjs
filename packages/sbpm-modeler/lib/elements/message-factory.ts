@@ -2,12 +2,17 @@ import * as joint from 'jointjs';
 
 import Canvas from './canvas';
 import { MessageOptions } from '../types';
-import { SVG_PREFIX, Errors } from '../variables';
+import { SVG_PREFIX, Errors, ShapeTypes, Events } from '../variables';
+import {
+  createLinkTools,
+  createLabelBasedLinkTools
+} from '../common/link-tools';
+import { combineStrings } from '../common/utils';
 
 const messageDefaults = {
   attrs: {
     wrapper: {
-      //   pointerEvents: 'none'
+      pointerEvents: 'none'
     }
   }
 };
@@ -15,7 +20,7 @@ const messageDefaults = {
 export default class MessageFactory {
   private static _instance: MessageFactory;
   private _canvas: Canvas;
-  private _lastCreatedMessage: joint.dia.Link;
+  private _messageInstance: joint.dia.Link;
 
   /**
    * Creates a new [[MessageFactory]] instance.
@@ -45,41 +50,78 @@ export default class MessageFactory {
     return MessageFactory._instance;
   }
 
-  public create(options: MessageOptions) {
-    const { graph, paper } = this._canvas;
-    const { source, target } = options;
-
-    const message = new joint.shapes.standard.Link(messageDefaults);
-
-    message.router('orthogonal');
-    message.source(source);
-    message.target(target);
-
-    this.addIconLabel(message);
-
-    message.addTo(graph);
-
-    const verticesTool = new joint.linkTools.Vertices();
-    const segmentsTool = new joint.linkTools.Segments();
-    const targetArrowhead = new joint.linkTools.TargetArrowhead();
-
-    var toolsView = new joint.dia.ToolsView({
-      tools: [verticesTool, segmentsTool, targetArrowhead]
-    });
-
-    var linkView = message.findView(paper);
-    linkView.addTools(toolsView);
-    linkView.showTools();
-
-    return message;
-  }
-
   public add(options: MessageOptions) {
-    return this.create(options);
+    this._messageInstance = this.create(options);
+    return this._messageInstance;
   }
 
   constructor() {
     this._canvas = Canvas.getInstance();
+    this._messageInstance = null;
+    this.registerEvents();
+  }
+
+  private create(options: MessageOptions) {
+    const { graph, paper } = this._canvas;
+    const { source, target } = options;
+
+    const messageModel = new joint.shapes.standard.Link({
+      ...messageDefaults,
+      type: ShapeTypes.MESSAGE
+    });
+    messageModel.router('orthogonal');
+    messageModel.source(source);
+    messageModel.target(target);
+
+    this.addIconLabel(messageModel);
+    messageModel.addTo(graph);
+
+    const messageView = messageModel.findView(paper);
+    this.addTools(messageView);
+    this.addLabelBasedTools(messageModel);
+
+    return messageModel;
+  }
+
+  private registerEvents() {
+    const { paper } = this._canvas;
+
+    paper.on(Events.LINK_POINTERDOWN, (view: joint.dia.LinkView) => {
+      const { model } = view;
+      const { type } = model.attributes;
+
+      if (type === ShapeTypes.MESSAGE) {
+        view.showTools();
+        this.addLabelBasedTools(model);
+        this._messageInstance = model;
+      }
+    });
+
+    paper.on(
+      combineStrings([Events.CELL_POINTERDOWN, Events.BLANK_POINTERDOWN]),
+      () => {
+        this.removeLabelBasedTools();
+        this._messageInstance = null;
+      }
+    );
+  }
+
+  private removeLabelBasedTools() {
+    if (this._messageInstance !== null) {
+      const labels = this._messageInstance.labels();
+      labels.slice(1).forEach(l => this._messageInstance.removeLabel(-1));
+    }
+  }
+
+  private addTools(view: joint.dia.CellView) {
+    const tools = createLinkTools();
+    view.addTools(tools);
+    view.showTools();
+  }
+
+  private addLabelBasedTools(model: joint.dia.Link) {
+    const tools = createLabelBasedLinkTools();
+    tools.forEach((label, i) => model.insertLabel(i + 1, label));
   }
 
   private addIconLabel(message: joint.shapes.standard.Link) {

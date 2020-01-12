@@ -12,14 +12,16 @@ export enum Errors {
 
 export enum ShapeTypes {
   ORIGIN = 'sbpm.common.Origin',
+  MESSAGE = 'sbpm.sid.Message',
   STANDARD_SUBJECT = 'sbpm.sid.StandardSubject',
   SEND_STATE = 'sbpm.sbd.SendState'
 }
 
-export enum EventTypes {
+export enum Events {
   BLANK_POINTERUP = 'blank:pointerup',
   BLANK_POINTERDOWN = 'blank:pointerdown',
   CELL_POINTERUP = 'cell:pointerup',
+  CELL_POINTERDOWN = 'cell:pointerdown',
   ELEMENT_POINTERDOWN = 'element:pointerdown',
   LINK_POINTERDOWN = 'link:pointerdown',
   MOUSEMOVE = 'mousemove',
@@ -27,7 +29,9 @@ export enum EventTypes {
 }
 
 export enum CustomEvents {
-  ELEMENT_ADD_MESSAGE = 'element:addMessage'
+  ELEMENT_ADD_MESSAGE = 'element:addMessage',
+  LINK_REMOVE = 'link:remove',
+  LINK_REMOVE_VERTICES = 'link:removeVertices'
 }
 
 export const SVG_PREFIX = 'data:image/svg+xml;utf8,';

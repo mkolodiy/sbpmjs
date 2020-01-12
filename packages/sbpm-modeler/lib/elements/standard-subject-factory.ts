@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, ShapeTypes, EventTypes, Errors } from '../variables';
+import { SVG_PREFIX, ShapeTypes, Events, Errors } from '../variables';
 import Canvas from './canvas';
 import { SubjectOptions, ElementToolsOptions } from '../types';
 import { createElementTools } from '../common/element-tools';
@@ -172,7 +172,7 @@ export default class StandardSubjectFactory {
    */
   private registerEvents() {
     const { paper } = this._canvas;
-    paper.on(EventTypes.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
+    paper.on(Events.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
       const { type, isMachine } = cellView.model.attributes;
 
       if (type === ShapeTypes.STANDARD_SUBJECT && !isMachine) {

@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import { EventTypes, Errors, ShapeTypes } from '../variables';
+import { Events, Errors, ShapeTypes, CustomEvents } from '../variables';
 import { combineStrings } from '../common/utils';
 import { Coordinates } from '../types';
 
@@ -60,11 +60,6 @@ export default class Canvas {
     return Canvas._instance;
   }
 
-  /**
-   * Create and configures a new canvas.
-   *
-   * @param container HTML element where the canvas will be rendered.
-   */
   constructor(container: Element) {
     this._graph = new joint.dia.Graph();
     this._paper = new joint.dia.Paper({
@@ -85,22 +80,22 @@ export default class Canvas {
    */
   private addDragging(container: Element) {
     this._paper.on(
-      EventTypes.BLANK_POINTERDOWN,
+      Events.BLANK_POINTERDOWN,
       (event: MouseEvent, x: number, y: number) => {
         this._dragStartPosition = { x: x, y: y };
       }
     );
 
     const pointerupEvents = combineStrings([
-      EventTypes.CELL_POINTERUP,
-      EventTypes.BLANK_POINTERUP
+      Events.CELL_POINTERUP,
+      Events.BLANK_POINTERUP
     ]);
     this._paper.on(pointerupEvents, () => {
       this._dragStartPosition = null;
     });
 
     container.addEventListener(
-      EventTypes.MOUSEMOVE,
+      Events.MOUSEMOVE,
       (event: MouseEvent) => {
         if (this._dragStartPosition !== null) {
           const scale = this._paper.scale();
@@ -178,16 +173,29 @@ export default class Canvas {
   }
 
   private registerPaperEvents() {
-    this._paper.on(EventTypes.BLANK_POINTERDOWN, () => {
+    this._paper.on(Events.BLANK_POINTERDOWN, () => {
       this._paper.hideTools();
     });
 
     this._paper.on(
-      combineStrings([
-        EventTypes.ELEMENT_POINTERDOWN,
-        EventTypes.LINK_POINTERDOWN
-      ]),
+      combineStrings([Events.ELEMENT_POINTERDOWN, Events.LINK_POINTERDOWN]),
       this.paperOnElementPointerdown
+    );
+
+    this._paper.on(
+      CustomEvents.LINK_REMOVE_VERTICES,
+      (view: joint.dia.LinkView, evt: MouseEvent) => {
+        evt.stopPropagation();
+        view.model.vertices([]);
+      }
+    );
+
+    this._paper.on(
+      CustomEvents.LINK_REMOVE,
+      (view: joint.dia.LinkView, evt: MouseEvent) => {
+        evt.stopPropagation();
+        view.model.remove();
+      }
     );
   }
 

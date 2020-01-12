@@ -65,6 +65,7 @@ export default class Modeler {
       console.log('element:addMessage');
       console.log(evt);
       console.log(view);
+      view.hideTools();
       this._drawConnection = true;
       const target = this._graph.getElements()[2];
       this._lastCreatedMessage = this._mf.add({
