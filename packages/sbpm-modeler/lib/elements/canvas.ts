@@ -14,6 +14,9 @@ const paperDefaults = {
   origin: {
     x: 0,
     y: 0
+  },
+  defaultRouter: {
+    name: 'orthogonal'
   }
 };
 
@@ -58,6 +61,18 @@ export default class Canvas {
     }
 
     return Canvas._instance;
+  }
+
+  public unhighlight() {
+    console.log(this);
+    this.getElements().forEach((model: joint.dia.Element) => {
+      this._paper.findViewByModel(model).unhighlight();
+    });
+  }
+
+  public unhighlightElement(model: joint.dia.Element) {
+    console.log(this);
+    model.findView(this._paper).unhighlight();
   }
 
   constructor(container: Element) {
@@ -179,7 +194,10 @@ export default class Canvas {
 
     this._paper.on(
       combineStrings([Events.ELEMENT_POINTERDOWN, Events.LINK_POINTERDOWN]),
-      this.paperOnElementPointerdown
+      (cellView: joint.dia.CellView) => {
+        this._paper.hideTools();
+        cellView.model.toFront();
+      }
     );
 
     this._paper.on(
@@ -199,8 +217,7 @@ export default class Canvas {
     );
   }
 
-  private paperOnElementPointerdown = (cellView: joint.dia.CellView) => {
-    this._paper.hideTools();
-    cellView.model.toFront();
-  };
+  private getElements() {
+    return this._graph.getElements();
+  }
 }

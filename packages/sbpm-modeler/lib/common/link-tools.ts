@@ -36,7 +36,7 @@ export const createLabelBasedLinkTools = () => {
         width: 24,
         height: 24,
         xAlignment: 52.5,
-        yAlignment: -82.5,
+        yAlignment: -38,
         event: CustomEvents.LINK_REMOVE
       }
     }
@@ -55,7 +55,7 @@ export const createLabelBasedLinkTools = () => {
         width: 100,
         height: 70,
         xAlignment: 'middle',
-        yAlignment: -80,
+        yAlignment: 'middle',
         fill: 'none',
         stroke: '#33334F',
         'stroke-width': 0.5,
@@ -79,7 +79,7 @@ export const createLabelBasedLinkTools = () => {
         width: 24,
         height: 24,
         xAlignment: 72.5,
-        yAlignment: -82.5,
+        yAlignment: -38,
         title: 'Reset vertices',
         event: 'link:removeVertices'
       }

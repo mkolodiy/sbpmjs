@@ -1,8 +1,14 @@
 import * as joint from 'jointjs';
 
 import Canvas from './canvas';
-import { MessageOptions } from '../types';
-import { SVG_PREFIX, Errors, ShapeTypes, Events } from '../variables';
+import { MessageOptions, Coordinates } from '../types';
+import {
+  SVG_PREFIX,
+  Errors,
+  ShapeTypes,
+  Events,
+  CustomEvents
+} from '../variables';
 import {
   createLinkTools,
   createLabelBasedLinkTools
@@ -21,15 +27,16 @@ export default class MessageFactory {
   private static _instance: MessageFactory;
   private _canvas: Canvas;
   private _messageInstance: joint.dia.Link;
+  private _drawConnection: boolean;
 
   /**
    * Creates a new [[MessageFactory]] instance.
    *
    * @throws Error when the [[MessageFactory]] instance is already initialized.
    */
-  public static initialize(): MessageFactory {
+  public static initialize(el: Element): MessageFactory {
     if (!MessageFactory._instance) {
-      MessageFactory._instance = new MessageFactory();
+      MessageFactory._instance = new MessageFactory(el);
       return MessageFactory._instance;
     }
 
@@ -55,10 +62,11 @@ export default class MessageFactory {
     return this._messageInstance;
   }
 
-  constructor() {
+  constructor(el: Element) {
     this._canvas = Canvas.getInstance();
     this._messageInstance = null;
-    this.registerEvents();
+    this._drawConnection = false;
+    this.registerEvents(el);
   }
 
   private create(options: MessageOptions) {
@@ -69,7 +77,6 @@ export default class MessageFactory {
       ...messageDefaults,
       type: ShapeTypes.MESSAGE
     });
-    messageModel.router('orthogonal');
     messageModel.source(source);
     messageModel.target(target);
 
@@ -83,7 +90,7 @@ export default class MessageFactory {
     return messageModel;
   }
 
-  private registerEvents() {
+  private registerEvents(el: Element) {
     const { paper } = this._canvas;
 
     paper.on(Events.LINK_POINTERDOWN, (view: joint.dia.LinkView) => {
@@ -99,11 +106,66 @@ export default class MessageFactory {
 
     paper.on(
       combineStrings([Events.CELL_POINTERDOWN, Events.BLANK_POINTERDOWN]),
-      () => {
-        this.removeLabelBasedTools();
-        this._messageInstance = null;
+      () => this.reset()
+    );
+
+    paper.on(
+      CustomEvents.ELEMENT_ADD_MESSAGE,
+      (evt: joint.dia.Event, view: joint.dia.ElementView) => {
+        evt.stopPropagation();
+        view.hideTools();
+        this._drawConnection = true;
+
+        const options: MessageOptions = {
+          source: view.model,
+          target: {
+            x: evt.clientX,
+            y: evt.clientY
+          }
+        };
+
+        this.add(options);
       }
     );
+
+    el.addEventListener(Events.MOUSEMOVE, (evt: MouseEvent) => {
+      if (this.drawConnection()) {
+        const { paper } = this._canvas;
+        const coordinates: Coordinates = {
+          x: evt.clientX,
+          y: evt.clientY
+        };
+        this._messageInstance.target(coordinates);
+        const views = paper.findViewsFromPoint(coordinates);
+        const view: joint.dia.ElementView = views[0] || null;
+
+        if (view !== null) {
+          view.highlight();
+        } else {
+          this._canvas.unhighlight();
+        }
+      }
+    });
+
+    el.addEventListener(Events.MOUSEUP, (evt: MouseEvent) => {
+      if (this.drawConnection()) {
+        const { graph } = this._canvas;
+        const coordinates: Coordinates = {
+          x: evt.clientX,
+          y: evt.clientY
+        };
+        const elements = graph.findModelsFromPoint(coordinates);
+        const element: joint.dia.Element = elements[0] || null;
+        if (element !== null) {
+          this._canvas.unhighlightElement(element);
+          this._messageInstance.target(element);
+        } else {
+          this._messageInstance.remove();
+          this.reset();
+        }
+        this._drawConnection = false;
+      }
+    });
   }
 
   private removeLabelBasedTools() {
@@ -124,6 +186,16 @@ export default class MessageFactory {
     tools.forEach((label, i) => model.insertLabel(i + 1, label));
   }
 
+  private reset() {
+    this.removeLabelBasedTools();
+    this._messageInstance = null;
+    this._drawConnection = false;
+  }
+
+  private drawConnection() {
+    return this._messageInstance !== null && this._drawConnection;
+  }
+
   private addIconLabel(message: joint.shapes.standard.Link) {
     const iconLabel = {
       markup: [
@@ -139,7 +211,7 @@ export default class MessageFactory {
           width: 85,
           height: 55,
           xAlignment: 'middle',
-          yAlignment: -72.5
+          yAlignment: 'middle'
         }
       }
     };

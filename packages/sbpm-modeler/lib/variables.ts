@@ -25,6 +25,7 @@ export enum Events {
   ELEMENT_POINTERDOWN = 'element:pointerdown',
   LINK_POINTERDOWN = 'link:pointerdown',
   MOUSEMOVE = 'mousemove',
+  MOUSEUP = 'mouseup',
   POINTERDOWN = 'pointerdown'
 }
 
