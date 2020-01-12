@@ -97,7 +97,7 @@ const machineElementToolsOptions: ElementToolsOptions = {
 
 export default class StandardSubjectFactory {
   private static _instance: StandardSubjectFactory;
-  private canvas: Canvas;
+  private _canvas: Canvas;
 
   /**
    * Creates a new [[StandardSubjectFactory]] instance.
@@ -158,11 +158,12 @@ export default class StandardSubjectFactory {
    * @returns A new subject object.
    */
   public add(options: SubjectOptions) {
-    this.create(options).addTo(this.canvas.graph);
+    const { graph } = this._canvas;
+    this.create(options).addTo(graph);
   }
 
   constructor() {
-    this.canvas = Canvas.getInstance();
+    this._canvas = Canvas.getInstance();
     this.registerEvents();
   }
 
@@ -170,7 +171,7 @@ export default class StandardSubjectFactory {
    * Registers all necessary events needed for the interaction with a subject.
    */
   private registerEvents() {
-    const { paper } = this.canvas;
+    const { paper } = this._canvas;
     paper.on(EventTypes.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
       const { type, isMachine } = cellView.model.attributes;
 

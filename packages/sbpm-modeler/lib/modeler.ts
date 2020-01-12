@@ -6,12 +6,13 @@ import { Errors } from './variables';
 import { isValidObject } from './common/utils';
 import Canvas from './elements/canvas';
 import StandardSubjectFactory from './elements/standard-subject-factory';
-import Message from './elements/message';
+import MessageFactory from './elements/message-factory';
 
 export default class Modeler {
   private static _instance: Modeler;
   private _canvas: Canvas;
   private _ssf: StandardSubjectFactory;
+  private _mf: MessageFactory;
   private _graph: joint.dia.Graph;
   private _paper: joint.dia.Paper;
   private _lastCreatedMessage: joint.dia.Link = null;
@@ -52,16 +53,12 @@ export default class Modeler {
     return Modeler._instance;
   }
 
-  /**
-   * Create and configures jointjs paper and graph.
-   *
-   * @param options [[ModelerOptions]] object containing values needed to create a new [[Modeler]] instance.
-   */
   constructor(options: ModelerOptions) {
     this._canvas = Canvas.initialize(options.el);
     this._graph = this._canvas.graph;
     this._paper = this._canvas.paper;
     this._ssf = StandardSubjectFactory.initialize();
+    this._mf = MessageFactory.initialize();
 
     this._paper.on('element:addMessage', (evt: joint.dia.Event, view) => {
       evt.stopPropagation();
@@ -70,7 +67,7 @@ export default class Modeler {
       console.log(view);
       this._drawConnection = true;
       const target = this._graph.getElements()[2];
-      this._lastCreatedMessage = Message.add(this._canvas, {
+      this._lastCreatedMessage = this._mf.add({
         source: view.model,
         target: {
           x: evt.clientX,

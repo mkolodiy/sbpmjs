@@ -2,7 +2,7 @@ import * as joint from 'jointjs';
 
 import Canvas from './canvas';
 import { MessageOptions } from '../types';
-import { SVG_PREFIX } from '../variables';
+import { SVG_PREFIX, Errors } from '../variables';
 
 const messageDefaults = {
   attrs: {
@@ -12,19 +12,41 @@ const messageDefaults = {
   }
 };
 
-export default class Message {
-  private _lastCreatedMessage: joint.dia.Link = null;
+export default class MessageFactory {
+  private static _instance: MessageFactory;
+  private _canvas: Canvas;
+  private _lastCreatedMessage: joint.dia.Link;
 
-  public static add(canvas: Canvas, options: MessageOptions) {
-    const message = new Message(canvas, options);
-    return message._lastCreatedMessage;
+  /**
+   * Creates a new [[MessageFactory]] instance.
+   *
+   * @throws Error when the [[MessageFactory]] instance is already initialized.
+   */
+  public static initialize(): MessageFactory {
+    if (!MessageFactory._instance) {
+      MessageFactory._instance = new MessageFactory();
+      return MessageFactory._instance;
+    }
+
+    throw new Error(Errors.SSF_INITIALIZATION);
   }
 
-  constructor(canvas: Canvas, options: MessageOptions) {
-    this._lastCreatedMessage = this.create(canvas, options);
+  /**
+   * Retrieves the [[MessageFactory]] instance.
+   *
+   * @returns [[MessageFactory]] instance.
+   * @throws Error when the [[MessageFactory]] instance is not initialized.
+   */
+  public static getInstance(): MessageFactory {
+    if (!MessageFactory._instance) {
+      throw new Error(Errors.SSF_INSTANCE_RETRIEVAL);
+    }
+
+    return MessageFactory._instance;
   }
 
-  private create(canvas: Canvas, options: MessageOptions) {
+  public create(options: MessageOptions) {
+    const { graph, paper } = this._canvas;
     const { source, target } = options;
 
     const message = new joint.shapes.standard.Link(messageDefaults);
@@ -35,7 +57,7 @@ export default class Message {
 
     this.addIconLabel(message);
 
-    message.addTo(canvas.graph);
+    message.addTo(graph);
 
     const verticesTool = new joint.linkTools.Vertices();
     const segmentsTool = new joint.linkTools.Segments();
@@ -45,11 +67,19 @@ export default class Message {
       tools: [verticesTool, segmentsTool, targetArrowhead]
     });
 
-    var linkView = message.findView(canvas.paper);
+    var linkView = message.findView(paper);
     linkView.addTools(toolsView);
     linkView.showTools();
 
     return message;
+  }
+
+  public add(options: MessageOptions) {
+    return this.create(options);
+  }
+
+  constructor() {
+    this._canvas = Canvas.getInstance();
   }
 
   private addIconLabel(message: joint.shapes.standard.Link) {
