@@ -4,7 +4,7 @@ import { autoRenewIcon } from '../icons/auto-renew';
 import { CustomEvents } from '../variables';
 
 /**
- * Create link tools.
+ * Creates link tools.
  *
  * @param useSourceArrowhead Indicates if SourceArrowhead tool should be used added to link tools.
  * @returns A new tools view.

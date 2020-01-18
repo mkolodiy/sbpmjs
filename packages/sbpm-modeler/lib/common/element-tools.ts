@@ -6,6 +6,12 @@ import { openInNewIcon } from '../icons/open-in-new';
 import { Coordinates, ElementToolsOptions } from '../types';
 import Modeler from '../modeler';
 
+/**
+ * Creates element tools.
+ *
+ * @param options [[ElementToolsOptions]] object.
+ * @returns A new tools view.
+ */
 export const createElementTools = (options: ElementToolsOptions) => {
   const {
     removeButtonOptions,
