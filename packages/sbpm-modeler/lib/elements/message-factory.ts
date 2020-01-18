@@ -15,6 +15,9 @@ import {
 } from '../common/link-tools';
 import { combineStrings } from '../common/utils';
 
+/**
+ * Default options used to create a message.
+ */
 const messageDefaults = {
   attrs: {
     wrapper: {
@@ -32,11 +35,13 @@ export default class MessageFactory {
   /**
    * Creates a new [[MessageFactory]] instance.
    *
+   * @param container HTML element where the canvas will be rendered.
+   * @returns [[MessageFactory]] instance.
    * @throws Error when the [[MessageFactory]] instance is already initialized.
    */
-  public static initialize(el: Element): MessageFactory {
+  public static initialize(container: Element): MessageFactory {
     if (!MessageFactory._instance) {
-      MessageFactory._instance = new MessageFactory(el);
+      MessageFactory._instance = new MessageFactory(container);
       return MessageFactory._instance;
     }
 
@@ -57,18 +62,30 @@ export default class MessageFactory {
     return MessageFactory._instance;
   }
 
+  /**
+   * Creates and adds a new message to the canvas.
+   *
+   * @param options [[MessageOptions]] object used to create a new message.
+   * @returns A new message.
+   */
   public add(options: MessageOptions) {
     this._messageInstance = this.create(options);
     return this._messageInstance;
   }
 
-  constructor(el: Element) {
+  constructor(container: Element) {
     this._canvas = Canvas.getInstance();
     this._messageInstance = null;
     this._drawConnection = false;
-    this.registerEvents(el);
+    this.registerEvents(container);
   }
 
+  /**
+   * Creates a new message.
+   *
+   * @param options [[MessageOptions]] object used to create a new message.
+   * @returns A new message.
+   */
   private create(options: MessageOptions) {
     const { graph, paper } = this._canvas;
     const { source, target } = options;
@@ -90,84 +107,112 @@ export default class MessageFactory {
     return messageModel;
   }
 
-  private registerEvents(el: Element) {
+  /**
+   * Registers all necessary events needed for the interaction with a subject.
+   */
+  private registerEvents(container: Element) {
     const { paper } = this._canvas;
-
-    paper.on(Events.LINK_POINTERDOWN, (view: joint.dia.LinkView) => {
-      const { model } = view;
-      const { type } = model.attributes;
-
-      if (type === ShapeTypes.MESSAGE) {
-        view.showTools();
-        this.addLabelBasedTools(model);
-        this._messageInstance = model;
-      }
-    });
 
     paper.on(
       combineStrings([Events.CELL_POINTERDOWN, Events.BLANK_POINTERDOWN]),
       () => this.reset()
     );
 
-    paper.on(
-      CustomEvents.ELEMENT_ADD_MESSAGE,
-      (evt: joint.dia.Event, view: joint.dia.ElementView) => {
-        evt.stopPropagation();
-        view.hideTools();
-        this._drawConnection = true;
+    paper.on(Events.LINK_POINTERDOWN, this.onLinkPointerDown);
 
-        const options: MessageOptions = {
-          source: view.model,
-          target: {
-            x: evt.clientX,
-            y: evt.clientY
-          }
-        };
+    paper.on(CustomEvents.ELEMENT_ADD_MESSAGE, this.onElementAddMessage);
 
-        this.add(options);
-      }
-    );
+    container.addEventListener(Events.MOUSEMOVE, this.onMouseMove);
 
-    el.addEventListener(Events.MOUSEMOVE, (evt: MouseEvent) => {
-      if (this.drawConnection()) {
-        const { paper } = this._canvas;
-        const coordinates: Coordinates = {
-          x: evt.clientX,
-          y: evt.clientY
-        };
-        this._messageInstance.target(coordinates);
-        const views = paper.findViewsFromPoint(coordinates);
-        const view: joint.dia.ElementView = views[0] || null;
-
-        if (view !== null) {
-          view.highlight();
-        } else {
-          this._canvas.unhighlight();
-        }
-      }
-    });
-
-    el.addEventListener(Events.MOUSEUP, (evt: MouseEvent) => {
-      if (this.drawConnection()) {
-        const { graph } = this._canvas;
-        const coordinates: Coordinates = {
-          x: evt.clientX,
-          y: evt.clientY
-        };
-        const elements = graph.findModelsFromPoint(coordinates);
-        const element: joint.dia.Element = elements[0] || null;
-        if (element !== null) {
-          this._canvas.unhighlightElement(element);
-          this._messageInstance.target(element);
-        } else {
-          this._messageInstance.remove();
-          this.reset();
-        }
-        this._drawConnection = false;
-      }
-    });
+    container.addEventListener(Events.MOUSEUP, this.onMouseUp);
   }
 
+  /**
+   * Shows link tools. Also sets currently selected message instance.
+   */
+  private onLinkPointerDown = (view: joint.dia.LinkView) => {
+    const { model } = view;
+    const { type } = model.attributes;
+
+    if (type === ShapeTypes.MESSAGE) {
+      view.showTools();
+      this.addLabelBasedTools(model);
+      this._messageInstance = model;
+    }
+  };
+
+  /**
+   * Adds a new message when the user clicks the link button in the subject tools.
+   */
+  private onElementAddMessage = (
+    evt: joint.dia.Event,
+    view: joint.dia.ElementView
+  ) => {
+    evt.stopPropagation();
+    view.hideTools();
+    this._drawConnection = true;
+
+    const options: MessageOptions = {
+      source: view.model,
+      target: {
+        x: evt.clientX,
+        y: evt.clientY
+      }
+    };
+
+    this.add(options);
+  };
+
+  /**
+   * Dynamically changes the target of the message while a user moves the mouse curser across the canvas.
+   */
+  private onMouseMove = (evt: MouseEvent) => {
+    if (this.drawConnection()) {
+      const { paper } = this._canvas;
+      const coordinates: Coordinates = {
+        x: evt.clientX,
+        y: evt.clientY
+      };
+      this._messageInstance.target(coordinates);
+      const views = paper.findViewsFromPoint(coordinates);
+      const view: joint.dia.ElementView = views[0] || null;
+
+      if (view !== null) {
+        view.highlight();
+      } else {
+        this._canvas.unhighlight();
+      }
+    }
+  };
+
+  /**
+   * Links a message to target subject.
+   *
+   * @param evt [[MouseEvent]] object.
+   */
+  private onMouseUp = (evt: MouseEvent) => {
+    if (this.drawConnection()) {
+      const { graph } = this._canvas;
+      const coordinates: Coordinates = {
+        x: evt.clientX,
+        y: evt.clientY
+      };
+      const elements = graph.findModelsFromPoint(coordinates);
+      const element: joint.dia.Element = elements[0] || null;
+      if (element !== null) {
+        this._canvas.unhighlightElement(element);
+        this._messageInstance.target(element);
+      } else {
+        this._messageInstance.remove();
+        this.reset();
+      }
+      this._drawConnection = false;
+    }
+  };
+
+  /**
+   * Removes label based link tools from currently selected message instance.
+   */
   private removeLabelBasedTools() {
     if (this._messageInstance !== null) {
       const labels = this._messageInstance.labels();
@@ -175,28 +220,49 @@ export default class MessageFactory {
     }
   }
 
+  /**
+   * Adds link tools to a message.
+   *
+   * @param view Jointjs view of a message.
+   */
   private addTools(view: joint.dia.CellView) {
     const tools = createLinkTools();
     view.addTools(tools);
     view.showTools();
   }
 
+  /**
+   * Adds label based link tools.
+   *
+   * @param model Jointjs model of the message.
+   */
   private addLabelBasedTools(model: joint.dia.Link) {
     const tools = createLabelBasedLinkTools();
     tools.forEach((label, i) => model.insertLabel(i + 1, label));
   }
 
+  /**
+   * Resets all internal variables and calls [[removeLabelBasedTools]] method.
+   */
   private reset() {
     this.removeLabelBasedTools();
     this._messageInstance = null;
     this._drawConnection = false;
   }
 
+  /**
+   * Indicates if a message should be created between two subject.
+   */
   private drawConnection() {
     return this._messageInstance !== null && this._drawConnection;
   }
 
-  private addIconLabel(message: joint.shapes.standard.Link) {
+  /**
+   * Adds message icon as a label.
+   *
+   * @param model Jointjs model of the message.
+   */
+  private addIconLabel(model: joint.shapes.standard.Link) {
     const iconLabel = {
       markup: [
         {
@@ -216,13 +282,21 @@ export default class MessageFactory {
       }
     };
 
-    message.insertLabel(0, iconLabel);
+    model.insertLabel(0, iconLabel);
   }
 
+  /**
+   * Retrieves a SVG icon used to display a message.
+   *
+   * @param multiple Indicates if a message is single or multiple message.
+   */
   private getIcon(multiple: boolean = false) {
     return multiple ? this.multipleMessagesIcon() : this.singleMessageIcon();
   }
 
+  /**
+   * SVG icon for single message.
+   */
   private singleMessageIcon() {
     const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg
@@ -2076,6 +2150,9 @@ export default class MessageFactory {
     return `${SVG_PREFIX}${encodeURIComponent(template)}`;
   }
 
+  /**
+   * SVG icon for multiple messages.
+   */
   private multipleMessagesIcon() {
     const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg

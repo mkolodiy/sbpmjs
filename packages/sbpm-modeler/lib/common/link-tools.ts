@@ -3,6 +3,12 @@ import { deleteIcon } from '../icons/delete';
 import { autoRenewIcon } from '../icons/auto-renew';
 import { CustomEvents } from '../variables';
 
+/**
+ * Create link tools.
+ *
+ * @param useSourceArrowhead Indicates if SourceArrowhead tool should be used added to link tools.
+ * @returns A new tools view.
+ */
 export const createLinkTools = (useSourceArrowhead: boolean = false) => {
   let tools: any[] = [];
 
@@ -21,6 +27,11 @@ export const createLinkTools = (useSourceArrowhead: boolean = false) => {
   });
 };
 
+/**
+ * Create link tools that are not possible to create with standard jointjs functionality. Link tools are created as labels.
+ *
+ * @returns Array with link tools as labels.
+ */
 export const createLabelBasedLinkTools = () => {
   const removeLabel = {
     markup: [
