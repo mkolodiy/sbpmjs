@@ -1,5 +1,11 @@
 import * as joint from 'jointjs';
-import { Events, Errors, ShapeTypes, CustomEvents } from '../variables';
+import {
+  Events,
+  Errors,
+  Shapes,
+  CustomEvents,
+  ShapeNamespaces
+} from '../variables';
 import { combineStrings } from '../common/utils';
 import { Coordinates, ModelerOptions } from '../types';
 
@@ -34,8 +40,8 @@ export default class Canvas {
   /**
    * Create a new canvas.
    *
-   * @param container HTML element where the canvas will be rendered.
-   * @returns New canvas instance.
+   * @param options [[ModelerOptions]] object.
+   * @returns [[Canvas]] instance.
    */
   public static initialize = (options: ModelerOptions) => {
     if (!Canvas._instance) {
@@ -47,9 +53,9 @@ export default class Canvas {
   };
 
   /**
-   * Retrieved the canvas instance.
+   * Retrieves the canvas instance.
    *
-   * @returns Canvas instance.
+   * @returns [[Canvas]] instance.
    * @throws Error when the modeler instance is not initialized.
    */
   public static getInstance() {
@@ -60,12 +66,20 @@ export default class Canvas {
     return Canvas._instance;
   }
 
+  /**
+   * Unhighlights all the elements on the canvas.
+   */
   public unhighlight() {
     this.getElements().forEach((model: joint.dia.Element) => {
       this._paper.findViewByModel(model).unhighlight();
     });
   }
 
+  /**
+   * Unhighlights one specific element on the canvas.
+   *
+   * @param model Jointjs element.
+   */
   public unhighlightElement(model: joint.dia.Element) {
     model.findView(this._paper).unhighlight();
   }
@@ -127,9 +141,12 @@ export default class Canvas {
     );
   }
 
+  /**
+   * Adds origin point to the canvas.
+   */
   private addOrigin() {
     const Origin = joint.shapes.standard.Rectangle.define(
-      ShapeTypes.ORIGIN,
+      Shapes.ORIGIN,
       {
         attrs: {
           x: -20,
@@ -189,6 +206,9 @@ export default class Canvas {
     origin.addTo(this._graph);
   }
 
+  /**
+   * Registers all necessary events needed for the interaction with the canvas and elements on the canvas.
+   */
   private registerPaperEvents() {
     this._paper.on(Events.BLANK_POINTERDOWN, () => {
       this._paper.hideTools();
@@ -219,7 +239,13 @@ export default class Canvas {
     );
   }
 
+  /**
+   * Get all elements on the canvas.
+   */
   private getElements() {
-    return this._graph.getElements();
+    const allElements = this._graph.getElements();
+    return allElements.filter(
+      (el: joint.dia.Element) => el.attributes.type !== ShapeNamespaces.COMMON
+    );
   }
 }

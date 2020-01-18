@@ -1,7 +1,6 @@
-import * as joint from 'jointjs';
 import '../node_modules/jointjs/dist/joint.min.css';
 
-import { ModelerOptions, SubjectOptions, Coordinates } from './types';
+import { ModelerOptions, SubjectOptions } from './types';
 import { Errors } from './variables';
 import { isValidObject } from './common/utils';
 import Canvas from './elements/canvas';
@@ -57,19 +56,33 @@ export default class Modeler {
     this._mf = MessageFactory.initialize(el);
   }
 
+  /**
+   * Retries [[Canvas]] instance.
+   */
   public get canvas() {
     return this._canvas;
   }
 
+  /**
+   * Retries canvas [[StandardSubjectFactory]] instance.
+   */
   public get ssf() {
     return this._ssf;
   }
 
+  /**
+   * Retries canvas [[MessageFactory]] instance.
+   */
   public get mf() {
     return this._mf;
   }
 
+  /**
+   * Adds standard subject to the canvas.
+   *
+   * @param options [[SubjectOptions]] object.
+   */
   public addStandardSubject(options: SubjectOptions) {
-    return this._ssf.add(options);
+    return this.ssf.add(options);
   }
 }

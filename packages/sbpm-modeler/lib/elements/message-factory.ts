@@ -2,13 +2,7 @@ import * as joint from 'jointjs';
 
 import Canvas from './canvas';
 import { MessageOptions, Coordinates } from '../types';
-import {
-  SVG_PREFIX,
-  Errors,
-  ShapeTypes,
-  Events,
-  CustomEvents
-} from '../variables';
+import { SVG_PREFIX, Errors, Shapes, Events, CustomEvents } from '../variables';
 import {
   createLinkTools,
   createLabelBasedLinkTools
@@ -92,7 +86,7 @@ export default class MessageFactory {
 
     const messageModel = new joint.shapes.standard.Link({
       ...messageDefaults,
-      type: ShapeTypes.MESSAGE
+      type: Shapes.MESSAGE
     });
     messageModel.source(source);
     messageModel.target(target);
@@ -134,7 +128,7 @@ export default class MessageFactory {
     const { model } = view;
     const { type } = model.attributes;
 
-    if (type === ShapeTypes.MESSAGE) {
+    if (type === Shapes.MESSAGE) {
       view.showTools();
       this.addLabelBasedTools(model);
       this._messageInstance = model;

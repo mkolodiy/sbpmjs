@@ -10,7 +10,13 @@ export enum Errors {
   INVALID_MODELER_OPTIONS = 'Please provide valid modeler options.'
 }
 
-export enum ShapeTypes {
+export enum ShapeNamespaces {
+  COMMON = 'sbpm.common',
+  SID = 'sbpm.sid',
+  SBD = 'sbpm.sbd'
+}
+
+export enum Shapes {
   ORIGIN = 'sbpm.common.Origin',
   MESSAGE = 'sbpm.sid.Message',
   STANDARD_SUBJECT = 'sbpm.sid.StandardSubject',

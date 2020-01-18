@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, ShapeTypes, Events, Errors } from '../variables';
+import { SVG_PREFIX, Shapes, Events, Errors } from '../variables';
 import Canvas from './canvas';
 import { SubjectOptions, ElementToolsOptions } from '../types';
 import { createElementTools } from '../common/element-tools';
@@ -152,7 +152,7 @@ export default class StandardSubjectFactory {
 
     const standardSubject = new joint.shapes.basic.Image({
       ...defaults,
-      type: ShapeTypes.STANDARD_SUBJECT,
+      type: Shapes.STANDARD_SUBJECT,
       isMachine: Boolean(machine)
     });
 
@@ -176,11 +176,11 @@ export default class StandardSubjectFactory {
     paper.on(Events.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
       const { type, isMachine } = cellView.model.attributes;
 
-      if (type === ShapeTypes.STANDARD_SUBJECT && !isMachine) {
+      if (type === Shapes.STANDARD_SUBJECT && !isMachine) {
         cellView.addTools(createElementTools(humanElementToolsOptions));
       }
 
-      if (type === ShapeTypes.STANDARD_SUBJECT && isMachine) {
+      if (type === Shapes.STANDARD_SUBJECT && isMachine) {
         cellView.addTools(createElementTools(machineElementToolsOptions));
       }
     });
