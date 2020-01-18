@@ -1,7 +1,7 @@
 import * as joint from 'jointjs';
 import { Events, Errors, ShapeTypes, CustomEvents } from '../variables';
 import { combineStrings } from '../common/utils';
-import { Coordinates } from '../types';
+import { Coordinates, ModelerOptions } from '../types';
 
 /**
  * Default options used to create a new paper instance.
@@ -14,9 +14,6 @@ const paperDefaults = {
   origin: {
     x: 0,
     y: 0
-  },
-  defaultRouter: {
-    name: 'orthogonal'
   }
 };
 
@@ -40,9 +37,9 @@ export default class Canvas {
    * @param container HTML element where the canvas will be rendered.
    * @returns New canvas instance.
    */
-  public static initialize = (container: Element) => {
+  public static initialize = (options: ModelerOptions) => {
     if (!Canvas._instance) {
-      Canvas._instance = new Canvas(container);
+      Canvas._instance = new Canvas(options);
       return Canvas._instance;
     }
 
@@ -64,23 +61,28 @@ export default class Canvas {
   }
 
   public unhighlight() {
-    console.log(this);
     this.getElements().forEach((model: joint.dia.Element) => {
       this._paper.findViewByModel(model).unhighlight();
     });
   }
 
   public unhighlightElement(model: joint.dia.Element) {
-    console.log(this);
     model.findView(this._paper).unhighlight();
   }
 
-  constructor(container: Element) {
+  constructor(options: ModelerOptions) {
+    const { el: container, routerName } = options;
+
+    const defaultRouter = routerName
+      ? { name: routerName }
+      : { name: 'normal' };
+
     this._graph = new joint.dia.Graph();
     this._paper = new joint.dia.Paper({
       ...paperDefaults,
       el: container,
-      model: this._graph
+      model: this._graph,
+      defaultRouter
     });
 
     this.addDragging(container);

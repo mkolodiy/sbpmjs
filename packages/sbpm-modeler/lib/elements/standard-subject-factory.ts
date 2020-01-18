@@ -102,6 +102,7 @@ export default class StandardSubjectFactory {
   /**
    * Creates a new [[StandardSubjectFactory]] instance.
    *
+   * @returns [[StandardSubjectFactory]] instance.
    * @throws Error when the [[StandardSubjectFactory]] instance is already initialized.
    */
   public static initialize(): StandardSubjectFactory {
@@ -128,6 +129,17 @@ export default class StandardSubjectFactory {
   }
 
   /**
+   * Creates and adds a new subject to the canvas.
+   *
+   * @param options [[SubjectOptions]] object containing options used to create a new subject.
+   * @returns A new subject object.
+   */
+  public add(options: SubjectOptions) {
+    const { graph } = this._canvas;
+    return this.create(options).addTo(graph);
+  }
+
+  /**
    * Creates a new subject.
    *
    * @param options [[SubjectOptions]] object containing options used to create a new subject.
@@ -149,17 +161,6 @@ export default class StandardSubjectFactory {
     standardSubject.attr('text/textWrap/text', description);
 
     return standardSubject;
-  }
-
-  /**
-   * Creates and adds a new subject to the canvas.
-   *
-   * @param options [[SubjectOptions]] object containing options used to create a new subject.
-   * @returns A new subject object.
-   */
-  public add(options: SubjectOptions) {
-    const { graph } = this._canvas;
-    this.create(options).addTo(graph);
   }
 
   constructor() {

@@ -52,7 +52,7 @@ export default class Modeler {
   constructor(options: ModelerOptions) {
     const { el } = options;
 
-    this._canvas = Canvas.initialize(el);
+    this._canvas = Canvas.initialize(options);
     this._ssf = StandardSubjectFactory.initialize();
     this._mf = MessageFactory.initialize(el);
   }
@@ -70,6 +70,6 @@ export default class Modeler {
   }
 
   public addStandardSubject(options: SubjectOptions) {
-    this._ssf.add(options);
+    return this._ssf.add(options);
   }
 }
