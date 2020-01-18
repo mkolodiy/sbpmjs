@@ -163,10 +163,10 @@ export default class MessageFactory {
   private onMouseMove = (evt: MouseEvent) => {
     if (this.drawConnection()) {
       const { paper } = this._canvas;
-      const coordinates: Coordinates = {
+      const coordinates = paper.snapToGrid({
         x: evt.clientX,
         y: evt.clientY
-      };
+      });
       this._messageInstance.target(coordinates);
       const views = paper.findViewsFromPoint(coordinates);
       const view: joint.dia.ElementView = views[0] || null;
@@ -186,11 +186,11 @@ export default class MessageFactory {
    */
   private onMouseUp = (evt: MouseEvent) => {
     if (this.drawConnection()) {
-      const { graph } = this._canvas;
-      const coordinates: Coordinates = {
+      const { graph, paper } = this._canvas;
+      const coordinates = paper.snapToGrid({
         x: evt.clientX,
         y: evt.clientY
-      };
+      });
       const elements = graph.findModelsFromPoint(coordinates);
       const element: joint.dia.Element = elements[0] || null;
       if (element !== null) {
