@@ -6,7 +6,7 @@
     "sbpm",
     "modeler"
   ],
-  "author": "Maksym Kolodiy <mak.kolodiy@gmail.com>",
+  "author": "Maksym Kolodiy",
   "homepage": "https://github.com/mkolodiy/sbpmjs/tree/master/packages/modeler#readme",
   "license": "MIT",
   "main": "dist/modeler.umd.js",
