@@ -1,13 +1,84 @@
 <html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="<%=htmlWebpackPlugin.files.chunks.main.css %>"
+    />
+  </head>
 
-<head>
-  <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>">
-</head>
-
-<body>
-  <h1 class="center">Hello, world! It works!</h1>
-  <h2 class="center">If u want to Change your Preproceesor check out the readme!</h2>
-  <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
-</body>
-
+  <body>
+    <div>
+      <div class="row">
+        <div class="col m4 l4 xl2 controls">
+          <ul class="collapsible expandable">
+            <li>
+              <div class="collapsible-header">
+                <span class="title">Subject</span>
+              </div>
+              <div class="collapsible-body">
+                <form class="row subject-form">
+                  <div class="input-field col s6">
+                    <input id="positionX" type="number" required />
+                    <label for="positionY">X-Coordinate</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="positionY" type="number" required />
+                    <label for="positionY">Y-Coordinate</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <textarea
+                      id="description"
+                      class="materialize-textarea"
+                    ></textarea>
+                    <label for="description">Description</label>
+                  </div>
+                  <div class="col s12">
+                    <button
+                      class="waves-effect waves-light btn right"
+                      type="submit"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">
+                <span class="title">Message</span>
+              </div>
+              <div class="collapsible-body">
+                <form class="row message-form">
+                  <div class="col s12">
+                    <p>
+                      <label>
+                        <input id="bidirectional" type="checkbox" />
+                        <span>Bidirectional</span>
+                      </label>
+                    </p>
+                  </div>
+                  <div class="col s12">
+                    <button
+                      class="waves-effect waves-light btn right"
+                      type="submit"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="col m8 l8 xl10 canvas">
+          <div class="sbpmjs"></div>
+        </div>
+      </div>
+    </div>
+    <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
+  </body>
 </html>

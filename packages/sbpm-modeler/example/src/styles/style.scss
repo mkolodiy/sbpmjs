@@ -1,4 +1,39 @@
 @import '/node_modules/normalize.css/normalize.css';
+@import '/node_modules/materialize-css/dist/css/materialize.min.css';
 
-@import 'modules/variables';
-@import 'modules/base'
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  * {
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+  }
+}
+
+form,
+.row {
+  margin-bottom: 0;
+}
+
+.controls {
+  height: 100%;
+
+  &,
+  .collapsible {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+.canvas {
+  padding-left: 5px !important;
+}
+
+.title {
+  font-weight: bold;
+}
