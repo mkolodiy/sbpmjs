@@ -7,7 +7,9 @@ export enum Errors {
   MF_INITIALIZATION = 'MessageFactory is already initialized. Please use MessageFactory.getInstance() method to retrieve the factory instance.',
   INITIALIZATION = 'Modeler is already initialized. Please use Modeler.getInstance() method to retrieve the modeler instance.',
   INSTANCE_RETRIEVAL = 'Modeler is not initialized. Please use Modeler.initialize() method to create a new instance of the modeler.',
-  INVALID_MODELER_OPTIONS = 'Please provide valid modeler options.'
+  INVALID_MODELER_OPTIONS = 'Please provide valid modeler options.',
+  SStF_INSTANCE_RETRIEVAL = 'SendStateFactory is not initialized. Please use SendStateFactory.initialize() method to create a new instance of the factory.',
+  SStF_INITIALIZATION = 'SendStateFactory is already initialized. Please use SendStateFactory.getInstance() method to retrieve the factory instance.'
 }
 
 export enum ShapeNamespaces {

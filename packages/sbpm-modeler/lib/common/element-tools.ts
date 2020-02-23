@@ -3,7 +3,7 @@ import * as joint from 'jointjs';
 import { deleteIcon } from '../icons/delete';
 import { callMadeIcon } from '../icons/call-made';
 import { openInNewIcon } from '../icons/open-in-new';
-import { Coordinates, ElementToolsOptions } from '../types';
+import { ButtonOptions, ElementToolsOptions } from '../types';
 import Modeler from '../modeler';
 
 /**
@@ -49,12 +49,12 @@ const createBoundaryTool = () => {
   });
 };
 
-const createRemoveButton = (options: Coordinates) => {
-  const { x, y } = options;
+const createRemoveButton = (options: ButtonOptions) => {
+  const { coordinates } = options;
   return new joint.elementTools.Remove({
     rotate: true,
-    x,
-    y,
+    x: coordinates.x,
+    y: coordinates.y,
     markup: [
       {
         tagName: 'image',
@@ -67,11 +67,11 @@ const createRemoveButton = (options: Coordinates) => {
   });
 };
 
-const createOpenInNewButton = (options: Coordinates) => {
-  const { x, y } = options;
+const createOpenInNewButton = (options: ButtonOptions) => {
+  const { coordinates } = options;
   return new joint.elementTools.Button({
-    x,
-    y,
+    x: coordinates.x,
+    y: coordinates.y,
     action: function(evt) {},
     markup: [
       {
@@ -85,14 +85,14 @@ const createOpenInNewButton = (options: Coordinates) => {
   });
 };
 
-const createLinkButton = (options: Coordinates) => {
-  const { x, y } = options;
+const createLinkButton = (options: ButtonOptions) => {
+  const { coordinates, event } = options;
   return new joint.elementTools.Button({
-    x,
-    y,
+    x: coordinates.x,
+    y: coordinates.y,
     action: (evt: joint.dia.Event, view: joint.dia.CellView) => {
       const paper = Modeler.getInstance().canvas.paper;
-      paper.trigger('element:addMessage', evt, view);
+      paper.trigger(event, evt, view);
     },
     markup: [
       {

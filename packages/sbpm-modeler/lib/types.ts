@@ -53,15 +53,20 @@ export interface ElementToolsOptions {
   /**
    * Defines the position of the remove button.
    */
-  removeButtonOptions?: Coordinates;
+  removeButtonOptions?: ButtonOptions;
   /**
    * Defines the position of the openInNew button.
    */
-  openInNewButtonOptions?: Coordinates;
+  openInNewButtonOptions?: ButtonOptions;
   /**
    * Defines the position of the link button.
    */
-  linkButtonOptions?: Coordinates;
+  linkButtonOptions?: ButtonOptions;
+}
+
+export interface ButtonOptions {
+  coordinates: Coordinates;
+  event?: string;
 }
 
 /**

@@ -64,16 +64,23 @@ const machineSubjectDefaults = {
  */
 const humanElementToolsOptions: ElementToolsOptions = {
   removeButtonOptions: {
-    x: 105,
-    y: -13
+    coordinates: {
+      x: 105,
+      y: -13
+    }
   },
   openInNewButtonOptions: {
-    x: 130,
-    y: -13
+    coordinates: {
+      x: 130,
+      y: -13
+    }
   },
   linkButtonOptions: {
-    x: 155,
-    y: -13
+    coordinates: {
+      x: 155,
+      y: -13
+    },
+    event: 'element:addMessage'
   }
 };
 
@@ -82,16 +89,22 @@ const humanElementToolsOptions: ElementToolsOptions = {
  */
 const machineElementToolsOptions: ElementToolsOptions = {
   removeButtonOptions: {
-    x: 125,
-    y: -13
+    coordinates: {
+      x: 125,
+      y: -13
+    }
   },
   openInNewButtonOptions: {
-    x: 150,
-    y: -13
+    coordinates: {
+      x: 150,
+      y: -13
+    }
   },
   linkButtonOptions: {
-    x: 175,
-    y: -13
+    coordinates: {
+      x: 175,
+      y: -13
+    }
   }
 };
 

@@ -6,12 +6,14 @@ import { isValidObject } from './common/utils';
 import Canvas from './elements/canvas';
 import StandardSubjectFactory from './elements/standard-subject-factory';
 import MessageFactory from './elements/message-factory';
+import SendStateFactory from './elements/send-state-factory';
 
 export default class Modeler {
   private static _instance: Modeler;
   private _canvas: Canvas;
   private _ssf: StandardSubjectFactory;
   private _mf: MessageFactory;
+  private _sstf: SendStateFactory;
 
   /**
    * Creates a new [[Modeler]] instance.
@@ -54,6 +56,7 @@ export default class Modeler {
     this._canvas = Canvas.initialize(options);
     this._ssf = StandardSubjectFactory.initialize();
     this._mf = MessageFactory.initialize(el);
+    this._sstf = SendStateFactory.initialize();
   }
 
   /**
@@ -75,6 +78,13 @@ export default class Modeler {
    */
   public get mf() {
     return this._mf;
+  }
+
+  /**
+   * Retries canvas [[SendStateFactory]] instance.
+   */
+  public get sstf() {
+    return this._sstf;
   }
 
   /**
