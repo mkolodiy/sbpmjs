@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, Shapes, Events, Errors } from '../variables';
+import { SVG_PREFIX, Shapes, Events, Errors, CustomEvents } from '../variables';
 import Canvas from './canvas';
 import { StateOptions, ElementToolsOptions } from '../types';
 import { createElementTools } from '../common/element-tools';
@@ -47,7 +47,7 @@ const sendStateToolsOptions: ElementToolsOptions = {
       x: 180,
       y: -13
     },
-    event: 'element:addSendTransition'
+    event: CustomEvents.ELEMENT_ADD_SEND_STATE_TRANSITION
   }
 };
 

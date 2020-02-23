@@ -7,6 +7,7 @@ import Canvas from './elements/canvas';
 import StandardSubjectFactory from './elements/standard-subject-factory';
 import MessageFactory from './elements/message-factory';
 import SendStateFactory from './elements/send-state-factory';
+import SendStateTransitionFactory from './elements/send-state-transition-factory';
 
 export default class Modeler {
   private static _instance: Modeler;
@@ -14,6 +15,7 @@ export default class Modeler {
   private _ssf: StandardSubjectFactory;
   private _mf: MessageFactory;
   private _sstf: SendStateFactory;
+  private _sstrf: SendStateTransitionFactory;
 
   /**
    * Creates a new [[Modeler]] instance.
@@ -57,6 +59,7 @@ export default class Modeler {
     this._ssf = StandardSubjectFactory.initialize();
     this._mf = MessageFactory.initialize(el);
     this._sstf = SendStateFactory.initialize();
+    this._sstrf = SendStateTransitionFactory.initialize(el);
   }
 
   /**
@@ -85,6 +88,13 @@ export default class Modeler {
    */
   public get sstf() {
     return this._sstf;
+  }
+
+  /**
+   * Retries canvas [[SendStateTransitionFactory]] instance.
+   */
+  public get sstrf() {
+    return this._sstrf;
   }
 
   /**

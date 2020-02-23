@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, Shapes, Events, Errors } from '../variables';
+import { SVG_PREFIX, Shapes, Events, Errors, CustomEvents } from '../variables';
 import Canvas from './canvas';
 import { SubjectOptions, ElementToolsOptions } from '../types';
 import { createElementTools } from '../common/element-tools';
@@ -80,7 +80,7 @@ const humanElementToolsOptions: ElementToolsOptions = {
       x: 155,
       y: -13
     },
-    event: 'element:addMessage'
+    event: CustomEvents.ELEMENT_ADD_MESSAGE
   }
 };
 

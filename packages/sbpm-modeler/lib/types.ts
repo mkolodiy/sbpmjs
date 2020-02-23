@@ -92,3 +92,8 @@ export interface StateOptions {
   description: string;
   position: Coordinates;
 }
+
+export interface SendStateTransitionOptions {
+  source: joint.dia.Cell | Coordinates;
+  target: joint.dia.Cell | Coordinates;
+}

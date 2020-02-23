@@ -9,7 +9,9 @@ export enum Errors {
   INSTANCE_RETRIEVAL = 'Modeler is not initialized. Please use Modeler.initialize() method to create a new instance of the modeler.',
   INVALID_MODELER_OPTIONS = 'Please provide valid modeler options.',
   SStF_INSTANCE_RETRIEVAL = 'SendStateFactory is not initialized. Please use SendStateFactory.initialize() method to create a new instance of the factory.',
-  SStF_INITIALIZATION = 'SendStateFactory is already initialized. Please use SendStateFactory.getInstance() method to retrieve the factory instance.'
+  SStF_INITIALIZATION = 'SendStateFactory is already initialized. Please use SendStateFactory.getInstance() method to retrieve the factory instance.',
+  SSTF_INSTANCE_RETRIEVAL = 'SendStateTransitionFactory is not initialized. Please use SendStateTransitionFactory.initialize() method to create a new instance of the factory.',
+  SSTF_INITIALIZATION = 'SendStateTransitionFactory is already initialized. Please use SendStateTransitionFactory.getInstance() method to retrieve the factory instance.'
 }
 
 export enum ShapeNamespaces {
@@ -22,7 +24,8 @@ export enum Shapes {
   ORIGIN = 'sbpm.common.Origin',
   MESSAGE = 'sbpm.sid.Message',
   STANDARD_SUBJECT = 'sbpm.sid.StandardSubject',
-  SEND_STATE = 'sbpm.sbd.SendState'
+  SEND_STATE = 'sbpm.sbd.SendState',
+  SEND_STATE_TRANSITION = 'sbpm.sbd.SendStateTransition'
 }
 
 export enum Events {
@@ -39,6 +42,7 @@ export enum Events {
 
 export enum CustomEvents {
   ELEMENT_ADD_MESSAGE = 'element:addMessage',
+  ELEMENT_ADD_SEND_STATE_TRANSITION = 'element:addSendTransition',
   LINK_REMOVE = 'link:remove',
   LINK_REMOVE_VERTICES = 'link:removeVertices'
 }
