@@ -48,7 +48,8 @@ export const createLabelBasedLinkTools = () => {
         height: 24,
         xAlignment: 52.5,
         yAlignment: -38,
-        event: CustomEvents.LINK_REMOVE
+        event: CustomEvents.LINK_REMOVE,
+        title: 'Remove element'
       }
     }
   };

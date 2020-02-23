@@ -88,8 +88,16 @@ export default class MessageFactory {
       ...messageDefaults,
       type: Shapes.MESSAGE
     });
-    messageModel.source(source);
-    messageModel.target(target);
+    messageModel.source(source, {
+      anchor: {
+        name: 'modelCenter'
+      }
+    });
+    messageModel.target(target, {
+      anchor: {
+        name: 'modelCenter'
+      }
+    });
 
     this.addIconLabel(messageModel);
     messageModel.addTo(graph);
