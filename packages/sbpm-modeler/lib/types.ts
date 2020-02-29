@@ -97,3 +97,14 @@ export interface SendStateTransitionOptions {
   source: joint.dia.Cell | Coordinates;
   target: joint.dia.Cell | Coordinates;
 }
+
+export interface ISingleton {
+  instance: unknown;
+  initialize: () => unknown;
+  getInstance: () => unknown;
+}
+
+export interface ILinkOptions {
+  source: joint.dia.Cell | Coordinates;
+  target: joint.dia.Cell | Coordinates;
+}
