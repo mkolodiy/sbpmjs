@@ -1,6 +1,10 @@
 import * as joint from 'jointjs';
 import Canvas from '../elements/canvas';
-import { ILinkOptions, MessageOptions } from '../types';
+import {
+  ILinkOptions,
+  MessageOptions,
+  ILabelBasedLinkToolsOptions
+} from '../types';
 import { Shapes, Events, CustomEvents } from '../variables';
 import { combineStrings } from '../common/utils';
 import {
@@ -18,16 +22,18 @@ export default abstract class LinkFactory {
   private canvas: Canvas;
   private link: joint.dia.Link;
   private drawConnection: boolean;
+  private type: Shapes;
 
   public add(options: ILinkOptions): joint.dia.Link {
     this.link = this.create(options);
     return this.link;
   }
 
-  constructor(container: Element, customEvent: string) {
+  constructor(container: Element, type: Shapes, customEvent: string) {
     this.canvas = Canvas.getInstance();
     this.link = null;
     this.drawConnection = false;
+    this.type = type;
     this.registerEvents(container, customEvent);
   }
 
@@ -42,8 +48,8 @@ export default abstract class LinkFactory {
     const { source, target } = options;
 
     const linkModel = new joint.shapes.standard.Link({
-      ...this.getDefaults(),
-      type: Shapes.MESSAGE
+      ...this.getLinkDefaults(),
+      type: this.type
     });
     linkModel.source(source, anchorDefaults);
     linkModel.target(target, anchorDefaults);
@@ -85,7 +91,7 @@ export default abstract class LinkFactory {
     const { model } = view;
     const { type } = model.attributes;
 
-    if (type === Shapes.MESSAGE) {
+    if (type === this.type) {
       view.showTools();
       this.addLabelBasedTools(model);
       this.link = model;
@@ -188,7 +194,10 @@ export default abstract class LinkFactory {
    * @param model Jointjs model of a link.
    */
   private addLabelBasedTools(model: joint.dia.Link) {
-    const tools = createLabelBasedLinkTools();
+    console.log('add');
+    const tools = createLabelBasedLinkTools(
+      this.getLabelBasedLinkToolsDefaults()
+    );
     tools.forEach((label: joint.dia.Link.Label, i: number) =>
       model.insertLabel(i + 1, label)
     );
@@ -213,7 +222,7 @@ export default abstract class LinkFactory {
   /**
    * Returns default options needed for the creation of the link.
    */
-  protected abstract getDefaults(): {};
+  protected abstract getLinkDefaults(): {};
 
   /**
    * Adds send state transition icon as a label.
@@ -221,4 +230,9 @@ export default abstract class LinkFactory {
    * @param model Jointjs model of the link.
    */
   protected abstract addIconLabel(model: joint.shapes.standard.Link): void;
+
+  /**
+   * Returns default options needed for the creation of label based link tools.
+   */
+  protected abstract getLabelBasedLinkToolsDefaults(): ILabelBasedLinkToolsOptions;
 }

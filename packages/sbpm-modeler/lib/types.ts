@@ -108,3 +108,13 @@ export interface ILinkOptions {
   source: joint.dia.Cell | Coordinates;
   target: joint.dia.Cell | Coordinates;
 }
+
+interface IGenericOptions {
+  [key: string]: any;
+}
+
+export interface ILabelBasedLinkToolsOptions {
+  selectionLabelOptions: IGenericOptions;
+  removeLabelOptions: IGenericOptions;
+  removeVerticesLabelOptions: IGenericOptions;
+}

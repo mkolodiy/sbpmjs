@@ -1,7 +1,8 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, Errors, CustomEvents } from '../variables';
+import { SVG_PREFIX, Errors, CustomEvents, Shapes } from '../variables';
 import LinkFactory from '../factories/link-factory';
+import { ILabelBasedLinkToolsOptions } from '../types';
 
 /**
  * Default options used to create a message.
@@ -11,6 +12,21 @@ const messageDefaults = {
     wrapper: {
       pointerEvents: 'none'
     }
+  }
+};
+
+const labelBasedLinkToolsDefaults: ILabelBasedLinkToolsOptions = {
+  selectionLabelOptions: {
+    width: 100,
+    height: 70
+  },
+  removeLabelOptions: {
+    xAlignment: 52.5,
+    yAlignment: -40
+  },
+  removeVerticesLabelOptions: {
+    xAlignment: 77.5,
+    yAlignment: -40
   }
 };
 
@@ -48,10 +64,10 @@ export default class MessageFactory extends LinkFactory {
   }
 
   private constructor(container: Element) {
-    super(container, CustomEvents.ELEMENT_ADD_MESSAGE);
+    super(container, Shapes.MESSAGE, CustomEvents.ELEMENT_ADD_MESSAGE);
   }
 
-  protected getDefaults(): {} {
+  protected getLinkDefaults(): {} {
     return messageDefaults;
   }
 
@@ -81,6 +97,10 @@ export default class MessageFactory extends LinkFactory {
     };
 
     model.insertLabel(0, iconLabel);
+  }
+
+  protected getLabelBasedLinkToolsDefaults(): ILabelBasedLinkToolsOptions {
+    return labelBasedLinkToolsDefaults;
   }
 
   /**
