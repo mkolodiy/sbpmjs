@@ -1,4 +1,8 @@
-import { addSubject, getInputValueFromForm } from '../common';
+import {
+  addSubject,
+  getInputValueFromForm,
+  getInputCheckedFromForm
+} from '../common';
 
 export const subjectComponent = () => {
   const form = document.querySelector('.subject-form');
@@ -7,6 +11,7 @@ export const subjectComponent = () => {
     const positionX = getInputValueFromForm(form, 'positionX');
     const positionY = getInputValueFromForm(form, 'positionY');
     const description = getInputValueFromForm(form, 'description');
-    addSubject(positionX, positionY, description);
+    const multiple = getInputCheckedFromForm(form, 'multiple');
+    addSubject(positionX, positionY, description, multiple);
   });
 };
