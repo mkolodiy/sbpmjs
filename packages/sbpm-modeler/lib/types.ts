@@ -26,24 +26,27 @@ export interface Coordinates {
   y: number;
 }
 
+export interface IElementOptions extends IGenericOptions {
+  /**
+   * Defines description that will be shown besides the icon of the element.
+   */
+  description: string;
+  /**
+   * Defines position on the canvas where the element should be added at.
+   */
+  position: Coordinates;
+}
+
 /**
  * Representation of the options for the creation of a subject.
  */
-export interface SubjectOptions {
+export interface SubjectOptions extends IElementOptions {
   /**
    * Defines if a subject is of type machine or human. Is need to display different icons.
    *
    * @default false
    */
-  machine?: boolean;
-  /**
-   * Defines description that will be shown besides the icon of the subject.
-   */
-  description: string;
-  /**
-   * Defines position on the canvas where the subject should be added at.
-   */
-  position: Coordinates;
+  isMachine?: boolean;
 }
 
 /**
@@ -109,7 +112,7 @@ export interface ILinkOptions {
   target: joint.dia.Cell | Coordinates;
 }
 
-interface IGenericOptions {
+export interface IGenericOptions {
   [key: string]: any;
 }
 

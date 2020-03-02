@@ -4,6 +4,7 @@ import { SVG_PREFIX, Shapes, Events, Errors, CustomEvents } from '../variables';
 import Canvas from './canvas';
 import { SubjectOptions, ElementToolsOptions } from '../types';
 import { createElementTools } from '../common/element-tools';
+import ElementFactory from '../factories/element-factory';
 
 /**
  * Default options used to create a new human subject.
@@ -108,9 +109,8 @@ const machineElementToolsOptions: ElementToolsOptions = {
   }
 };
 
-export default class StandardSubjectFactory {
-  private static _instance: StandardSubjectFactory;
-  private _canvas: Canvas;
+export default class StandardSubjectFactory extends ElementFactory {
+  private static instance: StandardSubjectFactory;
 
   /**
    * Creates a new [[StandardSubjectFactory]] instance.
@@ -119,9 +119,9 @@ export default class StandardSubjectFactory {
    * @throws Error when the [[StandardSubjectFactory]] instance is already initialized.
    */
   public static initialize(): StandardSubjectFactory {
-    if (!StandardSubjectFactory._instance) {
-      StandardSubjectFactory._instance = new StandardSubjectFactory();
-      return StandardSubjectFactory._instance;
+    if (!StandardSubjectFactory.instance) {
+      StandardSubjectFactory.instance = new StandardSubjectFactory();
+      return StandardSubjectFactory.instance;
     }
 
     throw new Error(Errors.SSF_INITIALIZATION);
@@ -134,11 +134,11 @@ export default class StandardSubjectFactory {
    * @throws Error when the [[StandardSubjectFactory]] instance is not initialized.
    */
   public static getInstance(): StandardSubjectFactory {
-    if (!StandardSubjectFactory._instance) {
+    if (!StandardSubjectFactory.instance) {
       throw new Error(Errors.SSF_INSTANCE_RETRIEVAL);
     }
 
-    return StandardSubjectFactory._instance;
+    return StandardSubjectFactory.instance;
   }
 
   /**
@@ -148,7 +148,7 @@ export default class StandardSubjectFactory {
    * @returns A new subject object.
    */
   public add(options: SubjectOptions) {
-    const { graph } = this._canvas;
+    const { graph } = this.canvas;
     return this.create(options).addTo(graph);
   }
 
@@ -159,44 +159,34 @@ export default class StandardSubjectFactory {
    * @returns A new subject object.
    */
   public create(options: SubjectOptions) {
-    const { description, position, machine } = options;
-    const defaults = this.getDefaults(machine);
-    const icon = this.getIcon(machine);
+    const { isMachine = false } = options;
 
-    const standardSubject = new joint.shapes.basic.Image({
-      ...defaults,
+    const standardSubject = this.createInternal({
+      ...this.getDefaults(isMachine),
+      ...options,
       type: Shapes.STANDARD_SUBJECT,
-      isMachine: Boolean(machine)
+      isMachine
     });
 
-    standardSubject.position(position.x, position.y);
-    standardSubject.attr('image/xlinkHref', icon);
-    standardSubject.attr('text/textWrap/text', description);
+    standardSubject.attr('image/xlinkHref', this.getIcon(isMachine));
 
     return standardSubject;
   }
 
-  constructor() {
-    this._canvas = Canvas.getInstance();
-    this.registerEvents();
+  private constructor() {
+    super();
   }
 
-  /**
-   * Registers all necessary events needed for the interaction with a subject.
-   */
-  private registerEvents() {
-    const { paper } = this._canvas;
-    paper.on(Events.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
-      const { type, isMachine } = cellView.model.attributes;
+  protected onElementPointerDown(cellView: joint.dia.CellView): void {
+    const { type, isMachine } = cellView.model.attributes;
 
-      if (type === Shapes.STANDARD_SUBJECT && !isMachine) {
-        cellView.addTools(createElementTools(humanElementToolsOptions));
-      }
+    if (type === Shapes.STANDARD_SUBJECT && !isMachine) {
+      cellView.addTools(createElementTools(humanElementToolsOptions));
+    }
 
-      if (type === Shapes.STANDARD_SUBJECT && isMachine) {
-        cellView.addTools(createElementTools(machineElementToolsOptions));
-      }
-    });
+    if (type === Shapes.STANDARD_SUBJECT && isMachine) {
+      cellView.addTools(createElementTools(machineElementToolsOptions));
+    }
   }
 
   /**
@@ -205,7 +195,7 @@ export default class StandardSubjectFactory {
    * @param machine Defines if a subject is human or machine.
    * @returns Object with subject defaults.
    */
-  private getDefaults(machine: boolean) {
+  protected getDefaults(machine: boolean) {
     return machine ? machineSubjectDefaults : humanSubjectDefaults;
   }
 
@@ -215,7 +205,7 @@ export default class StandardSubjectFactory {
    * @param machine Defines if a subject is human or machine.
    * @returns SVG icon.
    */
-  private getIcon(machine: boolean) {
+  protected getIcon(machine: boolean) {
     return machine ? this.machineSubjectIcon() : this.humanSubjectIcon();
   }
 

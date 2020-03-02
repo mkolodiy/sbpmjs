@@ -28,14 +28,14 @@ messageComponent();
 //   }
 // });
 
-// const sub2 = modeler.addStandardSubject({
-//   description:
-//     'Standard subject human Standard subject human Standard subject human',
-//   position: {
-//     x: 200,
-//     y: 500
-//   }
-// });
+const sub2 = modeler.addStandardSubject({
+  description:
+    'Standard subject human Standard subject human Standard subject human',
+  position: {
+    x: 200,
+    y: 500
+  }
+});
 
 // modeler.sstrf.add({
 //   source: sst1,

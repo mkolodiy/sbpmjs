@@ -20,7 +20,7 @@ export const addSubject = (
       x: Number(positionX),
       y: Number(positionY)
     },
-    machine
+    isMachine: machine
   });
 };
 
