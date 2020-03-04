@@ -1,6 +1,6 @@
 {
   "name": "@sbpmjs/modeler",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "A library for modeling SBPM processes.",
   "keywords": [
     "sbpm",
@@ -67,6 +67,5 @@
     "@types/lodash": "^4.14.149",
     "jointjs": "^3.1.1",
     "lodash": "^4.17.15"
-  },
-  "devDependencies": {}
+  }
 }
