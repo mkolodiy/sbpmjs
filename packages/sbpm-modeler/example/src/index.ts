@@ -20,24 +20,40 @@ document.addEventListener('DOMContentLoaded', function() {
 subjectComponent();
 messageComponent();
 
-// const sst1 = modeler.sstf.add({
-//   description: 'Send state',
-//   position: {
-//     x: 200,
-//     y: 100
-//   }
-// });
-
-const sub2 = modeler.addStandardSubject({
-  description:
-    'Standard subject human Standard subject human Standard subject human',
+const sst = modeler.sstf.add({
+  description: 'Send state',
   position: {
     x: 200,
-    y: 500
+    y: 100
   }
 });
+
+// const sub2 = modeler.addStandardSubject({
+//   description:
+//     'Standard subject human Standard subject human Standard subject human',
+//   position: {
+//     x: 200,
+//     y: 500
+//   }
+// });
 
 // modeler.sstrf.add({
 //   source: sst1,
 //   target: sub2
 // });
+
+const rsf = modeler.rsf.add({
+  description: 'Receive state',
+  position: {
+    x: 400,
+    y: 100
+  }
+});
+
+const fsf = modeler.fsf.add({
+  description: 'Function state',
+  position: {
+    x: 200,
+    y: 100
+  }
+});

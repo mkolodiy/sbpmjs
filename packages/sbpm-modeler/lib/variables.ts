@@ -25,7 +25,11 @@ export enum Shapes {
   MESSAGE = 'sbpm.sid.Message',
   STANDARD_SUBJECT = 'sbpm.sid.StandardSubject',
   SEND_STATE = 'sbpm.sbd.SendState',
-  SEND_STATE_TRANSITION = 'sbpm.sbd.SendStateTransition'
+  RECEIVE_STATE = 'sbpm.sbd.ReceiveState',
+  FUNCTION_STATE = 'sbpm.sbd.FunctionState',
+  SEND_STATE_TRANSITION = 'sbpm.sbd.SendStateTransition',
+  RECEIVE_STATE_TRANSITION = 'sbpm.sbd.ReceiveStateTransition',
+  FUNCTION_STATE_TRANSITION = 'sbpm.sbd.FunctionStateTransition'
 }
 
 export enum Events {
@@ -43,6 +47,8 @@ export enum Events {
 export enum CustomEvents {
   ELEMENT_ADD_MESSAGE = 'element:addMessage',
   ELEMENT_ADD_SEND_STATE_TRANSITION = 'element:addSendTransition',
+  ELEMENT_ADD_RECEIVE_STATE_TRANSITION = 'element:addReceiveTransition',
+  ELEMENT_ADD_FUNCTION_STATE_TRANSITION = 'element:addFunctionTransition',
   LINK_REMOVE = 'link:remove',
   LINK_REMOVE_VERTICES = 'link:removeVertices'
 }

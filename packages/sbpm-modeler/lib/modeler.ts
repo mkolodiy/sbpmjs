@@ -8,6 +8,10 @@ import StandardSubjectFactory from './elements/standard-subject-factory';
 import MessageFactory from './elements/message-factory';
 import SendStateFactory from './elements/send-state-factory';
 import SendStateTransitionFactory from './elements/send-state-transition-factory';
+import ReceiveStateFactory from './elements/receive-state-factory';
+import FunctionStateFactory from './elements/function-state-factory';
+import ReceiveStateTransitionFactory from './elements/receive-state-transition-factory';
+import FunctionStateTransitionFactory from './elements/function-state-transition-factory';
 
 export default class Modeler {
   private static _instance: Modeler;
@@ -15,7 +19,11 @@ export default class Modeler {
   private _ssf: StandardSubjectFactory;
   private _mf: MessageFactory;
   private _sstf: SendStateFactory;
+  private _rsf: ReceiveStateFactory;
+  private _fsf: FunctionStateFactory;
   private _sstrf: SendStateTransitionFactory;
+  private _rstf: ReceiveStateTransitionFactory;
+  private _fstf: FunctionStateTransitionFactory;
 
   /**
    * Creates a new [[Modeler]] instance.
@@ -59,7 +67,11 @@ export default class Modeler {
     this._ssf = StandardSubjectFactory.initialize();
     this._mf = MessageFactory.initialize(el);
     this._sstf = SendStateFactory.initialize();
+    this._rsf = ReceiveStateFactory.initialize();
+    this._fsf = FunctionStateFactory.initialize();
     this._sstrf = SendStateTransitionFactory.initialize(el);
+    this._rstf = ReceiveStateTransitionFactory.initialize(el);
+    this._fstf = FunctionStateTransitionFactory.initialize(el);
   }
 
   /**
@@ -88,6 +100,20 @@ export default class Modeler {
    */
   public get sstf() {
     return this._sstf;
+  }
+
+  /**
+   * TODO
+   */
+  public get rsf() {
+    return this._rsf;
+  }
+
+  /**
+   * TOD
+   */
+  public get fsf() {
+    return this._fsf;
   }
 
   /**
