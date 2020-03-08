@@ -5,7 +5,7 @@ import {
   MessageOptions,
   ILabelBasedLinkToolsOptions
 } from '../types';
-import { Shapes, Events, CustomEvents } from '../variables';
+import { Shapes, Events, CustomEvents } from '../constans';
 import { combineStrings } from '../common/utils';
 import {
   createLinkTools,

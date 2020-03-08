@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, Errors, CustomEvents, Shapes } from '../variables';
+import { SVG_PREFIX, Errors, CustomEvents, Shapes } from '../constans';
 import LinkFactory from '../factories/link-factory';
 import { ILabelBasedLinkToolsOptions } from '../types';
 

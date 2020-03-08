@@ -2,7 +2,7 @@ import * as joint from 'jointjs';
 
 import Canvas from '../elements/canvas';
 import { IElementOptions, IGenericOptions } from '../types';
-import { Events, Shapes } from '../variables';
+import { Events, Shapes } from '../constans';
 
 export default abstract class ElementFactory {
   protected canvas: Canvas;

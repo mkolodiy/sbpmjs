@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, Shapes, Events, Errors, CustomEvents } from '../variables';
+import { SVG_PREFIX, Shapes, Events, Errors, CustomEvents } from '../constans';
 import Canvas from './canvas';
 import { StateOptions, ElementToolsOptions } from '../types';
 import { createElementTools } from '../common/element-tools';
@@ -10,20 +10,20 @@ import { createElementTools } from '../common/element-tools';
  */
 const defaults = {
   size: {
-    width: 90,
-    height: 140
+    width: 140,
+    height: 95
   },
   attrs: {
     image: {
-      width: 90,
-      height: 140,
+      width: 140,
+      height: 95,
       cursor: 'pointer'
     },
     text: {
       textWrap: {
         width: 150
       },
-      xAlignment: 65,
+      xAlignment: 90,
       yAlignment: -80,
       pointerEvents: 'none',
       fontWeight: 'bold',
@@ -38,50 +38,50 @@ const defaults = {
 const toolsDefaults: ElementToolsOptions = {
   removeButtonOptions: {
     coordinates: {
-      x: 105,
+      x: 155,
       y: -13
     }
   },
   linkButtonOptions: {
     coordinates: {
-      x: 130,
+      x: 180,
       y: -13
     },
-    event: CustomEvents.ELEMENT_ADD_FUNCTION_STATE_TRANSITION
+    event: CustomEvents.ELEMENT_ADD_RECEIVE_STATE_TRANSITION
   }
 };
 
-export default class FunctionStateFactory {
-  private static _instance: FunctionStateFactory;
+export default class ReceiveStateFactory {
+  private static _instance: ReceiveStateFactory;
   private _canvas: Canvas;
 
   /**
-   * Creates a new [[FunctionStateFactory]] instance.
+   * Creates a new [[ReceiveStateFactory]] instance.
    *
-   * @returns [[FunctionStateFactory]] instance.
-   * @throws Error when the [[FunctionStateFactory]] instance is already initialized.
+   * @returns [[ReceiveStateFactory]] instance.
+   * @throws Error when the [[ReceiveStateFactory]] instance is already initialized.
    */
-  public static initialize(): FunctionStateFactory {
-    if (!FunctionStateFactory._instance) {
-      FunctionStateFactory._instance = new FunctionStateFactory();
-      return FunctionStateFactory._instance;
+  public static initialize(): ReceiveStateFactory {
+    if (!ReceiveStateFactory._instance) {
+      ReceiveStateFactory._instance = new ReceiveStateFactory();
+      return ReceiveStateFactory._instance;
     }
 
     throw new Error(Errors.SStF_INITIALIZATION);
   }
 
   /**
-   * Retrieves the [[FunctionStateFactory]] instance.
+   * Retrieves the [[ReceiveStateFactory]] instance.
    *
-   * @returns [[FunctionStateFactory]] instance.
-   * @throws Error when the [[FunctionStateFactory]] instance is not initialized.
+   * @returns [[ReceiveStateFactory]] instance.
+   * @throws Error when the [[ReceiveStateFactory]] instance is not initialized.
    */
-  public static getInstance(): FunctionStateFactory {
-    if (!FunctionStateFactory._instance) {
+  public static getInstance(): ReceiveStateFactory {
+    if (!ReceiveStateFactory._instance) {
       throw new Error(Errors.SStF_INSTANCE_RETRIEVAL);
     }
 
-    return FunctionStateFactory._instance;
+    return ReceiveStateFactory._instance;
   }
 
   /**
@@ -106,7 +106,7 @@ export default class FunctionStateFactory {
 
     const sendState = new joint.shapes.basic.Image({
       ...defaults,
-      type: Shapes.FUNCTION_STATE
+      type: Shapes.RECEIVE_STATE
     });
 
     sendState.position(position.x, position.y);
@@ -129,7 +129,7 @@ export default class FunctionStateFactory {
     paper.on(Events.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
       const { type } = cellView.model.attributes;
 
-      if (type === Shapes.FUNCTION_STATE) {
+      if (type === Shapes.RECEIVE_STATE) {
         cellView.addTools(createElementTools(toolsDefaults));
       }
     });
@@ -148,9 +148,9 @@ export default class FunctionStateFactory {
        xmlns="http://www.w3.org/2000/svg"
        id="svg8"
        version="1.1"
-       viewBox="0 0 261.8359 407.50195"
-       height="407.50195mm"
-       width="261.83591mm">
+       viewBox="0 0 384.00704 242.80513"
+       height="242.80513mm"
+       width="384.00705mm">
       <defs
          id="defs2" />
       <metadata
@@ -166,7 +166,7 @@ export default class FunctionStateFactory {
         </rdf:RDF>
       </metadata>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          style="display:none"
          id="layer4">
         <g
@@ -278,7 +278,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          id="layer15">
         <g
            transform="translate(-11.910411,-17.946055)"
@@ -313,7 +313,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          id="layer16">
         <g
            id="g1408">
@@ -431,7 +431,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          id="layer14">
         <path
            id="rect1161"
@@ -439,7 +439,7 @@ export default class FunctionStateFactory {
            style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#b3b3b3;stroke-width:10;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          id="layer13">
         <g
            transform="translate(-20.653077,-452.6035)"
@@ -561,7 +561,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          id="layer12">
         <g
            id="g1746"
@@ -640,7 +640,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          id="layer11">
         <g
            id="g1618"
@@ -671,7 +671,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          id="layer10">
         <g
            transform="translate(-3441.6999,-503.76665)"
@@ -702,7 +702,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          id="layer18">
         <g
            transform="translate(-3445.2827,-503.91183)"
@@ -763,7 +763,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          id="g2259"
          style="opacity:1">
         <g
@@ -807,7 +807,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          style="opacity:1"
          id="layer9">
         <g
@@ -832,7 +832,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          style="display:inline"
          id="layer8">
         <g
@@ -1174,7 +1174,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          id="layer17">
         <g
            id="g2503">
@@ -1452,7 +1452,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          style="display:inline"
          id="layer7">
         <g
@@ -1562,7 +1562,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          id="layer6">
         <g
            transform="translate(-3441.6999,-503.76665)"
@@ -1620,7 +1620,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          id="layer5">
         <g
            transform="translate(-3441.6999,-503.76665)"
@@ -1742,7 +1742,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          id="layer2">
         <g
            transform="translate(-3441.6999,-503.76665)"
@@ -1859,7 +1859,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          style="display:inline"
          id="layer1">
         <g
@@ -1943,7 +1943,7 @@ export default class FunctionStateFactory {
         </g>
       </g>
       <g
-         transform="translate(3652.9848,-204.95184)"
+         transform="translate(4429.5701,-1185.2474)"
          style="display:inline;opacity:1"
          id="layer3">
         <g

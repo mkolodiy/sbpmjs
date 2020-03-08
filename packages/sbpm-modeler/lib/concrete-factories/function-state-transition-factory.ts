@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import { Errors, CustomEvents, Shapes } from '../variables';
+import { Errors, CustomEvents, Shapes } from '../constans';
 import LinkFactory from '../factories/link-factory';
 import { ILabelBasedLinkToolsOptions } from '../types';
 
@@ -30,46 +30,46 @@ const labelBasedLinkToolsDefaults: ILabelBasedLinkToolsOptions = {
   }
 };
 
-export default class SendStateTransitionFactory extends LinkFactory {
-  private static _instance: SendStateTransitionFactory;
+export default class FunctionStateTransitionFactory extends LinkFactory {
+  private static _instance: FunctionStateTransitionFactory;
 
   /**
-   * Creates a new [[SendStateTransitionFactory]] instance.
+   * Creates a new [[FunctionStateTransitionFactory]] instance.
    *
    * @param container HTML element where the canvas will be rendered.
-   * @returns [[SendStateTransitionFactory]] instance.
-   * @throws Error when the [[SendStateTransitionFactory]] instance is already initialized.
+   * @returns [[FunctionStateTransitionFactory]] instance.
+   * @throws Error when the [[FunctionStateTransitionFactory]] instance is already initialized.
    */
-  public static initialize(container: Element): SendStateTransitionFactory {
-    if (!SendStateTransitionFactory._instance) {
-      SendStateTransitionFactory._instance = new SendStateTransitionFactory(
+  public static initialize(container: Element): FunctionStateTransitionFactory {
+    if (!FunctionStateTransitionFactory._instance) {
+      FunctionStateTransitionFactory._instance = new FunctionStateTransitionFactory(
         container
       );
-      return SendStateTransitionFactory._instance;
+      return FunctionStateTransitionFactory._instance;
     }
 
     throw new Error(Errors.SSTF_INITIALIZATION);
   }
 
   /**
-   * Retrieves the [[SendStateTransitionFactory]] instance.
+   * Retrieves the [[FunctionStateTransitionFactory]] instance.
    *
-   * @returns [[SendStateTransitionFactory]] instance.
-   * @throws Error when the [[SendStateTransitionFactory]] instance is not initialized.
+   * @returns [[FunctionStateTransitionFactory]] instance.
+   * @throws Error when the [[FunctionStateTransitionFactory]] instance is not initialized.
    */
-  public static getInstance(): SendStateTransitionFactory {
-    if (!SendStateTransitionFactory._instance) {
+  public static getInstance(): FunctionStateTransitionFactory {
+    if (!FunctionStateTransitionFactory._instance) {
       throw new Error(Errors.SSTF_INSTANCE_RETRIEVAL);
     }
 
-    return SendStateTransitionFactory._instance;
+    return FunctionStateTransitionFactory._instance;
   }
 
   private constructor(container: Element) {
     super(
       container,
-      Shapes.SEND_STATE_TRANSITION,
-      CustomEvents.ELEMENT_ADD_SEND_STATE_TRANSITION
+      Shapes.FUNCTION_STATE_TRANSITION,
+      CustomEvents.ELEMENT_ADD_FUNCTION_STATE_TRANSITION
     );
   }
 

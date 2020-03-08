@@ -1,7 +1,7 @@
 import '../node_modules/jointjs/dist/joint.min.css';
 
 import { ModelerOptions, SubjectOptions } from './types';
-import { Errors } from './variables';
+import { Errors } from './constans';
 import { isValidObject } from './common/utils';
 import Canvas from './elements/canvas';
 import StandardSubjectFactory from './elements/standard-subject-factory';

@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, Shapes, Events, Errors, CustomEvents } from '../variables';
+import { SVG_PREFIX, Shapes, Events, Errors, CustomEvents } from '../constans';
 import Canvas from './canvas';
 import { StateOptions, ElementToolsOptions } from '../types';
 import { createElementTools } from '../common/element-tools';
@@ -8,22 +8,22 @@ import { createElementTools } from '../common/element-tools';
 /**
  * Default options used to create a new human send state.
  */
-const sendStateDefaults = {
+const defaults = {
   size: {
-    width: 140,
-    height: 95
+    width: 90,
+    height: 140
   },
   attrs: {
     image: {
-      width: 140,
-      height: 95,
+      width: 90,
+      height: 140,
       cursor: 'pointer'
     },
     text: {
       textWrap: {
         width: 150
       },
-      xAlignment: 90,
+      xAlignment: 65,
       yAlignment: -80,
       pointerEvents: 'none',
       fontWeight: 'bold',
@@ -35,53 +35,53 @@ const sendStateDefaults = {
 /**
  * Options used to create element tools for a machine send state.
  */
-const sendStateToolsOptions: ElementToolsOptions = {
+const toolsDefaults: ElementToolsOptions = {
   removeButtonOptions: {
     coordinates: {
-      x: 155,
+      x: 105,
       y: -13
     }
   },
   linkButtonOptions: {
     coordinates: {
-      x: 180,
+      x: 130,
       y: -13
     },
-    event: CustomEvents.ELEMENT_ADD_SEND_STATE_TRANSITION
+    event: CustomEvents.ELEMENT_ADD_FUNCTION_STATE_TRANSITION
   }
 };
 
-export default class SendStateFactory {
-  private static _instance: SendStateFactory;
+export default class FunctionStateFactory {
+  private static _instance: FunctionStateFactory;
   private _canvas: Canvas;
 
   /**
-   * Creates a new [[SendStateFactory]] instance.
+   * Creates a new [[FunctionStateFactory]] instance.
    *
-   * @returns [[SendStateFactory]] instance.
-   * @throws Error when the [[SendStateFactory]] instance is already initialized.
+   * @returns [[FunctionStateFactory]] instance.
+   * @throws Error when the [[FunctionStateFactory]] instance is already initialized.
    */
-  public static initialize(): SendStateFactory {
-    if (!SendStateFactory._instance) {
-      SendStateFactory._instance = new SendStateFactory();
-      return SendStateFactory._instance;
+  public static initialize(): FunctionStateFactory {
+    if (!FunctionStateFactory._instance) {
+      FunctionStateFactory._instance = new FunctionStateFactory();
+      return FunctionStateFactory._instance;
     }
 
     throw new Error(Errors.SStF_INITIALIZATION);
   }
 
   /**
-   * Retrieves the [[SendStateFactory]] instance.
+   * Retrieves the [[FunctionStateFactory]] instance.
    *
-   * @returns [[SendStateFactory]] instance.
-   * @throws Error when the [[SendStateFactory]] instance is not initialized.
+   * @returns [[FunctionStateFactory]] instance.
+   * @throws Error when the [[FunctionStateFactory]] instance is not initialized.
    */
-  public static getInstance(): SendStateFactory {
-    if (!SendStateFactory._instance) {
+  public static getInstance(): FunctionStateFactory {
+    if (!FunctionStateFactory._instance) {
       throw new Error(Errors.SStF_INSTANCE_RETRIEVAL);
     }
 
-    return SendStateFactory._instance;
+    return FunctionStateFactory._instance;
   }
 
   /**
@@ -105,8 +105,8 @@ export default class SendStateFactory {
     const { description, position } = options;
 
     const sendState = new joint.shapes.basic.Image({
-      ...sendStateDefaults,
-      type: Shapes.SEND_STATE
+      ...defaults,
+      type: Shapes.FUNCTION_STATE
     });
 
     sendState.position(position.x, position.y);
@@ -129,8 +129,8 @@ export default class SendStateFactory {
     paper.on(Events.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
       const { type } = cellView.model.attributes;
 
-      if (type === Shapes.SEND_STATE) {
-        cellView.addTools(createElementTools(sendStateToolsOptions));
+      if (type === Shapes.FUNCTION_STATE) {
+        cellView.addTools(createElementTools(toolsDefaults));
       }
     });
   }
@@ -148,9 +148,9 @@ export default class SendStateFactory {
        xmlns="http://www.w3.org/2000/svg"
        id="svg8"
        version="1.1"
-       viewBox="0 0 384.00707 242.80508"
-       height="242.80508mm"
-       width="384.00708mm">
+       viewBox="0 0 261.8359 407.50195"
+       height="407.50195mm"
+       width="261.83591mm">
       <defs
          id="defs2" />
       <metadata
@@ -166,7 +166,7 @@ export default class SendStateFactory {
         </rdf:RDF>
       </metadata>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          style="display:none"
          id="layer4">
         <g
@@ -278,7 +278,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          id="layer15">
         <g
            transform="translate(-11.910411,-17.946055)"
@@ -313,7 +313,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          id="layer16">
         <g
            id="g1408">
@@ -431,7 +431,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          id="layer14">
         <path
            id="rect1161"
@@ -439,7 +439,7 @@ export default class SendStateFactory {
            style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#b3b3b3;stroke-width:10;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          id="layer13">
         <g
            transform="translate(-20.653077,-452.6035)"
@@ -561,7 +561,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          id="layer12">
         <g
            id="g1746"
@@ -640,7 +640,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          id="layer11">
         <g
            id="g1618"
@@ -671,7 +671,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          id="layer10">
         <g
            transform="translate(-3441.6999,-503.76665)"
@@ -702,7 +702,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          id="layer18">
         <g
            transform="translate(-3445.2827,-503.91183)"
@@ -763,7 +763,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          id="g2259"
          style="opacity:1">
         <g
@@ -807,7 +807,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          style="opacity:1"
          id="layer9">
         <g
@@ -832,7 +832,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          style="display:inline"
          id="layer8">
         <g
@@ -1174,7 +1174,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          id="layer17">
         <g
            id="g2503">
@@ -1452,7 +1452,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          style="display:inline"
          id="layer7">
         <g
@@ -1562,7 +1562,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          id="layer6">
         <g
            transform="translate(-3441.6999,-503.76665)"
@@ -1620,7 +1620,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          id="layer5">
         <g
            transform="translate(-3441.6999,-503.76665)"
@@ -1742,7 +1742,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          id="layer2">
         <g
            transform="translate(-3441.6999,-503.76665)"
@@ -1859,7 +1859,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          style="display:inline"
          id="layer1">
         <g
@@ -1943,7 +1943,7 @@ export default class SendStateFactory {
         </g>
       </g>
       <g
-         transform="translate(4453.4708,-814.95294)"
+         transform="translate(3652.9848,-204.95184)"
          style="display:inline;opacity:1"
          id="layer3">
         <g

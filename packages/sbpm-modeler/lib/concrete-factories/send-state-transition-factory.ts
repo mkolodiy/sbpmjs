@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import { Errors, CustomEvents, Shapes } from '../variables';
+import { Errors, CustomEvents, Shapes } from '../constans';
 import LinkFactory from '../factories/link-factory';
 import { ILabelBasedLinkToolsOptions } from '../types';
 
@@ -30,46 +30,46 @@ const labelBasedLinkToolsDefaults: ILabelBasedLinkToolsOptions = {
   }
 };
 
-export default class ReceiveStateTransitionFactory extends LinkFactory {
-  private static _instance: ReceiveStateTransitionFactory;
+export default class SendStateTransitionFactory extends LinkFactory {
+  private static _instance: SendStateTransitionFactory;
 
   /**
-   * Creates a new [[ReceiveStateTransitionFactory]] instance.
+   * Creates a new [[SendStateTransitionFactory]] instance.
    *
    * @param container HTML element where the canvas will be rendered.
-   * @returns [[ReceiveStateTransitionFactory]] instance.
-   * @throws Error when the [[ReceiveStateTransitionFactory]] instance is already initialized.
+   * @returns [[SendStateTransitionFactory]] instance.
+   * @throws Error when the [[SendStateTransitionFactory]] instance is already initialized.
    */
-  public static initialize(container: Element): ReceiveStateTransitionFactory {
-    if (!ReceiveStateTransitionFactory._instance) {
-      ReceiveStateTransitionFactory._instance = new ReceiveStateTransitionFactory(
+  public static initialize(container: Element): SendStateTransitionFactory {
+    if (!SendStateTransitionFactory._instance) {
+      SendStateTransitionFactory._instance = new SendStateTransitionFactory(
         container
       );
-      return ReceiveStateTransitionFactory._instance;
+      return SendStateTransitionFactory._instance;
     }
 
     throw new Error(Errors.SSTF_INITIALIZATION);
   }
 
   /**
-   * Retrieves the [[ReceiveStateTransitionFactory]] instance.
+   * Retrieves the [[SendStateTransitionFactory]] instance.
    *
-   * @returns [[ReceiveStateTransitionFactory]] instance.
-   * @throws Error when the [[ReceiveStateTransitionFactory]] instance is not initialized.
+   * @returns [[SendStateTransitionFactory]] instance.
+   * @throws Error when the [[SendStateTransitionFactory]] instance is not initialized.
    */
-  public static getInstance(): ReceiveStateTransitionFactory {
-    if (!ReceiveStateTransitionFactory._instance) {
+  public static getInstance(): SendStateTransitionFactory {
+    if (!SendStateTransitionFactory._instance) {
       throw new Error(Errors.SSTF_INSTANCE_RETRIEVAL);
     }
 
-    return ReceiveStateTransitionFactory._instance;
+    return SendStateTransitionFactory._instance;
   }
 
   private constructor(container: Element) {
     super(
       container,
-      Shapes.RECEIVE_STATE_TRANSITION,
-      CustomEvents.ELEMENT_ADD_RECEIVE_STATE_TRANSITION
+      Shapes.SEND_STATE_TRANSITION,
+      CustomEvents.ELEMENT_ADD_SEND_STATE_TRANSITION
     );
   }
 

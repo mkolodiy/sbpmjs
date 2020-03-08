@@ -1,4 +1,5 @@
 import { isPlainObject, isEmpty } from 'lodash';
+import { SVG_PREFIX } from '../constans';
 
 /**
  * Checks if a value is an object and if it has values in it.
@@ -17,4 +18,8 @@ export const isValidObject = (obj: any) => {
  */
 export const combineStrings = (strings: string[], separator: string = ' ') => {
   return strings.join(' ');
+};
+
+export const createIcon = (template: string) => {
+  return `${SVG_PREFIX}${encodeURIComponent(template)}`;
 };
