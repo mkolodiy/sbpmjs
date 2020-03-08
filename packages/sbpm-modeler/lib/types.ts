@@ -1,15 +1,9 @@
-/**
- * Representation of the options for the modeler initialization.
- */
-export interface ModelerOptions {
-  /**
-   * Defines a HTML element for rendering the modeler.
-   */
-  el: Element;
-  /**
-   * Defines a router name. Possible values are: manhattan, metro, normal, orthogonal and oneSide.
-   */
-  routerName?: string;
+import { ShapeType } from './constants';
+
+/* COMMON TYPES */
+
+export interface GenericOptions {
+  [key: string]: any;
 }
 
 /**
@@ -26,7 +20,30 @@ export interface Coordinates {
   y: number;
 }
 
-export interface IElementOptions extends IGenericOptions {
+export interface ButtonOptions {
+  coordinates: Coordinates;
+  event?: string;
+}
+
+/* GENERAL TYPES */
+
+/**
+ * Representation of the options for the modeler initialization.
+ */
+export interface ModelerOptions {
+  /**
+   * Defines a HTML element for rendering the modeler.
+   */
+  el: Element;
+  /**
+   * Defines a router name. Possible values are: manhattan, metro, normal, orthogonal and oneSide.
+   */
+  routerName?: string;
+}
+
+/* ELEMENT TYPES*/
+
+export interface ElementOptions extends GenericOptions {
   /**
    * Defines description that will be shown besides the icon of the element.
    */
@@ -35,18 +52,6 @@ export interface IElementOptions extends IGenericOptions {
    * Defines position on the canvas where the element should be added at.
    */
   position: Coordinates;
-}
-
-/**
- * Representation of the options for the creation of a subject.
- */
-export interface SubjectOptions extends IElementOptions {
-  /**
-   * Defines if a subject is of type machine or human. Is need to display different icons.
-   *
-   * @default false
-   */
-  isMachine?: boolean;
 }
 
 /**
@@ -67,9 +72,40 @@ export interface ElementToolsOptions {
   linkButtonOptions?: ButtonOptions;
 }
 
-export interface ButtonOptions {
-  coordinates: Coordinates;
-  event?: string;
+export interface ElementCreationOptions<A> {
+  jointOptions: {};
+  options: A;
+  toolsOptions: ElementToolsOptions;
+  icon: string;
+  type: ShapeType;
+}
+
+/**
+ * Representation of the options for the creation of a subject.
+ */
+export interface SubjectOptions extends ElementOptions {
+  /**
+   * Defines which icon (human or machine) should be used for a subject.
+   *
+   * @default false
+   */
+  isMachine?: boolean;
+}
+
+/**
+ * Representation of the options for the creation of a state.
+ */
+export interface StateOptions extends ElementOptions {
+  startState?: boolean;
+  endState?: boolean;
+}
+
+/* LINK TYPES*/
+
+export interface LabelBasedLinkToolsOptions {
+  selectionLabelOptions: GenericOptions;
+  removeLabelOptions: GenericOptions;
+  removeVerticesLabelOptions: GenericOptions;
 }
 
 /**
@@ -86,38 +122,7 @@ export interface MessageOptions {
   target: joint.dia.Cell | Coordinates;
 }
 
-/**
- * Representation of the options for the creation of a state.
- */
-export interface StateOptions {
-  startState?: boolean;
-  endState?: boolean;
-  description: string;
-  position: Coordinates;
-}
-
-export interface SendStateTransitionOptions {
+export interface LinkOptions {
   source: joint.dia.Cell | Coordinates;
   target: joint.dia.Cell | Coordinates;
-}
-
-export interface ISingleton {
-  instance: unknown;
-  initialize: () => unknown;
-  getInstance: () => unknown;
-}
-
-export interface ILinkOptions {
-  source: joint.dia.Cell | Coordinates;
-  target: joint.dia.Cell | Coordinates;
-}
-
-export interface IGenericOptions {
-  [key: string]: any;
-}
-
-export interface ILabelBasedLinkToolsOptions {
-  selectionLabelOptions: IGenericOptions;
-  removeLabelOptions: IGenericOptions;
-  removeVerticesLabelOptions: IGenericOptions;
 }

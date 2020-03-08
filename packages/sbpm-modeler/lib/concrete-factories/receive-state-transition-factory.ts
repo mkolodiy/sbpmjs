@@ -1,8 +1,8 @@
 import * as joint from 'jointjs';
 
-import { Errors, CustomEvents, Shapes } from '../constants';
+import { Error, CustomEvent, ShapeType } from '../constants';
 import LinkFactory from '../factories/link-factory';
-import { ILabelBasedLinkToolsOptions } from '../types';
+import { LabelBasedLinkToolsOptions } from '../types';
 
 /**
  * Default options used to create a send state transition.
@@ -15,7 +15,7 @@ const sendStateTransitionDefaults = {
   }
 };
 
-const labelBasedLinkToolsDefaults: ILabelBasedLinkToolsOptions = {
+const labelBasedLinkToolsDefaults: LabelBasedLinkToolsOptions = {
   selectionLabelOptions: {
     width: 195,
     height: 75
@@ -48,7 +48,7 @@ export default class ReceiveStateTransitionFactory extends LinkFactory {
       return ReceiveStateTransitionFactory._instance;
     }
 
-    throw new Error(Errors.SSTF_INITIALIZATION);
+    throw new Error(Error.SSTF_INITIALIZATION);
   }
 
   /**
@@ -59,7 +59,7 @@ export default class ReceiveStateTransitionFactory extends LinkFactory {
    */
   public static getInstance(): ReceiveStateTransitionFactory {
     if (!ReceiveStateTransitionFactory._instance) {
-      throw new Error(Errors.SSTF_INSTANCE_RETRIEVAL);
+      throw new Error(Error.SSTF_INSTANCE_RETRIEVAL);
     }
 
     return ReceiveStateTransitionFactory._instance;
@@ -68,8 +68,8 @@ export default class ReceiveStateTransitionFactory extends LinkFactory {
   private constructor(container: Element) {
     super(
       container,
-      Shapes.RECEIVE_STATE_TRANSITION,
-      CustomEvents.ELEMENT_ADD_RECEIVE_STATE_TRANSITION
+      ShapeType.RECEIVE_STATE_TRANSITION,
+      CustomEvent.ELEMENT_ADD_RECEIVE_STATE_TRANSITION
     );
   }
 
@@ -155,7 +155,7 @@ export default class ReceiveStateTransitionFactory extends LinkFactory {
     model.insertLabel(0, iconLabel);
   }
 
-  protected getLabelBasedLinkToolsDefaults(): ILabelBasedLinkToolsOptions {
+  protected getLabelBasedLinkToolsDefaults(): LabelBasedLinkToolsOptions {
     return labelBasedLinkToolsDefaults;
   }
 }

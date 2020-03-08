@@ -1,7 +1,7 @@
 import * as joint from 'jointjs';
 import { deleteIcon, autoRenewIcon } from './icons';
-import { CustomEvents } from '../constants';
-import { ILabelBasedLinkToolsOptions } from '../types';
+import { CustomEvent } from '../constants';
+import { LabelBasedLinkToolsOptions } from '../types';
 
 /**
  * Creates link tools.
@@ -33,7 +33,7 @@ export const createLinkTools = (useSourceArrowhead: boolean = false) => {
  * @returns Array with link tools as labels.
  */
 export const createLabelBasedLinkTools = (
-  options: ILabelBasedLinkToolsOptions
+  options: LabelBasedLinkToolsOptions
 ) => {
   const {
     selectionLabelOptions,
@@ -76,7 +76,7 @@ export const createLabelBasedLinkTools = (
         cursor: 'pointer',
         width: 24,
         height: 24,
-        event: CustomEvents.LINK_REMOVE,
+        event: CustomEvent.LINK_REMOVE,
         title: 'Remove element',
         ...removeLabelOptions
       }

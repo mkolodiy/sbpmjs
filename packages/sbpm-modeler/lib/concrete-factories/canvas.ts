@@ -1,10 +1,10 @@
 import * as joint from 'jointjs';
 import {
-  Events,
-  Errors,
-  Shapes,
-  CustomEvents,
-  ShapeNamespaces
+  Event,
+  Error,
+  ShapeType,
+  CustomEvent,
+  ShapeNamespace
 } from '../constants';
 import { combineStrings } from '../common/utils';
 import { Coordinates, ModelerOptions } from '../types';
@@ -49,7 +49,7 @@ export default class Canvas {
       return Canvas._instance;
     }
 
-    throw new Error(Errors.CANVAS_INITIALIZATION);
+    throw new Error(Error.CANVAS_INITIALIZATION);
   };
 
   /**
@@ -60,7 +60,7 @@ export default class Canvas {
    */
   public static getInstance() {
     if (!Canvas._instance) {
-      throw new Error(Errors.CANVAS_INSTANCE_RETRIEVAL);
+      throw new Error(Error.CANVAS_INSTANCE_RETRIEVAL);
     }
 
     return Canvas._instance;
@@ -111,22 +111,22 @@ export default class Canvas {
    */
   private addDragging(container: Element) {
     this._paper.on(
-      Events.BLANK_POINTERDOWN,
+      Event.BLANK_POINTERDOWN,
       (event: MouseEvent, x: number, y: number) => {
         this._dragStartPosition = { x: x, y: y };
       }
     );
 
     const pointerupEvents = combineStrings([
-      Events.CELL_POINTERUP,
-      Events.BLANK_POINTERUP
+      Event.CELL_POINTERUP,
+      Event.BLANK_POINTERUP
     ]);
     this._paper.on(pointerupEvents, () => {
       this._dragStartPosition = null;
     });
 
     container.addEventListener(
-      Events.MOUSEMOVE,
+      Event.MOUSEMOVE,
       (event: MouseEvent) => {
         if (this._dragStartPosition !== null) {
           const scale = this._paper.scale();
@@ -146,7 +146,7 @@ export default class Canvas {
    */
   private addOrigin() {
     const Origin = joint.shapes.standard.Rectangle.define(
-      Shapes.ORIGIN,
+      ShapeType.ORIGIN,
       {
         attrs: {
           x: -20,
@@ -210,12 +210,12 @@ export default class Canvas {
    * Registers all necessary events needed for the interaction with the canvas and elements on the canvas.
    */
   private registerPaperEvents() {
-    this._paper.on(Events.BLANK_POINTERDOWN, () => {
+    this._paper.on(Event.BLANK_POINTERDOWN, () => {
       this._paper.hideTools();
     });
 
     this._paper.on(
-      combineStrings([Events.ELEMENT_POINTERDOWN, Events.LINK_POINTERDOWN]),
+      combineStrings([Event.ELEMENT_POINTERDOWN, Event.LINK_POINTERDOWN]),
       (cellView: joint.dia.CellView) => {
         this._paper.hideTools();
         cellView.model.toFront();
@@ -223,7 +223,7 @@ export default class Canvas {
     );
 
     this._paper.on(
-      CustomEvents.LINK_REMOVE_VERTICES,
+      CustomEvent.LINK_REMOVE_VERTICES,
       (view: joint.dia.LinkView, evt: MouseEvent) => {
         evt.stopPropagation();
         view.model.vertices([]);
@@ -231,7 +231,7 @@ export default class Canvas {
     );
 
     this._paper.on(
-      CustomEvents.LINK_REMOVE,
+      CustomEvent.LINK_REMOVE,
       (view: joint.dia.LinkView, evt: MouseEvent) => {
         evt.stopPropagation();
         view.model.remove();
@@ -245,7 +245,7 @@ export default class Canvas {
   private getElements() {
     const allElements = this._graph.getElements();
     return allElements.filter(
-      (el: joint.dia.Element) => el.attributes.type !== ShapeNamespaces.COMMON
+      (el: joint.dia.Element) => el.attributes.type !== ShapeNamespace.COMMON
     );
   }
 }

@@ -1,11 +1,11 @@
 import * as joint from 'jointjs';
 import Canvas from '../concrete-factories/canvas';
 import {
-  ILinkOptions,
+  LinkOptions,
   MessageOptions,
-  ILabelBasedLinkToolsOptions
+  LabelBasedLinkToolsOptions
 } from '../types';
-import { Shapes, Events, CustomEvents } from '../constants';
+import { ShapeType, Event, CustomEvent } from '../constants';
 import { combineStrings } from '../common/utils';
 import {
   createLinkTools,
@@ -22,14 +22,14 @@ export default abstract class LinkFactory {
   private canvas: Canvas;
   private link: joint.dia.Link;
   private drawConnection: boolean;
-  private type: Shapes;
+  private type: ShapeType;
 
-  public add(options: ILinkOptions): joint.dia.Link {
+  public add(options: LinkOptions): joint.dia.Link {
     this.link = this.create(options);
     return this.link;
   }
 
-  constructor(container: Element, type: Shapes, customEvent: string) {
+  constructor(container: Element, type: ShapeType, customEvent: string) {
     this.canvas = Canvas.getInstance();
     this.link = null;
     this.drawConnection = false;
@@ -43,7 +43,7 @@ export default abstract class LinkFactory {
    * @param options [[ILinkOptions]] object used to create a new link.
    * @returns A new link.
    */
-  private create(options: ILinkOptions) {
+  private create(options: LinkOptions) {
     const { graph, paper } = this.canvas;
     const { source, target } = options;
 
@@ -71,17 +71,17 @@ export default abstract class LinkFactory {
     const { paper } = this.canvas;
 
     paper.on(
-      combineStrings([Events.CELL_POINTERDOWN, Events.BLANK_POINTERDOWN]),
+      combineStrings([Event.CELL_POINTERDOWN, Event.BLANK_POINTERDOWN]),
       () => this.reset()
     );
 
-    paper.on(Events.LINK_POINTERDOWN, this.onLinkPointerDown);
+    paper.on(Event.LINK_POINTERDOWN, this.onLinkPointerDown);
 
     paper.on(customEvent, this.onCustomEventHandler);
 
-    container.addEventListener(Events.MOUSEMOVE, this.onMouseMove);
+    container.addEventListener(Event.MOUSEMOVE, this.onMouseMove);
 
-    container.addEventListener(Events.MOUSEUP, this.onMouseUp);
+    container.addEventListener(Event.MOUSEUP, this.onMouseUp);
   }
 
   /**
@@ -234,5 +234,5 @@ export default abstract class LinkFactory {
   /**
    * Returns default options needed for the creation of label based link tools.
    */
-  protected abstract getLabelBasedLinkToolsDefaults(): ILabelBasedLinkToolsOptions;
+  protected abstract getLabelBasedLinkToolsDefaults(): LabelBasedLinkToolsOptions;
 }

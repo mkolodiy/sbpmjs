@@ -1,4 +1,4 @@
-export enum Errors {
+export enum Error {
   CANVAS_INSTANCE_RETRIEVAL = 'Canvas is not initialized. Please use Canvas.initialize() method to create a new instance of the canvas.',
   CANVAS_INITIALIZATION = 'Canvas is already initialized. Please use Canvas.getInstance() method to retrieve the canvas instance.',
   SSF_INSTANCE_RETRIEVAL = 'StandardSubjectFactory is not initialized. Please use StandardSubjectFactory.initialize() method to create a new instance of the factory.',
@@ -14,13 +14,13 @@ export enum Errors {
   SSTF_INITIALIZATION = 'SendStateTransitionFactory is already initialized. Please use SendStateTransitionFactory.getInstance() method to retrieve the factory instance.'
 }
 
-export enum ShapeNamespaces {
+export enum ShapeNamespace {
   COMMON = 'sbpm.common',
   SID = 'sbpm.sid',
   SBD = 'sbpm.sbd'
 }
 
-export enum Shapes {
+export enum ShapeType {
   ORIGIN = 'sbpm.common.Origin',
   MESSAGE = 'sbpm.sid.Message',
   STANDARD_SUBJECT = 'sbpm.sid.StandardSubject',
@@ -32,7 +32,7 @@ export enum Shapes {
   FUNCTION_STATE_TRANSITION = 'sbpm.sbd.FunctionStateTransition'
 }
 
-export enum Events {
+export enum Event {
   BLANK_POINTERUP = 'blank:pointerup',
   BLANK_POINTERDOWN = 'blank:pointerdown',
   CELL_POINTERUP = 'cell:pointerup',
@@ -44,7 +44,7 @@ export enum Events {
   POINTERDOWN = 'pointerdown'
 }
 
-export enum CustomEvents {
+export enum CustomEvent {
   ELEMENT_ADD_MESSAGE = 'element:addMessage',
   ELEMENT_ADD_SEND_STATE_TRANSITION = 'element:addSendTransition',
   ELEMENT_ADD_RECEIVE_STATE_TRANSITION = 'element:addReceiveTransition',

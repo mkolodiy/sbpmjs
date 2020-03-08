@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, Shapes, Events, Errors, CustomEvents } from '../constants';
+import { SVG_PREFIX, ShapeType, Event, Error, CustomEvent } from '../constants';
 import Canvas from './canvas';
 import { StateOptions, ElementToolsOptions } from '../types';
 import { createElementTools } from '../common/element-tools';
@@ -47,7 +47,7 @@ const toolsDefaults: ElementToolsOptions = {
       x: 130,
       y: -13
     },
-    event: CustomEvents.ELEMENT_ADD_FUNCTION_STATE_TRANSITION
+    event: CustomEvent.ELEMENT_ADD_FUNCTION_STATE_TRANSITION
   }
 };
 
@@ -67,7 +67,7 @@ export default class FunctionStateFactory {
       return FunctionStateFactory._instance;
     }
 
-    throw new Error(Errors.SStF_INITIALIZATION);
+    throw new Error(Error.SStF_INITIALIZATION);
   }
 
   /**
@@ -78,7 +78,7 @@ export default class FunctionStateFactory {
    */
   public static getInstance(): FunctionStateFactory {
     if (!FunctionStateFactory._instance) {
-      throw new Error(Errors.SStF_INSTANCE_RETRIEVAL);
+      throw new Error(Error.SStF_INSTANCE_RETRIEVAL);
     }
 
     return FunctionStateFactory._instance;
@@ -106,7 +106,7 @@ export default class FunctionStateFactory {
 
     const sendState = new joint.shapes.basic.Image({
       ...defaults,
-      type: Shapes.FUNCTION_STATE
+      type: ShapeType.FUNCTION_STATE
     });
 
     sendState.position(position.x, position.y);
@@ -126,10 +126,10 @@ export default class FunctionStateFactory {
    */
   private registerEvents() {
     const { paper } = this._canvas;
-    paper.on(Events.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
+    paper.on(Event.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
       const { type } = cellView.model.attributes;
 
-      if (type === Shapes.FUNCTION_STATE) {
+      if (type === ShapeType.FUNCTION_STATE) {
         cellView.addTools(createElementTools(toolsDefaults));
       }
     });

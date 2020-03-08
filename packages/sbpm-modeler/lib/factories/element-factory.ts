@@ -1,8 +1,8 @@
 import * as joint from 'jointjs';
 
 import Canvas from '../concrete-factories/canvas';
-import { IElementOptions, IGenericOptions } from '../types';
-import { Events, Shapes } from '../constants';
+import { ElementOptions, GenericOptions } from '../types';
+import { Event, ShapeType } from '../constants';
 
 export default abstract class ElementFactory {
   protected canvas: Canvas;
@@ -13,12 +13,12 @@ export default abstract class ElementFactory {
    * @param options [[IElementOptions]] object containing options used to create a new element.
    * @returns A new element object.
    */
-  public add(options: IElementOptions) {
+  public add(options: ElementOptions) {
     const { graph } = this.canvas;
     return this.create(options).addTo(graph);
   }
 
-  public abstract create(options: IElementOptions): joint.dia.Element;
+  public abstract create(options: ElementOptions): joint.dia.Element;
 
   protected constructor() {
     this.canvas = Canvas.getInstance();
@@ -31,7 +31,7 @@ export default abstract class ElementFactory {
    * @param options [[IElementOptions]] object containing options used to create a new element.
    * @returns A new element object.
    */
-  protected createInternal(options: IElementOptions) {
+  protected createInternal(options: ElementOptions) {
     const { description, position } = options;
 
     const element = new joint.shapes.basic.Image({
@@ -49,7 +49,7 @@ export default abstract class ElementFactory {
    */
   private registerEvents() {
     const { paper } = this.canvas;
-    paper.on(Events.ELEMENT_POINTERDOWN, this.onElementPointerDown);
+    paper.on(Event.ELEMENT_POINTERDOWN, this.onElementPointerDown);
   }
 
   protected abstract onElementPointerDown(cellView: joint.dia.CellView): void;

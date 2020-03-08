@@ -1,8 +1,8 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, Errors, CustomEvents, Shapes } from '../constants';
+import { SVG_PREFIX, Error, CustomEvent, ShapeType } from '../constants';
 import LinkFactory from '../factories/link-factory';
-import { ILabelBasedLinkToolsOptions } from '../types';
+import { LabelBasedLinkToolsOptions } from '../types';
 
 /**
  * Default options used to create a message.
@@ -15,7 +15,7 @@ const messageDefaults = {
   }
 };
 
-const labelBasedLinkToolsDefaults: ILabelBasedLinkToolsOptions = {
+const labelBasedLinkToolsDefaults: LabelBasedLinkToolsOptions = {
   selectionLabelOptions: {
     width: 100,
     height: 70
@@ -46,7 +46,7 @@ export default class MessageFactory extends LinkFactory {
       return MessageFactory.instance;
     }
 
-    throw new Error(Errors.SSF_INITIALIZATION);
+    throw new Error(Error.SSF_INITIALIZATION);
   }
 
   /**
@@ -57,14 +57,14 @@ export default class MessageFactory extends LinkFactory {
    */
   public static getInstance(): MessageFactory {
     if (!MessageFactory.instance) {
-      throw new Error(Errors.SSF_INSTANCE_RETRIEVAL);
+      throw new Error(Error.SSF_INSTANCE_RETRIEVAL);
     }
 
     return MessageFactory.instance;
   }
 
   private constructor(container: Element) {
-    super(container, Shapes.MESSAGE, CustomEvents.ELEMENT_ADD_MESSAGE);
+    super(container, ShapeType.MESSAGE, CustomEvent.ELEMENT_ADD_MESSAGE);
   }
 
   protected getLinkDefaults(): {} {
@@ -99,7 +99,7 @@ export default class MessageFactory extends LinkFactory {
     model.insertLabel(0, iconLabel);
   }
 
-  protected getLabelBasedLinkToolsDefaults(): ILabelBasedLinkToolsOptions {
+  protected getLabelBasedLinkToolsDefaults(): LabelBasedLinkToolsOptions {
     return labelBasedLinkToolsDefaults;
   }
 

@@ -1,7 +1,7 @@
 import '../node_modules/jointjs/dist/joint.min.css';
 
 import { ModelerOptions, SubjectOptions } from './types';
-import { Errors } from './constants';
+import { Error } from './constants';
 import { isValidObject } from './common/utils';
 import Canvas from './concrete-factories/canvas';
 import StandardSubjectFactory from './concrete-factories/standard-subject-factory';
@@ -12,6 +12,7 @@ import ReceiveStateFactory from './concrete-factories/receive-state-factory';
 import FunctionStateFactory from './concrete-factories/function-state-factory';
 import ReceiveStateTransitionFactory from './concrete-factories/receive-state-transition-factory';
 import FunctionStateTransitionFactory from './concrete-factories/function-state-transition-factory';
+import ElementCreator from './creators/element-creator';
 
 export default class Modeler {
   private static _instance: Modeler;
@@ -24,6 +25,7 @@ export default class Modeler {
   private _sstrf: SendStateTransitionFactory;
   private _rstf: ReceiveStateTransitionFactory;
   private _fstf: FunctionStateTransitionFactory;
+  private elementCreator: ElementCreator;
 
   /**
    * Creates a new [[Modeler]] instance.
@@ -35,7 +37,7 @@ export default class Modeler {
    */
   public static initialize(options: ModelerOptions): Modeler {
     if (!isValidObject(options)) {
-      throw new Error(Errors.INVALID_MODELER_OPTIONS);
+      throw new Error(Error.INVALID_MODELER_OPTIONS);
     }
 
     if (!Modeler._instance) {
@@ -43,7 +45,7 @@ export default class Modeler {
       return Modeler._instance;
     }
 
-    throw new Error(Errors.INITIALIZATION);
+    throw new Error(Error.INITIALIZATION);
   }
 
   /**
@@ -54,7 +56,7 @@ export default class Modeler {
    */
   public static getInstance(): Modeler {
     if (!Modeler._instance) {
-      throw new Error(Errors.INSTANCE_RETRIEVAL);
+      throw new Error(Error.INSTANCE_RETRIEVAL);
     }
 
     return Modeler._instance;
@@ -72,6 +74,8 @@ export default class Modeler {
     this._sstrf = SendStateTransitionFactory.initialize(el);
     this._rstf = ReceiveStateTransitionFactory.initialize(el);
     this._fstf = FunctionStateTransitionFactory.initialize(el);
+
+    this.elementCreator = new ElementCreator();
   }
 
   /**
@@ -130,5 +134,9 @@ export default class Modeler {
    */
   public addStandardSubject(options: SubjectOptions) {
     return this.ssf.add(options);
+  }
+
+  public newAddStandardSubject(options: SubjectOptions) {
+    return this.elementCreator.createStandardSubject(options);
   }
 }

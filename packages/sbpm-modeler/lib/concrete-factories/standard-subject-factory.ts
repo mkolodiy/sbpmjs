@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, Shapes, Events, Errors, CustomEvents } from '../constants';
+import { SVG_PREFIX, ShapeType, Event, Error, CustomEvent } from '../constants';
 import Canvas from './canvas';
 import { SubjectOptions, ElementToolsOptions } from '../types';
 import { createElementTools } from '../common/element-tools';
@@ -81,7 +81,7 @@ const humanElementToolsOptions: ElementToolsOptions = {
       x: 155,
       y: -13
     },
-    event: CustomEvents.ELEMENT_ADD_MESSAGE
+    event: CustomEvent.ELEMENT_ADD_MESSAGE
   }
 };
 
@@ -124,7 +124,7 @@ export default class StandardSubjectFactory extends ElementFactory {
       return StandardSubjectFactory.instance;
     }
 
-    throw new Error(Errors.SSF_INITIALIZATION);
+    throw new Error(Error.SSF_INITIALIZATION);
   }
 
   /**
@@ -135,7 +135,7 @@ export default class StandardSubjectFactory extends ElementFactory {
    */
   public static getInstance(): StandardSubjectFactory {
     if (!StandardSubjectFactory.instance) {
-      throw new Error(Errors.SSF_INSTANCE_RETRIEVAL);
+      throw new Error(Error.SSF_INSTANCE_RETRIEVAL);
     }
 
     return StandardSubjectFactory.instance;
@@ -164,7 +164,7 @@ export default class StandardSubjectFactory extends ElementFactory {
     const standardSubject = this.createInternal({
       ...this.getDefaults(isMachine),
       ...options,
-      type: Shapes.STANDARD_SUBJECT,
+      type: ShapeType.STANDARD_SUBJECT,
       isMachine
     });
 
@@ -180,11 +180,11 @@ export default class StandardSubjectFactory extends ElementFactory {
   protected onElementPointerDown(cellView: joint.dia.CellView): void {
     const { type, isMachine } = cellView.model.attributes;
 
-    if (type === Shapes.STANDARD_SUBJECT && !isMachine) {
+    if (type === ShapeType.STANDARD_SUBJECT && !isMachine) {
       cellView.addTools(createElementTools(humanElementToolsOptions));
     }
 
-    if (type === Shapes.STANDARD_SUBJECT && isMachine) {
+    if (type === ShapeType.STANDARD_SUBJECT && isMachine) {
       cellView.addTools(createElementTools(machineElementToolsOptions));
     }
   }

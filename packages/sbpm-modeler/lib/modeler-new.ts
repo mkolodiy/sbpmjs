@@ -6,7 +6,7 @@ class Modeler {
 
   public constructor(options: ModelerOptions) {}
 
-  public addSubject() {
+  public addStandardSubject() {
     // TODO
   }
 

@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, Shapes, Events, Errors, CustomEvents } from '../constants';
+import { SVG_PREFIX, ShapeType, Event, Error, CustomEvent } from '../constants';
 import Canvas from './canvas';
 import { StateOptions, ElementToolsOptions } from '../types';
 import { createElementTools } from '../common/element-tools';
@@ -47,7 +47,7 @@ const sendStateToolsOptions: ElementToolsOptions = {
       x: 180,
       y: -13
     },
-    event: CustomEvents.ELEMENT_ADD_SEND_STATE_TRANSITION
+    event: CustomEvent.ELEMENT_ADD_SEND_STATE_TRANSITION
   }
 };
 
@@ -67,7 +67,7 @@ export default class SendStateFactory {
       return SendStateFactory._instance;
     }
 
-    throw new Error(Errors.SStF_INITIALIZATION);
+    throw new Error(Error.SStF_INITIALIZATION);
   }
 
   /**
@@ -78,7 +78,7 @@ export default class SendStateFactory {
    */
   public static getInstance(): SendStateFactory {
     if (!SendStateFactory._instance) {
-      throw new Error(Errors.SStF_INSTANCE_RETRIEVAL);
+      throw new Error(Error.SStF_INSTANCE_RETRIEVAL);
     }
 
     return SendStateFactory._instance;
@@ -106,7 +106,7 @@ export default class SendStateFactory {
 
     const sendState = new joint.shapes.basic.Image({
       ...sendStateDefaults,
-      type: Shapes.SEND_STATE
+      type: ShapeType.SEND_STATE
     });
 
     sendState.position(position.x, position.y);
@@ -126,10 +126,10 @@ export default class SendStateFactory {
    */
   private registerEvents() {
     const { paper } = this._canvas;
-    paper.on(Events.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
+    paper.on(Event.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
       const { type } = cellView.model.attributes;
 
-      if (type === Shapes.SEND_STATE) {
+      if (type === ShapeType.SEND_STATE) {
         cellView.addTools(createElementTools(sendStateToolsOptions));
       }
     });
