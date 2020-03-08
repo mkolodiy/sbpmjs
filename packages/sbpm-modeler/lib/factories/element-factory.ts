@@ -1,8 +1,8 @@
 import * as joint from 'jointjs';
 
-import Canvas from '../elements/canvas';
+import Canvas from '../concrete-factories/canvas';
 import { IElementOptions, IGenericOptions } from '../types';
-import { Events, Shapes } from '../constans';
+import { Events, Shapes } from '../constants';
 
 export default abstract class ElementFactory {
   protected canvas: Canvas;

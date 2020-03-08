@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import { Errors, CustomEvents, Shapes } from '../constans';
+import { Errors, CustomEvents, Shapes } from '../constants';
 import LinkFactory from '../factories/link-factory';
 import { ILabelBasedLinkToolsOptions } from '../types';
 

@@ -1,5 +1,5 @@
 import { isPlainObject, isEmpty } from 'lodash';
-import { SVG_PREFIX } from '../constans';
+import { SVG_PREFIX } from '../constants';
 
 /**
  * Checks if a value is an object and if it has values in it.

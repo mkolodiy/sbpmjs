@@ -5,7 +5,7 @@ import {
   Shapes,
   CustomEvents,
   ShapeNamespaces
-} from '../constans';
+} from '../constants';
 import { combineStrings } from '../common/utils';
 import { Coordinates, ModelerOptions } from '../types';
 

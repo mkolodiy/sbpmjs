@@ -1,15 +1,11 @@
-import * as joint from 'jointjs';
-
-import { SVG_PREFIX, Shapes, Events, Errors, CustomEvents } from '../constants';
-import Canvas from './canvas';
-import { SubjectOptions, ElementToolsOptions } from '../types';
-import { createElementTools } from '../common/element-tools';
-import ElementFactory from '../factories/element-factory';
+import { ElementToolsOptions } from '../types';
+import { CustomEvents } from '../constants';
+import { createIcon } from '../common/utils';
 
 /**
- * Default options used to create a new human subject.
+ * Default options used to create a new standard subject with human icon.
  */
-const humanSubjectDefaults = {
+export const humanSubjectOptions = {
   size: {
     width: 90,
     height: 140
@@ -34,36 +30,9 @@ const humanSubjectDefaults = {
 };
 
 /**
- * Default options used to create a new machine subject.
+ * Default options used to create element tools for a standard subject with human icon.
  */
-const machineSubjectDefaults = {
-  size: {
-    width: 110,
-    height: 140
-  },
-  attrs: {
-    image: {
-      width: 110,
-      height: 140,
-      cursor: 'pointer'
-    },
-    text: {
-      textWrap: {
-        width: 150
-      },
-      xAlignment: 75,
-      yAlignment: -80,
-      pointerEvents: 'none',
-      fontWeight: 'bold',
-      lineHeight: 18
-    }
-  }
-};
-
-/**
- * Options used to create element tools for a human subject.
- */
-const humanElementToolsOptions: ElementToolsOptions = {
+export const humanElementToolsOptions: ElementToolsOptions = {
   removeButtonOptions: {
     coordinates: {
       x: 105,
@@ -86,134 +55,10 @@ const humanElementToolsOptions: ElementToolsOptions = {
 };
 
 /**
- * Options used to create element tools for a machine subject.
+ * SVG icon for single message.
  */
-const machineElementToolsOptions: ElementToolsOptions = {
-  removeButtonOptions: {
-    coordinates: {
-      x: 125,
-      y: -13
-    }
-  },
-  openInNewButtonOptions: {
-    coordinates: {
-      x: 150,
-      y: -13
-    }
-  },
-  linkButtonOptions: {
-    coordinates: {
-      x: 175,
-      y: -13
-    }
-  }
-};
-
-export default class StandardSubjectFactory extends ElementFactory {
-  private static instance: StandardSubjectFactory;
-
-  /**
-   * Creates a new [[StandardSubjectFactory]] instance.
-   *
-   * @returns [[StandardSubjectFactory]] instance.
-   * @throws Error when the [[StandardSubjectFactory]] instance is already initialized.
-   */
-  public static initialize(): StandardSubjectFactory {
-    if (!StandardSubjectFactory.instance) {
-      StandardSubjectFactory.instance = new StandardSubjectFactory();
-      return StandardSubjectFactory.instance;
-    }
-
-    throw new Error(Errors.SSF_INITIALIZATION);
-  }
-
-  /**
-   * Retrieves the [[StandardSubjectFactory]] instance.
-   *
-   * @returns [[StandardSubjectFactory]] instance.
-   * @throws Error when the [[StandardSubjectFactory]] instance is not initialized.
-   */
-  public static getInstance(): StandardSubjectFactory {
-    if (!StandardSubjectFactory.instance) {
-      throw new Error(Errors.SSF_INSTANCE_RETRIEVAL);
-    }
-
-    return StandardSubjectFactory.instance;
-  }
-
-  /**
-   * Creates and adds a new subject to the canvas.
-   *
-   * @param options [[SubjectOptions]] object containing options used to create a new subject.
-   * @returns A new subject object.
-   */
-  public add(options: SubjectOptions) {
-    const { graph } = this.canvas;
-    return this.create(options).addTo(graph);
-  }
-
-  /**
-   * Creates a new subject.
-   *
-   * @param options [[SubjectOptions]] object containing options used to create a new subject.
-   * @returns A new subject object.
-   */
-  public create(options: SubjectOptions) {
-    const { isMachine = false } = options;
-
-    const standardSubject = this.createInternal({
-      ...this.getDefaults(isMachine),
-      ...options,
-      type: Shapes.STANDARD_SUBJECT,
-      isMachine
-    });
-
-    standardSubject.attr('image/xlinkHref', this.getIcon(isMachine));
-
-    return standardSubject;
-  }
-
-  private constructor() {
-    super();
-  }
-
-  protected onElementPointerDown(cellView: joint.dia.CellView): void {
-    const { type, isMachine } = cellView.model.attributes;
-
-    if (type === Shapes.STANDARD_SUBJECT && !isMachine) {
-      cellView.addTools(createElementTools(humanElementToolsOptions));
-    }
-
-    if (type === Shapes.STANDARD_SUBJECT && isMachine) {
-      cellView.addTools(createElementTools(machineElementToolsOptions));
-    }
-  }
-
-  /**
-   * Retrieves subject defaults.
-   *
-   * @param machine Defines if a subject is human or machine.
-   * @returns Object with subject defaults.
-   */
-  protected getDefaults(machine: boolean) {
-    return machine ? machineSubjectDefaults : humanSubjectDefaults;
-  }
-
-  /**
-   * Retrieves a SVG icon used to display a subject.
-   *
-   * @param machine Defines if a subject is human or machine.
-   * @returns SVG icon.
-   */
-  protected getIcon(machine: boolean) {
-    return machine ? this.machineSubjectIcon() : this.humanSubjectIcon();
-  }
-
-  /**
-   * SVG icon for human subject.
-   */
-  private humanSubjectIcon() {
-    const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+export const singleMessageIcon = () => {
+  const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg
        xmlns:dc="http://purl.org/dc/elements/1.1/"
        xmlns:cc="http://creativecommons.org/ns#"
@@ -222,9 +67,9 @@ export default class StandardSubjectFactory extends ElementFactory {
        xmlns="http://www.w3.org/2000/svg"
        id="svg8"
        version="1.1"
-       viewBox="0 0 240.98796 407.40292"
-       height="407.40292mm"
-       width="240.98796mm">
+       viewBox="0 0 234.30023 144.78903"
+       height="144.78903mm"
+       width="234.30023mm">
       <defs
          id="defs2" />
       <metadata
@@ -240,7 +85,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </rdf:RDF>
       </metadata>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          style="display:none"
          id="layer4">
         <g
@@ -352,7 +197,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          id="layer15">
         <g
            transform="translate(-11.910411,-17.946055)"
@@ -387,7 +232,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          id="layer16">
         <g
            id="g1408">
@@ -505,7 +350,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          id="layer14">
         <path
            id="rect1161"
@@ -513,7 +358,7 @@ export default class StandardSubjectFactory extends ElementFactory {
            style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#b3b3b3;stroke-width:10;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          id="layer13">
         <g
            transform="translate(-20.653077,-452.6035)"
@@ -635,7 +480,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          id="layer12">
         <g
            id="g1746"
@@ -714,7 +559,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          id="layer11">
         <g
            id="g1618"
@@ -745,7 +590,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          id="layer10">
         <g
            transform="translate(-3441.6999,-503.76665)"
@@ -776,7 +621,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          id="layer18">
         <g
            transform="translate(-3445.2827,-503.91183)"
@@ -837,7 +682,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          id="g2259"
          style="opacity:1">
         <g
@@ -881,7 +726,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          style="opacity:1"
          id="layer9">
         <g
@@ -906,7 +751,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          style="display:inline"
          id="layer8">
         <g
@@ -1248,7 +1093,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          id="layer17">
         <g
            id="g2503">
@@ -1526,7 +1371,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          style="display:inline"
          id="layer7">
         <g
@@ -1636,7 +1481,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          id="layer6">
         <g
            transform="translate(-3441.6999,-503.76665)"
@@ -1694,7 +1539,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          id="layer5">
         <g
            transform="translate(-3441.6999,-503.76665)"
@@ -1816,7 +1661,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          id="layer2">
         <g
            transform="translate(-3441.6999,-503.76665)"
@@ -1933,7 +1778,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          style="display:inline"
          id="layer1">
         <g
@@ -2017,7 +1862,7 @@ export default class StandardSubjectFactory extends ElementFactory {
         </g>
       </g>
       <g
-         transform="translate(5609.2501,380.76095)"
+         transform="translate(5694.6664,-806.68566)"
          style="display:inline;opacity:1"
          id="layer3">
         <g
@@ -2062,14 +1907,66 @@ export default class StandardSubjectFactory extends ElementFactory {
     </svg>
   `;
 
-    return `${SVG_PREFIX}${encodeURIComponent(template)}`;
-  }
+  return createIcon(template);
+};
 
-  /**
-   * SVG icon for machine subject.
-   */
-  private machineSubjectIcon() {
-    const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+/**
+ * Default options used to create a new standard subject with machine icon.
+ */
+export const machineSubjectOptions = {
+  size: {
+    width: 110,
+    height: 140
+  },
+  attrs: {
+    image: {
+      width: 110,
+      height: 140,
+      cursor: 'pointer'
+    },
+    text: {
+      textWrap: {
+        width: 150
+      },
+      xAlignment: 75,
+      yAlignment: -80,
+      pointerEvents: 'none',
+      fontWeight: 'bold',
+      lineHeight: 18
+    }
+  }
+};
+
+/**
+ * Options used to create element tools for a standard subject with machine icon.
+ */
+export const machineElementToolsOptions: ElementToolsOptions = {
+  removeButtonOptions: {
+    coordinates: {
+      x: 125,
+      y: -13
+    }
+  },
+  openInNewButtonOptions: {
+    coordinates: {
+      x: 150,
+      y: -13
+    }
+  },
+  linkButtonOptions: {
+    coordinates: {
+      x: 175,
+      y: -13
+    },
+    event: CustomEvents.ELEMENT_ADD_MESSAGE
+  }
+};
+
+/**
+ * SVG machine icon for a standard subject.
+ */
+export const machineSubjectIcon = () => {
+  const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg
        xmlns:dc="http://purl.org/dc/elements/1.1/"
        xmlns:cc="http://creativecommons.org/ns#"
@@ -3919,6 +3816,5 @@ export default class StandardSubjectFactory extends ElementFactory {
     </svg>
   `;
 
-    return `${SVG_PREFIX}${encodeURIComponent(template)}`;
-  }
-}
+  return createIcon(template);
+};

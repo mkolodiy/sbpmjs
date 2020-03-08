@@ -1,17 +1,17 @@
 import '../node_modules/jointjs/dist/joint.min.css';
 
 import { ModelerOptions, SubjectOptions } from './types';
-import { Errors } from './constans';
+import { Errors } from './constants';
 import { isValidObject } from './common/utils';
-import Canvas from './elements/canvas';
-import StandardSubjectFactory from './elements/standard-subject-factory';
-import MessageFactory from './elements/message-factory';
-import SendStateFactory from './elements/send-state-factory';
-import SendStateTransitionFactory from './elements/send-state-transition-factory';
-import ReceiveStateFactory from './elements/receive-state-factory';
-import FunctionStateFactory from './elements/function-state-factory';
-import ReceiveStateTransitionFactory from './elements/receive-state-transition-factory';
-import FunctionStateTransitionFactory from './elements/function-state-transition-factory';
+import Canvas from './concrete-factories/canvas';
+import StandardSubjectFactory from './concrete-factories/standard-subject-factory';
+import MessageFactory from './concrete-factories/message-factory';
+import SendStateFactory from './concrete-factories/send-state-factory';
+import SendStateTransitionFactory from './concrete-factories/send-state-transition-factory';
+import ReceiveStateFactory from './concrete-factories/receive-state-factory';
+import FunctionStateFactory from './concrete-factories/function-state-factory';
+import ReceiveStateTransitionFactory from './concrete-factories/receive-state-transition-factory';
+import FunctionStateTransitionFactory from './concrete-factories/function-state-transition-factory';
 
 export default class Modeler {
   private static _instance: Modeler;

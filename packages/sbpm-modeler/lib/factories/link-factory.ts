@@ -1,11 +1,11 @@
 import * as joint from 'jointjs';
-import Canvas from '../elements/canvas';
+import Canvas from '../concrete-factories/canvas';
 import {
   ILinkOptions,
   MessageOptions,
   ILabelBasedLinkToolsOptions
 } from '../types';
-import { Shapes, Events, CustomEvents } from '../constans';
+import { Shapes, Events, CustomEvents } from '../constants';
 import { combineStrings } from '../common/utils';
 import {
   createLinkTools,
