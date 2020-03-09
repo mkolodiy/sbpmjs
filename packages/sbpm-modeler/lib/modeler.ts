@@ -137,6 +137,6 @@ export default class Modeler {
   }
 
   public newAddStandardSubject(options: SubjectOptions) {
-    return this.elementCreator.createStandardSubject(options);
+    return this.elementCreator.addStandardSubject(options);
   }
 }

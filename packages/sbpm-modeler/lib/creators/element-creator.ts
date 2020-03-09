@@ -14,8 +14,8 @@ export default class ElementCreator {
   /**
    *
    */
-  public createStandardSubject(options: SubjectOptions) {
+  public addStandardSubject(options: SubjectOptions) {
     const creationOptions = createStandardSubjectOptions(options);
-    return this.elementFactory.create(creationOptions);
+    return this.elementFactory.add(creationOptions);
   }
 }
