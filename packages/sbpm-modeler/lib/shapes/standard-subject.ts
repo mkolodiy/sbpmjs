@@ -2,8 +2,8 @@ import {
   ElementCreationOptions,
   ElementToolsOptions,
   SubjectOptions
-} from '../types';
-import { CustomEvent, ShapeType } from '../constants';
+} from '../common/types';
+import { CustomEvent, ShapeType } from '../common/constants';
 import { createIcon } from '../common/utils';
 
 export const createStandardSubjectOptions = (

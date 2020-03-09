@@ -1,8 +1,14 @@
 import * as joint from 'jointjs';
 
-import { SVG_PREFIX, ShapeType, Event, Error, CustomEvent } from '../constants';
+import {
+  SVG_PREFIX,
+  ShapeType,
+  Event,
+  Error,
+  CustomEvent
+} from '../common/constants';
 import Canvas from './canvas';
-import { StateOptions, ElementToolsOptions } from '../types';
+import { StateOptions, ElementToolsOptions } from '../common/types';
 import { createElementTools } from '../common/element-tools';
 
 /**

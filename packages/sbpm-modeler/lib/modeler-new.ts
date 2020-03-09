@@ -1,4 +1,4 @@
-import { ModelerOptions } from './types';
+import { ModelerOptions } from './common/types';
 
 class Modeler {
   private linkFactory: any;

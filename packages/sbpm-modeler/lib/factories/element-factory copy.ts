@@ -1,8 +1,8 @@
 import * as joint from 'jointjs';
 
 import Canvas from '../concrete-factories/canvas';
-import { ElementOptions, ElementCreationOptions } from '../types';
-import { Event, ShapeType } from '../constants';
+import { ElementOptions, ElementCreationOptions } from '../common/types';
+import { Event, ShapeType } from '../common/constants';
 import { createElementTools } from '../common/element-tools';
 
 export default class ElementFactory {

@@ -4,8 +4,8 @@ import {
   LinkOptions,
   MessageOptions,
   LabelBasedLinkToolsOptions
-} from '../types';
-import { ShapeType, Event, CustomEvent } from '../constants';
+} from '../common/types';
+import { ShapeType, Event, CustomEvent } from '../common/constants';
 import { combineStrings } from '../common/utils';
 import {
   createLinkTools,

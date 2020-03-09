@@ -1,8 +1,8 @@
 import * as joint from 'jointjs';
 
-import { Error, CustomEvent, ShapeType } from '../constants';
+import { Error, CustomEvent, ShapeType } from '../common/constants';
 import LinkFactory from '../factories/link-factory';
-import { LabelBasedLinkToolsOptions } from '../types';
+import { LabelBasedLinkToolsOptions } from '../common/types';
 
 /**
  * Default options used to create a send state transition.

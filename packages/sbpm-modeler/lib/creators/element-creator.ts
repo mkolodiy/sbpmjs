@@ -1,4 +1,4 @@
-import { SubjectOptions } from '../types';
+import { SubjectOptions } from '../common/types';
 import { createStandardSubjectOptions } from '../shapes/standard-subject';
 import ElementFactory from '../factories/element-factory copy';
 
