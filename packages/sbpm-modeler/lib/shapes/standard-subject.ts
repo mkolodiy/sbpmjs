@@ -10,10 +10,12 @@ export const createStandardSubjectOptions = (
   options: SubjectOptions = defaultOptions
 ): ElementCreationOptions<SubjectOptions> => {
   const { isMachine } = options;
-  const jointOptions = isMachine ? machineSubjectOptions : humanSubjectOptions;
+  const jointOptions = isMachine
+    ? machineSubjectJointOptions
+    : humanSubjectJointOptions;
   const toolsOptions = isMachine
-    ? machineElementToolsOptions
-    : humanElementToolsOptions;
+    ? machineSubjectToolsOptions
+    : humanSubjectToolsOptions;
   const icon = isMachine ? machineSubjectIcon() : humanSubjectIcon();
   return {
     jointOptions,
@@ -39,7 +41,7 @@ const defaultOptions: SubjectOptions = {
 /**
  * Default options used to create a new standard subject with human icon.
  */
-const humanSubjectOptions = {
+const humanSubjectJointOptions = {
   size: {
     width: 90,
     height: 140
@@ -66,7 +68,7 @@ const humanSubjectOptions = {
 /**
  * Default options used to create element tools for a standard subject with human icon.
  */
-const humanElementToolsOptions: ElementToolsOptions = {
+const humanSubjectToolsOptions: ElementToolsOptions = {
   removeButtonOptions: {
     coordinates: {
       x: 105,
@@ -1947,7 +1949,7 @@ const humanSubjectIcon = () => {
 /**
  * Default options used to create a new standard subject with machine icon.
  */
-const machineSubjectOptions = {
+const machineSubjectJointOptions = {
   size: {
     width: 110,
     height: 140
@@ -1974,7 +1976,7 @@ const machineSubjectOptions = {
 /**
  * Options used to create element tools for a standard subject with machine icon.
  */
-const machineElementToolsOptions: ElementToolsOptions = {
+const machineSubjectToolsOptions: ElementToolsOptions = {
   removeButtonOptions: {
     coordinates: {
       x: 125,

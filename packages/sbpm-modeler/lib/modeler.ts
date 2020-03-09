@@ -1,142 +1,44 @@
 import '../node_modules/jointjs/dist/joint.min.css';
-
-import { ModelerOptions, SubjectOptions } from './common/types';
-import { Error } from './common/constants';
-import { isValidObject } from './common/utils';
-import Canvas from './canvas';
-import StandardSubjectFactory from './concrete-factories/standard-subject-factory';
-import MessageFactory from './concrete-factories/message-factory';
-import SendStateFactory from './concrete-factories/send-state-factory';
-import SendStateTransitionFactory from './concrete-factories/send-state-transition-factory';
-import ReceiveStateFactory from './concrete-factories/receive-state-factory';
-import FunctionStateFactory from './concrete-factories/function-state-factory';
-import ReceiveStateTransitionFactory from './concrete-factories/receive-state-transition-factory';
-import FunctionStateTransitionFactory from './concrete-factories/function-state-transition-factory';
+import { ModelerOptions, SubjectOptions, StateOptions } from './common/types';
 import ElementCreator from './creators/element-creator';
+import Canvas from './canvas';
 
 export default class Modeler {
-  private static _instance: Modeler;
-  private _canvas: Canvas;
-  private _ssf: StandardSubjectFactory;
-  private _mf: MessageFactory;
-  private _sstf: SendStateFactory;
-  private _rsf: ReceiveStateFactory;
-  private _fsf: FunctionStateFactory;
-  private _sstrf: SendStateTransitionFactory;
-  private _rstf: ReceiveStateTransitionFactory;
-  private _fstf: FunctionStateTransitionFactory;
+  private static instance: Modeler;
+  private canvas: Canvas;
   private elementCreator: ElementCreator;
 
-  /**
-   * Creates a new [[Modeler]] instance.
-   *
-   * @param options [[ModelerOptions]] object containing values needed to create a new [[Modeler]] instance.
-   * @returns A new [[Modeler]] instance.
-   * @throws Error when the [[Modeler]] instance is already initialized.
-   * @throws Error when the modeler options are not valid.
-   */
-  public static initialize(options: ModelerOptions): Modeler {
-    if (!isValidObject(options)) {
-      throw new Error(Error.INVALID_MODELER_OPTIONS);
+  public static create(options: ModelerOptions) {
+    if (!Modeler.instance) {
+      Modeler.instance = new Modeler(options);
     }
 
-    if (!Modeler._instance) {
-      Modeler._instance = new Modeler(options);
-      return Modeler._instance;
-    }
-
-    throw new Error(Error.INITIALIZATION);
+    return Modeler.instance;
   }
 
-  /**
-   * Retrieves the [[Modeler]] instance.
-   *
-   * @returns [[Modeler]] instance.
-   * @throws Error when the modeler instance is not initialized.
-   */
-  public static getInstance(): Modeler {
-    if (!Modeler._instance) {
-      throw new Error(Error.INSTANCE_RETRIEVAL);
-    }
-
-    return Modeler._instance;
+  public static getInstance() {
+    return Modeler.instance;
   }
 
-  constructor(options: ModelerOptions) {
+  public constructor(options: ModelerOptions) {
     const { el } = options;
-
-    this._canvas = Canvas.initialize(options);
-    this._ssf = StandardSubjectFactory.initialize();
-    this._mf = MessageFactory.initialize(el);
-    this._sstf = SendStateFactory.initialize();
-    this._rsf = ReceiveStateFactory.initialize();
-    this._fsf = FunctionStateFactory.initialize();
-    this._sstrf = SendStateTransitionFactory.initialize(el);
-    this._rstf = ReceiveStateTransitionFactory.initialize(el);
-    this._fstf = FunctionStateTransitionFactory.initialize(el);
-
-    this.elementCreator = new ElementCreator();
+    this.canvas = Canvas.initialize(options);
+    this.elementCreator = new ElementCreator(this.canvas);
   }
 
-  /**
-   * Retries [[Canvas]] instance.
-   */
-  public get canvas() {
-    return this._canvas;
-  }
-
-  /**
-   * Retries canvas [[StandardSubjectFactory]] instance.
-   */
-  public get ssf() {
-    return this._ssf;
-  }
-
-  /**
-   * Retries canvas [[MessageFactory]] instance.
-   */
-  public get mf() {
-    return this._mf;
-  }
-
-  /**
-   * Retries canvas [[SendStateFactory]] instance.
-   */
-  public get sstf() {
-    return this._sstf;
-  }
-
-  /**
-   * TODO
-   */
-  public get rsf() {
-    return this._rsf;
-  }
-
-  /**
-   * TOD
-   */
-  public get fsf() {
-    return this._fsf;
-  }
-
-  /**
-   * Retries canvas [[SendStateTransitionFactory]] instance.
-   */
-  public get sstrf() {
-    return this._sstrf;
-  }
-
-  /**
-   * Adds standard subject to the canvas.
-   *
-   * @param options [[SubjectOptions]] object.
-   */
   public addStandardSubject(options: SubjectOptions) {
-    return this.ssf.add(options);
+    return this.elementCreator.addStandardSubject(options);
   }
 
-  public newAddStandardSubject(options: SubjectOptions) {
-    return this.elementCreator.addStandardSubject(options);
+  public addSendState(options: StateOptions) {
+    return this.elementCreator.addSendState(options);
+  }
+
+  public addReceiveState(options: StateOptions) {
+    return this.elementCreator.addReceiveState(options);
+  }
+
+  public addFunctionState(options: StateOptions) {
+    return this.elementCreator.addFunctionState(options);
   }
 }

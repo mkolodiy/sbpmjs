@@ -1,20 +1,27 @@
-import * as joint from 'jointjs';
-
 import {
-  SVG_PREFIX,
-  ShapeType,
-  Event,
-  Error,
-  CustomEvent
-} from '../common/constants';
-import Canvas from '../canvas';
-import { StateOptions, ElementToolsOptions } from '../common/types';
-import { createElementTools } from '../common/element-tools';
+  ElementToolsOptions,
+  StateOptions,
+  ElementCreationOptions
+} from '../common/types';
+import { CustomEvent, ShapeType } from '../common/constants';
+import { createIcon } from '../common/utils';
+
+export const createSendStateOptions = (
+  options: StateOptions
+): ElementCreationOptions<StateOptions> => {
+  return {
+    jointOptions,
+    options,
+    toolsOptions,
+    icon: icon(),
+    type: ShapeType.SEND_STATE
+  };
+};
 
 /**
- * Default options used to create a new human send state.
+ * Default options used to create a new send state.
  */
-const sendStateDefaults = {
+const jointOptions = {
   size: {
     width: 140,
     height: 95
@@ -39,9 +46,9 @@ const sendStateDefaults = {
 };
 
 /**
- * Options used to create element tools for a machine send state.
+ * Default options used to create element tools for a send state.
  */
-const sendStateToolsOptions: ElementToolsOptions = {
+const toolsOptions: ElementToolsOptions = {
   removeButtonOptions: {
     coordinates: {
       x: 155,
@@ -57,95 +64,8 @@ const sendStateToolsOptions: ElementToolsOptions = {
   }
 };
 
-export default class SendStateFactory {
-  private static _instance: SendStateFactory;
-  private _canvas: Canvas;
-
-  /**
-   * Creates a new [[SendStateFactory]] instance.
-   *
-   * @returns [[SendStateFactory]] instance.
-   * @throws Error when the [[SendStateFactory]] instance is already initialized.
-   */
-  public static initialize(): SendStateFactory {
-    if (!SendStateFactory._instance) {
-      SendStateFactory._instance = new SendStateFactory();
-      return SendStateFactory._instance;
-    }
-
-    throw new Error(Error.SStF_INITIALIZATION);
-  }
-
-  /**
-   * Retrieves the [[SendStateFactory]] instance.
-   *
-   * @returns [[SendStateFactory]] instance.
-   * @throws Error when the [[SendStateFactory]] instance is not initialized.
-   */
-  public static getInstance(): SendStateFactory {
-    if (!SendStateFactory._instance) {
-      throw new Error(Error.SStF_INSTANCE_RETRIEVAL);
-    }
-
-    return SendStateFactory._instance;
-  }
-
-  /**
-   * Creates and adds a new send state to the canvas.
-   *
-   * @param options [[StateOptions]] object containing options used to create a new send state.
-   * @returns A new send state object.
-   */
-  public add(options: StateOptions) {
-    const { graph } = this._canvas;
-    return this.create(options).addTo(graph);
-  }
-
-  /**
-   * Creates a new send state.
-   *
-   * @param options [[StateOptions]] object containing options used to create a new send state.
-   * @returns A new send state object.
-   */
-  public create(options: StateOptions) {
-    const { description, position } = options;
-
-    const sendState = new joint.shapes.basic.Image({
-      ...sendStateDefaults,
-      type: ShapeType.SEND_STATE
-    });
-
-    sendState.position(position.x, position.y);
-    sendState.attr('image/xlinkHref', this.getIcon());
-    sendState.attr('text/textWrap/text', description);
-
-    return sendState;
-  }
-
-  constructor() {
-    this._canvas = Canvas.getInstance();
-    this.registerEvents();
-  }
-
-  /**
-   * Registers all necessary events needed for the interaction with a send state.
-   */
-  private registerEvents() {
-    const { paper } = this._canvas;
-    paper.on(Event.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
-      const { type } = cellView.model.attributes;
-
-      if (type === ShapeType.SEND_STATE) {
-        cellView.addTools(createElementTools(sendStateToolsOptions));
-      }
-    });
-  }
-
-  /**
-   * SVG icon for send state.
-   */
-  private getIcon() {
-    const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+const icon = () => {
+  const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg
        xmlns:dc="http://purl.org/dc/elements/1.1/"
        xmlns:cc="http://creativecommons.org/ns#"
@@ -1994,6 +1914,5 @@ export default class SendStateFactory {
     </svg>
   `;
 
-    return `${SVG_PREFIX}${encodeURIComponent(template)}`;
-  }
-}
+  return createIcon(template);
+};

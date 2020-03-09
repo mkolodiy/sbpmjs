@@ -46,10 +46,9 @@ export default class Canvas {
   public static initialize = (options: ModelerOptions) => {
     if (!Canvas._instance) {
       Canvas._instance = new Canvas(options);
-      return Canvas._instance;
     }
 
-    throw new Error(Error.CANVAS_INITIALIZATION);
+    return Canvas._instance;
   };
 
   /**
@@ -59,10 +58,6 @@ export default class Canvas {
    * @throws Error when the modeler instance is not initialized.
    */
   public static getInstance() {
-    if (!Canvas._instance) {
-      throw new Error(Error.CANVAS_INSTANCE_RETRIEVAL);
-    }
-
     return Canvas._instance;
   }
 

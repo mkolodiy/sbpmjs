@@ -25,7 +25,7 @@ export const addSubject = (
 };
 
 export const addMessage = (source: any, target: any) => {
-  return Modeler.getInstance().mf.add({
+  return Modeler.getInstance().addMessageTransition({
     source,
     target
   });

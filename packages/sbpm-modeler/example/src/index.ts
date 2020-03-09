@@ -4,7 +4,7 @@ import Modeler from '../../lib/modeler';
 import { subjectComponent } from './components/subject';
 import { messageComponent } from './components/message';
 
-const modeler = Modeler.initialize({
+const modeler = Modeler.create({
   el: document.querySelector('.sbpmjs'),
   routerName: 'orthogonal'
 });
@@ -58,11 +58,35 @@ messageComponent();
 //   }
 // });
 
-const sub2 = modeler.newAddStandardSubject({
+const sub2 = modeler.addStandardSubject({
   description:
     'Standard subject human Standard subject human Standard subject human',
   position: {
     x: 200,
     y: 500
+  }
+});
+
+const sendState1 = modeler.addSendState({
+  description: 'Send state',
+  position: {
+    x: 200,
+    y: 200
+  }
+});
+
+const receiveState1 = modeler.addReceiveState({
+  description: 'Receive state',
+  position: {
+    x: 600,
+    y: 200
+  }
+});
+
+const functionState1 = modeler.addFunctionState({
+  description: 'Receive state',
+  position: {
+    x: 600,
+    y: 600
   }
 });
