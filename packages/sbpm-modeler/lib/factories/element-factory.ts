@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 
-import Canvas from '../concrete-factories/canvas';
+import Canvas from '../canvas';
 import { ElementOptions, GenericOptions } from '../common/types';
 import { Event, ShapeType } from '../common/constants';
 

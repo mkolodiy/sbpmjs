@@ -3,7 +3,7 @@ import '../node_modules/jointjs/dist/joint.min.css';
 import { ModelerOptions, SubjectOptions } from './common/types';
 import { Error } from './common/constants';
 import { isValidObject } from './common/utils';
-import Canvas from './concrete-factories/canvas';
+import Canvas from './canvas';
 import StandardSubjectFactory from './concrete-factories/standard-subject-factory';
 import MessageFactory from './concrete-factories/message-factory';
 import SendStateFactory from './concrete-factories/send-state-factory';

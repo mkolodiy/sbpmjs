@@ -5,9 +5,9 @@ import {
   ShapeType,
   CustomEvent,
   ShapeNamespace
-} from '../common/constants';
-import { combineStrings } from '../common/utils';
-import { Coordinates, ModelerOptions } from '../common/types';
+} from './common/constants';
+import { combineStrings } from './common/utils';
+import { Coordinates, ModelerOptions } from './common/types';
 
 /**
  * Default options used to create a new paper instance.

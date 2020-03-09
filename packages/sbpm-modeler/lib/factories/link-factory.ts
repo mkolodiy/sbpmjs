@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import Canvas from '../concrete-factories/canvas';
+import Canvas from '../canvas';
 import {
   LinkOptions,
   MessageOptions,

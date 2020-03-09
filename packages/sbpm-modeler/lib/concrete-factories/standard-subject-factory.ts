@@ -7,7 +7,7 @@ import {
   Error,
   CustomEvent
 } from '../common/constants';
-import Canvas from './canvas';
+import Canvas from '../canvas';
 import { SubjectOptions, ElementToolsOptions } from '../common/types';
 import { createElementTools } from '../common/element-tools';
 import ElementFactory from '../factories/element-factory';
