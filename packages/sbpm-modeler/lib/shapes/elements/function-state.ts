@@ -2,11 +2,11 @@ import {
   ElementToolsOptions,
   StateOptions,
   ElementCreationOptions
-} from '../common/types';
-import { CustomEvent, ShapeType } from '../common/constants';
-import { createIcon } from '../common/utils';
+} from '../../common/types';
+import { CustomEvent, ShapeType } from '../../common/constants';
+import { createIcon } from '../../common/utils';
 
-export const createReceiveStateOptions = (
+export const createFunctionStateOptions = (
   options: StateOptions
 ): ElementCreationOptions<StateOptions> => {
   return {
@@ -19,24 +19,24 @@ export const createReceiveStateOptions = (
 };
 
 /**
- * Default options used to create a new receive state.
+ * Default options used to create a new function state.
  */
 const jointOptions = {
   size: {
-    width: 140,
-    height: 95
+    width: 90,
+    height: 140
   },
   attrs: {
     image: {
-      width: 140,
-      height: 95,
+      width: 90,
+      height: 140,
       cursor: 'pointer'
     },
     text: {
       textWrap: {
         width: 150
       },
-      xAlignment: 90,
+      xAlignment: 65,
       yAlignment: -80,
       pointerEvents: 'none',
       fontWeight: 'bold',
@@ -46,21 +46,21 @@ const jointOptions = {
 };
 
 /**
- * Default options used to create element tools for a receive state.
+ * Default options used to create element tools for a function state.
  */
 const toolsOptions: ElementToolsOptions = {
   removeButtonOptions: {
     coordinates: {
-      x: 155,
+      x: 105,
       y: -13
     }
   },
   linkButtonOptions: {
     coordinates: {
-      x: 180,
+      x: 130,
       y: -13
     },
-    event: CustomEvent.ELEMENT_ADD_RECEIVE_STATE_TRANSITION
+    event: CustomEvent.ELEMENT_ADD_FUNCTION_STATE_TRANSITION
   }
 };
 
@@ -74,9 +74,9 @@ const icon = () => {
       xmlns="http://www.w3.org/2000/svg"
       id="svg8"
       version="1.1"
-      viewBox="0 0 384.00704 242.80513"
-      height="242.80513mm"
-      width="384.00705mm">
+      viewBox="0 0 261.8359 407.50195"
+      height="407.50195mm"
+      width="261.83591mm">
      <defs
         id="defs2" />
      <metadata
@@ -92,7 +92,7 @@ const icon = () => {
        </rdf:RDF>
      </metadata>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         style="display:none"
         id="layer4">
        <g
@@ -204,7 +204,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         id="layer15">
        <g
           transform="translate(-11.910411,-17.946055)"
@@ -239,7 +239,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         id="layer16">
        <g
           id="g1408">
@@ -357,7 +357,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         id="layer14">
        <path
           id="rect1161"
@@ -365,7 +365,7 @@ const icon = () => {
           style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#b3b3b3;stroke-width:10;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         id="layer13">
        <g
           transform="translate(-20.653077,-452.6035)"
@@ -487,7 +487,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         id="layer12">
        <g
           id="g1746"
@@ -566,7 +566,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         id="layer11">
        <g
           id="g1618"
@@ -597,7 +597,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         id="layer10">
        <g
           transform="translate(-3441.6999,-503.76665)"
@@ -628,7 +628,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         id="layer18">
        <g
           transform="translate(-3445.2827,-503.91183)"
@@ -689,7 +689,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         id="g2259"
         style="opacity:1">
        <g
@@ -733,7 +733,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         style="opacity:1"
         id="layer9">
        <g
@@ -758,7 +758,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         style="display:inline"
         id="layer8">
        <g
@@ -1100,7 +1100,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         id="layer17">
        <g
           id="g2503">
@@ -1378,7 +1378,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         style="display:inline"
         id="layer7">
        <g
@@ -1488,7 +1488,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         id="layer6">
        <g
           transform="translate(-3441.6999,-503.76665)"
@@ -1546,7 +1546,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         id="layer5">
        <g
           transform="translate(-3441.6999,-503.76665)"
@@ -1668,7 +1668,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         id="layer2">
        <g
           transform="translate(-3441.6999,-503.76665)"
@@ -1785,7 +1785,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         style="display:inline"
         id="layer1">
        <g
@@ -1869,7 +1869,7 @@ const icon = () => {
        </g>
      </g>
      <g
-        transform="translate(4429.5701,-1185.2474)"
+        transform="translate(3652.9848,-204.95184)"
         style="display:inline;opacity:1"
         id="layer3">
        <g

@@ -25,6 +25,13 @@ export interface ButtonOptions {
   event?: string;
 }
 
+export interface CreationOptions<A> {
+  jointOptions: {};
+  options: A;
+  icon: string;
+  type: ShapeType;
+}
+
 /* GENERAL TYPES */
 
 /**
@@ -43,15 +50,8 @@ export interface ModelerOptions {
 
 /* ELEMENT TYPES*/
 
-export interface ElementOptions extends GenericOptions {
-  /**
-   * Defines description that will be shown besides the icon of the element.
-   */
-  description: string;
-  /**
-   * Defines position on the canvas where the element should be added at.
-   */
-  position: Coordinates;
+export interface ElementCreationOptions<A> extends CreationOptions<A> {
+  toolsOptions: ElementToolsOptions;
 }
 
 /**
@@ -72,12 +72,15 @@ export interface ElementToolsOptions {
   linkButtonOptions?: ButtonOptions;
 }
 
-export interface ElementCreationOptions<A> {
-  jointOptions: {};
-  options: A;
-  toolsOptions: ElementToolsOptions;
-  icon: string;
-  type: ShapeType;
+export interface ElementOptions extends GenericOptions {
+  /**
+   * Defines description that will be shown besides the icon of the element.
+   */
+  description: string;
+  /**
+   * Defines position on the canvas where the element should be added at.
+   */
+  position: Coordinates;
 }
 
 /**
@@ -102,24 +105,14 @@ export interface StateOptions extends ElementOptions {
 
 /* LINK TYPES*/
 
+export interface LinkCreationOptions<A> extends CreationOptions<A> {
+  labelBasedLinkToolsOptions: LabelBasedLinkToolsOptions;
+}
+
 export interface LabelBasedLinkToolsOptions {
   selectionLabelOptions: GenericOptions;
   removeLabelOptions: GenericOptions;
   removeVerticesLabelOptions: GenericOptions;
-}
-
-/**
- * Representation of the options for the creation of a message.
- */
-export interface MessageOptions {
-  /**
-   * Defines a source of a message.
-   */
-  source: joint.dia.Cell | Coordinates;
-  /**
-   * Defines a target of a message.
-   */
-  target: joint.dia.Cell | Coordinates;
 }
 
 export interface LinkOptions {

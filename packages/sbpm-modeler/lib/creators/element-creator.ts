@@ -1,10 +1,10 @@
 import { SubjectOptions, StateOptions } from '../common/types';
-import { createStandardSubjectOptions } from '../shapes/standard-subject';
+import { createStandardSubjectOptions } from '../shapes/elements/standard-subject';
 import ElementFactory from '../factories/element-factory';
 import Canvas from '../canvas';
-import { createSendStateOptions } from '../shapes/send-state';
-import { createReceiveStateOptions } from '../shapes/receive-state';
-import { createFunctionStateOptions } from '../shapes/function-state';
+import { createSendStateOptions } from '../shapes/elements/send-state';
+import { createReceiveStateOptions } from '../shapes/elements/receive-state';
+import { createFunctionStateOptions } from '../shapes/elements/function-state';
 
 export default class ElementCreator {
   private canvas: Canvas;
