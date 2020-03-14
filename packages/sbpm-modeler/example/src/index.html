@@ -55,6 +55,7 @@
                 </form>
               </div>
             </li>
+
             <li>
               <div class="collapsible-header">
                 <span class="title">Message</span>
@@ -66,6 +67,79 @@
                       <label>
                         <input id="bidirectional" type="checkbox" />
                         <span>Bidirectional</span>
+                      </label>
+                    </p>
+                  </div>
+                  <div class="col s12">
+                    <button
+                      class="waves-effect waves-light btn right"
+                      type="submit"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </li>
+
+            <li>
+              <div class="collapsible-header">
+                <span class="title">Send/Receive/Function states</span>
+              </div>
+              <div class="collapsible-body">
+                <form class="row basic-states-form">
+                  <div class="col s12">
+                    <p>
+                      <label>
+                        <input id="sendState" type="checkbox" />
+                        <span>Send state</span>
+                      </label>
+                    </p>
+                  </div>
+                  <div class="col s12">
+                    <p>
+                      <label>
+                        <input id="receiveState" type="checkbox" />
+                        <span>Receive state</span>
+                      </label>
+                    </p>
+                  </div>
+                  <div class="col s12">
+                    <p>
+                      <label>
+                        <input id="functionState" type="checkbox" />
+                        <span>Function state</span>
+                      </label>
+                    </p>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="positionX" type="number" required />
+                    <label for="positionY">X-Coordinate</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="positionY" type="number" required />
+                    <label for="positionY">Y-Coordinate</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <textarea
+                      id="description"
+                      class="materialize-textarea"
+                    ></textarea>
+                    <label for="description">Description</label>
+                  </div>
+                  <div class="col s12">
+                    <p>
+                      <label>
+                        <input id="startState" type="checkbox" />
+                        <span>Start state</span>
+                      </label>
+                    </p>
+                  </div>
+                  <div class="col s12">
+                    <p>
+                      <label>
+                        <input id="endState" type="checkbox" />
+                        <span>End state</span>
                       </label>
                     </p>
                   </div>

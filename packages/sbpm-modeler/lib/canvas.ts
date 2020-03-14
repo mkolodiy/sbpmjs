@@ -1,7 +1,6 @@
 import * as joint from 'jointjs';
 import {
   Event,
-  Error,
   ShapeType,
   CustomEvent,
   ShapeNamespace
@@ -24,10 +23,9 @@ const paperOptions = {
 };
 
 export default class Canvas {
-  private static _instance: Canvas = null;
-  private _graph: joint.dia.Graph = null;
-  private _paper: joint.dia.Paper = null;
-  private _dragStartPosition: Coordinates = null;
+  private _graph: joint.dia.Graph;
+  private _paper: joint.dia.Paper;
+  private _dragStartPosition: Coordinates;
 
   public get graph() {
     return this._graph;
@@ -35,30 +33,6 @@ export default class Canvas {
 
   public get paper() {
     return this._paper;
-  }
-
-  /**
-   * Create a new canvas.
-   *
-   * @param options [[ModelerOptions]] object.
-   * @returns [[Canvas]] instance.
-   */
-  public static initialize = (options: ModelerOptions) => {
-    if (!Canvas._instance) {
-      Canvas._instance = new Canvas(options);
-    }
-
-    return Canvas._instance;
-  };
-
-  /**
-   * Retrieves the canvas instance.
-   *
-   * @returns [[Canvas]] instance.
-   * @throws Error when the modeler instance is not initialized.
-   */
-  public static getInstance() {
-    return Canvas._instance;
   }
 
   /**
@@ -93,6 +67,7 @@ export default class Canvas {
       model: this._graph,
       defaultRouter
     });
+    this._dragStartPosition = null;
 
     this.addDragging(container);
     this.addOrigin();

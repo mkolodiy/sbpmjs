@@ -1,5 +1,6 @@
-import { LinkOptions, MessageTransitionOptions } from '../common/types';
+import Canvas from '../canvas';
 import LinkFactory from '../factories/link-factory';
+import { LinkOptions, MessageTransitionOptions } from '../common/types';
 import { createMessageTransitionOptions } from '../shapes/links/message-transition';
 import { createSendStateTransitionOptions } from '../shapes/links/send-state-transition';
 import { createReceiveStateTransitionOptions } from '../shapes/links/receive-state-transition';
@@ -11,8 +12,8 @@ export default class LinkCreator {
   /**
    * Constructor
    */
-  public constructor(container: Element) {
-    this.linkFactory = new LinkFactory(container);
+  public constructor(canvas: Canvas, container: Element) {
+    this.linkFactory = new LinkFactory(canvas, container);
   }
 
   public addMessageTransition(options: MessageTransitionOptions) {

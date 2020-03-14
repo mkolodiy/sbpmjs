@@ -1,12 +1,7 @@
 import * as joint from 'jointjs';
 import Canvas from '../canvas';
 import { LinkOptions, LinkCreationOptions } from '../common/types';
-import {
-  ShapeType,
-  Event,
-  CustomEvent,
-  CUSTOM_EVENTS
-} from '../common/constants';
+import { ShapeType, Event, CUSTOM_EVENTS } from '../common/constants';
 import { combineStrings } from '../common/utils';
 import {
   createLinkTools,
@@ -33,8 +28,8 @@ export default class LinkFactory {
     return this.link;
   }
 
-  constructor(container: Element) {
-    this.canvas = Canvas.getInstance();
+  constructor(canvas: Canvas, container: Element) {
+    this.canvas = canvas;
     this.link = null;
     this.drawConnection = false;
     this.registerEvents(container);

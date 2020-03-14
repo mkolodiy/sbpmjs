@@ -24,9 +24,68 @@ export const addSubject = (
   });
 };
 
-export const addMessage = (source: any, target: any) => {
+export const addMessage = (
+  source: any,
+  target: any,
+  isBidirectional?: boolean
+) => {
   return Modeler.getInstance().addMessageTransition({
     source,
-    target
+    target,
+    isBidirectional
+  });
+};
+
+export const addSendState = (
+  positionX: string | number,
+  positionY: string | number,
+  description: string,
+  startState: boolean,
+  endState: boolean
+) => {
+  return Modeler.getInstance().addSendState({
+    description,
+    position: {
+      x: Number(positionX),
+      y: Number(positionY)
+    },
+    startState,
+    endState
+  });
+};
+
+export const addReceiveState = (
+  positionX: string | number,
+  positionY: string | number,
+  description: string,
+  startState: boolean,
+  endState: boolean
+) => {
+  return Modeler.getInstance().addReceiveState({
+    description,
+    position: {
+      x: Number(positionX),
+      y: Number(positionY)
+    },
+    startState,
+    endState
+  });
+};
+
+export const addFunctionState = (
+  positionX: string | number,
+  positionY: string | number,
+  description: string,
+  startState: boolean,
+  endState: boolean
+) => {
+  return Modeler.getInstance().addFunctionState({
+    description,
+    position: {
+      x: Number(positionX),
+      y: Number(positionY)
+    },
+    startState,
+    endState
   });
 };

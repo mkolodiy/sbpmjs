@@ -3,6 +3,7 @@ import '../node_modules/materialize-css/dist/js/materialize';
 import Modeler from '../../lib/modeler';
 import { subjectComponent } from './components/subject';
 import { messageComponent } from './components/message';
+import { statesComponent } from './components/basic-states';
 
 const modeler = Modeler.create({
   container: document.querySelector('.sbpmjs'),
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 subjectComponent();
 messageComponent();
+statesComponent();
 
 // const sst = modeler.sstf.add({
 //   description: 'Send state',
@@ -58,35 +60,35 @@ messageComponent();
 //   }
 // });
 
-const sub2 = modeler.addStandardSubject({
-  description:
-    'Standard subject human Standard subject human Standard subject human',
-  position: {
-    x: 200,
-    y: 500
-  }
-});
+// const sub2 = modeler.addStandardSubject({
+//   description:
+//     'Standard subject human Standard subject human Standard subject human',
+//   position: {
+//     x: 200,
+//     y: 500
+//   }
+// });
 
-const sendState1 = modeler.addSendState({
-  description: 'Send state',
-  position: {
-    x: 200,
-    y: 200
-  }
-});
+// const sendState1 = modeler.addSendState({
+//   description: 'Send state',
+//   position: {
+//     x: 200,
+//     y: 200
+//   }
+// });
 
-const receiveState1 = modeler.addReceiveState({
-  description: 'Receive state',
-  position: {
-    x: 600,
-    y: 200
-  }
-});
+// const receiveState1 = modeler.addReceiveState({
+//   description: 'Receive state',
+//   position: {
+//     x: 600,
+//     y: 200
+//   }
+// });
 
-const functionState1 = modeler.addFunctionState({
-  description: 'Receive state',
-  position: {
-    x: 600,
-    y: 600
-  }
-});
+// const functionState1 = modeler.addFunctionState({
+//   description: 'Receive state',
+//   position: {
+//     x: 600,
+//     y: 600
+//   }
+// });

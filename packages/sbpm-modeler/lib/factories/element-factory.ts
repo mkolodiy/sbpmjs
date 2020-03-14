@@ -21,8 +21,8 @@ export default class ElementFactory {
     return this.create(creationOptions).addTo(graph);
   }
 
-  public constructor() {
-    this.canvas = Canvas.getInstance();
+  public constructor(canvas: Canvas) {
+    this.canvas = canvas;
     this.registerEvents();
   }
 

@@ -11,59 +11,63 @@ import Canvas from './canvas';
 import LinkCreator from './creators/link-creator';
 
 export default class Modeler {
-  private static instance: Modeler;
-  public canvas: Canvas;
-  private elementCreator: ElementCreator;
-  private linkCreator: LinkCreator;
+  private static _instance: Modeler;
+  private _canvas: Canvas;
+  private _elementCreator: ElementCreator;
+  private _linkCreator: LinkCreator;
+
+  public get canvas() {
+    return this._canvas;
+  }
 
   public static create(options: ModelerOptions) {
-    if (!Modeler.instance) {
-      Modeler.instance = new Modeler(options);
+    if (!Modeler._instance) {
+      Modeler._instance = new Modeler(options);
     }
 
-    return Modeler.instance;
+    return Modeler._instance;
   }
 
   public static getInstance() {
-    return Modeler.instance;
+    return Modeler._instance;
   }
 
   public constructor(options: ModelerOptions) {
     const { container } = options;
-    this.canvas = Canvas.initialize(options);
-    this.elementCreator = new ElementCreator();
-    this.linkCreator = new LinkCreator(container);
+    this._canvas = new Canvas(options);
+    this._elementCreator = new ElementCreator(this._canvas);
+    this._linkCreator = new LinkCreator(this._canvas, container);
   }
 
   public addStandardSubject(options: SubjectOptions) {
-    return this.elementCreator.addStandardSubject(options);
+    return this._elementCreator.addStandardSubject(options);
   }
 
   public addSendState(options: StateOptions) {
-    return this.elementCreator.addSendState(options);
+    return this._elementCreator.addSendState(options);
   }
 
   public addReceiveState(options: StateOptions) {
-    return this.elementCreator.addReceiveState(options);
+    return this._elementCreator.addReceiveState(options);
   }
 
   public addFunctionState(options: StateOptions) {
-    return this.elementCreator.addFunctionState(options);
+    return this._elementCreator.addFunctionState(options);
   }
 
   public addMessageTransition(options: MessageTransitionOptions) {
-    return this.linkCreator.addMessageTransition(options);
+    return this._linkCreator.addMessageTransition(options);
   }
 
   public addSendStateTransition(options: LinkOptions) {
-    return this.linkCreator.addSendStateTransition(options);
+    return this._linkCreator.addSendStateTransition(options);
   }
 
   public addReceiveStateTransition(options: LinkOptions) {
-    return this.linkCreator.addReceiveStateTransition(options);
+    return this._linkCreator.addReceiveStateTransition(options);
   }
 
   public addFunctionStateTransition(options: LinkOptions) {
-    return this.linkCreator.addFunctionStateTransition(options);
+    return this._linkCreator.addFunctionStateTransition(options);
   }
 }
