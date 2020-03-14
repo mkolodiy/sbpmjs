@@ -22,7 +22,7 @@ export enum ShapeNamespace {
 
 export enum ShapeType {
   ORIGIN = 'sbpm.common.Origin',
-  MESSAGE = 'sbpm.sid.Message',
+  MESSAGE_TRANSITION = 'sbpm.sid.MessageTransition',
   STANDARD_SUBJECT = 'sbpm.sid.StandardSubject',
   SEND_STATE = 'sbpm.sbd.SendState',
   RECEIVE_STATE = 'sbpm.sbd.ReceiveState',
@@ -45,7 +45,7 @@ export enum Event {
 }
 
 export enum CustomEvent {
-  ELEMENT_ADD_MESSAGE = 'element:addMessage',
+  ELEMENT_ADD_MESSAGE_TRANSITION = 'element:addMessageTransition',
   ELEMENT_ADD_SEND_STATE_TRANSITION = 'element:addSendTransition',
   ELEMENT_ADD_RECEIVE_STATE_TRANSITION = 'element:addReceiveTransition',
   ELEMENT_ADD_FUNCTION_STATE_TRANSITION = 'element:addFunctionTransition',

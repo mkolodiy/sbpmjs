@@ -12,9 +12,9 @@ export const createFunctionStateOptions = (
   return {
     jointOptions,
     options,
-    toolsOptions,
     icon: icon(),
-    type: ShapeType.SEND_STATE
+    type: ShapeType.SEND_STATE,
+    toolsOptions
   };
 };
 

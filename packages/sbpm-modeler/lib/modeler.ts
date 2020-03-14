@@ -1,11 +1,16 @@
 import '../node_modules/jointjs/dist/joint.min.css';
-import { ModelerOptions, SubjectOptions, StateOptions } from './common/types';
+import {
+  ModelerOptions,
+  SubjectOptions,
+  StateOptions,
+  MessageTransitionOptions
+} from './common/types';
 import ElementCreator from './creators/element-creator';
 import Canvas from './canvas';
 
 export default class Modeler {
   private static instance: Modeler;
-  private canvas: Canvas;
+  public canvas: Canvas;
   private elementCreator: ElementCreator;
 
   public static create(options: ModelerOptions) {
@@ -23,7 +28,7 @@ export default class Modeler {
   public constructor(options: ModelerOptions) {
     const { el } = options;
     this.canvas = Canvas.initialize(options);
-    this.elementCreator = new ElementCreator(this.canvas);
+    this.elementCreator = new ElementCreator(this.canvas, el);
   }
 
   public addStandardSubject(options: SubjectOptions) {
@@ -40,5 +45,9 @@ export default class Modeler {
 
   public addFunctionState(options: StateOptions) {
     return this.elementCreator.addFunctionState(options);
+  }
+
+  public addMessageTransition(options: MessageTransitionOptions) {
+    return this.elementCreator.addMessageTransition(options);
   }
 }

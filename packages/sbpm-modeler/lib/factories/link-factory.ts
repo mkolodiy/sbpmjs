@@ -1,16 +1,13 @@
 import * as joint from 'jointjs';
 import Canvas from '../canvas';
-import {
-  LinkOptions,
-  MessageOptions,
-  LabelBasedLinkToolsOptions
-} from '../common/types';
+import { LinkOptions, LinkCreationOptions } from '../common/types';
 import { ShapeType, Event, CustomEvent } from '../common/constants';
 import { combineStrings } from '../common/utils';
 import {
   createLinkTools,
   createLabelBasedLinkTools
 } from '../common/link-tools';
+import elementToLinkMapping from '../shapes/elementToLinkMapping';
 
 const anchorDefaults = {
   anchor: {
@@ -18,43 +15,40 @@ const anchorDefaults = {
   }
 };
 
-export default abstract class LinkFactory {
+export default class LinkFactory {
   private canvas: Canvas;
   private link: joint.dia.Link;
   private drawConnection: boolean;
   private type: ShapeType;
 
-  public add(options: LinkOptions): joint.dia.Link {
-    this.link = this.create(options);
+  public add<A extends LinkOptions>(
+    creationOptions: LinkCreationOptions<A>
+  ): joint.dia.Link {
+    this.link = this.create(creationOptions);
     return this.link;
   }
 
-  constructor(container: Element, type: ShapeType, customEvent: string) {
+  constructor(container: Element) {
     this.canvas = Canvas.getInstance();
     this.link = null;
     this.drawConnection = false;
-    this.type = type;
-    this.registerEvents(container, customEvent);
+    this.registerEvents(container);
   }
 
-  /**
-   * Creates a new link.
-   *
-   * @param options [[ILinkOptions]] object used to create a new link.
-   * @returns A new link.
-   */
-  private create(options: LinkOptions) {
+  private create<A extends LinkOptions>(
+    creationOptions: LinkCreationOptions<A>
+  ) {
+    const { options, iconLabel } = creationOptions;
     const { graph, paper } = this.canvas;
     const { source, target } = options;
 
     const linkModel = new joint.shapes.standard.Link({
-      ...this.getLinkDefaults(),
-      type: this.type
+      ...creationOptions
     });
     linkModel.source(source, anchorDefaults);
     linkModel.target(target, anchorDefaults);
 
-    this.addIconLabel(linkModel);
+    linkModel.insertLabel(0, iconLabel);
     linkModel.addTo(graph);
 
     const linkView = linkModel.findView(paper);
@@ -67,7 +61,7 @@ export default abstract class LinkFactory {
   /**
    * Registers all necessary events needed for the interaction with a link.
    */
-  private registerEvents(container: Element, customEvent: string) {
+  private registerEvents(container: Element) {
     const { paper } = this.canvas;
 
     paper.on(
@@ -77,11 +71,14 @@ export default abstract class LinkFactory {
 
     paper.on(Event.LINK_POINTERDOWN, this.onLinkPointerDown);
 
-    paper.on(customEvent, this.onCustomEventHandler);
-
     container.addEventListener(Event.MOUSEMOVE, this.onMouseMove);
 
     container.addEventListener(Event.MOUSEUP, this.onMouseUp);
+
+    const customEvents = combineStrings([
+      CustomEvent.ELEMENT_ADD_MESSAGE_TRANSITION
+    ]);
+    paper.on(customEvents, this.onCustomEventHandler);
   }
 
   /**
@@ -89,13 +86,10 @@ export default abstract class LinkFactory {
    */
   private onLinkPointerDown = (view: joint.dia.LinkView) => {
     const { model } = view;
-    const { type } = model.attributes;
 
-    if (type === this.type) {
-      view.showTools();
-      this.addLabelBasedTools(model);
-      this.link = model;
-    }
+    view.showTools();
+    this.addLabelBasedTools(model);
+    this.link = model;
   };
 
   /**
@@ -109,7 +103,9 @@ export default abstract class LinkFactory {
     view.hideTools();
     this.drawConnection = true;
 
-    const options: MessageOptions = {
+    const { type } = view.model.attributes;
+
+    const options: LinkOptions = {
       source: view.model,
       target: {
         x: evt.clientX,
@@ -117,7 +113,11 @@ export default abstract class LinkFactory {
       }
     };
 
-    this.add(options);
+    const creationOptions: LinkCreationOptions<LinkOptions> = elementToLinkMapping[
+      type
+    ](options);
+
+    this.add(creationOptions);
   };
 
   /**
@@ -194,10 +194,8 @@ export default abstract class LinkFactory {
    * @param model Jointjs model of a link.
    */
   private addLabelBasedTools(model: joint.dia.Link) {
-    console.log('add');
-    const tools = createLabelBasedLinkTools(
-      this.getLabelBasedLinkToolsDefaults()
-    );
+    const { labelBasedLinkToolsOptions } = model.attributes;
+    const tools = createLabelBasedLinkTools(labelBasedLinkToolsOptions);
     tools.forEach((label: joint.dia.Link.Label, i: number) =>
       model.insertLabel(i + 1, label)
     );
@@ -218,21 +216,4 @@ export default abstract class LinkFactory {
   private createConnection() {
     return this.link !== null && this.drawConnection;
   }
-
-  /**
-   * Returns default options needed for the creation of the link.
-   */
-  protected abstract getLinkDefaults(): {};
-
-  /**
-   * Adds send state transition icon as a label.
-   *
-   * @param model Jointjs model of the link.
-   */
-  protected abstract addIconLabel(model: joint.shapes.standard.Link): void;
-
-  /**
-   * Returns default options needed for the creation of label based link tools.
-   */
-  protected abstract getLabelBasedLinkToolsDefaults(): LabelBasedLinkToolsOptions;
 }

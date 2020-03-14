@@ -17,7 +17,7 @@ export const isValidObject = (obj: any) => {
  * @param separator Separator which should be use to combine the strings.
  */
 export const combineStrings = (strings: string[], separator: string = ' ') => {
-  return strings.join(' ');
+  return strings.join(separator);
 };
 
 export const createIcon = (template: string) => {

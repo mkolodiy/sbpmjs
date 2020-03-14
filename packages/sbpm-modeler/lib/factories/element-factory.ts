@@ -29,7 +29,7 @@ export default class ElementFactory {
   private create<A extends ElementOptions>(
     creationOptions: ElementCreationOptions<A>
   ): joint.shapes.basic.Image {
-    const { jointOptions, options, toolsOptions, icon, type } = creationOptions;
+    const { jointOptions, options, icon, type, toolsOptions } = creationOptions;
     const { position, description } = options;
 
     const element = new joint.shapes.basic.Image({

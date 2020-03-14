@@ -1,13 +1,28 @@
-import * as joint from 'jointjs';
+import {
+  LabelBasedLinkToolsOptions,
+  MessageTransitionOptions,
+  LinkCreationOptions
+} from '../../common/types';
+import { createIcon } from '../../common/utils';
+import { ShapeType } from '../../common/constants';
 
-import { SVG_PREFIX, Error, CustomEvent, ShapeType } from '../common/constants';
-import LinkFactory from '../factories/link-factory';
-import { LabelBasedLinkToolsOptions } from '../common/types';
+export const createMessageTransitionOptions = (
+  options: MessageTransitionOptions
+): LinkCreationOptions<MessageTransitionOptions> => {
+  const { isBidirectional } = options;
+  return {
+    jointOptions,
+    options,
+    iconLabel: iconLabel(isBidirectional),
+    type: ShapeType.MESSAGE_TRANSITION,
+    labelBasedLinkToolsOptions
+  };
+};
 
 /**
- * Default options used to create a message.
+ * Default options used to create a new message transition.
  */
-const messageDefaults = {
+const jointOptions = {
   attrs: {
     wrapper: {
       pointerEvents: 'none'
@@ -15,7 +30,10 @@ const messageDefaults = {
   }
 };
 
-const labelBasedLinkToolsDefaults: LabelBasedLinkToolsOptions = {
+/**
+ * Default options used to create label based link tools.
+ */
+const labelBasedLinkToolsOptions: LabelBasedLinkToolsOptions = {
   selectionLabelOptions: {
     width: 100,
     height: 70
@@ -30,97 +48,35 @@ const labelBasedLinkToolsDefaults: LabelBasedLinkToolsOptions = {
   }
 };
 
-export default class MessageFactory extends LinkFactory {
-  private static instance: MessageFactory;
-
-  /**
-   * Creates a new [[MessageFactory]] instance.
-   *
-   * @param container HTML element where the canvas will be rendered.
-   * @returns [[MessageFactory]] instance.
-   * @throws Error when the [[MessageFactory]] instance is already initialized.
-   */
-  public static initialize(container: Element): MessageFactory {
-    if (!MessageFactory.instance) {
-      MessageFactory.instance = new MessageFactory(container);
-      return MessageFactory.instance;
-    }
-
-    throw new Error(Error.SSF_INITIALIZATION);
-  }
-
-  /**
-   * Retrieves the [[MessageFactory]] instance.
-   *
-   * @returns [[MessageFactory]] instance.
-   * @throws Error when the [[MessageFactory]] instance is not initialized.
-   */
-  public static getInstance(): MessageFactory {
-    if (!MessageFactory.instance) {
-      throw new Error(Error.SSF_INSTANCE_RETRIEVAL);
-    }
-
-    return MessageFactory.instance;
-  }
-
-  private constructor(container: Element) {
-    super(
-      container,
-      ShapeType.MESSAGE_TRANSITION,
-      CustomEvent.ELEMENT_ADD_MESSAGE_TRANSITION
-    );
-  }
-
-  protected getLinkDefaults(): {} {
-    return messageDefaults;
-  }
-
-  /**
-   * Adds message icon as a label.
-   *
-   * @param model Jointjs model of the message.
-   */
-  protected addIconLabel(model: joint.shapes.standard.Link) {
-    const iconLabel = {
-      markup: [
-        {
-          tagName: 'image',
-          selector: 'iconLabel'
-        }
-      ],
-      attrs: {
-        iconLabel: {
-          'xlink:href': this.getIcon(),
-          cursor: 'pointer',
-          width: 85,
-          height: 55,
-          xAlignment: 'middle',
-          yAlignment: 'middle'
-        }
+const iconLabel = (isBidirectional: boolean) => {
+  const icon = isBidirectional
+    ? bidirectionalMessageTransitionIcon()
+    : messageTransitionIcon();
+  return {
+    markup: [
+      {
+        tagName: 'image',
+        selector: 'iconLabel'
       }
-    };
+    ],
+    attrs: {
+      iconLabel: {
+        'xlink:href': icon,
+        cursor: 'pointer',
+        width: 85,
+        height: 55,
+        xAlignment: 'middle',
+        yAlignment: 'middle'
+      }
+    }
+  };
+};
 
-    model.insertLabel(0, iconLabel);
-  }
-
-  protected getLabelBasedLinkToolsDefaults(): LabelBasedLinkToolsOptions {
-    return labelBasedLinkToolsDefaults;
-  }
-
-  /**
-   * Retrieves a SVG icon used to display a message.
-   *
-   * @param multiple Indicates if a message is single or multiple message.
-   */
-  private getIcon(multiple: boolean = false) {
-    return multiple ? this.multipleMessagesIcon() : this.singleMessageIcon();
-  }
-
-  /**
-   * SVG icon for single message.
-   */
-  private singleMessageIcon() {
-    const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+/**
+ * SVG icon for a message transition.
+ */
+const messageTransitionIcon = () => {
+  const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg
        xmlns:dc="http://purl.org/dc/elements/1.1/"
        xmlns:cc="http://creativecommons.org/ns#"
@@ -1969,14 +1925,14 @@ export default class MessageFactory extends LinkFactory {
     </svg>
   `;
 
-    return `${SVG_PREFIX}${encodeURIComponent(template)}`;
-  }
+  return createIcon(template);
+};
 
-  /**
-   * SVG icon for multiple messages.
-   */
-  private multipleMessagesIcon() {
-    const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+/**
+ * SVG icon for a bidirectional message transition.
+ */
+const bidirectionalMessageTransitionIcon = () => {
+  const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg
        xmlns:dc="http://purl.org/dc/elements/1.1/"
        xmlns:cc="http://creativecommons.org/ns#"
@@ -3825,6 +3781,5 @@ export default class MessageFactory extends LinkFactory {
     </svg> 
   `;
 
-    return `${SVG_PREFIX}${encodeURIComponent(template)}`;
-  }
-}
+  return createIcon(template);
+};

@@ -7,7 +7,7 @@ import { CustomEvent, ShapeType } from '../../common/constants';
 import { createIcon } from '../../common/utils';
 
 export const createStandardSubjectOptions = (
-  options: SubjectOptions = defaultOptions
+  options: SubjectOptions
 ): ElementCreationOptions<SubjectOptions> => {
   const { isMachine } = options;
   const jointOptions = isMachine
@@ -20,22 +20,10 @@ export const createStandardSubjectOptions = (
   return {
     jointOptions,
     options,
-    toolsOptions,
     icon,
-    type: ShapeType.STANDARD_SUBJECT
+    type: ShapeType.STANDARD_SUBJECT,
+    toolsOptions
   };
-};
-
-/**
- * Default options.
- */
-const defaultOptions: SubjectOptions = {
-  position: {
-    x: 100,
-    y: 100
-  },
-  description: 'Standard subject',
-  isMachine: false
 };
 
 /**
@@ -86,7 +74,7 @@ const humanSubjectToolsOptions: ElementToolsOptions = {
       x: 155,
       y: -13
     },
-    event: CustomEvent.ELEMENT_ADD_MESSAGE
+    event: CustomEvent.ELEMENT_ADD_MESSAGE_TRANSITION
   }
 };
 
@@ -1994,7 +1982,7 @@ const machineSubjectToolsOptions: ElementToolsOptions = {
       x: 175,
       y: -13
     },
-    event: CustomEvent.ELEMENT_ADD_MESSAGE
+    event: CustomEvent.ELEMENT_ADD_MESSAGE_TRANSITION
   }
 };
 

@@ -28,7 +28,6 @@ export interface ButtonOptions {
 export interface CreationOptions<A> {
   jointOptions: {};
   options: A;
-  icon: string;
   type: ShapeType;
 }
 
@@ -51,6 +50,7 @@ export interface ModelerOptions {
 /* ELEMENT TYPES*/
 
 export interface ElementCreationOptions<A> extends CreationOptions<A> {
+  icon: string;
   toolsOptions: ElementToolsOptions;
 }
 
@@ -106,6 +106,7 @@ export interface StateOptions extends ElementOptions {
 /* LINK TYPES*/
 
 export interface LinkCreationOptions<A> extends CreationOptions<A> {
+  iconLabel: {};
   labelBasedLinkToolsOptions: LabelBasedLinkToolsOptions;
 }
 
@@ -118,4 +119,8 @@ export interface LabelBasedLinkToolsOptions {
 export interface LinkOptions {
   source: joint.dia.Cell | Coordinates;
   target: joint.dia.Cell | Coordinates;
+}
+
+export interface MessageTransitionOptions extends LinkOptions {
+  isBidirectional?: boolean;
 }
