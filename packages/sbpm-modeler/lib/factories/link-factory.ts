@@ -1,13 +1,18 @@
 import * as joint from 'jointjs';
 import Canvas from '../canvas';
 import { LinkOptions, LinkCreationOptions } from '../common/types';
-import { ShapeType, Event, CustomEvent } from '../common/constants';
+import {
+  ShapeType,
+  Event,
+  CustomEvent,
+  CUSTOM_EVENTS
+} from '../common/constants';
 import { combineStrings } from '../common/utils';
 import {
   createLinkTools,
   createLabelBasedLinkTools
-} from '../common/link-tools';
-import elementToLinkMapping from '../shapes/elementToLinkMapping';
+} from '../shape-tools/link-tools';
+import elementLinkMapping from '../shapes/element-link-mapping';
 
 const anchorDefaults = {
   anchor: {
@@ -75,10 +80,7 @@ export default class LinkFactory {
 
     container.addEventListener(Event.MOUSEUP, this.onMouseUp);
 
-    const customEvents = combineStrings([
-      CustomEvent.ELEMENT_ADD_MESSAGE_TRANSITION
-    ]);
-    paper.on(customEvents, this.onCustomEventHandler);
+    paper.on(combineStrings(CUSTOM_EVENTS), this.onCustomEventHandler);
   }
 
   /**
@@ -113,7 +115,7 @@ export default class LinkFactory {
       }
     };
 
-    const creationOptions: LinkCreationOptions<LinkOptions> = elementToLinkMapping[
+    const creationOptions: LinkCreationOptions<LinkOptions> = elementLinkMapping[
       type
     ](options);
 

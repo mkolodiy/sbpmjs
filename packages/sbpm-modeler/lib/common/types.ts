@@ -40,7 +40,7 @@ export interface ModelerOptions {
   /**
    * Defines a HTML element for rendering the modeler.
    */
-  el: Element;
+  container: Element;
   /**
    * Defines a router name. Possible values are: manhattan, metro, normal, orthogonal and oneSide.
    */

@@ -5,7 +5,7 @@ import { subjectComponent } from './components/subject';
 import { messageComponent } from './components/message';
 
 const modeler = Modeler.create({
-  el: document.querySelector('.sbpmjs'),
+  container: document.querySelector('.sbpmjs'),
   routerName: 'orthogonal'
 });
 

@@ -3,15 +3,18 @@ import {
   ModelerOptions,
   SubjectOptions,
   StateOptions,
-  MessageTransitionOptions
+  MessageTransitionOptions,
+  LinkOptions
 } from './common/types';
 import ElementCreator from './creators/element-creator';
 import Canvas from './canvas';
+import LinkCreator from './creators/link-creator';
 
 export default class Modeler {
   private static instance: Modeler;
   public canvas: Canvas;
   private elementCreator: ElementCreator;
+  private linkCreator: LinkCreator;
 
   public static create(options: ModelerOptions) {
     if (!Modeler.instance) {
@@ -26,9 +29,10 @@ export default class Modeler {
   }
 
   public constructor(options: ModelerOptions) {
-    const { el } = options;
+    const { container } = options;
     this.canvas = Canvas.initialize(options);
-    this.elementCreator = new ElementCreator(this.canvas, el);
+    this.elementCreator = new ElementCreator();
+    this.linkCreator = new LinkCreator(container);
   }
 
   public addStandardSubject(options: SubjectOptions) {
@@ -48,6 +52,18 @@ export default class Modeler {
   }
 
   public addMessageTransition(options: MessageTransitionOptions) {
-    return this.elementCreator.addMessageTransition(options);
+    return this.linkCreator.addMessageTransition(options);
+  }
+
+  public addSendStateTransition(options: LinkOptions) {
+    return this.linkCreator.addSendStateTransition(options);
+  }
+
+  public addReceiveStateTransition(options: LinkOptions) {
+    return this.linkCreator.addReceiveStateTransition(options);
+  }
+
+  public addFunctionStateTransition(options: LinkOptions) {
+    return this.linkCreator.addFunctionStateTransition(options);
   }
 }

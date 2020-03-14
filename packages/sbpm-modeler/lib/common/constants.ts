@@ -53,4 +53,11 @@ export enum CustomEvent {
   LINK_REMOVE_VERTICES = 'link:removeVertices'
 }
 
+export const CUSTOM_EVENTS = [
+  CustomEvent.ELEMENT_ADD_MESSAGE_TRANSITION,
+  CustomEvent.ELEMENT_ADD_SEND_STATE_TRANSITION,
+  CustomEvent.ELEMENT_ADD_RECEIVE_STATE_TRANSITION,
+  CustomEvent.ELEMENT_ADD_FUNCTION_STATE_TRANSITION
+];
+
 export const SVG_PREFIX = 'data:image/svg+xml;utf8,';

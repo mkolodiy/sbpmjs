@@ -1,7 +1,7 @@
 import * as joint from 'jointjs';
 
-import { deleteIcon, callMadeIcon, openInNewIcon } from './icons';
-import { ButtonOptions, ElementToolsOptions } from './types';
+import { deleteIcon, callMadeIcon, openInNewIcon } from '../common/icons';
+import { ButtonOptions, ElementToolsOptions } from '../common/types';
 import Modeler from '../modeler';
 
 /**

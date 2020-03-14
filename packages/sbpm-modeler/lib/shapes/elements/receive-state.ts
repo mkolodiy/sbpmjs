@@ -13,7 +13,7 @@ export const createReceiveStateOptions = (
     jointOptions,
     options,
     icon: icon(),
-    type: ShapeType.SEND_STATE,
+    type: ShapeType.RECEIVE_STATE,
     toolsOptions
   };
 };

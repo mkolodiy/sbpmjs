@@ -3,7 +3,7 @@ import * as joint from 'jointjs';
 import Canvas from '../canvas';
 import { ElementOptions, ElementCreationOptions } from '../common/types';
 import { Event, ShapeType } from '../common/constants';
-import { createElementTools } from '../common/element-tools';
+import { createElementTools } from '../shape-tools/element-tools';
 
 export default class ElementFactory {
   protected canvas: Canvas;

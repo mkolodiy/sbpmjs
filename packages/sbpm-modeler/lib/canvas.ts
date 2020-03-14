@@ -10,9 +10,9 @@ import { combineStrings } from './common/utils';
 import { Coordinates, ModelerOptions } from './common/types';
 
 /**
- * Default options used to create a new paper instance.
+ * Default options used to create a new paper.
  */
-const paperDefaults = {
+const paperOptions = {
   width: '100%',
   height: '100%',
   gridSize: 1,
@@ -80,7 +80,7 @@ export default class Canvas {
   }
 
   constructor(options: ModelerOptions) {
-    const { el: container, routerName } = options;
+    const { container, routerName } = options;
 
     const defaultRouter = routerName
       ? { name: routerName }
@@ -88,7 +88,7 @@ export default class Canvas {
 
     this._graph = new joint.dia.Graph();
     this._paper = new joint.dia.Paper({
-      ...paperDefaults,
+      ...paperOptions,
       el: container,
       model: this._graph,
       defaultRouter

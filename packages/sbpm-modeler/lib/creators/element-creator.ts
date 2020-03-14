@@ -1,29 +1,18 @@
-import {
-  SubjectOptions,
-  StateOptions,
-  MessageTransitionOptions
-} from '../common/types';
+import { SubjectOptions, StateOptions } from '../common/types';
 import { createStandardSubjectOptions } from '../shapes/elements/standard-subject';
 import ElementFactory from '../factories/element-factory';
-import Canvas from '../canvas';
 import { createSendStateOptions } from '../shapes/elements/send-state';
 import { createReceiveStateOptions } from '../shapes/elements/receive-state';
 import { createFunctionStateOptions } from '../shapes/elements/function-state';
-import { createMessageTransitionOptions } from '../shapes/links/message-transition';
-import LinkFactory from '../factories/link-factory';
 
 export default class ElementCreator {
-  private canvas: Canvas;
   private elementFactory: ElementFactory;
-  private linkFactory: LinkFactory;
 
   /**
    * Constructor
    */
-  public constructor(canvas: Canvas, container: Element) {
-    this.canvas = canvas;
+  public constructor() {
     this.elementFactory = new ElementFactory();
-    this.linkFactory = new LinkFactory(container);
   }
 
   /**
@@ -47,10 +36,5 @@ export default class ElementCreator {
   public addFunctionState(options: StateOptions) {
     const creationOptions = createFunctionStateOptions(options);
     return this.elementFactory.add(creationOptions);
-  }
-
-  public addMessageTransition(options: MessageTransitionOptions) {
-    const creationOptions = createMessageTransitionOptions(options);
-    return this.linkFactory.add(creationOptions);
   }
 }

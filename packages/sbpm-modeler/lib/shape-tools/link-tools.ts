@@ -1,7 +1,7 @@
 import * as joint from 'jointjs';
-import { deleteIcon, autoRenewIcon } from './icons';
-import { CustomEvent } from './constants';
-import { LabelBasedLinkToolsOptions } from './types';
+import { deleteIcon, autoRenewIcon } from '../common/icons';
+import { CustomEvent } from '../common/constants';
+import { LabelBasedLinkToolsOptions } from '../common/types';
 
 /**
  * Creates link tools.
