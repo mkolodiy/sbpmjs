@@ -1,25 +1,15 @@
-export enum Error {
-  CANVAS_INSTANCE_RETRIEVAL = 'Canvas is not initialized. Please use Canvas.initialize() method to create a new instance of the canvas.',
-  CANVAS_INITIALIZATION = 'Canvas is already initialized. Please use Canvas.getInstance() method to retrieve the canvas instance.',
-  SSF_INSTANCE_RETRIEVAL = 'StandardSubjectFactory is not initialized. Please use StandardSubjectFactory.initialize() method to create a new instance of the factory.',
-  SSF_INITIALIZATION = 'StandardSubjectFactory is already initialized. Please use StandardSubjectFactory.getInstance() method to retrieve the factory instance.',
-  MF_INSTANCE_RETRIEVAL = 'MessageFactory is not initialized. Please use MessageFactory.initialize() method to create a new instance of the factory.',
-  MF_INITIALIZATION = 'MessageFactory is already initialized. Please use MessageFactory.getInstance() method to retrieve the factory instance.',
-  INITIALIZATION = 'Modeler is already initialized. Please use Modeler.getInstance() method to retrieve the modeler instance.',
-  INSTANCE_RETRIEVAL = 'Modeler is not initialized. Please use Modeler.initialize() method to create a new instance of the modeler.',
-  INVALID_MODELER_OPTIONS = 'Please provide valid modeler options.',
-  SStF_INSTANCE_RETRIEVAL = 'SendStateFactory is not initialized. Please use SendStateFactory.initialize() method to create a new instance of the factory.',
-  SStF_INITIALIZATION = 'SendStateFactory is already initialized. Please use SendStateFactory.getInstance() method to retrieve the factory instance.',
-  SSTF_INSTANCE_RETRIEVAL = 'SendStateTransitionFactory is not initialized. Please use SendStateTransitionFactory.initialize() method to create a new instance of the factory.',
-  SSTF_INITIALIZATION = 'SendStateTransitionFactory is already initialized. Please use SendStateTransitionFactory.getInstance() method to retrieve the factory instance.'
-}
-
+/**
+ * Shape namespaces used to check if a shape is SBPM shape.
+ */
 export enum ShapeNamespace {
   COMMON = 'sbpm.common',
   SID = 'sbpm.sid',
   SBD = 'sbpm.sbd'
 }
 
+/**
+ * Shape types used to create SBPM shapes.
+ */
 export enum ShapeType {
   ORIGIN = 'sbpm.common.Origin',
   MESSAGE_TRANSITION = 'sbpm.sid.MessageTransition',
@@ -32,6 +22,9 @@ export enum ShapeType {
   FUNCTION_STATE_TRANSITION = 'sbpm.sbd.FunctionStateTransition'
 }
 
+/**
+ * Joint events.
+ */
 export enum Event {
   BLANK_POINTERUP = 'blank:pointerup',
   BLANK_POINTERDOWN = 'blank:pointerdown',
@@ -44,6 +37,9 @@ export enum Event {
   POINTERDOWN = 'pointerdown'
 }
 
+/**
+ * Custom events.
+ */
 export enum CustomEvent {
   ELEMENT_ADD_MESSAGE_TRANSITION = 'element:addMessageTransition',
   ELEMENT_ADD_SEND_STATE_TRANSITION = 'element:addSendTransition',
@@ -53,6 +49,9 @@ export enum CustomEvent {
   LINK_REMOVE_VERTICES = 'link:removeVertices'
 }
 
+/**
+ * List of custom events that are triggered by clicking on element link tool.
+ */
 export const CUSTOM_EVENTS = [
   CustomEvent.ELEMENT_ADD_MESSAGE_TRANSITION,
   CustomEvent.ELEMENT_ADD_SEND_STATE_TRANSITION,
