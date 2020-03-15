@@ -29,11 +29,7 @@ export default {
     typescript({
       useTsconfigDeclarationDir: true
     }),
-    commonjs({
-      namedExports: {
-        'node_modules/lodash/lodash.js': ['isPlainObject', 'isEmpty']
-      }
-    }),
+    commonjs(),
     resolve(),
     sourceMaps()
   ]
