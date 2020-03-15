@@ -2,6 +2,9 @@ import { ShapeType } from './constants';
 
 /* COMMON TYPES */
 
+/**
+ * Representation of the generic options.
+ */
 export interface GenericOptions {
   [key: string]: any;
 }
@@ -20,14 +23,35 @@ export interface Coordinates {
   y: number;
 }
 
+/**
+ * Representation of the button options.
+ */
 export interface ButtonOptions {
+  /**
+   * Defines coordinates where the button should be positioned.
+   */
   coordinates: Coordinates;
+  /**
+   * Defines which event should be triggered when the button is clicked.
+   */
   event?: string;
 }
 
+/**
+ * Representation of the general options used to create a new shape.
+ */
 export interface CreationOptions<A> {
+  /**
+   * Defines joint options.
+   */
   jointOptions: {};
+  /**
+   * Defines shape options that are provided by the users of the library.
+   */
   options: A;
+  /**
+   * Defines shape type.
+   */
   type: ShapeType;
 }
 
@@ -49,8 +73,17 @@ export interface ModelerOptions {
 
 /* ELEMENT TYPES*/
 
+/**
+ * Representation of the options used to create a new element shape.
+ */
 export interface ElementCreationOptions<A> extends CreationOptions<A> {
+  /**
+   * Defines icon of the element.
+   */
   icon: string;
+  /**
+   * Defines element tools options.
+   */
   toolsOptions: ElementToolsOptions;
 }
 
@@ -72,6 +105,9 @@ export interface ElementToolsOptions {
   linkButtonOptions?: ButtonOptions;
 }
 
+/**
+ * Representation of the options used to create a element shape.
+ */
 export interface ElementOptions extends GenericOptions {
   /**
    * Defines description that will be shown besides the icon of the element.
@@ -99,28 +135,74 @@ export interface SubjectOptions extends ElementOptions {
  * Representation of the options for the creation of a state.
  */
 export interface StateOptions extends ElementOptions {
+  /**
+   * Defines if a state is a start state.
+   *
+   * @default false
+   */
   startState?: boolean;
+  /**
+   * Defines if a state is an end state.
+   *
+   * @default false
+   */
   endState?: boolean;
 }
 
 /* LINK TYPES*/
 
+/**
+ * Representation of the options used to create a new link shape.
+ */
 export interface LinkCreationOptions<A> extends CreationOptions<A> {
+  /**
+   * Defines a label that should be used as an icon for a link shape.
+   */
   iconLabel: {};
+  /**
+   * Defines label based link tools options.
+   */
   labelBasedLinkToolsOptions: LabelBasedLinkToolsOptions;
 }
 
+/**
+ * Representation of tha label based link tools options.
+ */
 export interface LabelBasedLinkToolsOptions {
+  /**
+   * Defines options used to create selection label.
+   */
   selectionLabelOptions: GenericOptions;
+  /**
+   * Defines options used to create remove label.
+   */
   removeLabelOptions: GenericOptions;
+  /**
+   * Defines options used to create remove vertices label.
+   */
   removeVerticesLabelOptions: GenericOptions;
 }
 
+/**
+ * Representation of the options used to create a link shape.
+ */
 export interface LinkOptions {
+  /**
+   * Defines a source element.
+   */
   source: joint.dia.Cell | Coordinates;
+  /**
+   * Defines a target element.
+   */
   target: joint.dia.Cell | Coordinates;
 }
 
+/**
+ * Representation of the message transition options.
+ */
 export interface MessageTransitionOptions extends LinkOptions {
+  /**
+   * Defines is a message transition goes in both directions.
+   */
   isBidirectional?: boolean;
 }
