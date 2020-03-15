@@ -10,6 +10,8 @@ const modeler = Modeler.create({
   routerName: 'orthogonal'
 });
 
+modeler;
+
 document.addEventListener('DOMContentLoaded', function() {
   const element = document.querySelector('.collapsible');
   const instance = M.Collapsible.init(element, {
