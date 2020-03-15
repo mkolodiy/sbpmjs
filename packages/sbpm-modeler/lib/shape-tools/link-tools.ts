@@ -72,7 +72,7 @@ export const createLabelBasedLinkTools = (
     ],
     attrs: {
       removeLabel: {
-        'xlink:href': deleteIcon(),
+        'xlink:href': deleteIcon,
         cursor: 'pointer',
         width: 24,
         height: 24,
@@ -92,7 +92,7 @@ export const createLabelBasedLinkTools = (
     ],
     attrs: {
       removeVerticesLabel: {
-        'xlink:href': autoRenewIcon(),
+        'xlink:href': autoRenewIcon,
         cursor: 'pointer',
         width: 24,
         height: 24,

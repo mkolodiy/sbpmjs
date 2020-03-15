@@ -57,7 +57,7 @@ const createRemoveButton = (options: ButtonOptions) => {
       {
         tagName: 'image',
         attributes: {
-          'xlink:href': deleteIcon(),
+          'xlink:href': deleteIcon,
           cursor: 'pointer'
         }
       }
@@ -75,7 +75,7 @@ const createOpenInNewButton = (options: ButtonOptions) => {
       {
         tagName: 'image',
         attributes: {
-          'xlink:href': openInNewIcon(),
+          'xlink:href': openInNewIcon,
           cursor: 'pointer'
         }
       }
@@ -96,7 +96,7 @@ const createLinkButton = (options: ButtonOptions) => {
       {
         tagName: 'image',
         attributes: {
-          'xlink:href': callMadeIcon(),
+          'xlink:href': callMadeIcon,
           cursor: 'pointer'
         }
       }
