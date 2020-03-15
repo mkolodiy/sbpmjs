@@ -1,10 +1,12 @@
 import Canvas from '../canvas';
 import ElementFactory from '../factories/element-factory';
 import { SubjectOptions, StateOptions } from '../common/types';
-import { createStandardSubjectOptions } from '../shapes/elements/standard-subject';
-import { createSendStateOptions } from '../shapes/elements/send-state';
-import { createReceiveStateOptions } from '../shapes/elements/receive-state';
-import { createFunctionStateOptions } from '../shapes/elements/function-state';
+import {
+  createStandardSubjectOptions,
+  createSendStateOptions,
+  createReceiveStateOptions,
+  createFunctionStateOptions
+} from '../shapes/elements';
 
 export default class ElementCreator {
   private elementFactory: ElementFactory;

@@ -1,10 +1,12 @@
 import Canvas from '../canvas';
 import LinkFactory from '../factories/link-factory';
 import { LinkOptions, MessageTransitionOptions } from '../common/types';
-import { createMessageTransitionOptions } from '../shapes/links/message-transition';
-import { createSendStateTransitionOptions } from '../shapes/links/send-state-transition';
-import { createReceiveStateTransitionOptions } from '../shapes/links/receive-state-transition';
-import { createFunctionStateTransitionOptions } from '../shapes/links/function-state-transition';
+import {
+  createMessageTransitionOptions,
+  createSendStateTransitionOptions,
+  createReceiveStateTransitionOptions,
+  createFunctionStateTransitionOptions
+} from '../shapes/links';
 
 export default class LinkCreator {
   private linkFactory: LinkFactory;
