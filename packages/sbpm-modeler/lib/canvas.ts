@@ -38,7 +38,7 @@ export default class Canvas {
   /**
    * Unhighlights all the elements on the canvas.
    */
-  public unhighlight() {
+  public unhighlightAllElements() {
     this.getElements().forEach((model: joint.dia.Element) => {
       this._paper.findViewByModel(model).unhighlight();
     });

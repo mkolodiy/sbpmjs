@@ -1,31 +1,41 @@
 import * as joint from 'jointjs';
-
 import Canvas from '../canvas';
 import { ElementOptions, ElementCreationOptions } from '../common/types';
-import { Event, ShapeType } from '../common/constants';
+import { Event } from '../common/constants';
 import { createElementTools } from '../shape-tools/element-tools';
 
 export default class ElementFactory {
-  protected canvas: Canvas;
+  private _canvas: Canvas;
 
   /**
    * Creates and adds a new element to the canvas.
    *
-   * @param options [[IElementOptions]] object containing options used to create a new element.
-   * @returns A new element object.
+   * @param options [[ElementCreationOptions]] object containing all options used to create a new element.
+   * @returns A new element.
    */
   public add<A extends ElementOptions>(
     creationOptions: ElementCreationOptions<A>
   ): joint.shapes.basic.Image {
-    const { graph } = this.canvas;
+    const { graph } = this._canvas;
     return this.create(creationOptions).addTo(graph);
   }
 
+  /**
+   * Constructor
+   *
+   * @param canvas [[Canvas]] object used to register events.
+   */
   public constructor(canvas: Canvas) {
-    this.canvas = canvas;
+    this._canvas = canvas;
     this.registerEvents();
   }
 
+  /**
+   * Creates a new element.
+   *
+   * @param creationOptions [[ElementCreationOptions]] object containing all options used to create a new element.
+   * @returns A new element.
+   */
   private create<A extends ElementOptions>(
     creationOptions: ElementCreationOptions<A>
   ): joint.shapes.basic.Image {
@@ -50,12 +60,10 @@ export default class ElementFactory {
    * Registers all necessary events needed for the interaction with an element.
    */
   private registerEvents() {
-    const { paper } = this.canvas;
-    paper.on(Event.ELEMENT_POINTERDOWN, this.onElementPointerDown);
-  }
-
-  private onElementPointerDown(cellView: joint.dia.CellView): void {
-    const { toolsOptions } = cellView.model.attributes;
-    cellView.addTools(createElementTools(toolsOptions));
+    const { paper } = this._canvas;
+    paper.on(Event.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
+      const { toolsOptions } = cellView.model.attributes;
+      cellView.addTools(createElementTools(toolsOptions));
+    });
   }
 }
