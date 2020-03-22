@@ -105,7 +105,6 @@ export default class LinkFactory {
    */
   private onLinkPointerDown = (view: joint.dia.LinkView) => {
     const { model } = view;
-    console.log(model);
     view.showTools();
     this.addLabelBasedTools(model);
     this._link = model;

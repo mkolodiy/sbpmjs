@@ -27,33 +27,12 @@ export default class Canvas {
   private _paper: joint.dia.Paper;
   private _dragStartPosition: Coordinates;
 
-  public get graph() {
-    return this._graph;
-  }
-
-  public get paper() {
-    return this._paper;
-  }
-
   /**
-   * Unhighlights all the elements on the canvas.
-   */
-  public unhighlightAllElements() {
-    this.getElements().forEach((model: joint.dia.Element) => {
-      this._paper.findViewByModel(model).unhighlight();
-    });
-  }
-
-  /**
-   * Unhighlights one specific element on the canvas.
+   * Constructor
    *
-   * @param model Jointjs element.
+   * @param options [[ModelerOptions]] object containing all options for creating a new canvas.
    */
-  public unhighlightElement(model: joint.dia.Element) {
-    model.findView(this._paper).unhighlight();
-  }
-
-  constructor(options: ModelerOptions) {
+  public constructor(options: ModelerOptions) {
     const { container, routerName } = options;
 
     const defaultRouter = routerName
@@ -72,6 +51,77 @@ export default class Canvas {
     this.addDragging(container);
     this.addOrigin();
     this.registerPaperEvents();
+  }
+
+  /**
+   * Returns graph instance.
+   *
+   * @returns Joint graph.
+   */
+  public get graph() {
+    return this._graph;
+  }
+
+  /**
+   * Returns paper instance.
+   *
+   * @returns Joint paper.
+   */
+  public get paper() {
+    return this._paper;
+  }
+
+  /**
+   * Unhighlights all the elements on the canvas.
+   */
+  public unhighlightAllElements() {
+    this.getElements().forEach((model: joint.dia.Element) => {
+      this._paper.findViewByModel(model).unhighlight();
+    });
+  }
+
+  /**
+   * Unhighlights one specific element on the canvas.
+   *
+   * @param model Joint element.
+   */
+  public unhighlightElement(model: joint.dia.Element) {
+    model.findView(this._paper).unhighlight();
+  }
+
+  /**
+   * Get all elements on the canvas.
+   */
+  public getElements() {
+    const allElements = this._graph.getElements();
+    return allElements.filter(
+      (el: joint.dia.Element) => el.attributes.type !== ShapeNamespace.COMMON
+    );
+  }
+
+  /**
+   * Get all links on the canvas.
+   */
+  public getLinks() {
+    const allElements = this._graph.getLinks();
+    return allElements.filter(
+      (el: joint.dia.Link) => el.attributes.type !== ShapeNamespace.COMMON
+    );
+  }
+
+  /**
+   * Removes all shapes from the graph.
+   */
+  public clear() {
+    this._graph.clear();
+    this.addOrigin();
+  }
+
+  /**
+   * Sets canvas to origin.
+   */
+  public setToOrigin() {
+    this._paper.translate(0, 0);
   }
 
   /**
@@ -206,16 +256,6 @@ export default class Canvas {
         evt.stopPropagation();
         view.model.remove();
       }
-    );
-  }
-
-  /**
-   * Get all elements on the canvas.
-   */
-  private getElements() {
-    const allElements = this._graph.getElements();
-    return allElements.filter(
-      (el: joint.dia.Element) => el.attributes.type !== ShapeNamespace.COMMON
     );
   }
 }

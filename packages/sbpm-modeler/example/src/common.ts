@@ -14,7 +14,8 @@ export const addSubject = (
   description: string,
   machine: boolean
 ) => {
-  return Modeler.getInstance().addStandardSubject({
+  const { elementCreator } = Modeler.getInstance();
+  return elementCreator.addStandardSubject({
     description,
     position: {
       x: Number(positionX),
@@ -29,7 +30,8 @@ export const addMessage = (
   target: any,
   isBidirectional?: boolean
 ) => {
-  return Modeler.getInstance().addMessageTransition({
+  const { linkCreator } = Modeler.getInstance();
+  return linkCreator.addMessageTransition({
     source,
     target,
     isBidirectional
@@ -43,7 +45,8 @@ export const addSendState = (
   startState: boolean,
   endState: boolean
 ) => {
-  return Modeler.getInstance().addSendState({
+  const { elementCreator } = Modeler.getInstance();
+  return elementCreator.addSendState({
     description,
     position: {
       x: Number(positionX),
@@ -61,7 +64,8 @@ export const addReceiveState = (
   startState: boolean,
   endState: boolean
 ) => {
-  return Modeler.getInstance().addReceiveState({
+  const { elementCreator } = Modeler.getInstance();
+  return elementCreator.addReceiveState({
     description,
     position: {
       x: Number(positionX),
@@ -79,7 +83,8 @@ export const addFunctionState = (
   startState: boolean,
   endState: boolean
 ) => {
-  return Modeler.getInstance().addFunctionState({
+  const { elementCreator } = Modeler.getInstance();
+  return elementCreator.addFunctionState({
     description,
     position: {
       x: Number(positionX),

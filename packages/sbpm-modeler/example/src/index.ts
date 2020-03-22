@@ -5,34 +5,34 @@ import { subjectComponent } from './components/subject';
 import { messageComponent } from './components/message';
 import { statesComponent } from './components/basic-states';
 
-const modeler = Modeler.create({
+const modeler = Modeler.initialize({
   container: document.querySelector('.sbpmjs'),
   routerName: 'orthogonal'
 });
 
-modeler;
+const { elementCreator, linkCreator, canvas } = modeler;
 
 document.addEventListener('DOMContentLoaded', function() {
   const element = document.querySelector('.collapsible');
   const instance = M.Collapsible.init(element, {
     accordion: false
   });
-  instance.open(0);
+  instance.open(1);
 });
+
+document
+  .querySelector('.clear-canvas')
+  .addEventListener('click', () => canvas.clear());
+
+document
+  .querySelector('.set-canvas-to-origin')
+  .addEventListener('click', () => canvas.setToOrigin());
 
 subjectComponent();
 messageComponent();
 statesComponent();
 
-// const sst = modeler.sstf.add({
-//   description: 'Send state',
-//   position: {
-//     x: 200,
-//     y: 100
-//   }
-// });
-
-// const sub2 = modeler.addStandardSubject({
+// const sub2 = elementCreator.addStandardSubject({
 //   description:
 //     'Standard subject human Standard subject human Standard subject human',
 //   position: {
