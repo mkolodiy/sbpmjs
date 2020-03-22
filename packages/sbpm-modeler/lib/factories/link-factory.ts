@@ -1,7 +1,7 @@
 import * as joint from 'jointjs';
 import Canvas from '../canvas';
 import { LinkOptions, LinkCreationOptions } from '../common/types';
-import { ShapeType, Event, CUSTOM_EVENTS } from '../common/constants';
+import { Event, CUSTOM_EVENTS } from '../common/constants';
 import { combineStrings } from '../common/utils';
 import {
   createLinkTools,
@@ -32,7 +32,9 @@ export default class LinkFactory {
   public add<A extends LinkOptions>(
     creationOptions: LinkCreationOptions<A>
   ): joint.dia.Link {
+    this._canvas.hideAllTools();
     this._link = this.create(creationOptions);
+    this._canvas.triggerLinkPointerdown(this._link);
     return this._link;
   }
 
@@ -59,7 +61,6 @@ export default class LinkFactory {
     creationOptions: LinkCreationOptions<A>
   ) {
     const { options, iconLabel } = creationOptions;
-    const { graph, paper } = this._canvas;
     const { source, target } = options;
 
     const linkModel = new joint.shapes.standard.Link(creationOptions);
@@ -67,9 +68,9 @@ export default class LinkFactory {
     linkModel.target(target, anchorOptions);
 
     linkModel.insertLabel(0, iconLabel);
-    linkModel.addTo(graph);
+    linkModel.addTo(this._canvas.graph);
 
-    const linkView = linkModel.findView(paper);
+    const linkView = linkModel.findView(this._canvas.paper);
     this.addTools(linkView);
     this.addLabelBasedTools(linkModel);
 
@@ -82,20 +83,21 @@ export default class LinkFactory {
    * @param container [[Element]] object used to register DOM events.
    */
   private registerEvents(container: Element) {
-    const { paper } = this._canvas;
-
-    paper.on(
+    this._canvas.paper.on(
       combineStrings([Event.CELL_POINTERDOWN, Event.BLANK_POINTERDOWN]),
       () => this.reset()
     );
 
-    paper.on(Event.LINK_POINTERDOWN, this.onLinkPointerDown);
+    this._canvas.paper.on(Event.LINK_POINTERDOWN, this.onLinkPointerDown);
 
     container.addEventListener(Event.MOUSEMOVE, this.onMouseMove);
 
     container.addEventListener(Event.MOUSEUP, this.onMouseUp);
 
-    paper.on(combineStrings(CUSTOM_EVENTS), this.onCustomEventHandler);
+    this._canvas.paper.on(
+      combineStrings(CUSTOM_EVENTS),
+      this.onCustomEventHandler
+    );
   }
 
   /**
@@ -146,19 +148,18 @@ export default class LinkFactory {
    */
   private onMouseMove = (evt: MouseEvent) => {
     if (this.createConnection()) {
-      const { paper, unhighlightAllElements } = this._canvas;
-      const coordinates = paper.snapToGrid({
+      const coordinates = this._canvas.paper.snapToGrid({
         x: evt.clientX,
         y: evt.clientY
       });
       this._link.target(coordinates);
-      const views = paper.findViewsFromPoint(coordinates);
+      const views = this._canvas.paper.findViewsFromPoint(coordinates);
       const view: joint.dia.ElementView = views[0] || null;
 
       if (view !== null) {
         view.highlight();
       } else {
-        unhighlightAllElements();
+        this._canvas.unhighlightAllElements();
       }
     }
   };
@@ -170,15 +171,14 @@ export default class LinkFactory {
    */
   private onMouseUp = (evt: MouseEvent) => {
     if (this.createConnection()) {
-      const { graph, paper, unhighlightElement } = this._canvas;
-      const coordinates = paper.snapToGrid({
+      const coordinates = this._canvas.paper.snapToGrid({
         x: evt.clientX,
         y: evt.clientY
       });
-      const elements = graph.findModelsFromPoint(coordinates);
+      const elements = this._canvas.graph.findModelsFromPoint(coordinates);
       const element = elements[0] || null;
       if (element !== null) {
-        unhighlightElement(element);
+        this._canvas.unhighlightElement(element);
         this._link.target(element);
       } else {
         this._link.remove();

@@ -6,6 +6,7 @@ import { createElementTools } from '../shape-tools/element-tools';
 
 export default class ElementFactory {
   private _canvas: Canvas;
+  private _element: joint.dia.Element;
 
   /**
    * Creates and adds a new element to the canvas.
@@ -16,8 +17,9 @@ export default class ElementFactory {
   public add<A extends ElementOptions>(
     creationOptions: ElementCreationOptions<A>
   ): joint.shapes.basic.Image {
-    const { graph } = this._canvas;
-    return this.create(creationOptions).addTo(graph);
+    this._element = this.create(creationOptions).addTo(this._canvas.graph);
+    this._canvas.triggerElementPointerdown(this._element);
+    return this._element;
   }
 
   /**
@@ -60,10 +62,12 @@ export default class ElementFactory {
    * Registers all necessary events needed for the interaction with an element.
    */
   private registerEvents() {
-    const { paper } = this._canvas;
-    paper.on(Event.ELEMENT_POINTERDOWN, (cellView: joint.dia.CellView) => {
-      const { toolsOptions } = cellView.model.attributes;
-      cellView.addTools(createElementTools(toolsOptions));
-    });
+    this._canvas.paper.on(
+      Event.ELEMENT_POINTERDOWN,
+      (cellView: joint.dia.CellView) => {
+        const { toolsOptions } = cellView.model.attributes;
+        cellView.addTools(createElementTools(toolsOptions));
+      }
+    );
   }
 }

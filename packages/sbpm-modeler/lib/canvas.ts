@@ -125,6 +125,55 @@ export default class Canvas {
   }
 
   /**
+   * Triggers element pointer down event.
+   *
+   * @param element Joint element.
+   */
+  public triggerElementPointerdown(element: joint.dia.Element) {
+    this._paper.trigger(
+      Event.ELEMENT_POINTERDOWN,
+      this._paper.findViewByModel(element)
+    );
+  }
+
+  /**
+   * Triggers link pointer down event.
+   *
+   * @param link Joint link.
+   */
+  public triggerLinkPointerdown(link: joint.dia.Link) {
+    this._paper.trigger(
+      Event.LINK_POINTERDOWN,
+      this._paper.findViewByModel(link)
+    );
+  }
+
+  /**
+   * Hides tools of all shapes on the canvas.
+   */
+  public hideAllTools() {
+    this._paper.hideTools();
+  }
+
+  /**
+   * React to user clicking on an element.
+   *
+   * @param cb Callback function that is executed when the user clicks on an element.
+   */
+  public onElementSelected(cb: (cellView?: joint.dia.CellView) => void) {
+    this._paper.on(Event.ELEMENT_POINTERDOWN, cb);
+  }
+
+  /**
+   * React to user clicking on a link.
+   *
+   * @param cb Callback function that is executed when the user clicks on a link.
+   */
+  public onLinkSelected(cb: (cellView?: joint.dia.CellView) => void) {
+    this._paper.on(Event.LINK_POINTERDOWN, cb);
+  }
+
+  /**
    * Add dragging to the canvas.
    *
    * @param container HTML element where the canvas will be rendered.

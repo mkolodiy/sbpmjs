@@ -28,6 +28,14 @@ document
   .querySelector('.set-canvas-to-origin')
   .addEventListener('click', () => canvas.setToOrigin());
 
+canvas.onElementSelected((cellView: joint.dia.CellView) => {
+  console.log('test');
+});
+
+canvas.onLinkSelected((cellView: joint.dia.CellView) => {
+  console.log('test');
+});
+
 subjectComponent();
 messageComponent();
 statesComponent();
