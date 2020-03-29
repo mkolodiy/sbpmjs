@@ -156,6 +156,16 @@ export default class Canvas {
   }
 
   /**
+   * Get element cell view;
+   *
+   * @param model Joint element.
+   * @returns Joint cell view.
+   */
+  public getCellView(model: joint.dia.Element) {
+    return this._paper.findViewByModel(model);
+  }
+
+  /**
    * React to user clicking on an element.
    *
    * @param cb Callback function that is executed when the user clicks on an element.

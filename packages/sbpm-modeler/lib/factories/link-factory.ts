@@ -34,7 +34,6 @@ export default class LinkFactory {
   ): joint.dia.Link {
     this._canvas.hideAllTools();
     this._link = this.create(creationOptions);
-    this._canvas.triggerLinkPointerdown(this._link);
     return this._link;
   }
 

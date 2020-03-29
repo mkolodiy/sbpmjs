@@ -29,7 +29,11 @@ document
   .addEventListener('click', () => canvas.setToOrigin());
 
 canvas.onElementSelected((cellView: joint.dia.CellView) => {
-  console.log('test');
+  setTimeout(
+    () => cellView.model.attr('text/textWrap/text', 'description'),
+    1000
+  );
+  console.log(cellView);
 });
 
 canvas.onLinkSelected((cellView: joint.dia.CellView) => {

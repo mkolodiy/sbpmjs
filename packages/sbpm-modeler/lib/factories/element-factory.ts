@@ -18,7 +18,7 @@ export default class ElementFactory {
     creationOptions: ElementCreationOptions<A>
   ): joint.shapes.basic.Image {
     this._element = this.create(creationOptions).addTo(this._canvas.graph);
-    this._canvas.triggerElementPointerdown(this._element);
+    this.addElementTools(this._canvas.getCellView(this._element));
     return this._element;
   }
 
@@ -65,9 +65,18 @@ export default class ElementFactory {
     this._canvas.paper.on(
       Event.ELEMENT_POINTERDOWN,
       (cellView: joint.dia.CellView) => {
-        const { toolsOptions } = cellView.model.attributes;
-        cellView.addTools(createElementTools(toolsOptions));
+        this.addElementTools(cellView);
       }
     );
+  }
+
+  /**
+   * Adds element tools for given cell view.
+   *
+   * @param cellView Joint cell view.
+   */
+  private addElementTools(cellView: joint.dia.CellView) {
+    const { toolsOptions } = cellView.model.attributes;
+    cellView.addTools(createElementTools(toolsOptions));
   }
 }
