@@ -1,12 +1,11 @@
 import {
   ElementToolsOptions,
   StateOptions,
-  ElementCreationOptions,
-  GenericOptions
+  ElementCreationOptions
 } from '../../common/types';
 import { CustomEvent, ShapeType } from '../../common/constants';
 import { createIcon } from '../../common/utils';
-import { blueDotIcon, redDotIcon } from '../../common/icons';
+import { getStateModifierOptions } from '../common/elements';
 
 export const createReceiveStateOptions = (
   options: StateOptions
@@ -23,65 +22,53 @@ export const createReceiveStateOptions = (
 /**
  * Default options used to create a new receive state.
  */
-const jointOptions = (options: StateOptions) => {
-  const { startState, endState } = options;
-
-  const stateModifierOptions: GenericOptions = {
-    opacity: Boolean(startState) || Boolean(endState) ? 0.5 : 0,
-    'xlink:href': Boolean(startState)
-      ? blueDotIcon
-      : Boolean(endState)
-      ? redDotIcon
-      : ''
-  };
-
-  return {
-    markup: [
-      {
-        tagName: 'image',
-        selector: 'image'
-      },
-      {
-        tagName: 'image',
-        selector: 'stateModifier'
-      },
-      {
-        tagName: 'text',
-        selector: 'text'
-      }
-    ],
-    size: {
-      width: 140,
-      height: 95
+const jointOptions = (options: StateOptions) => ({
+  markup: [
+    {
+      tagName: 'image',
+      selector: 'image'
     },
-    attrs: {
-      image: {
-        'xlink:href': icon(),
-        width: 140,
-        height: 95,
-        cursor: 'pointer'
-      },
-      stateModifier: {
-        height: 50,
-        width: 50,
-        xAlignment: 45,
-        yAlignment: 22.5,
-        opacity: 0,
-        ...stateModifierOptions
-      },
-      text: {
-        textWrap: {
-          width: 150
-        },
-        xAlignment: 90,
-        yAlignment: -80,
-        pointerEvents: 'none',
-        fontWeight: 'bold',
-        lineHeight: 18
-      }
+    {
+      tagName: 'image',
+      selector: 'stateModifier'
+    },
+    {
+      tagName: 'text',
+      selector: 'text'
     }
-  };
-};
+  ],
+  size: {
+    width: 140,
+    height: 95
+  },
+  attrs: {
+    image: {
+      'xlink:href': icon(),
+      width: 140,
+      height: 95,
+      cursor: 'pointer'
+    },
+    stateModifier: {
+      height: 50,
+      width: 50,
+      xAlignment: 45,
+      yAlignment: 22.5,
+      opacity: 0,
+      cursor: 'pointer',
+      ...getStateModifierOptions(options)
+    },
+    text: {
+      textWrap: {
+        width: 150
+      },
+      xAlignment: 90,
+      yAlignment: -80,
+      pointerEvents: 'none',
+      fontWeight: 'bold',
+      lineHeight: 18
+    }
+  }
+});
 
 /**
  * Default options used to create element tools for a receive state.

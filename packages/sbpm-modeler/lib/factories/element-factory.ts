@@ -1,12 +1,25 @@
 import * as joint from 'jointjs';
 import Canvas from '../canvas';
-import { ElementOptions, ElementCreationOptions } from '../common/types';
+import {
+  ElementOptions,
+  ElementCreationOptions,
+  GenericOptions
+} from '../common/types';
 import { Event } from '../common/constants';
 import { createElementTools } from '../shape-tools/element-tools';
 
 export default class ElementFactory {
   private _canvas: Canvas;
   private _element: joint.dia.Element;
+
+  /**
+   * Get currently selected element.
+   *
+   * @returns Joint element.
+   */
+  public get currentlySelectedElement() {
+    return this._element;
+  }
 
   /**
    * Creates and adds a new element to the canvas.
@@ -20,6 +33,16 @@ export default class ElementFactory {
     this._element = this.create(creationOptions).addTo(this._canvas.graph);
     this.addElementTools(this._canvas.getCellView(this._element));
     return this._element;
+  }
+
+  public updateCurrentlySelectedElement(options: GenericOptions) {
+    if (!this._element) {
+      throw Error('No element selected.');
+    }
+
+    for (let [key, value] of Object.entries(options)) {
+      this._element.attr(key, value);
+    }
   }
 
   /**

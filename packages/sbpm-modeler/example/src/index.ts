@@ -29,10 +29,13 @@ document
   .addEventListener('click', () => canvas.setToOrigin());
 
 canvas.onElementSelected((cellView: joint.dia.CellView) => {
-  setTimeout(
-    () => cellView.model.attr('text/textWrap/text', 'description'),
-    1000
-  );
+  setTimeout(() => {
+    const options = {
+      description: 'Test desc',
+      startState: true
+    };
+    elementCreator.updateCurrentlySelectedElement(options);
+  }, 5000);
   console.log(cellView);
 });
 

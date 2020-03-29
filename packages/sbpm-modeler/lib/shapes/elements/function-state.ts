@@ -1,12 +1,11 @@
 import {
   ElementToolsOptions,
   StateOptions,
-  ElementCreationOptions,
-  GenericOptions
+  ElementCreationOptions
 } from '../../common/types';
 import { CustomEvent, ShapeType } from '../../common/constants';
 import { createIcon } from '../../common/utils';
-import { blueDotIcon, redDotIcon } from '../../common/icons';
+import { getStateModifierOptions } from '../common/elements';
 
 export const createFunctionStateOptions = (
   options: StateOptions
@@ -23,65 +22,53 @@ export const createFunctionStateOptions = (
 /**
  * Default options used to create a new function state.
  */
-const jointOptions = (options: StateOptions) => {
-  const { startState, endState } = options;
-
-  const stateModifierOptions: GenericOptions = {
-    opacity: Boolean(startState) || Boolean(endState) ? 0.5 : 0,
-    'xlink:href': Boolean(startState)
-      ? blueDotIcon
-      : Boolean(endState)
-      ? redDotIcon
-      : ''
-  };
-
-  return {
-    markup: [
-      {
-        tagName: 'image',
-        selector: 'image'
-      },
-      {
-        tagName: 'image',
-        selector: 'stateModifier'
-      },
-      {
-        tagName: 'text',
-        selector: 'text'
-      }
-    ],
-    size: {
-      width: 90,
-      height: 140
+const jointOptions = (options: StateOptions) => ({
+  markup: [
+    {
+      tagName: 'image',
+      selector: 'image'
     },
-    attrs: {
-      image: {
-        'xlink:href': icon(),
-        width: 90,
-        height: 140,
-        cursor: 'pointer'
-      },
-      stateModifier: {
-        height: 50,
-        width: 50,
-        xAlignment: 20,
-        yAlignment: 45,
-        opacity: 0,
-        ...stateModifierOptions
-      },
-      text: {
-        textWrap: {
-          width: 150
-        },
-        xAlignment: 65,
-        yAlignment: -80,
-        pointerEvents: 'none',
-        fontWeight: 'bold',
-        lineHeight: 18
-      }
+    {
+      tagName: 'image',
+      selector: 'stateModifier'
+    },
+    {
+      tagName: 'text',
+      selector: 'text'
     }
-  };
-};
+  ],
+  size: {
+    width: 90,
+    height: 140
+  },
+  attrs: {
+    image: {
+      'xlink:href': icon(),
+      width: 90,
+      height: 140,
+      cursor: 'pointer'
+    },
+    stateModifier: {
+      height: 50,
+      width: 50,
+      xAlignment: 20,
+      yAlignment: 45,
+      opacity: 0,
+      cursor: 'pointer',
+      ...getStateModifierOptions(options)
+    },
+    text: {
+      textWrap: {
+        width: 150
+      },
+      xAlignment: 65,
+      yAlignment: -80,
+      pointerEvents: 'none',
+      fontWeight: 'bold',
+      lineHeight: 18
+    }
+  }
+});
 
 /**
  * Default options used to create element tools for a function state.

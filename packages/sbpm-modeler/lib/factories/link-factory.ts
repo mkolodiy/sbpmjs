@@ -7,7 +7,7 @@ import {
   createLinkTools,
   createLabelBasedLinkTools
 } from '../shape-tools/link-tools';
-import elementLinkMapping from '../shapes/element-link-mapping';
+import { elementLinkMapping } from '../shapes/mappings';
 
 /**
  * Options used to create a new anchor.

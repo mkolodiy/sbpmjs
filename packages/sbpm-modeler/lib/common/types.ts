@@ -44,7 +44,7 @@ export interface CreationOptions<A> {
   /**
    * Defines joint options.
    */
-  jointOptions: {};
+  jointOptions: GenericOptions;
   /**
    * Defines shape options that are provided by the users of the library.
    */
@@ -80,7 +80,7 @@ export interface ElementCreationOptions<A> extends CreationOptions<A> {
   /**
    * Defines icon of the element.
    */
-  icon: string;
+  icon?: string;
   /**
    * Defines element tools options.
    */

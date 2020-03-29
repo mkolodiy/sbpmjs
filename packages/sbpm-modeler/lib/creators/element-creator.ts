@@ -1,12 +1,13 @@
 import Canvas from '../canvas';
 import ElementFactory from '../factories/element-factory';
-import { SubjectOptions, StateOptions } from '../common/types';
+import { SubjectOptions, StateOptions, GenericOptions } from '../common/types';
 import {
   createStandardSubjectOptions,
   createSendStateOptions,
   createReceiveStateOptions,
   createFunctionStateOptions
 } from '../shapes/elements';
+import { updateOptionsMapping } from '../shapes/mappings';
 
 export default class ElementCreator {
   private elementFactory: ElementFactory;
@@ -58,5 +59,12 @@ export default class ElementCreator {
   public addFunctionState(options: StateOptions) {
     const creationOptions = createFunctionStateOptions(options);
     return this.elementFactory.add(creationOptions);
+  }
+
+  public updateCurrentlySelectedElement(options: GenericOptions) {
+    const { type } = this.elementFactory.currentlySelectedElement.attributes;
+    this.elementFactory.updateCurrentlySelectedElement(
+      updateOptionsMapping[type](options)
+    );
   }
 }
