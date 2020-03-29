@@ -178,7 +178,7 @@ export default class LinkFactory {
       const element = elements[0] || null;
       if (element !== null) {
         this._canvas.unhighlightElement(element);
-        this._link.target(element);
+        this._link.target(element, anchorOptions);
       } else {
         this._link.remove();
         this.reset();

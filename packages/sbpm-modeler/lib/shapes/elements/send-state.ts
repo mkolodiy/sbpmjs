@@ -1,16 +1,18 @@
 import {
   ElementToolsOptions,
   StateOptions,
-  ElementCreationOptions
+  ElementCreationOptions,
+  GenericOptions
 } from '../../common/types';
 import { CustomEvent, ShapeType } from '../../common/constants';
 import { createIcon } from '../../common/utils';
+import { blueDotIcon, redDotIcon } from '../../common/icons';
 
 export const createSendStateOptions = (
   options: StateOptions
 ): ElementCreationOptions<StateOptions> => {
   return {
-    jointOptions,
+    jointOptions: jointOptions(options),
     options,
     icon: icon(),
     type: ShapeType.SEND_STATE,
@@ -21,28 +23,64 @@ export const createSendStateOptions = (
 /**
  * Default options used to create a new send state.
  */
-const jointOptions = {
-  size: {
-    width: 140,
-    height: 95
-  },
-  attrs: {
-    image: {
-      width: 140,
-      height: 95,
-      cursor: 'pointer'
-    },
-    text: {
-      textWrap: {
-        width: 150
+const jointOptions = (options: StateOptions) => {
+  const { startState, endState } = options;
+
+  const stateModifierOptions: GenericOptions = {
+    opacity: Boolean(startState) || Boolean(endState) ? 0.5 : 0,
+    'xlink:href': Boolean(startState)
+      ? blueDotIcon
+      : Boolean(endState)
+      ? redDotIcon
+      : ''
+  };
+
+  return {
+    markup: [
+      {
+        tagName: 'image',
+        selector: 'image'
       },
-      xAlignment: 90,
-      yAlignment: -80,
-      pointerEvents: 'none',
-      fontWeight: 'bold',
-      lineHeight: 18
+      {
+        tagName: 'image',
+        selector: 'stateModifier'
+      },
+      {
+        tagName: 'text',
+        selector: 'text'
+      }
+    ],
+    size: {
+      width: 140,
+      height: 95
+    },
+    attrs: {
+      image: {
+        'xlink:href': icon(),
+        width: 140,
+        height: 95,
+        cursor: 'pointer'
+      },
+      stateModifier: {
+        height: 50,
+        width: 50,
+        xAlignment: 45,
+        yAlignment: 22.5,
+        opacity: 0,
+        ...stateModifierOptions
+      },
+      text: {
+        textWrap: {
+          width: 150
+        },
+        xAlignment: 90,
+        yAlignment: -80,
+        pointerEvents: 'none',
+        fontWeight: 'bold',
+        lineHeight: 18
+      }
     }
-  }
+  };
 };
 
 /**

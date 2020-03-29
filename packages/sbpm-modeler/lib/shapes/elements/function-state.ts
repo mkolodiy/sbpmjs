@@ -1,16 +1,18 @@
 import {
   ElementToolsOptions,
   StateOptions,
-  ElementCreationOptions
+  ElementCreationOptions,
+  GenericOptions
 } from '../../common/types';
 import { CustomEvent, ShapeType } from '../../common/constants';
 import { createIcon } from '../../common/utils';
+import { blueDotIcon, redDotIcon } from '../../common/icons';
 
 export const createFunctionStateOptions = (
   options: StateOptions
 ): ElementCreationOptions<StateOptions> => {
   return {
-    jointOptions,
+    jointOptions: jointOptions(options),
     options,
     icon: icon(),
     type: ShapeType.FUNCTION_STATE,
@@ -21,28 +23,64 @@ export const createFunctionStateOptions = (
 /**
  * Default options used to create a new function state.
  */
-const jointOptions = {
-  size: {
-    width: 90,
-    height: 140
-  },
-  attrs: {
-    image: {
-      width: 90,
-      height: 140,
-      cursor: 'pointer'
-    },
-    text: {
-      textWrap: {
-        width: 150
+const jointOptions = (options: StateOptions) => {
+  const { startState, endState } = options;
+
+  const stateModifierOptions: GenericOptions = {
+    opacity: Boolean(startState) || Boolean(endState) ? 0.5 : 0,
+    'xlink:href': Boolean(startState)
+      ? blueDotIcon
+      : Boolean(endState)
+      ? redDotIcon
+      : ''
+  };
+
+  return {
+    markup: [
+      {
+        tagName: 'image',
+        selector: 'image'
       },
-      xAlignment: 65,
-      yAlignment: -80,
-      pointerEvents: 'none',
-      fontWeight: 'bold',
-      lineHeight: 18
+      {
+        tagName: 'image',
+        selector: 'stateModifier'
+      },
+      {
+        tagName: 'text',
+        selector: 'text'
+      }
+    ],
+    size: {
+      width: 90,
+      height: 140
+    },
+    attrs: {
+      image: {
+        'xlink:href': icon(),
+        width: 90,
+        height: 140,
+        cursor: 'pointer'
+      },
+      stateModifier: {
+        height: 50,
+        width: 50,
+        xAlignment: 20,
+        yAlignment: 45,
+        opacity: 0,
+        ...stateModifierOptions
+      },
+      text: {
+        textWrap: {
+          width: 150
+        },
+        xAlignment: 65,
+        yAlignment: -80,
+        pointerEvents: 'none',
+        fontWeight: 'bold',
+        lineHeight: 18
+      }
     }
-  }
+  };
 };
 
 /**
