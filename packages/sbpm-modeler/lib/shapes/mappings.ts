@@ -7,8 +7,8 @@ import {
   createFunctionStateTransitionOptions
 } from './links';
 import {
-  createElementUpdateOptions,
-  createStateUpdateOptions
+  createStateUpdateOptions,
+  createSubjectUpdateOptions
 } from './common/elements';
 
 const elementLinkMapping: GenericOptions = {
@@ -19,7 +19,7 @@ const elementLinkMapping: GenericOptions = {
 };
 
 const updateOptionsMapping: GenericOptions = {
-  [ShapeType.STANDARD_SUBJECT]: createElementUpdateOptions,
+  [ShapeType.STANDARD_SUBJECT]: createSubjectUpdateOptions,
   [ShapeType.SEND_STATE]: createStateUpdateOptions,
   [ShapeType.RECEIVE_STATE]: createStateUpdateOptions,
   [ShapeType.FUNCTION_STATE]: createStateUpdateOptions

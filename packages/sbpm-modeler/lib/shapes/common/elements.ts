@@ -1,16 +1,26 @@
-import { GenericOptions } from '../../common/types';
+import { GenericOptions, SubjectUpdateOptions } from '../../common/types';
 import { blueDotIcon, redDotIcon } from '../../common/icons';
+import { getStandardSubjectIcon } from '../elements';
 
-/**
- * Creates joint options for an element.
- *
- * @param options Object with options which should be used for the update of an element.
- */
-export const createElementUpdateOptions = (options: GenericOptions) => {
-  const { description } = options;
-  return {
-    'text/textWrap/text': description
-  };
+export const createSubjectUpdateOptions = (options: SubjectUpdateOptions) => {
+  const { description, isMachine } = options;
+  let updateOptions = {};
+
+  if (Boolean(isMachine)) {
+    const icon = getStandardSubjectIcon(isMachine);
+    updateOptions = {
+      'image/xlinkHref': icon
+    };
+  }
+
+  if (description) {
+    updateOptions = {
+      ...updateOptions,
+      'text/textWrap/text': description
+    };
+  }
+
+  return updateOptions;
 };
 
 /**
@@ -20,20 +30,24 @@ export const createElementUpdateOptions = (options: GenericOptions) => {
  */
 export const createStateUpdateOptions = (options: GenericOptions) => {
   const { description, startState, endState } = options;
-  let stateModifierUpdateOptions = {};
+  let updateOptions = {};
 
   if (Boolean(startState) || Boolean(endState)) {
     const stateModifierOptions = getStateModifierOptions(options);
-    stateModifierUpdateOptions = {
+    updateOptions = {
       'stateModifier/xlink:href': stateModifierOptions['xlink:href'],
       'stateModifier/opacity': stateModifierOptions.opacity
     };
   }
 
-  return {
-    ...createElementUpdateOptions(options),
-    ...stateModifierUpdateOptions
-  };
+  if (description) {
+    updateOptions = {
+      ...updateOptions,
+      'text/textWrap/text': description
+    };
+  }
+
+  return updateOptions;
 };
 
 /**

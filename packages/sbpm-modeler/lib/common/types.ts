@@ -108,7 +108,7 @@ export interface ElementToolsOptions {
 /**
  * Representation of the options used to create a element shape.
  */
-export interface ElementOptions extends GenericOptions {
+export interface ElementOptions {
   /**
    * Defines description that will be shown besides the icon of the element.
    */
@@ -120,7 +120,7 @@ export interface ElementOptions extends GenericOptions {
 }
 
 /**
- * Representation of the options for the creation of a subject.
+ * Representation of the subject options.
  */
 export interface SubjectOptions extends ElementOptions {
   /**
@@ -132,7 +132,12 @@ export interface SubjectOptions extends ElementOptions {
 }
 
 /**
- * Representation of the options for the creation of a state.
+ * Representation of the subject update options.
+ */
+export type SubjectUpdateOptions = Partial<Omit<SubjectOptions, 'position'>>;
+
+/**
+ * Representation of the state options.
  */
 export interface StateOptions extends ElementOptions {
   /**
@@ -148,6 +153,11 @@ export interface StateOptions extends ElementOptions {
    */
   endState?: boolean;
 }
+
+/**
+ * Representation of the state update options.
+ */
+export type StateUpdateOptions = Partial<Omit<StateOptions, 'position'>>;
 
 /* LINK TYPES*/
 
@@ -206,3 +216,69 @@ export interface MessageTransitionOptions extends LinkOptions {
    */
   isBidirectional?: boolean;
 }
+
+/**
+ * Representation of the message transition update options.
+ */
+export type MessageTransitionUpdateOptions = Partial<
+  Omit<MessageTransitionOptions, 'source' | 'target'>
+>;
+
+/**
+ * Representation of the send state transition options.
+ */
+export interface SendStateTransitionOptions extends LinkOptions {
+  /**
+   * Defines a subject that receives a message.
+   */
+  receiver: string;
+  /**
+   * Defines a message that is sent to a subject.
+   */
+  message: string;
+}
+
+/**
+ * Representation of the send state transition update options.
+ */
+export type SendStateTransitionUpdateOptions = Partial<
+  Omit<SendStateTransitionOptions, 'source' | 'target'>
+>;
+
+/**
+ * Representation of the receive state transition options.
+ */
+export interface ReceiveStateTransitionOptions extends LinkOptions {
+  /**
+   * Defines a subject that sends a message.
+   */
+  sender: string;
+  /**
+   * Defines a message that is received by a subject.
+   */
+  message: string;
+}
+
+/**
+ * Representation of the receive state transition update options.
+ */
+export type ReceiveStateTransitionUpdateOptions = Partial<
+  Omit<ReceiveStateTransitionOptions, 'source' | 'target'>
+>;
+
+/**
+ * Representation of the function state transition options.
+ */
+export interface FunctionStateTransitionOptions extends LinkOptions {
+  /**
+   * Defines a action that is executed by a subject.
+   */
+  action: string;
+}
+
+/**
+ * Representation of the function state transition update options;
+ */
+export type FunctionStateTransitionUpdateOptions = Partial<
+  Omit<FunctionStateTransitionOptions, 'source' | 'target'>
+>;

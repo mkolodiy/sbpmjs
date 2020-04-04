@@ -27,6 +27,16 @@ export const createStandardSubjectOptions = (
 };
 
 /**
+ * Returns human/machine icon for standard subject.
+ *
+ * @param isMachine Defines if a human or machine icon should be returned.
+ * @returns SVG icon.
+ */
+export const getStandardSubjectIcon = (isMachine: boolean) => {
+  return isMachine ? machineSubjectIcon() : humanSubjectIcon();
+};
+
+/**
  * Default options used to create a new standard subject with human icon.
  */
 const humanSubjectJointOptions = {
