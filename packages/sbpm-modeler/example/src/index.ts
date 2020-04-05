@@ -32,7 +32,8 @@ canvas.onElementSelected((cellView: joint.dia.CellView) => {
   const { isMachine: isMachineCurrent } = cellView.model.attributes;
   setTimeout(() => {
     const options = {
-      description: 'Test desc'
+      description: 'Test desc',
+      isMachine: !isMachineCurrent
     };
     elementCreator.updateCurrentlySelectedElement(options);
   }, 1000);

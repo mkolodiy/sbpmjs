@@ -4,15 +4,13 @@ import {
   SubjectOptions,
   StateOptions,
   GenericOptions,
-  ElementOptions,
   SubjectUpdateOptions
 } from '../common/types';
 import {
   createStandardSubjectOptions,
   createSendStateOptions,
   createReceiveStateOptions,
-  createFunctionStateOptions,
-  recreateStandardSubject
+  createFunctionStateOptions
 } from '../shapes/elements';
 import {
   updateOptionsMapping,
@@ -75,16 +73,20 @@ export default class ElementCreator {
   public updateCurrentlySelectedElement(options: GenericOptions) {
     const type = this.elementFactory.getSelectedElementType();
 
-    if (
-      type === ShapeType.STANDARD_SUBJECT &&
-      recreateElementMapping[type](options)
-    ) {
-      return this.recreateStandardSubject(options);
+    if (recreateElementMapping[type](options)) {
+      return this.recreateElement(type)(options);
     }
 
     this.elementFactory.updateSelectedElement(
       updateOptionsMapping[type](options)
     );
+  }
+
+  private recreateElement(type: string) {
+    switch (type) {
+      case ShapeType.STANDARD_SUBJECT:
+        return this.recreateStandardSubject.bind(this);
+    }
   }
 
   private recreateStandardSubject(updateOptions: SubjectUpdateOptions) {
