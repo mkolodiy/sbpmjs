@@ -1,7 +1,8 @@
 import {
   ElementCreationOptions,
   ElementToolsOptions,
-  SubjectOptions
+  SubjectOptions,
+  SubjectUpdateOptions
 } from '../../common/types';
 import { CustomEvent, ShapeType } from '../../common/constants';
 import { createIcon } from '../../common/utils';
@@ -26,14 +27,9 @@ export const createStandardSubjectOptions = (
   };
 };
 
-/**
- * Returns human/machine icon for standard subject.
- *
- * @param isMachine Defines if a human or machine icon should be returned.
- * @returns SVG icon.
- */
-export const getStandardSubjectIcon = (isMachine: boolean) => {
-  return isMachine ? machineSubjectIcon() : humanSubjectIcon();
+export const recreateStandardSubject = (options: SubjectUpdateOptions) => {
+  const { isMachine } = options;
+  return isMachine !== null && isMachine !== undefined;
 };
 
 /**
@@ -48,7 +44,8 @@ const humanSubjectJointOptions = {
     image: {
       width: 90,
       height: 140,
-      cursor: 'pointer'
+      cursor: 'pointer',
+      xlinkHref: humanSubjectIcon()
     },
     text: {
       textWrap: {
@@ -91,7 +88,7 @@ const humanSubjectToolsOptions: ElementToolsOptions = {
 /**
  * SVG human icon for a standard subject.
  */
-const humanSubjectIcon = () => {
+function humanSubjectIcon() {
   const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
    <svg
       xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -1942,7 +1939,7 @@ const humanSubjectIcon = () => {
  `;
 
   return createIcon(template);
-};
+}
 
 /**
  * Default options used to create a new standard subject with machine icon.
@@ -1956,7 +1953,8 @@ const machineSubjectJointOptions = {
     image: {
       width: 110,
       height: 140,
-      cursor: 'pointer'
+      cursor: 'pointer',
+      xlinkHref: machineSubjectIcon()
     },
     text: {
       textWrap: {
@@ -1999,7 +1997,7 @@ const machineSubjectToolsOptions: ElementToolsOptions = {
 /**
  * SVG machine icon for a standard subject.
  */
-const machineSubjectIcon = () => {
+function machineSubjectIcon() {
   const template = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
     <svg
        xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -3851,4 +3849,4 @@ const machineSubjectIcon = () => {
   `;
 
   return createIcon(template);
-};
+}

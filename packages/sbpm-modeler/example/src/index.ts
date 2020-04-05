@@ -29,13 +29,13 @@ document
   .addEventListener('click', () => canvas.setToOrigin());
 
 canvas.onElementSelected((cellView: joint.dia.CellView) => {
+  const { isMachine: isMachineCurrent } = cellView.model.attributes;
   setTimeout(() => {
     const options = {
-      description: 'Test desc',
-      startState: true
+      description: 'Test desc'
     };
     elementCreator.updateCurrentlySelectedElement(options);
-  }, 5000);
+  }, 1000);
   console.log(cellView);
 });
 

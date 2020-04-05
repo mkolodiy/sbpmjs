@@ -10,6 +10,7 @@ import {
   createStateUpdateOptions,
   createSubjectUpdateOptions
 } from './common/elements';
+import { recreateStandardSubject } from './elements';
 
 const elementLinkMapping: GenericOptions = {
   [ShapeType.STANDARD_SUBJECT]: createMessageTransitionOptions,
@@ -25,4 +26,8 @@ const updateOptionsMapping: GenericOptions = {
   [ShapeType.FUNCTION_STATE]: createStateUpdateOptions
 };
 
-export { elementLinkMapping, updateOptionsMapping };
+const recreateElementMapping: GenericOptions = {
+  [ShapeType.STANDARD_SUBJECT]: recreateStandardSubject
+};
+
+export { elementLinkMapping, updateOptionsMapping, recreateElementMapping };

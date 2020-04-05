@@ -1,21 +1,12 @@
 import { GenericOptions, SubjectUpdateOptions } from '../../common/types';
 import { blueDotIcon, redDotIcon } from '../../common/icons';
-import { getStandardSubjectIcon } from '../elements';
 
 export const createSubjectUpdateOptions = (options: SubjectUpdateOptions) => {
-  const { description, isMachine } = options;
+  const { description } = options;
   let updateOptions = {};
-
-  if (Boolean(isMachine)) {
-    const icon = getStandardSubjectIcon(isMachine);
-    updateOptions = {
-      'image/xlinkHref': icon
-    };
-  }
 
   if (description) {
     updateOptions = {
-      ...updateOptions,
       'text/textWrap/text': description
     };
   }

@@ -1,13 +1,24 @@
 import Canvas from '../canvas';
 import ElementFactory from '../factories/element-factory';
-import { SubjectOptions, StateOptions, GenericOptions } from '../common/types';
+import {
+  SubjectOptions,
+  StateOptions,
+  GenericOptions,
+  ElementOptions,
+  SubjectUpdateOptions
+} from '../common/types';
 import {
   createStandardSubjectOptions,
   createSendStateOptions,
   createReceiveStateOptions,
-  createFunctionStateOptions
+  createFunctionStateOptions,
+  recreateStandardSubject
 } from '../shapes/elements';
-import { updateOptionsMapping } from '../shapes/mappings';
+import {
+  updateOptionsMapping,
+  recreateElementMapping
+} from '../shapes/mappings';
+import { ShapeType } from '../common/constants';
 
 export default class ElementCreator {
   private elementFactory: ElementFactory;
@@ -62,9 +73,35 @@ export default class ElementCreator {
   }
 
   public updateCurrentlySelectedElement(options: GenericOptions) {
-    const { type } = this.elementFactory.currentlySelectedElement.attributes;
-    this.elementFactory.updateCurrentlySelectedElement(
+    const type = this.elementFactory.getSelectedElementType();
+
+    if (
+      type === ShapeType.STANDARD_SUBJECT &&
+      recreateElementMapping[type](options)
+    ) {
+      return this.recreateStandardSubject(options);
+    }
+
+    this.elementFactory.updateSelectedElement(
       updateOptionsMapping[type](options)
     );
+  }
+
+  private recreateStandardSubject(updateOptions: SubjectUpdateOptions) {
+    const selectedElementAttributes = this.elementFactory.getSelectedElementAttributes();
+
+    const currentOptions = {
+      description: selectedElementAttributes.description,
+      position: selectedElementAttributes.position,
+      isMachine: selectedElementAttributes.isMachine
+    };
+
+    const options = {
+      ...currentOptions,
+      ...updateOptions
+    };
+
+    this.elementFactory.removeSelectedElement();
+    this.addStandardSubject(options);
   }
 }

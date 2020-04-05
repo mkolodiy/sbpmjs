@@ -17,8 +17,18 @@ export default class ElementFactory {
    *
    * @returns Joint element.
    */
-  public get currentlySelectedElement() {
+  public get selectedElement() {
     return this._element;
+  }
+
+  public getSelectedElementType() {
+    const { type } = this.getSelectedElementAttributes();
+    return type;
+  }
+
+  public getSelectedElementAttributes() {
+    const { attributes } = this._element;
+    return attributes;
   }
 
   /**
@@ -35,7 +45,7 @@ export default class ElementFactory {
     return this._element;
   }
 
-  public updateCurrentlySelectedElement(options: GenericOptions) {
+  public updateSelectedElement(options: GenericOptions) {
     if (!this._element) {
       throw Error('No element selected.');
     }
@@ -43,6 +53,11 @@ export default class ElementFactory {
     for (let [key, value] of Object.entries(options)) {
       this._element.attr(key, value);
     }
+  }
+
+  public removeSelectedElement() {
+    this._element.remove();
+    this._element = null;
   }
 
   /**
