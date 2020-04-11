@@ -36,6 +36,16 @@ export default class LinkFactory {
     return this._link;
   }
 
+  public getSelectedElementType() {
+    const { type } = this.getSelectedElementAttributes();
+    return type;
+  }
+
+  public getSelectedElementAttributes() {
+    const { attributes } = this._link;
+    return attributes;
+  }
+
   /**
    * Creates a new link and saves it internally.
    *
@@ -46,6 +56,7 @@ export default class LinkFactory {
     creationOptions: LinkCreationOptions<A>
   ): joint.dia.Link {
     this._canvas.hideAllTools();
+    this.reset();
     this._link = this.create(creationOptions);
     return this._link;
   }

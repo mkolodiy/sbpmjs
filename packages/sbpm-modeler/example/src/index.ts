@@ -43,9 +43,11 @@ canvas.onLinkSelected((cellView: joint.dia.CellView) => {
   console.log('test');
   setTimeout(() => {
     const options = {
-      action: 'New action'
+      sender: 'New action',
+      message: 'test'
     };
-  });
+    linkCreator.updateCurrentlySelectedLink(options);
+  }, 1000);
 });
 
 subjectComponent();

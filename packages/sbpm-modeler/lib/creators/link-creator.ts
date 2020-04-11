@@ -13,6 +13,7 @@ import {
   createReceiveStateTransitionOptions,
   createFunctionStateTransitionOptions
 } from '../shapes/links';
+import { updateOptionsMapping } from '../shapes/mappings';
 
 export default class LinkCreator {
   private linkFactory: LinkFactory;
@@ -67,5 +68,9 @@ export default class LinkCreator {
     return this.linkFactory.add(creationOptions);
   }
 
-  public updateCurrentlySelectedLink(options: GenericOptions) {}
+  public updateCurrentlySelectedLink(options: GenericOptions) {
+    const type = this.linkFactory.getSelectedElementType();
+
+    this.linkFactory.update(updateOptionsMapping[type](options));
+  }
 }

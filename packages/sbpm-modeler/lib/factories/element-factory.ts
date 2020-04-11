@@ -45,13 +45,15 @@ export default class ElementFactory {
     return this._element;
   }
 
-  public updateSelectedElement(options: GenericOptions) {
-    if (!this._element) {
+  public update(options: GenericOptions, element?: joint.dia.Element) {
+    if (!this._element && !element) {
       throw Error('No element selected.');
     }
 
+    const elementToUpdate = element ?? this._element;
+
     for (let [key, value] of Object.entries(options)) {
-      this._element.attr(key, value);
+      elementToUpdate.attr(key, value);
     }
   }
 

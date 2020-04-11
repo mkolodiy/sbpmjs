@@ -77,9 +77,7 @@ export default class ElementCreator {
       return this.recreateElement(type)(options);
     }
 
-    this.elementFactory.updateSelectedElement(
-      updateOptionsMapping[type](options)
-    );
+    this.elementFactory.update(updateOptionsMapping[type](options));
   }
 
   private recreateElement(type: string) {
