@@ -90,11 +90,10 @@ const iconLabel = {
       xAlignment: 'middle',
       yAlignment: -25,
       textWrap: {
-        text: 'Subject Test',
+        text: 'TBD',
         width: 180,
         height: 30
       },
-      title: 'Subject Test',
       cursor: 'pointer',
       textVerticalAnchor: 'middle',
       textAnchor: 'middle'
@@ -103,11 +102,10 @@ const iconLabel = {
       xAlignment: 'middle',
       yAlignment: 5,
       textWrap: {
-        text: 'Message Test',
+        text: 'TBD',
         width: 180,
         height: 30
       },
-      title: 'Message Test',
       cursor: 'pointer',
       textVerticalAnchor: 'middle',
       textAnchor: 'middle'

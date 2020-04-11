@@ -1,13 +1,17 @@
 import * as joint from 'jointjs';
 import Canvas from '../canvas';
-import { LinkOptions, LinkCreationOptions } from '../common/types';
+import {
+  LinkOptions,
+  LinkCreationOptions,
+  GenericOptions
+} from '../common/types';
 import { Event, CUSTOM_EVENTS } from '../common/constants';
 import { combineStrings } from '../common/utils';
 import {
   createLinkTools,
   createLabelBasedLinkTools
 } from '../shape-tools/link-tools';
-import { elementLinkMapping } from '../shapes/mappings';
+import { elementLinkMapping, updateOptionsMapping } from '../shapes/mappings';
 
 /**
  * Options used to create a new anchor.
@@ -24,6 +28,15 @@ export default class LinkFactory {
   private _drawConnection: boolean;
 
   /**
+   * Get currently selected link.
+   *
+   * @returns Joint element.
+   */
+  public get selectedLink() {
+    return this._link;
+  }
+
+  /**
    * Creates a new link and saves it internally.
    *
    * @param creationOptions [[LinkCreationOptions]] object containing all options used to create a new link.
@@ -35,6 +48,14 @@ export default class LinkFactory {
     this._canvas.hideAllTools();
     this._link = this.create(creationOptions);
     return this._link;
+  }
+
+  public update(options: GenericOptions, link?: joint.dia.Link) {
+    if (!this._link && !link) {
+      throw Error('No element selected.');
+    }
+    const linkToUpdate = link ?? this._link;
+    linkToUpdate.label(0, options);
   }
 
   /**
@@ -59,14 +80,15 @@ export default class LinkFactory {
   private create<A extends LinkOptions>(
     creationOptions: LinkCreationOptions<A>
   ) {
-    const { options, iconLabel } = creationOptions;
-    const { source, target } = options;
+    const { options, iconLabel, type } = creationOptions;
+    const { source, target, ...updateOptions } = options;
 
     const linkModel = new joint.shapes.standard.Link(creationOptions);
     linkModel.source(source, anchorOptions);
     linkModel.target(target, anchorOptions);
 
     linkModel.insertLabel(0, iconLabel);
+    this.update(updateOptionsMapping[type](updateOptions), linkModel);
     linkModel.addTo(this._canvas.graph);
 
     const linkView = linkModel.findView(this._canvas.paper);

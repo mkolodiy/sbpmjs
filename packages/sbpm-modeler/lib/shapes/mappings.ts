@@ -11,6 +11,11 @@ import {
   createSubjectUpdateOptions
 } from './common/elements';
 import { recreateStandardSubject } from './elements';
+import {
+  createSendStateTransitionUpdateOptions,
+  createReceiveStateTransitionUpdateOptions,
+  createFunctionStateTransitionUpdateOptions
+} from './common/link';
 
 const elementLinkMapping: GenericOptions = {
   [ShapeType.STANDARD_SUBJECT]: createMessageTransitionOptions,
@@ -23,7 +28,10 @@ const updateOptionsMapping: GenericOptions = {
   [ShapeType.STANDARD_SUBJECT]: createSubjectUpdateOptions,
   [ShapeType.SEND_STATE]: createStateUpdateOptions,
   [ShapeType.RECEIVE_STATE]: createStateUpdateOptions,
-  [ShapeType.FUNCTION_STATE]: createStateUpdateOptions
+  [ShapeType.FUNCTION_STATE]: createStateUpdateOptions,
+  [ShapeType.SEND_STATE_TRANSITION]: createSendStateTransitionUpdateOptions,
+  [ShapeType.RECEIVE_STATE_TRANSITION]: createReceiveStateTransitionUpdateOptions,
+  [ShapeType.FUNCTION_STATE_TRANSITION]: createFunctionStateTransitionUpdateOptions
 };
 
 const recreateElementMapping: GenericOptions = {

@@ -1,6 +1,12 @@
 import Canvas from '../canvas';
 import LinkFactory from '../factories/link-factory';
-import { LinkOptions, MessageTransitionOptions } from '../common/types';
+import {
+  MessageTransitionOptions,
+  GenericOptions,
+  SendStateTransitionOptions,
+  ReceiveStateTransitionOptions,
+  FunctionStateTransitionOptions
+} from '../common/types';
 import {
   createMessageTransitionOptions,
   createSendStateTransitionOptions,
@@ -36,7 +42,7 @@ export default class LinkCreator {
    *
    * @param options [[LinkOptions]] object
    */
-  public addSendStateTransition(options: LinkOptions) {
+  public addSendStateTransition(options: SendStateTransitionOptions) {
     const creationOptions = createSendStateTransitionOptions(options);
     return this.linkFactory.add(creationOptions);
   }
@@ -46,7 +52,7 @@ export default class LinkCreator {
    *
    * @param options [[LinkOptions]] object
    */
-  public addReceiveStateTransition(options: LinkOptions) {
+  public addReceiveStateTransition(options: ReceiveStateTransitionOptions) {
     const creationOptions = createReceiveStateTransitionOptions(options);
     return this.linkFactory.add(creationOptions);
   }
@@ -56,8 +62,10 @@ export default class LinkCreator {
    *
    * @param options [[LinkOptions]] object
    */
-  public addFunctionStateTransition(options: LinkOptions) {
+  public addFunctionStateTransition(options: FunctionStateTransitionOptions) {
     const creationOptions = createFunctionStateTransitionOptions(options);
     return this.linkFactory.add(creationOptions);
   }
+
+  public updateCurrentlySelectedLink(options: GenericOptions) {}
 }

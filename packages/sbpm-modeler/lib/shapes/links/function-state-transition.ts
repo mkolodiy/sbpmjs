@@ -72,7 +72,7 @@ const iconLabel = {
       xAlignment: 'middle',
       yAlignment: 'middle',
       textWrap: {
-        text: 'Message Test',
+        text: 'TBD',
         width: 180,
         height: 60
       },

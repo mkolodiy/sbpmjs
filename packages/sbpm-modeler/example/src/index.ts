@@ -6,8 +6,7 @@ import { messageComponent } from './components/message';
 import { statesComponent } from './components/basic-states';
 
 const modeler = Modeler.initialize({
-  container: document.querySelector('.sbpmjs'),
-  routerName: 'orthogonal'
+  container: document.querySelector('.sbpmjs')
 });
 
 const { elementCreator, linkCreator, canvas } = modeler;
@@ -28,34 +27,39 @@ document
   .querySelector('.set-canvas-to-origin')
   .addEventListener('click', () => canvas.setToOrigin());
 
-// canvas.onElementSelected((cellView: joint.dia.CellView) => {
-//   const { isMachine: isMachineCurrent } = cellView.model.attributes;
-//   setTimeout(() => {
-//     const options = {
-//       description: 'Test desc',
-//       isMachine: !isMachineCurrent
-//     };
-//     elementCreator.updateCurrentlySelectedElement(options);
-//   }, 1000);
-//   console.log(cellView);
-// });
+canvas.onElementSelected((cellView: joint.dia.CellView) => {
+  const { isMachine: isMachineCurrent } = cellView.model.attributes;
+  // setTimeout(() => {
+  //   const options = {
+  //     description: 'Test desc',
+  //     isMachine: !isMachineCurrent
+  //   };
+  //   elementCreator.updateCurrentlySelectedElement(options);
+  // }, 1000);
+  console.log(cellView);
+});
 
 canvas.onLinkSelected((cellView: joint.dia.CellView) => {
   console.log('test');
+  setTimeout(() => {
+    const options = {
+      action: 'New action'
+    };
+  });
 });
 
 subjectComponent();
 messageComponent();
 statesComponent();
 
-const sub2 = elementCreator.addStandardSubject({
-  description:
-    'Standard subject human Standard subject human Standard subject human',
-  position: {
-    x: 200,
-    y: 500
-  }
-});
+// const sub2 = elementCreator.addStandardSubject({
+//   description:
+//     'Standard subject human Standard subject human Standard subject human',
+//   position: {
+//     x: 200,
+//     y: 500
+//   }
+// });
 
 // modeler.sstrf.add({
 //   source: sst1,
@@ -87,26 +91,46 @@ const sub2 = elementCreator.addStandardSubject({
 //   }
 // });
 
-// const sendState1 = modeler.addSendState({
-//   description: 'Send state',
-//   position: {
-//     x: 200,
-//     y: 200
-//   }
-// });
+const sendState1 = elementCreator.addSendState({
+  description: 'Send state',
+  position: {
+    x: 700,
+    y: 200
+  }
+});
 
-// const receiveState1 = modeler.addReceiveState({
-//   description: 'Receive state',
-//   position: {
-//     x: 600,
-//     y: 200
-//   }
-// });
+const receiveState1 = elementCreator.addReceiveState({
+  description: 'Receive state',
+  position: {
+    x: 200,
+    y: 200
+  }
+});
 
 const functionState1 = elementCreator.addFunctionState({
   description: 'Receive state',
   position: {
-    x: 600,
+    x: 200,
     y: 600
   }
+});
+
+const functionTransition = linkCreator.addFunctionStateTransition({
+  source: functionState1,
+  target: receiveState1,
+  action: 'New Action'
+});
+
+linkCreator.addSendStateTransition({
+  source: sendState1,
+  target: functionState1,
+  message: 'Some message',
+  receiver: 'Some subject'
+});
+
+linkCreator.addReceiveStateTransition({
+  source: receiveState1,
+  target: sendState1,
+  message: 'Some message',
+  sender: 'Some subject'
 });
