@@ -28,17 +28,17 @@ document
   .querySelector('.set-canvas-to-origin')
   .addEventListener('click', () => canvas.setToOrigin());
 
-canvas.onElementSelected((cellView: joint.dia.CellView) => {
-  const { isMachine: isMachineCurrent } = cellView.model.attributes;
-  setTimeout(() => {
-    const options = {
-      description: 'Test desc',
-      isMachine: !isMachineCurrent
-    };
-    elementCreator.updateCurrentlySelectedElement(options);
-  }, 1000);
-  console.log(cellView);
-});
+// canvas.onElementSelected((cellView: joint.dia.CellView) => {
+//   const { isMachine: isMachineCurrent } = cellView.model.attributes;
+//   setTimeout(() => {
+//     const options = {
+//       description: 'Test desc',
+//       isMachine: !isMachineCurrent
+//     };
+//     elementCreator.updateCurrentlySelectedElement(options);
+//   }, 1000);
+//   console.log(cellView);
+// });
 
 canvas.onLinkSelected((cellView: joint.dia.CellView) => {
   console.log('test');
@@ -48,14 +48,14 @@ subjectComponent();
 messageComponent();
 statesComponent();
 
-// const sub2 = elementCreator.addStandardSubject({
-//   description:
-//     'Standard subject human Standard subject human Standard subject human',
-//   position: {
-//     x: 200,
-//     y: 500
-//   }
-// });
+const sub2 = elementCreator.addStandardSubject({
+  description:
+    'Standard subject human Standard subject human Standard subject human',
+  position: {
+    x: 200,
+    y: 500
+  }
+});
 
 // modeler.sstrf.add({
 //   source: sst1,
@@ -103,10 +103,10 @@ statesComponent();
 //   }
 // });
 
-// const functionState1 = modeler.addFunctionState({
-//   description: 'Receive state',
-//   position: {
-//     x: 600,
-//     y: 600
-//   }
-// });
+const functionState1 = elementCreator.addFunctionState({
+  description: 'Receive state',
+  position: {
+    x: 600,
+    y: 600
+  }
+});

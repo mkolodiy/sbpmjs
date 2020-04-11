@@ -124,15 +124,14 @@ export default class LinkFactory {
     evt.stopPropagation();
     view.hideTools();
     this._drawConnection = true;
-
     const { type } = view.model.attributes;
-
+    const coordinates = this._canvas.paper.snapToGrid({
+      x: evt.clientX,
+      y: evt.clientY
+    });
     const options: LinkOptions = {
       source: view.model,
-      target: {
-        x: evt.clientX,
-        y: evt.clientY
-      }
+      target: coordinates
     };
 
     const creationOptions: LinkCreationOptions<LinkOptions> = elementLinkMapping[
@@ -152,10 +151,8 @@ export default class LinkFactory {
         y: evt.clientY
       });
       this._link.target(coordinates);
-      const views = this._canvas.paper.findViewsFromPoint(coordinates);
-      const view: joint.dia.ElementView = views[0] || null;
-
-      if (view !== null) {
+      const view = this._canvas.findViewFromPoint(coordinates);
+      if (view) {
         view.highlight();
       } else {
         this._canvas.unhighlightAllElements();
@@ -174,9 +171,8 @@ export default class LinkFactory {
         x: evt.clientX,
         y: evt.clientY
       });
-      const elements = this._canvas.graph.findModelsFromPoint(coordinates);
-      const element = elements[0] || null;
-      if (element !== null) {
+      const element = this._canvas.findModelFromPoint(coordinates);
+      if (element) {
         this._canvas.unhighlightElement(element);
         this._link.target(element, anchorOptions);
       } else {

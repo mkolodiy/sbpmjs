@@ -1,4 +1,4 @@
-import { SVG_PREFIX } from './constants';
+import { SVG_PREFIX, ShapeNamespace } from './constants';
 
 /**
  * Combine multiple strings in an array separated by separator.
@@ -17,4 +17,13 @@ export const combineStrings = (strings: string[], separator: string = ' ') => {
  */
 export const createIcon = (template: string) => {
   return `${SVG_PREFIX}${encodeURIComponent(template)}`;
+};
+
+/**
+ * Check if a shape is of common type.
+ *
+ * @param type Type of a shape.
+ */
+export const isCommonType = (type: string) => {
+  return type.includes(ShapeNamespace.COMMON);
 };

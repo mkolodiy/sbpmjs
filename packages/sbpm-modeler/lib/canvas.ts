@@ -5,7 +5,7 @@ import {
   CustomEvent,
   ShapeNamespace
 } from './common/constants';
-import { combineStrings } from './common/utils';
+import { combineStrings, isCommonType } from './common/utils';
 import { Coordinates, ModelerOptions } from './common/types';
 
 /**
@@ -181,6 +181,25 @@ export default class Canvas {
    */
   public onLinkSelected(cb: (cellView?: joint.dia.CellView) => void) {
     this._paper.on(Event.LINK_POINTERDOWN, cb);
+  }
+
+  public findModelFromPoint(coordinates: Coordinates) {
+    const models = this.graph
+      .findModelsFromPoint(coordinates)
+      .filter(
+        (model: joint.dia.Element) => !isCommonType(model.attributes.type)
+      );
+    return models[0];
+  }
+
+  public findViewFromPoint(coordinates: Coordinates) {
+    const views = this.paper
+      .findViewsFromPoint(coordinates)
+      .filter(
+        (view: joint.dia.ElementView) =>
+          !isCommonType(view.model.attributes.type)
+      );
+    return views[0];
   }
 
   /**
