@@ -53,16 +53,8 @@ const iconLabel = {
       selector: 'body'
     },
     {
-      tagName: 'rect',
-      selector: 'header'
-    },
-    {
       tagName: 'text',
-      selector: 'headerText'
-    },
-    {
-      tagName: 'text',
-      selector: 'bodyText'
+      selector: 'text'
     }
   ],
   attrs: {
@@ -76,38 +68,14 @@ const iconLabel = {
       yAlignment: 'middle',
       cursor: 'pointer'
     },
-    header: {
-      width: 180,
-      height: 30,
-      strokeWidth: 2,
-      stroke: '#b3b3b3ff',
-      fill: '#FFFFFF',
+    text: {
       xAlignment: 'middle',
-      yAlignment: -30,
-      cursor: 'pointer'
-    },
-    headerText: {
-      xAlignment: 'middle',
-      yAlignment: -25,
-      textWrap: {
-        text: 'Subject Test',
-        width: 180,
-        height: 30
-      },
-      title: 'Subject Test',
-      cursor: 'pointer',
-      textVerticalAnchor: 'middle',
-      textAnchor: 'middle'
-    },
-    bodyText: {
-      xAlignment: 'middle',
-      yAlignment: 5,
+      yAlignment: 'middle',
       textWrap: {
         text: 'Message Test',
         width: 180,
-        height: 30
+        height: 60
       },
-      title: 'Message Test',
       cursor: 'pointer',
       textVerticalAnchor: 'middle',
       textAnchor: 'middle'
