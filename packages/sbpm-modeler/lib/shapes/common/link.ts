@@ -4,6 +4,11 @@ import {
   FunctionStateTransitionUpdateOptions
 } from '../../common/types';
 
+/**
+ *  Creates joint options for a send state transition.
+ *
+ * @param options Update options.
+ */
 export const createSendStateTransitionUpdateOptions = (
   options: SendStateTransitionUpdateOptions
 ) => {
@@ -34,6 +39,11 @@ export const createSendStateTransitionUpdateOptions = (
   return { attrs };
 };
 
+/**
+ *  Creates joint options for a receive state transition.
+ *
+ * @param options Update options.
+ */
 export const createReceiveStateTransitionUpdateOptions = (
   options: ReceiveStateTransitionUpdateOptions
 ) => {
@@ -64,6 +74,11 @@ export const createReceiveStateTransitionUpdateOptions = (
   return { attrs };
 };
 
+/**
+ *  Creates joint options for a function state transition.
+ *
+ * @param options Update options.
+ */
 export const createFunctionStateTransitionUpdateOptions = (
   options: FunctionStateTransitionUpdateOptions
 ) => {

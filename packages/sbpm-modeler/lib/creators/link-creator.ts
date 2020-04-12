@@ -68,8 +68,13 @@ export default class LinkCreator {
     return this.linkFactory.add(creationOptions);
   }
 
+  /**
+   * Updates currently selected link on canvas.
+   *
+   * @param options Update options.
+   */
   public updateCurrentlySelectedLink(options: GenericOptions) {
-    const type = this.linkFactory.getSelectedElementType();
+    const type = this.linkFactory.getSelectedLinkType();
 
     this.linkFactory.update(updateOptionsMapping[type](options));
   }

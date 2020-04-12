@@ -10,8 +10,8 @@ import { createElementTools } from '../shape-tools/element-tools';
 import { updateOptionsMapping } from '../shapes/mappings';
 
 export default class ElementFactory {
-  private _canvas: Canvas;
-  private _element: joint.dia.Element;
+  private canvas: Canvas;
+  private element: joint.dia.Element;
 
   /**
    * Get currently selected element.
@@ -19,16 +19,22 @@ export default class ElementFactory {
    * @returns Joint element.
    */
   public get selectedElement() {
-    return this._element;
+    return this.element;
   }
 
+  /**
+   * Get selected element type.
+   */
   public getSelectedElementType() {
     const { type } = this.getSelectedElementAttributes();
     return type;
   }
 
+  /**
+   * Get selected element attributes.
+   */
   public getSelectedElementAttributes() {
-    const { attributes } = this._element;
+    const { attributes } = this.element;
     return attributes;
   }
 
@@ -41,26 +47,36 @@ export default class ElementFactory {
   public add<A extends ElementOptions>(
     creationOptions: ElementCreationOptions<A>
   ): joint.shapes.basic.Image {
-    this._element = this.create(creationOptions).addTo(this._canvas.graph);
-    this.addElementTools(this._canvas.getCellView(this._element));
-    return this._element;
+    this.element = this.create(creationOptions).addTo(this.canvas.graph);
+    this.addElementTools(this.canvas.getCellView(this.element));
+    return this.element;
   }
 
+  /**
+   * Updates a given element or as fallback a currently selected element.
+   *
+   * @param options Update options.
+   * @param element Element to update.
+   * @throws Error when no element was passed as a parameter and if no element is selected on canvas.
+   */
   public update(options: GenericOptions, element?: joint.dia.Element) {
-    if (!this._element && !element) {
+    if (!this.element && !element) {
       throw Error('No element selected.');
     }
 
-    const elementToUpdate = element ?? this._element;
+    const elementToUpdate = element ?? this.element;
 
     for (let [key, value] of Object.entries(options)) {
       elementToUpdate.attr(key, value);
     }
   }
 
+  /**
+   * Removes currently selected element from canvas.
+   */
   public removeSelectedElement() {
-    this._element.remove();
-    this._element = null;
+    this.element.remove();
+    this.element = null;
   }
 
   /**
@@ -69,7 +85,7 @@ export default class ElementFactory {
    * @param canvas [[Canvas]] object used to register events.
    */
   public constructor(canvas: Canvas) {
-    this._canvas = canvas;
+    this.canvas = canvas;
     this.registerEvents();
   }
 
@@ -102,7 +118,7 @@ export default class ElementFactory {
    * Registers all necessary events needed for the interaction with an element.
    */
   private registerEvents() {
-    this._canvas.paper.on(
+    this.canvas.paper.on(
       Event.ELEMENT_POINTERDOWN,
       (cellView: joint.dia.CellView) => {
         this.addElementTools(cellView);

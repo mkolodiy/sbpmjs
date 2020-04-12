@@ -6,6 +6,11 @@ import {
 import { createIcon } from '../../common/utils';
 import { ShapeType } from '../../common/constants';
 
+/**
+ * Creates message transition creation options.
+ *
+ * @param options [[MessageTransitionOptions]] object.
+ */
 export const createMessageTransitionOptions = (
   options: MessageTransitionOptions
 ): LinkCreationOptions<MessageTransitionOptions> => {

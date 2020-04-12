@@ -5,7 +5,7 @@ import {
   LinkCreationOptions,
   GenericOptions
 } from '../common/types';
-import { Event, CUSTOM_EVENTS } from '../common/constants';
+import { Event, CUSTOM_EVENTS, CustomEvent } from '../common/constants';
 import { combineStrings } from '../common/utils';
 import {
   createLinkTools,
@@ -23,9 +23,9 @@ const anchorOptions = {
 };
 
 export default class LinkFactory {
-  private _canvas: Canvas;
-  private _link: joint.dia.Link;
-  private _drawConnection: boolean;
+  private canvas: Canvas;
+  private link: joint.dia.Link;
+  private drawConnection: boolean;
 
   /**
    * Get currently selected link.
@@ -33,16 +33,22 @@ export default class LinkFactory {
    * @returns Joint element.
    */
   public get selectedLink() {
-    return this._link;
+    return this.link;
   }
 
-  public getSelectedElementType() {
-    const { type } = this.getSelectedElementAttributes();
+  /**
+   * Get selected link type.
+   */
+  public getSelectedLinkType() {
+    const { type } = this.getSelectedLinkAttributes();
     return type;
   }
 
-  public getSelectedElementAttributes() {
-    const { attributes } = this._link;
+  /**
+   * Get selected link attributes.
+   */
+  public getSelectedLinkAttributes() {
+    const { attributes } = this.link;
     return attributes;
   }
 
@@ -55,17 +61,24 @@ export default class LinkFactory {
   public add<A extends LinkOptions>(
     creationOptions: LinkCreationOptions<A>
   ): joint.dia.Link {
-    this._canvas.hideAllTools();
+    this.canvas.hideAllTools();
     this.removeLabelBasedTools();
-    this._link = this.create(creationOptions);
-    return this._link;
+    this.link = this.create(creationOptions);
+    return this.link;
   }
 
+  /**
+   * Updates a given link or as fallback a currently selected link.
+   *
+   * @param options Update options.
+   * @param link Link to update.
+   * @throws Error when no link was passed as a parameter and if no link is selected on canvas.
+   */
   public update(options: GenericOptions, link?: joint.dia.Link) {
-    if (!this._link && !link) {
+    if (!this.link && !link) {
       throw Error('No element selected.');
     }
-    const linkToUpdate = link ?? this._link;
+    const linkToUpdate = link ?? this.link;
     linkToUpdate.label(0, options);
   }
 
@@ -76,9 +89,9 @@ export default class LinkFactory {
    * @param container [[Element]] object used to register DOM events.
    */
   constructor(canvas: Canvas, container: Element) {
-    this._canvas = canvas;
-    this._link = null;
-    this._drawConnection = false;
+    this.canvas = canvas;
+    this.link = null;
+    this.drawConnection = false;
     this.registerEvents(container);
   }
 
@@ -100,9 +113,9 @@ export default class LinkFactory {
 
     linkModel.insertLabel(0, iconLabel);
     this.update(updateOptionsMapping[type](updateOptions), linkModel);
-    linkModel.addTo(this._canvas.graph);
+    linkModel.addTo(this.canvas.graph);
 
-    const linkView = linkModel.findView(this._canvas.paper);
+    const linkView = linkModel.findView(this.canvas.paper);
     this.addTools(linkView);
     this.addLabelBasedTools(linkModel);
 
@@ -115,20 +128,36 @@ export default class LinkFactory {
    * @param container [[Element]] object used to register DOM events.
    */
   private registerEvents(container: Element) {
-    this._canvas.paper.on(
+    this.canvas.paper.on(
       combineStrings([Event.CELL_POINTERDOWN, Event.BLANK_POINTERDOWN]),
       () => this.reset()
     );
 
-    this._canvas.paper.on(Event.LINK_POINTERDOWN, this.onLinkPointerDown);
+    this.canvas.paper.on(Event.LINK_POINTERDOWN, this.onLinkPointerDown);
 
     container.addEventListener(Event.MOUSEMOVE, this.onMouseMove);
 
     container.addEventListener(Event.MOUSEUP, this.onMouseUp);
 
-    this._canvas.paper.on(
+    this.canvas.paper.on(
       combineStrings(CUSTOM_EVENTS),
       this.onCustomEventHandler
+    );
+
+    this.canvas.paper.on(
+      CustomEvent.LINK_REMOVE_VERTICES,
+      (view: joint.dia.LinkView, evt: MouseEvent) => {
+        evt.stopPropagation();
+        view.model.vertices([]);
+      }
+    );
+
+    this.canvas.paper.on(
+      CustomEvent.LINK_REMOVE,
+      (view: joint.dia.LinkView, evt: MouseEvent) => {
+        evt.stopPropagation();
+        view.model.remove();
+      }
     );
   }
 
@@ -141,7 +170,7 @@ export default class LinkFactory {
     const { model } = view;
     view.showTools();
     this.addLabelBasedTools(model);
-    this._link = model;
+    this.link = model;
   };
 
   /**
@@ -156,9 +185,9 @@ export default class LinkFactory {
   ) => {
     evt.stopPropagation();
     view.hideTools();
-    this._drawConnection = true;
+    this.drawConnection = true;
     const { type } = view.model.attributes;
-    const coordinates = this._canvas.paper.snapToGrid({
+    const coordinates = this.canvas.paper.snapToGrid({
       x: evt.clientX,
       y: evt.clientY
     });
@@ -179,16 +208,16 @@ export default class LinkFactory {
    */
   private onMouseMove = (evt: MouseEvent) => {
     if (this.createConnection()) {
-      const coordinates = this._canvas.paper.snapToGrid({
+      const coordinates = this.canvas.paper.snapToGrid({
         x: evt.clientX,
         y: evt.clientY
       });
-      this._link.target(coordinates);
-      const view = this._canvas.findViewFromPoint(coordinates);
+      this.link.target(coordinates);
+      const view = this.canvas.findViewFromPoint(coordinates);
       if (view) {
         view.highlight();
       } else {
-        this._canvas.unhighlightAllElements();
+        this.canvas.unhighlightAllElements();
       }
     }
   };
@@ -200,19 +229,19 @@ export default class LinkFactory {
    */
   private onMouseUp = (evt: MouseEvent) => {
     if (this.createConnection()) {
-      const coordinates = this._canvas.paper.snapToGrid({
+      const coordinates = this.canvas.paper.snapToGrid({
         x: evt.clientX,
         y: evt.clientY
       });
-      const element = this._canvas.findModelFromPoint(coordinates);
+      const element = this.canvas.findModelFromPoint(coordinates);
       if (element) {
-        this._canvas.unhighlightElement(element);
-        this._link.target(element, anchorOptions);
+        this.canvas.unhighlightElement(element);
+        this.link.target(element, anchorOptions);
       } else {
-        this._link.remove();
+        this.link.remove();
         this.reset();
       }
-      this._drawConnection = false;
+      this.drawConnection = false;
     }
   };
 
@@ -220,9 +249,9 @@ export default class LinkFactory {
    * Removes label based link tools from currently selected link instance.
    */
   private removeLabelBasedTools() {
-    if (this._link !== null) {
-      const labels = this._link.labels();
-      labels.slice(1).forEach(l => this._link.removeLabel(-1));
+    if (this.link !== null) {
+      const labels = this.link.labels();
+      labels.slice(1).forEach(l => this.link.removeLabel(-1));
     }
   }
 
@@ -255,14 +284,14 @@ export default class LinkFactory {
    */
   private reset() {
     this.removeLabelBasedTools();
-    this._link = null;
-    this._drawConnection = false;
+    this.link = null;
+    this.drawConnection = false;
   }
 
   /**
    * Indicates if a link should be created between two elements.
    */
   private createConnection() {
-    return this._link !== null && this._drawConnection;
+    return this.link !== null && this.drawConnection;
   }
 }

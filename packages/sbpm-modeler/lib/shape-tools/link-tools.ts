@@ -28,7 +28,7 @@ export const createLinkTools = (useSourceArrowhead: boolean = false) => {
 };
 
 /**
- * Create link tools that are not possible to create with standard jointjs functionality. Link tools are created as labels.
+ * Create link tools that are not possible to create with standard joint functionality. Link tools are created as labels.
  *
  * @returns Array with link tools as labels.
  */

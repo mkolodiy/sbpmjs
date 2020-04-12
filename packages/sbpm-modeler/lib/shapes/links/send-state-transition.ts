@@ -5,6 +5,11 @@ import {
 } from '../../common/types';
 import { ShapeType } from '../../common/constants';
 
+/**
+ * Creates send state transition creation options.
+ *
+ * @param options [[LinkOptions]] object.
+ */
 export const createSendStateTransitionOptions = (
   options: LinkOptions
 ): LinkCreationOptions<LinkOptions> => {

@@ -1,6 +1,11 @@
 import { GenericOptions, SubjectUpdateOptions } from '../../common/types';
 import { blueDotIcon, redDotIcon } from '../../common/icons';
 
+/**
+ *  Creates joint options for a subject.
+ *
+ * @param options Update options.
+ */
 export const createSubjectUpdateOptions = (options: SubjectUpdateOptions) => {
   const { description } = options;
   let updateOptions = {};
@@ -17,7 +22,7 @@ export const createSubjectUpdateOptions = (options: SubjectUpdateOptions) => {
 /**
  * Creates joint options for a state.
  *
- * @param options Object with options which should be used for the update of a state.
+ * @param options Update options.
  */
 export const createStateUpdateOptions = (options: GenericOptions) => {
   const { description, startState, endState } = options;

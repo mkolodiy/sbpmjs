@@ -183,8 +183,13 @@ export default class Canvas {
     this._paper.on(Event.LINK_POINTERDOWN, cb);
   }
 
+  /**
+   * Get model from a point.
+   *
+   * @param coordinates [[Coordinates]] object.
+   */
   public findModelFromPoint(coordinates: Coordinates) {
-    const models = this.graph
+    const models = this._graph
       .findModelsFromPoint(coordinates)
       .filter(
         (model: joint.dia.Element) => !isCommonType(model.attributes.type)
@@ -192,6 +197,11 @@ export default class Canvas {
     return models[0];
   }
 
+  /**
+   * Get view from a point.
+   *
+   * @param coordinates [[Coordinates]] object.
+   */
   public findViewFromPoint(coordinates: Coordinates) {
     const views = this.paper
       .findViewsFromPoint(coordinates)
@@ -317,22 +327,6 @@ export default class Canvas {
       (cellView: joint.dia.CellView) => {
         this._paper.hideTools();
         cellView.model.toFront();
-      }
-    );
-
-    this._paper.on(
-      CustomEvent.LINK_REMOVE_VERTICES,
-      (view: joint.dia.LinkView, evt: MouseEvent) => {
-        evt.stopPropagation();
-        view.model.vertices([]);
-      }
-    );
-
-    this._paper.on(
-      CustomEvent.LINK_REMOVE,
-      (view: joint.dia.LinkView, evt: MouseEvent) => {
-        evt.stopPropagation();
-        view.model.remove();
       }
     );
   }

@@ -5,6 +5,11 @@ import {
 } from '../../common/types';
 import { ShapeType } from '../../common/constants';
 
+/**
+ * Creates function state transition creation options.
+ *
+ * @param options [[LinkOptions]] object.
+ */
 export const createFunctionStateTransitionOptions = (
   options: LinkOptions
 ): LinkCreationOptions<LinkOptions> => {

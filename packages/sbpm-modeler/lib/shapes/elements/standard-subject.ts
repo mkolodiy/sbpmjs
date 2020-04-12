@@ -7,6 +7,11 @@ import {
 import { CustomEvent, ShapeType } from '../../common/constants';
 import { createIcon } from '../../common/utils';
 
+/**
+ * Creates standard subject creation options.
+ *
+ * @param options [[SubjectOptions]] object.
+ */
 export const createStandardSubjectOptions = (
   options: SubjectOptions
 ): ElementCreationOptions<SubjectOptions> => {
@@ -25,6 +30,11 @@ export const createStandardSubjectOptions = (
   };
 };
 
+/**
+ * Checks if a standard subject should be recreated.
+ *
+ * @param options [[SubjectUpdateOptions]] object.
+ */
 export const recreateStandardSubject = (options: SubjectUpdateOptions) => {
   const { isMachine } = options;
   return isMachine !== null && isMachine !== undefined;

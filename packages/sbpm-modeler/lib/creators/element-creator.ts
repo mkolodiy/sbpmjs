@@ -70,6 +70,11 @@ export default class ElementCreator {
     return this.elementFactory.add(creationOptions);
   }
 
+  /**
+   * Updates currently selected element on canvas.
+   *
+   * @param options Update options.
+   */
   public updateCurrentlySelectedElement(options: GenericOptions) {
     const type = this.elementFactory.getSelectedElementType();
 
@@ -80,6 +85,11 @@ export default class ElementCreator {
     this.elementFactory.update(updateOptionsMapping[type](options));
   }
 
+  /**
+   * Recreates an element. This is necessary because updating some elements could be complex.
+   *
+   * @param type Element type.
+   */
   private recreateElement(type: string) {
     switch (type) {
       case ShapeType.STANDARD_SUBJECT:
@@ -87,6 +97,11 @@ export default class ElementCreator {
     }
   }
 
+  /**
+   * Recreate standard subject.
+   *
+   * @param updateOptions [[SubjectUpdateOptions]] update options.
+   */
   private recreateStandardSubject(updateOptions: SubjectUpdateOptions) {
     const selectedElementAttributes = this.elementFactory.getSelectedElementAttributes();
 

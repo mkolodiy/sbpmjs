@@ -7,6 +7,11 @@ import { CustomEvent, ShapeType } from '../../common/constants';
 import { createIcon } from '../../common/utils';
 import { getStateModifierOptions } from '../common/elements';
 
+/**
+ * Creates function state creation options.
+ *
+ * @param options [[StateOptions]] object.
+ */
 export const createFunctionStateOptions = (
   options: StateOptions
 ): ElementCreationOptions<StateOptions> => {

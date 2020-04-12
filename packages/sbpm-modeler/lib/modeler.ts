@@ -47,7 +47,7 @@ export default class Modeler {
   /**
    * Returns canvas instance.
    *
-   * @returns [[Canvas]] object.
+   * @returns [[Canvas]] instance.
    */
   public get canvas() {
     return this._canvas;
@@ -56,7 +56,7 @@ export default class Modeler {
   /**
    * Returns element creator instance.
    *
-   * @returns [[ElementCreator]]
+   * @returns [[ElementCreator]] instance.
    */
   public get elementCreator() {
     return this._elementCreator;
@@ -65,7 +65,7 @@ export default class Modeler {
   /**
    * Returns link creator instance.
    *
-   * @returns [[LinkCreator]]
+   * @returns [[LinkCreator]] instance.
    */
   public get linkCreator() {
     return this._linkCreator;
