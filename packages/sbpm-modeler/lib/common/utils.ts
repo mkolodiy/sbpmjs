@@ -27,3 +27,8 @@ export const createIcon = (template: string) => {
 export const isCommonType = (type: string) => {
   return type.includes(ShapeNamespace.COMMON);
 };
+
+/**
+ * No operation function.
+ */
+export const noop = () => {};

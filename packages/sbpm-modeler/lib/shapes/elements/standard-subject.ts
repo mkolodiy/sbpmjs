@@ -17,11 +17,9 @@ export const createStandardSubjectOptions = (
   const toolsOptions = isMachine
     ? machineSubjectToolsOptions
     : humanSubjectToolsOptions;
-  const icon = isMachine ? machineSubjectIcon() : humanSubjectIcon();
   return {
     jointOptions,
     options,
-    icon,
     type: ShapeType.STANDARD_SUBJECT,
     toolsOptions
   };

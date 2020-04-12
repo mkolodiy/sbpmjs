@@ -13,7 +13,6 @@ export const createReceiveStateOptions = (
   return {
     jointOptions: jointOptions(options),
     options,
-    icon: icon(),
     type: ShapeType.RECEIVE_STATE,
     toolsOptions
   };
@@ -43,7 +42,7 @@ const jointOptions = (options: StateOptions) => ({
   },
   attrs: {
     image: {
-      'xlink:href': icon(),
+      xlinkHref: icon(),
       width: 140,
       height: 95,
       cursor: 'pointer'

@@ -78,10 +78,6 @@ export interface ModelerOptions {
  */
 export interface ElementCreationOptions<A> extends CreationOptions<A> {
   /**
-   * Defines icon of the element.
-   */
-  icon?: string;
-  /**
    * Defines element tools options.
    */
   toolsOptions: ElementToolsOptions;

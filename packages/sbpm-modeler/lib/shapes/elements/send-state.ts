@@ -1,8 +1,7 @@
 import {
   ElementToolsOptions,
   StateOptions,
-  ElementCreationOptions,
-  GenericOptions
+  ElementCreationOptions
 } from '../../common/types';
 import { CustomEvent, ShapeType } from '../../common/constants';
 import { createIcon } from '../../common/utils';
@@ -14,7 +13,6 @@ export const createSendStateOptions = (
   return {
     jointOptions: jointOptions(options),
     options,
-    icon: icon(),
     type: ShapeType.SEND_STATE,
     toolsOptions
   };
@@ -44,7 +42,7 @@ const jointOptions = (options: StateOptions) => ({
   },
   attrs: {
     image: {
-      'xlink:href': icon(),
+      xlinkHref: icon(),
       width: 140,
       height: 95,
       cursor: 'pointer'

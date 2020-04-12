@@ -13,7 +13,6 @@ export const createFunctionStateOptions = (
   return {
     jointOptions: jointOptions(options),
     options,
-    icon: icon(),
     type: ShapeType.FUNCTION_STATE,
     toolsOptions
   };
@@ -43,7 +42,7 @@ const jointOptions = (options: StateOptions) => ({
   },
   attrs: {
     image: {
-      'xlink:href': icon(),
+      xlinkHref: icon(),
       width: 90,
       height: 140,
       cursor: 'pointer'

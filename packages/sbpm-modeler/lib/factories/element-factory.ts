@@ -7,6 +7,7 @@ import {
 } from '../common/types';
 import { Event } from '../common/constants';
 import { createElementTools } from '../shape-tools/element-tools';
+import { updateOptionsMapping } from '../shapes/mappings';
 
 export default class ElementFactory {
   private _canvas: Canvas;
@@ -81,8 +82,8 @@ export default class ElementFactory {
   private create<A extends ElementOptions>(
     creationOptions: ElementCreationOptions<A>
   ): joint.shapes.basic.Image {
-    const { jointOptions, options, icon, type, toolsOptions } = creationOptions;
-    const { position, description } = options;
+    const { jointOptions, options, type, toolsOptions } = creationOptions;
+    const { position, ...updateOptions } = options;
 
     const element = new joint.shapes.basic.Image({
       ...jointOptions,
@@ -91,9 +92,8 @@ export default class ElementFactory {
       toolsOptions
     });
 
-    element.attr('image/xlinkHref', icon);
     element.position(position.x, position.y);
-    element.attr('text/textWrap/text', description);
+    this.update(updateOptionsMapping[type](updateOptions), element);
 
     return element;
   }

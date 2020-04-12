@@ -16,6 +16,7 @@ import {
   createReceiveStateTransitionUpdateOptions,
   createFunctionStateTransitionUpdateOptions
 } from './common/link';
+import { noop } from '../common/utils';
 
 const elementLinkMapping: GenericOptions = {
   [ShapeType.STANDARD_SUBJECT]: createMessageTransitionOptions,
@@ -29,6 +30,7 @@ const updateOptionsMapping: GenericOptions = {
   [ShapeType.SEND_STATE]: createStateUpdateOptions,
   [ShapeType.RECEIVE_STATE]: createStateUpdateOptions,
   [ShapeType.FUNCTION_STATE]: createStateUpdateOptions,
+  [ShapeType.MESSAGE_TRANSITION]: noop,
   [ShapeType.SEND_STATE_TRANSITION]: createSendStateTransitionUpdateOptions,
   [ShapeType.RECEIVE_STATE_TRANSITION]: createReceiveStateTransitionUpdateOptions,
   [ShapeType.FUNCTION_STATE_TRANSITION]: createFunctionStateTransitionUpdateOptions
