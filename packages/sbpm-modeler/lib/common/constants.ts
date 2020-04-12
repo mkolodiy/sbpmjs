@@ -1,5 +1,5 @@
 /**
- * Shape namespaces used to check if a shape is SBPM shape.
+ * Shape namespaces used to check if a shape is a SBPM shape.
  */
 export enum ShapeNamespace {
   COMMON = 'sbpm.common',

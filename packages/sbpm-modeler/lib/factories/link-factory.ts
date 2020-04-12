@@ -56,7 +56,7 @@ export default class LinkFactory {
     creationOptions: LinkCreationOptions<A>
   ): joint.dia.Link {
     this._canvas.hideAllTools();
-    this.reset();
+    this.removeLabelBasedTools();
     this._link = this.create(creationOptions);
     return this._link;
   }

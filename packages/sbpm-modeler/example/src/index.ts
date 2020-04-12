@@ -93,46 +93,46 @@ statesComponent();
 //   }
 // });
 
-// const sendState1 = elementCreator.addSendState({
-//   description: 'Send state',
-//   position: {
-//     x: 700,
-//     y: 200
-//   }
-// });
+const sendState1 = elementCreator.addSendState({
+  description: 'Send state',
+  position: {
+    x: 700,
+    y: 200
+  }
+});
 
-// const receiveState1 = elementCreator.addReceiveState({
-//   description: 'Receive state',
-//   position: {
-//     x: 200,
-//     y: 200
-//   }
-// });
+const receiveState1 = elementCreator.addReceiveState({
+  description: 'Receive state',
+  position: {
+    x: 200,
+    y: 200
+  }
+});
 
-// const functionState1 = elementCreator.addFunctionState({
-//   description: 'Receive state',
-//   position: {
-//     x: 200,
-//     y: 600
-//   }
-// });
+const functionState1 = elementCreator.addFunctionState({
+  description: 'Receive state',
+  position: {
+    x: 200,
+    y: 600
+  }
+});
 
-// const functionTransition = linkCreator.addFunctionStateTransition({
-//   source: functionState1,
-//   target: receiveState1,
-//   action: 'New Action'
-// });
+const functionTransition = linkCreator.addFunctionStateTransition({
+  source: functionState1,
+  target: receiveState1,
+  action: 'New Action'
+});
 
-// linkCreator.addSendStateTransition({
-//   source: sendState1,
-//   target: functionState1,
-//   message: 'Some message',
-//   receiver: 'Some subject'
-// });
+linkCreator.addSendStateTransition({
+  source: sendState1,
+  target: functionState1,
+  message: 'Some message',
+  receiver: 'Some subject'
+});
 
-// linkCreator.addReceiveStateTransition({
-//   source: receiveState1,
-//   target: sendState1,
-//   message: 'Some message',
-//   sender: 'Some subject'
-// });
+linkCreator.addReceiveStateTransition({
+  source: receiveState1,
+  target: sendState1,
+  message: 'Some message',
+  sender: 'Some subject'
+});

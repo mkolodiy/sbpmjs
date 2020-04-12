@@ -3,14 +3,14 @@ import { ShapeType } from './constants';
 /* COMMON TYPES */
 
 /**
- * Representation of the generic options.
+ * Representation of generic options.
  */
 export interface GenericOptions {
   [key: string]: any;
 }
 
 /**
- * Representation of the coordinates.
+ * Representation of coordinates.
  */
 export interface Coordinates {
   /**
@@ -24,21 +24,21 @@ export interface Coordinates {
 }
 
 /**
- * Representation of the button options.
+ * Representation of button options.
  */
 export interface ButtonOptions {
   /**
-   * Defines coordinates where the button should be positioned.
+   * Defines button position.
    */
   coordinates: Coordinates;
   /**
-   * Defines which event should be triggered when the button is clicked.
+   * Defines button event.
    */
   event?: string;
 }
 
 /**
- * Representation of the general options used to create a new shape.
+ * Representation of general options used to create a new shape.
  */
 export interface CreationOptions<A> {
   /**
@@ -58,7 +58,7 @@ export interface CreationOptions<A> {
 /* GENERAL TYPES */
 
 /**
- * Representation of the options for the modeler initialization.
+ * Representation of modeler options.
  */
 export interface ModelerOptions {
   /**
@@ -67,6 +67,8 @@ export interface ModelerOptions {
   container: Element;
   /**
    * Defines a router name. Possible values are: manhattan, metro, normal, orthogonal and oneSide.
+   *
+   * @default normal
    */
   routerName?: string;
 }
@@ -74,7 +76,7 @@ export interface ModelerOptions {
 /* ELEMENT TYPES*/
 
 /**
- * Representation of the options used to create a new element shape.
+ * Representation of element creation options.
  */
 export interface ElementCreationOptions<A> extends CreationOptions<A> {
   /**
@@ -84,25 +86,25 @@ export interface ElementCreationOptions<A> extends CreationOptions<A> {
 }
 
 /**
- * Representation of the options for the creation of element tools for a subject.
+ * Representation of element tools options.
  */
 export interface ElementToolsOptions {
   /**
-   * Defines the position of the remove button.
+   * Defines remove button options.
    */
   removeButtonOptions?: ButtonOptions;
   /**
-   * Defines the position of the openInNew button.
+   * Defines openInNew button options.
    */
   openInNewButtonOptions?: ButtonOptions;
   /**
-   * Defines the position of the link button.
+   * Defines link button options.
    */
   linkButtonOptions?: ButtonOptions;
 }
 
 /**
- * Representation of the options used to create a element shape.
+ * Representation element options.
  */
 export interface ElementOptions {
   /**
@@ -116,7 +118,7 @@ export interface ElementOptions {
 }
 
 /**
- * Representation of the subject options.
+ * Representation of subject options.
  */
 export interface SubjectOptions extends ElementOptions {
   /**
@@ -133,7 +135,7 @@ export interface SubjectOptions extends ElementOptions {
 export type SubjectUpdateOptions = Partial<Omit<SubjectOptions, 'position'>>;
 
 /**
- * Representation of the state options.
+ * Representation of state options.
  */
 export interface StateOptions extends ElementOptions {
   /**
@@ -151,14 +153,14 @@ export interface StateOptions extends ElementOptions {
 }
 
 /**
- * Representation of the state update options.
+ * Representation of state update options.
  */
 export type StateUpdateOptions = Partial<Omit<StateOptions, 'position'>>;
 
 /* LINK TYPES*/
 
 /**
- * Representation of the options used to create a new link shape.
+ * Representation of link creation options.
  */
 export interface LinkCreationOptions<A> extends CreationOptions<A> {
   /**
@@ -172,25 +174,25 @@ export interface LinkCreationOptions<A> extends CreationOptions<A> {
 }
 
 /**
- * Representation of tha label based link tools options.
+ * Representation of label based link tools options.
  */
 export interface LabelBasedLinkToolsOptions {
   /**
-   * Defines options used to create selection label.
+   * Defines selection label options.
    */
   selectionLabelOptions: GenericOptions;
   /**
-   * Defines options used to create remove label.
+   * Defines  remove label options.
    */
   removeLabelOptions: GenericOptions;
   /**
-   * Defines options used to create remove vertices label.
+   * Defines vertices label options.
    */
   removeVerticesLabelOptions: GenericOptions;
 }
 
 /**
- * Representation of the options used to create a link shape.
+ * Representation of link options.
  */
 export interface LinkOptions {
   /**
@@ -204,7 +206,7 @@ export interface LinkOptions {
 }
 
 /**
- * Representation of the message transition options.
+ * Representation of message transition options.
  */
 export interface MessageTransitionOptions extends LinkOptions {
   /**
@@ -214,14 +216,14 @@ export interface MessageTransitionOptions extends LinkOptions {
 }
 
 /**
- * Representation of the message transition update options.
+ * Representation of message transition update options.
  */
 export type MessageTransitionUpdateOptions = Partial<
   Omit<MessageTransitionOptions, 'source' | 'target'>
 >;
 
 /**
- * Representation of the send state transition options.
+ * Representation of send state transition options.
  */
 export interface SendStateTransitionOptions extends LinkOptions {
   /**
@@ -235,14 +237,14 @@ export interface SendStateTransitionOptions extends LinkOptions {
 }
 
 /**
- * Representation of the send state transition update options.
+ * Representation of send state transition update options.
  */
 export type SendStateTransitionUpdateOptions = Partial<
   Omit<SendStateTransitionOptions, 'source' | 'target'>
 >;
 
 /**
- * Representation of the receive state transition options.
+ * Representation of receive state transition options.
  */
 export interface ReceiveStateTransitionOptions extends LinkOptions {
   /**
@@ -256,14 +258,14 @@ export interface ReceiveStateTransitionOptions extends LinkOptions {
 }
 
 /**
- * Representation of the receive state transition update options.
+ * Representation of receive state transition update options.
  */
 export type ReceiveStateTransitionUpdateOptions = Partial<
   Omit<ReceiveStateTransitionOptions, 'source' | 'target'>
 >;
 
 /**
- * Representation of the function state transition options.
+ * Representation of function state transition options.
  */
 export interface FunctionStateTransitionOptions extends LinkOptions {
   /**
@@ -273,7 +275,7 @@ export interface FunctionStateTransitionOptions extends LinkOptions {
 }
 
 /**
- * Representation of the function state transition update options;
+ * Representation of function state transition update options;
  */
 export type FunctionStateTransitionUpdateOptions = Partial<
   Omit<FunctionStateTransitionOptions, 'source' | 'target'>
