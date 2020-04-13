@@ -12,10 +12,7 @@ import {
   createReceiveStateOptions,
   createFunctionStateOptions
 } from '../shapes/elements';
-import {
-  updateOptionsMapping,
-  recreateElementMapping
-} from '../shapes/mappings';
+import { updateOptionsMapping, recreateElement } from '../shapes/mappings';
 import { ShapeType } from '../common/constants';
 
 export default class ElementCreator {
@@ -78,7 +75,7 @@ export default class ElementCreator {
   public updateCurrentlySelectedElement(options: GenericOptions) {
     const type = this.elementFactory.getSelectedElementType();
 
-    if (recreateElementMapping[type](options)) {
+    if (recreateElement(type, options)) {
       return this.recreateElement(type)(options);
     }
 

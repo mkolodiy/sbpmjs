@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const instance = M.Collapsible.init(element, {
     accordion: false
   });
-  instance.open(1);
 });
 
 document
@@ -27,112 +26,181 @@ document
   .querySelector('.set-canvas-to-origin')
   .addEventListener('click', () => canvas.setToOrigin());
 
-canvas.onElementSelected((cellView: joint.dia.CellView) => {
-  const { isMachine: isMachineCurrent } = cellView.model.attributes;
-  // setTimeout(() => {
-  //   const options = {
-  //     description: 'Test desc',
-  //     isMachine: !isMachineCurrent
-  //   };
-  //   elementCreator.updateCurrentlySelectedElement(options);
-  // }, 1000);
+document
+  .querySelector('.format-update-options')
+  .addEventListener('click', () => {
+    const updateOptionsTextarea = document.querySelector(
+      '.update-options'
+    ) as HTMLTextAreaElement;
+    const unformattedObject = updateOptionsTextarea.value;
+    console.log(unformattedObject);
+    const parsedObject = JSON.parse(unformattedObject);
+    const prettifiedObject = JSON.stringify(parsedObject, undefined, 4);
+    updateOptionsTextarea.value = prettifiedObject;
+  });
+
+document.querySelector('.update-element').addEventListener('click', () => {
+  const updateOptionsTextarea = document.querySelector(
+    '.update-options'
+  ) as HTMLTextAreaElement;
+  const updateOptions = JSON.parse(updateOptionsTextarea.value);
+  console.log(updateOptions);
+  elementCreator.updateCurrentlySelectedElement(updateOptions);
+});
+
+canvas.onElementSelected(cellView => {
   console.log(cellView);
 });
 
-canvas.onLinkSelected((cellView: joint.dia.CellView) => {
-  console.log('test');
-  setTimeout(() => {
-    const options = {
-      sender: 'New action',
-      message: 'test'
-    };
-    linkCreator.updateCurrentlySelectedLink(options);
-  }, 1000);
+canvas.onLinkSelected(cellView => {
+  console.log(cellView);
 });
 
 subjectComponent();
 messageComponent();
 statesComponent();
 
-// const sub2 = elementCreator.addStandardSubject({
-//   description:
-//     'Standard subject human Standard subject human Standard subject human',
-//   position: {
-//     x: 200,
-//     y: 500
-//   }
-// });
+demo1();
+demo2();
+demo3();
+demo4();
+demo5();
+demo6();
 
-// modeler.sstrf.add({
-//   source: sst1,
-//   target: sub2
-// });
+function demo1() {
+  const humanSubject = elementCreator.addStandardSubject({
+    description: 'Human standard subject',
+    position: {
+      x: 100,
+      y: 100
+    }
+  });
+  const machineSubject = elementCreator.addStandardSubject({
+    description: 'Machine standard subject',
+    position: {
+      x: 800,
+      y: 100
+    },
+    isMachine: true
+  });
+  linkCreator.addMessageTransition({
+    source: humanSubject,
+    target: machineSubject
+  });
+}
 
-// const rsf = modeler.rsf.add({
-//   description: 'Receive state',
-//   position: {
-//     x: 400,
-//     y: 100
-//   }
-// });
+function demo2() {
+  const humanSubject = elementCreator.addStandardSubject({
+    description: 'Human standard subject',
+    position: {
+      x: 100,
+      y: 300
+    }
+  });
+  const machineSubject = elementCreator.addStandardSubject({
+    description: 'Machine standard subject',
+    position: {
+      x: 800,
+      y: 300
+    },
+    isMachine: true
+  });
+  linkCreator.addMessageTransition({
+    source: machineSubject,
+    target: humanSubject,
+    isBidirectional: true
+  });
+}
 
-// const fsf = modeler.fsf.add({
-//   description: 'Function state',
-//   position: {
-//     x: 200,
-//     y: 100
-//   }
-// });
+function demo3() {
+  const sendState = elementCreator.addSendState({
+    description: 'Send state',
+    position: {
+      x: 100,
+      y: 500
+    }
+  });
+  const receiveState = elementCreator.addReceiveState({
+    description: 'Receive state',
+    position: {
+      x: 800,
+      y: 500
+    }
+  });
+  linkCreator.addSendStateTransition({
+    source: sendState,
+    target: receiveState,
+    receiver: 'Subject A',
+    message: 'Message A'
+  });
+}
 
-// const sub2 = modeler.addStandardSubject({
-//   description:
-//     'Standard subject human Standard subject human Standard subject human',
-//   position: {
-//     x: 200,
-//     y: 500
-//   }
-// });
+function demo4() {
+  const receiveState = elementCreator.addReceiveState({
+    description: 'Receive state',
+    position: {
+      x: 100,
+      y: 700
+    }
+  });
+  const functionState = elementCreator.addFunctionState({
+    description: 'Function state',
+    position: {
+      x: 800,
+      y: 680
+    }
+  });
+  linkCreator.addReceiveStateTransition({
+    source: receiveState,
+    target: functionState,
+    sender: 'Subject A',
+    message: 'Message A'
+  });
+}
 
-const sendState1 = elementCreator.addSendState({
-  description: 'Send state',
-  position: {
-    x: 700,
-    y: 200
-  }
-});
+function demo5() {
+  const functionState = elementCreator.addFunctionState({
+    description: 'Function state',
+    position: {
+      x: 100,
+      y: 880
+    }
+  });
+  const sendState = elementCreator.addSendState({
+    description: 'Receive state',
+    position: {
+      x: 800,
+      y: 900
+    }
+  });
+  linkCreator.addFunctionStateTransition({
+    source: functionState,
+    target: sendState,
+    action: 'Action'
+  });
+}
 
-const receiveState1 = elementCreator.addReceiveState({
-  description: 'Receive state',
-  position: {
-    x: 200,
-    y: 200
-  }
-});
-
-const functionState1 = elementCreator.addFunctionState({
-  description: 'Receive state',
-  position: {
-    x: 200,
-    y: 600
-  }
-});
-
-const functionTransition = linkCreator.addFunctionStateTransition({
-  source: functionState1,
-  target: receiveState1,
-  action: 'New Action'
-});
-
-linkCreator.addSendStateTransition({
-  source: sendState1,
-  target: functionState1,
-  message: 'Some message',
-  receiver: 'Some subject'
-});
-
-linkCreator.addReceiveStateTransition({
-  source: receiveState1,
-  target: sendState1,
-  message: 'Some message',
-  sender: 'Some subject'
-});
+function demo6() {
+  const sendState = elementCreator.addSendState({
+    description: 'Send state',
+    position: {
+      x: 100,
+      y: 1100
+    },
+    startState: true
+  });
+  const receiveState = elementCreator.addReceiveState({
+    description: 'Receive state',
+    position: {
+      x: 800,
+      y: 1100
+    },
+    endState: true
+  });
+  linkCreator.addSendStateTransition({
+    source: sendState,
+    target: receiveState,
+    receiver: 'Subject A',
+    message: 'Message A'
+  });
+}

@@ -40,4 +40,9 @@ const recreateElementMapping: GenericOptions = {
   [ShapeType.STANDARD_SUBJECT]: recreateStandardSubject
 };
 
-export { elementLinkMapping, updateOptionsMapping, recreateElementMapping };
+const recreateElement = (type: ShapeType, options: GenericOptions) => {
+  const recreationCheck = recreateElementMapping[type];
+  return recreationCheck && recreationCheck(options);
+};
+
+export { elementLinkMapping, updateOptionsMapping, recreateElement };
