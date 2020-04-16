@@ -28,12 +28,19 @@ export const createStateUpdateOptions = (options: GenericOptions) => {
   const { description, startState, endState } = options;
   let updateOptions = {};
 
-  if (Boolean(startState) || Boolean(endState)) {
-    const stateModifierOptions = getStateModifierOptions(options);
-    updateOptions = {
-      'stateModifier/xlink:href': stateModifierOptions['xlink:href'],
-      'stateModifier/opacity': stateModifierOptions.opacity
-    };
+  if (startState !== undefined || endState !== undefined) {
+    if (Boolean(startState) || Boolean(endState)) {
+      const stateModifierOptions = getStateModifierOptions(options);
+      updateOptions = {
+        'stateModifier/xlinkHref': stateModifierOptions.xlinkHref,
+        'stateModifier/opacity': stateModifierOptions.opacity
+      };
+    } else {
+      updateOptions = {
+        'stateModifier/xlinkHref': '',
+        'stateModifier/opacity': 0
+      };
+    }
   }
 
   if (description) {
@@ -54,7 +61,7 @@ export const getStateModifierOptions = (options: GenericOptions) => {
 
   return {
     opacity: Boolean(startState) || Boolean(endState) ? 0.5 : 0,
-    'xlink:href': Boolean(startState)
+    xlinkHref: Boolean(startState)
       ? blueDotIcon
       : Boolean(endState)
       ? redDotIcon

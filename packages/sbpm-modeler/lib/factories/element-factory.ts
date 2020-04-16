@@ -122,6 +122,9 @@ export default class ElementFactory {
       Event.ELEMENT_POINTERDOWN,
       (cellView: joint.dia.CellView) => {
         this.addElementTools(cellView);
+        this.element = this.canvas.findModelFromPoint(
+          cellView.model.attributes.position
+        );
       }
     );
   }
