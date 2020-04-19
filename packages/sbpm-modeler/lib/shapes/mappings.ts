@@ -4,7 +4,8 @@ import {
   createMessageTransitionOptions,
   createSendStateTransitionOptions,
   createReceiveStateTransitionOptions,
-  createFunctionStateTransitionOptions
+  createFunctionStateTransitionOptions,
+  createMessageTransitionUpdateOptions
 } from './links';
 import {
   createSendStateTransitionUpdateOptions,
@@ -31,7 +32,7 @@ const updateOptionsMapping: GenericOptions = {
   [ShapeType.SEND_STATE]: createSendStateUpdateOptions,
   [ShapeType.RECEIVE_STATE]: createReceiveStateUpdateOptions,
   [ShapeType.FUNCTION_STATE]: createFunctionStateUpdateOptions,
-  [ShapeType.MESSAGE_TRANSITION]: noop,
+  [ShapeType.MESSAGE_TRANSITION]: createMessageTransitionUpdateOptions,
   [ShapeType.SEND_STATE_TRANSITION]: createSendStateTransitionUpdateOptions,
   [ShapeType.RECEIVE_STATE_TRANSITION]: createReceiveStateTransitionUpdateOptions,
   [ShapeType.FUNCTION_STATE_TRANSITION]: createFunctionStateTransitionUpdateOptions

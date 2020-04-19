@@ -76,10 +76,23 @@ export default class LinkFactory {
    */
   public update(options: GenericOptions, link?: joint.dia.Link) {
     if (!this.link && !link) {
-      throw Error('No element selected.');
+      throw Error('No link selected.');
     }
+    console.log(options);
     const linkToUpdate = link ?? this.link;
     linkToUpdate.label(0, options);
+  }
+
+  public addSourceMarker(condition: boolean, link?: joint.dia.Link) {
+    const linkToUpdate = link ?? this.link;
+    if (Boolean(condition)) {
+      linkToUpdate.attr('line/sourceMarker', {
+        type: 'path',
+        d: 'M 10 -5 0 0 10 5 z'
+      });
+    } else {
+      linkToUpdate.removeAttr('line/sourceMarker');
+    }
   }
 
   /**

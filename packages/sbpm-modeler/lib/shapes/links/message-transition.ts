@@ -1,7 +1,8 @@
 import {
   LabelBasedLinkToolsOptions,
   MessageTransitionOptions,
-  LinkCreationOptions
+  LinkCreationOptions,
+  MessageTransitionUpdateOptions
 } from '../../common/types';
 import { createIcon } from '../../common/utils';
 import { ShapeType } from '../../common/constants';
@@ -23,6 +24,10 @@ export const createMessageTransitionOptions = (
     labelBasedLinkToolsOptions
   };
 };
+
+export const createMessageTransitionUpdateOptions = (
+  options: MessageTransitionUpdateOptions
+) => iconLabel(options?.isBidirectional);
 
 /**
  * Default options used to create a new message transition.

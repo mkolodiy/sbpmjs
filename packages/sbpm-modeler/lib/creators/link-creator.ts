@@ -14,6 +14,7 @@ import {
   createFunctionStateTransitionOptions
 } from '../shapes/links';
 import { updateOptionsMapping } from '../shapes/mappings';
+import { ShapeType } from '../common/constants';
 
 export default class LinkCreator {
   private linkFactory: LinkFactory;
@@ -35,7 +36,9 @@ export default class LinkCreator {
    */
   public addMessageTransition(options: MessageTransitionOptions) {
     const creationOptions = createMessageTransitionOptions(options);
-    return this.linkFactory.add(creationOptions);
+    const link = this.linkFactory.add(creationOptions);
+    this.linkFactory.addSourceMarker(options?.isBidirectional, link);
+    return link;
   }
 
   /**
@@ -75,7 +78,11 @@ export default class LinkCreator {
    */
   public updateCurrentlySelectedLink(options: GenericOptions) {
     const type = this.linkFactory.getSelectedLinkType();
-    console.log(updateOptionsMapping[type](options));
+
+    if (type === ShapeType.MESSAGE_TRANSITION) {
+      this.linkFactory.addSourceMarker(options?.isBidirectional);
+    }
+
     this.linkFactory.update(updateOptionsMapping[type](options));
   }
 }
