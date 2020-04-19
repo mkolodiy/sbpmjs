@@ -13,8 +13,11 @@ import {
   createFunctionStateTransitionUpdateOptions
 } from './common/link';
 import { noop } from '../common/utils';
-import { createStandardSubjectUpdateOptions } from './elements/standard-subject';
-import { createSendStateUpdateOptions } from './elements/send-state';
+import {
+  createStandardSubjectUpdateOptions,
+  createSendStateUpdateOptions,
+  createReceiveStateUpdateOptions
+} from './elements';
 
 const elementLinkMapping: GenericOptions = {
   [ShapeType.STANDARD_SUBJECT]: createMessageTransitionOptions,
@@ -26,7 +29,7 @@ const elementLinkMapping: GenericOptions = {
 const updateOptionsMapping: GenericOptions = {
   [ShapeType.STANDARD_SUBJECT]: createStandardSubjectUpdateOptions,
   [ShapeType.SEND_STATE]: createSendStateUpdateOptions,
-  [ShapeType.RECEIVE_STATE]: createStateUpdateOptions,
+  [ShapeType.RECEIVE_STATE]: createReceiveStateUpdateOptions,
   [ShapeType.FUNCTION_STATE]: createStateUpdateOptions,
   [ShapeType.MESSAGE_TRANSITION]: noop,
   [ShapeType.SEND_STATE_TRANSITION]: createSendStateTransitionUpdateOptions,
