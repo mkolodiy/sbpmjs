@@ -8,6 +8,7 @@ import {
 import { Event } from '../common/constants';
 import { createElementTools } from '../shape-tools/element-tools';
 import { updateOptionsMapping } from '../shapes/mappings';
+import { getDescriptionProperty } from '../shapes/common/helper';
 
 export default class ElementFactory {
   private canvas: Canvas;
@@ -65,9 +66,15 @@ export default class ElementFactory {
     }
 
     const elementToUpdate = element ?? this.element;
+    const { size, ...otherAttributes } = options;
 
-    for (let [key, value] of Object.entries(options)) {
-      elementToUpdate.attr(key, value);
+    for (let [key, value] of Object.entries(otherAttributes)) {
+      elementToUpdate.prop(key, value);
+    }
+
+    if (size) {
+      elementToUpdate.resize(size.width, size.height);
+      this.addElementTools(this.canvas.paper.findViewByModel(elementToUpdate));
     }
   }
 
@@ -99,7 +106,7 @@ export default class ElementFactory {
     creationOptions: ElementCreationOptions<A>
   ): joint.shapes.basic.Image {
     const { jointOptions, options, type, toolsOptions } = creationOptions;
-    const { position, ...updateOptions } = options;
+    const { position, description } = options;
 
     const element = new joint.shapes.basic.Image({
       ...jointOptions,
@@ -109,7 +116,12 @@ export default class ElementFactory {
     });
 
     element.position(position.x, position.y);
-    this.update(updateOptionsMapping[type](updateOptions), element);
+    this.update(
+      {
+        ...getDescriptionProperty(description)
+      },
+      element
+    );
 
     return element;
   }

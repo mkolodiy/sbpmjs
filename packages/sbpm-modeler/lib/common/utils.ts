@@ -1,4 +1,5 @@
 import { SVG_PREFIX, ShapeNamespace } from './constants';
+import { GenericOptions } from './types';
 
 /**
  * Combine multiple strings in an array separated by separator.
@@ -32,3 +33,34 @@ export const isCommonType = (type: string) => {
  * No operation function.
  */
 export const noop = () => {};
+
+export const flattenObject = (
+  object: GenericOptions,
+  prefix: string = '',
+  result: GenericOptions = {}
+): GenericOptions => {
+  if (
+    typeof object === 'string' ||
+    typeof object === 'number' ||
+    typeof object === 'boolean'
+  ) {
+    result[prefix] = object;
+    return result;
+  }
+
+  if (typeof object === 'object') {
+    for (let i in object) {
+      let pref = prefix;
+      if (!prefix) {
+        pref = i;
+      } else {
+        pref = prefix + '/' + i;
+      }
+
+      flattenObject(object[i], pref, result);
+    }
+    return result;
+  }
+
+  return result;
+};

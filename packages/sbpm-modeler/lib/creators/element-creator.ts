@@ -1,19 +1,13 @@
 import Canvas from '../canvas';
 import ElementFactory from '../factories/element-factory';
-import {
-  SubjectOptions,
-  StateOptions,
-  GenericOptions,
-  SubjectUpdateOptions
-} from '../common/types';
+import { SubjectOptions, StateOptions, GenericOptions } from '../common/types';
 import {
   createStandardSubjectOptions,
   createSendStateOptions,
   createReceiveStateOptions,
   createFunctionStateOptions
 } from '../shapes/elements';
-import { updateOptionsMapping, recreateElement } from '../shapes/mappings';
-import { ShapeType } from '../common/constants';
+import { updateOptionsMapping } from '../shapes/mappings';
 
 export default class ElementCreator {
   private elementFactory: ElementFactory;
@@ -74,46 +68,7 @@ export default class ElementCreator {
    */
   public updateCurrentlySelectedElement(options: GenericOptions) {
     const type = this.elementFactory.getSelectedElementType();
-
-    if (recreateElement(type, options)) {
-      return this.recreateElement(type)(options);
-    }
-
+    console.log(updateOptionsMapping[type](options));
     this.elementFactory.update(updateOptionsMapping[type](options));
-  }
-
-  /**
-   * Recreates an element. This is necessary because updating some elements could be complex.
-   *
-   * @param type Element type.
-   */
-  private recreateElement(type: string) {
-    switch (type) {
-      case ShapeType.STANDARD_SUBJECT:
-        return this.recreateStandardSubject.bind(this);
-    }
-  }
-
-  /**
-   * Recreate standard subject.
-   *
-   * @param updateOptions [[SubjectUpdateOptions]] update options.
-   */
-  private recreateStandardSubject(updateOptions: SubjectUpdateOptions) {
-    const selectedElementAttributes = this.elementFactory.getSelectedElementAttributes();
-
-    const currentOptions = {
-      description: selectedElementAttributes.description,
-      position: selectedElementAttributes.position,
-      isMachine: selectedElementAttributes.isMachine
-    };
-
-    const options = {
-      ...currentOptions,
-      ...updateOptions
-    };
-
-    this.elementFactory.removeSelectedElement();
-    this.addStandardSubject(options);
   }
 }

@@ -6,17 +6,14 @@ import {
   createReceiveStateTransitionOptions,
   createFunctionStateTransitionOptions
 } from './links';
-import {
-  createStateUpdateOptions,
-  createSubjectUpdateOptions
-} from './common/elements';
-import { recreateStandardSubject } from './elements';
+import { createStateUpdateOptions } from './common/elements';
 import {
   createSendStateTransitionUpdateOptions,
   createReceiveStateTransitionUpdateOptions,
   createFunctionStateTransitionUpdateOptions
 } from './common/link';
 import { noop } from '../common/utils';
+import { createStandardSubjectUpdateOptions } from './elements/standard-subject';
 
 const elementLinkMapping: GenericOptions = {
   [ShapeType.STANDARD_SUBJECT]: createMessageTransitionOptions,
@@ -26,7 +23,7 @@ const elementLinkMapping: GenericOptions = {
 };
 
 const updateOptionsMapping: GenericOptions = {
-  [ShapeType.STANDARD_SUBJECT]: createSubjectUpdateOptions,
+  [ShapeType.STANDARD_SUBJECT]: createStandardSubjectUpdateOptions,
   [ShapeType.SEND_STATE]: createStateUpdateOptions,
   [ShapeType.RECEIVE_STATE]: createStateUpdateOptions,
   [ShapeType.FUNCTION_STATE]: createStateUpdateOptions,
@@ -36,13 +33,4 @@ const updateOptionsMapping: GenericOptions = {
   [ShapeType.FUNCTION_STATE_TRANSITION]: createFunctionStateTransitionUpdateOptions
 };
 
-const recreateElementMapping: GenericOptions = {
-  [ShapeType.STANDARD_SUBJECT]: recreateStandardSubject
-};
-
-const recreateElement = (type: ShapeType, options: GenericOptions) => {
-  const recreationCheck = recreateElementMapping[type];
-  return recreationCheck && recreationCheck(options);
-};
-
-export { elementLinkMapping, updateOptionsMapping, recreateElement };
+export { elementLinkMapping, updateOptionsMapping };
