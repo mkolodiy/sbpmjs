@@ -1,56 +1,31 @@
-import { GenericOptions, SubjectUpdateOptions } from '../../common/types';
+import { GenericOptions, StateUpdateOptions } from '../../common/types';
 import { blueDotIcon, redDotIcon } from '../../common/icons';
-
-/**
- *  Creates joint options for a subject.
- *
- * @param options Update options.
- */
-export const createSubjectUpdateOptions = (options: SubjectUpdateOptions) => {
-  const { description } = options;
-  let updateOptions = {};
-
-  if (description) {
-    updateOptions = {
-      'text/textWrap/text': description
-    };
-  }
-
-  return updateOptions;
-};
+import { getDescriptionProperty } from './helper';
+import { flattenObject } from '../../common/utils';
 
 /**
  * Creates joint options for a state.
  *
  * @param options Update options.
  */
-export const createStateUpdateOptions = (options: GenericOptions) => {
+export const createStateUpdateOptions = (
+  options: StateUpdateOptions,
+  jointOptions: GenericOptions
+) => {
   const { description, startState, endState } = options;
-  let updateOptions = {};
 
   if (startState !== undefined || endState !== undefined) {
-    if (Boolean(startState) || Boolean(endState)) {
-      const stateModifierOptions = getStateModifierOptions(options);
-      updateOptions = {
-        'stateModifier/xlinkHref': stateModifierOptions.xlinkHref,
-        'stateModifier/opacity': stateModifierOptions.opacity
-      };
-    } else {
-      updateOptions = {
-        'stateModifier/xlinkHref': '',
-        'stateModifier/opacity': 0
-      };
-    }
-  }
-
-  if (description) {
-    updateOptions = {
-      ...updateOptions,
-      'text/textWrap/text': description
+    return {
+      ...getDescriptionProperty(description),
+      ...flattenObject({
+        attrs: { stateModifier: jointOptions.attrs.stateModifier }
+      })
     };
   }
 
-  return updateOptions;
+  return {
+    ...getDescriptionProperty(description)
+  };
 };
 
 /**
