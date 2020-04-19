@@ -177,17 +177,66 @@
           <div class="sbpmjs"></div>
         </div>
         <div class="col m4 l4 xl2 card">
+          <h5>Valid JSON object:</h5>
           <textarea class="update-options"></textarea>
-          <p>
-            <a class="waves-effect waves-light btn format-update-options"
-              >Format</a
-            >
-            <a class="waves-effect waves-light btn update-element"
-              >Update element</a
-            >
-            <a class="waves-effect waves-light btn update-link">Update link</a>
-          </p>
-          <div>test</div>
+          <div class="update-controls row">
+            <div class="col xl12">
+              <a class="waves-effect waves-light btn format-update-options"
+                >Format</a
+              >
+            </div>
+            <div class="col xl12">
+              <a class="waves-effect waves-light btn update-element"
+                >Update element</a
+              >
+            </div>
+            <div class="col xl12">
+              <a class="waves-effect waves-light btn update-link"
+                >Update link</a
+              >
+            </div>
+          </div>
+          <h5>Examples:</h5>
+          <div class="update-options-examples">
+            <pre>
+              <code>
+    // Subject
+    {
+      "description": "Test description",
+      "isMachine": true
+    }
+
+    // State
+    {
+      "description": "Test description",
+      "startState": true,
+      "endState": true
+    }
+
+    // Message transition
+    {
+      "isBidirectional": true
+    }
+
+    // Send state transition
+    {
+      "receiver": "Subject A",
+      "message": "Message A"
+    }
+
+    // Receive state transition
+    {
+      "sender": "Subject A",
+      "message": "Message A"
+    }
+
+    // Function state transition
+    {
+      "action": "Do something"
+    }
+              </code>
+            </pre>
+          </div>
         </div>
       </div>
     </div>

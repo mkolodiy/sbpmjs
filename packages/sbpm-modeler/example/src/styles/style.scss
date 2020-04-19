@@ -42,7 +42,24 @@ form,
   height: 300px;
 }
 
-.update-element,
-.update-link {
-  margin-left: 0.75rem;
+.update-controls {
+  padding: 10px 0;
+
+  .col {
+    padding-top: 10px;
+  }
+}
+
+pre {
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  color: #666;
+  page-break-inside: avoid;
+  font-family: monospace;
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 100%;
+  overflow: auto;
+  display: block;
+  word-wrap: break-word;
 }

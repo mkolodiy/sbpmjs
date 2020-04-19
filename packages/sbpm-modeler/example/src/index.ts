@@ -48,6 +48,15 @@ document.querySelector('.update-element').addEventListener('click', () => {
   elementCreator.updateCurrentlySelectedElement(updateOptions);
 });
 
+document.querySelector('.update-link').addEventListener('click', () => {
+  const updateOptionsTextarea = document.querySelector(
+    '.update-options'
+  ) as HTMLTextAreaElement;
+  const updateOptions = JSON.parse(updateOptionsTextarea.value);
+  console.log(updateOptions);
+  linkCreator.updateCurrentlySelectedLink(updateOptions);
+});
+
 canvas.onElementSelected(cellView => {
   console.log(cellView);
 });

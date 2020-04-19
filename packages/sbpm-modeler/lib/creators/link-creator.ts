@@ -75,7 +75,7 @@ export default class LinkCreator {
    */
   public updateCurrentlySelectedLink(options: GenericOptions) {
     const type = this.linkFactory.getSelectedLinkType();
-
+    console.log(updateOptionsMapping[type](options));
     this.linkFactory.update(updateOptionsMapping[type](options));
   }
 }

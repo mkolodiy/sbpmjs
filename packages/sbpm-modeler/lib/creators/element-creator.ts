@@ -68,7 +68,6 @@ export default class ElementCreator {
    */
   public updateCurrentlySelectedElement(options: GenericOptions) {
     const type = this.elementFactory.getSelectedElementType();
-    console.log(updateOptionsMapping[type](options));
     this.elementFactory.update(updateOptionsMapping[type](options));
   }
 }
