@@ -11,7 +11,7 @@
   "license": "MIT",
   "main": "dist/modeler.umd.js",
   "module": "dist/modeler.es5.js",
-  "typings": "dist/types/modeler.d.ts",
+  "typings": "dist/types/index.d.ts",
   "files": [
     "dist/"
   ],
@@ -29,6 +29,7 @@
     "fix:tslint": "tslint --fix --project .",
     "lint": "tslint  --project tsconfig.json -t codeFrame 'lib/**/*.ts' && prettier \"lib/**/*.ts\" --list-different",
     "test": "karma start",
+    "test:prod": "run-s build && karma start",
     "prebuild": "run-s clean fix",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file lib"
   },
