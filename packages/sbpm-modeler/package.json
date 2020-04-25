@@ -23,14 +23,12 @@
     "url": "git+https://github.com/mkolodiy/sbpmjs.git"
   },
   "scripts": {
-    "clean": "rimraf dist docs coverage",
+    "clean": "rimraf dist docs",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"lib/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
-    "lint": "tslint  --project tsconfig.json -t codeFrame 'lib/**/*.ts' '__test__/**/*.ts' && prettier \"lib/**/*.ts\" --list-different",
-    "test": "jest --coverage ",
-    "test:watch": "jest --coverage --watch",
-    "test:prod": "run-s test -- --no-cache",
+    "lint": "tslint  --project tsconfig.json -t codeFrame 'lib/**/*.ts' && prettier \"lib/**/*.ts\" --list-different",
+    "test": "karma start",
     "prebuild": "run-s clean fix",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file lib"
   },
@@ -41,30 +39,7 @@
     "semi": true,
     "singleQuote": true
   },
-  "jest": {
-    "transform": {
-      ".(ts|tsx)": "ts-jest"
-    },
-    "testEnvironment": "jsdom",
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/test/"
-    ],
-    "collectCoverageFrom": [
-      "lib/*.{js,ts}"
-    ],
-    "moduleNameMapper": {
-      "\\.(css|less)$": "identity-obj-proxy"
-    }
-  },
   "dependencies": {
-    "@types/lodash": "^4.14.149",
     "jointjs": "^3.1.1"
   }
 }
