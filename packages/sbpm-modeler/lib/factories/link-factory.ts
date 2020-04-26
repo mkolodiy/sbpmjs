@@ -78,7 +78,6 @@ export default class LinkFactory {
     if (!this.link && !link) {
       throw Error('No link selected.');
     }
-    console.log(options);
     const linkToUpdate = link ?? this.link;
     linkToUpdate.label(0, options);
   }

@@ -1,3 +1,5 @@
+process.env.CHROME_BIN = require('puppeteer').executablePath();
+
 module.exports = config => {
   config.set({
     basePath: '',
@@ -11,7 +13,7 @@ module.exports = config => {
     port: 9876,
     colors: true,
     autoWatch: false,
-    browsers: ['Chrome'],
+    browsers: ['ChromeHeadless'],
     singleRun: true,
     browserNoActivityTimeout: 30000,
     karmaTypescriptConfig: {

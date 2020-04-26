@@ -95,7 +95,8 @@ export default class Canvas {
   public getElements() {
     const allElements = this._graph.getElements();
     return allElements.filter(
-      (el: joint.dia.Element) => el.attributes.type !== ShapeNamespace.COMMON
+      (el: joint.dia.Element) =>
+        !el.attributes.type.includes(ShapeNamespace.COMMON)
     );
   }
 
@@ -105,7 +106,8 @@ export default class Canvas {
   public getLinks() {
     const allElements = this._graph.getLinks();
     return allElements.filter(
-      (el: joint.dia.Link) => el.attributes.type !== ShapeNamespace.COMMON
+      (el: joint.dia.Link) =>
+        !el.attributes.type.includes(ShapeNamespace.COMMON)
     );
   }
 
