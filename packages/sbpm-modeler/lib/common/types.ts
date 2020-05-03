@@ -143,13 +143,13 @@ export interface StateOptions extends ElementOptions {
    *
    * @default false
    */
-  startState?: boolean;
+  isStartState?: boolean;
   /**
    * Defines if a state is an end state.
    *
    * @default false
    */
-  endState?: boolean;
+  isEndState?: boolean;
 }
 
 /**

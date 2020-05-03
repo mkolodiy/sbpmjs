@@ -12,7 +12,11 @@ export const createStateUpdateOptions = (
   options: StateUpdateOptions,
   jointOptions: GenericOptions
 ) => {
-  const { description, startState, endState } = options;
+  const {
+    description,
+    isStartState: startState,
+    isEndState: endState
+  } = options;
 
   if (startState !== undefined || endState !== undefined) {
     return {

@@ -52,8 +52,8 @@ export const addSendState = (
       x: Number(positionX),
       y: Number(positionY)
     },
-    startState,
-    endState
+    isStartState: startState,
+    isEndState: endState
   });
 };
 
@@ -71,8 +71,8 @@ export const addReceiveState = (
       x: Number(positionX),
       y: Number(positionY)
     },
-    startState,
-    endState
+    isStartState: startState,
+    isEndState: endState
   });
 };
 
@@ -90,7 +90,7 @@ export const addFunctionState = (
       x: Number(positionX),
       y: Number(positionY)
     },
-    startState,
-    endState
+    isStartState: startState,
+    isEndState: endState
   });
 };

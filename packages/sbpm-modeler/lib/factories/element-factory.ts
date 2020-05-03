@@ -7,7 +7,6 @@ import {
 } from '../common/types';
 import { Event } from '../common/constants';
 import { createElementTools } from '../shape-tools/element-tools';
-import { updateOptionsMapping } from '../shapes/mappings';
 import { getDescriptionProperty } from '../shapes/common/helper';
 
 export default class ElementFactory {

@@ -82,7 +82,7 @@ describe('canvas', () => {
     expect(allLinks.length).to.equal(2);
   });
 
-  it('should remove all elements', () => {
+  it('should remove all shapes', () => {
     const sub1 = elementCreator.addStandardSubject(
       createStandardSubjectOptions('Test subject 1')
     );
@@ -105,6 +105,20 @@ describe('canvas', () => {
     allLinks = canvas.getLinks();
     expect(allLinks).to.be.empty;
     expect(allLinks.length).to.equal(0);
+  });
+
+  it('should set to origin', () => {
+    let translate = canvas.paper.translate();
+    expect(translate.tx).to.equal(0);
+    expect(translate.ty).to.equal(0);
+    canvas.paper.translate(100, 200);
+    translate = canvas.paper.translate();
+    expect(translate.tx).to.equal(100);
+    expect(translate.ty).to.equal(200);
+    canvas.setToOrigin();
+    translate = canvas.paper.translate();
+    expect(translate.tx).to.equal(0);
+    expect(translate.ty).to.equal(0);
   });
 });
 

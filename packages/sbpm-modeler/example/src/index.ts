@@ -196,7 +196,7 @@ function demo6() {
       x: 100,
       y: 1100
     },
-    startState: true
+    isStartState: true
   });
   const receiveState = elementCreator.addReceiveState({
     description: 'Receive state',
@@ -204,7 +204,7 @@ function demo6() {
       x: 800,
       y: 1100
     },
-    endState: true
+    isEndState: true
   });
   linkCreator.addSendStateTransition({
     source: sendState,
