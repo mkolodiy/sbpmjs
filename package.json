@@ -10,6 +10,7 @@
     "build": "lerna run build",
     "clean": "lerna run clean",
     "test": "lerna run test",
+    "docs": "lerna run docs",
     "test:watch": "lerna run test:watch",
     "test:prod": "lerna run test:prod"
   },
@@ -64,6 +65,7 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^9.0.0",
     "typedoc": "^0.15.5",
+    "typedoc-plugin-markdown": "^2.2.17",
     "typescript": "^3.8.3"
   },
   "config": {

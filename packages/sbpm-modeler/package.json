@@ -31,7 +31,8 @@
     "test": "karma start",
     "test:prod": "run-s build && karma start",
     "prebuild": "run-s clean fix",
-    "build": "tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file lib"
+    "docs": "rimraf docs && typedoc --out docs --target es6 --theme markdown --readme none --excludePrivate --excludeNotExported --mode file lib",
+    "build": "tsc --module commonjs && rollup -c rollup.config.ts && run-s docs"
   },
   "bugs": {
     "url": "https://github.com/mkolodiy/sbpmjs/issues"
