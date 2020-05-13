@@ -1,5 +1,4 @@
 import {
-  addSubject,
   getInputValueFromForm,
   getInputCheckedFromForm,
   addSendState,

@@ -1,8 +1,7 @@
 import {
   SendStateTransitionUpdateOptions,
   ReceiveStateTransitionUpdateOptions,
-  FunctionStateTransitionUpdateOptions,
-  MessageTransitionUpdateOptions
+  FunctionStateTransitionUpdateOptions
 } from '../../common/types';
 
 /**

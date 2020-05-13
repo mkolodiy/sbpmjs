@@ -1,36 +1,14 @@
 import '../node_modules/jointjs/dist/joint.min.css';
+
 import Canvas from './canvas';
 import ElementCreator from './creators/element-creator';
 import LinkCreator from './creators/link-creator';
 import { ModelerOptions } from './common/types';
 
 export default class Modeler {
-  private static _instance: Modeler;
-  private _canvas: Canvas;
-  private _elementCreator: ElementCreator;
-  private _linkCreator: LinkCreator;
-
-  /**
-   * Creates a new modeler instance.
-   *
-   * @param options [[ModelerOptions]] used to create a new modeler.
-   */
-  public static initialize(options: ModelerOptions) {
-    if (!Modeler._instance) {
-      Modeler._instance = new Modeler(options);
-    }
-
-    return Modeler._instance;
-  }
-
-  /**
-   * Returns a modeler instance.
-   *
-   * @returns [[Modeler]] object.
-   */
-  public static getInstance() {
-    return Modeler._instance;
-  }
+  private canvasInstance: Canvas;
+  private elementCreatorInstance: ElementCreator;
+  private linkCreatorInstance: LinkCreator;
 
   /**
    * Constructor
@@ -39,9 +17,9 @@ export default class Modeler {
    */
   public constructor(options: ModelerOptions) {
     const { container } = options;
-    this._canvas = new Canvas(options);
-    this._elementCreator = new ElementCreator(this._canvas);
-    this._linkCreator = new LinkCreator(this._canvas, container);
+    this.canvasInstance = new Canvas(options);
+    this.elementCreatorInstance = new ElementCreator(this.canvasInstance);
+    this.linkCreatorInstance = new LinkCreator(this.canvasInstance, container);
   }
 
   /**
@@ -50,7 +28,7 @@ export default class Modeler {
    * @returns [[Canvas]] instance.
    */
   public get canvas() {
-    return this._canvas;
+    return this.canvasInstance;
   }
 
   /**
@@ -59,7 +37,7 @@ export default class Modeler {
    * @returns [[ElementCreator]] instance.
    */
   public get elementCreator() {
-    return this._elementCreator;
+    return this.elementCreatorInstance;
   }
 
   /**
@@ -68,6 +46,22 @@ export default class Modeler {
    * @returns [[LinkCreator]] instance.
    */
   public get linkCreator() {
-    return this._linkCreator;
+    return this.linkCreatorInstance;
   }
 }
+
+export {
+  ModelerOptions,
+  SubjectOptions,
+  SubjectUpdateOptions,
+  StateOptions,
+  StateUpdateOptions,
+  MessageTransitionOptions,
+  MessageTransitionUpdateOptions,
+  SendStateTransitionOptions,
+  SendStateTransitionUpdateOptions,
+  ReceiveStateTransitionOptions,
+  ReceiveStateTransitionUpdateOptions,
+  FunctionStateTransitionOptions,
+  FunctionStateTransitionUpdateOptions
+} from './common/types';

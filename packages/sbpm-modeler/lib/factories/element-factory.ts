@@ -1,4 +1,5 @@
 import * as joint from 'jointjs';
+
 import Canvas from '../canvas';
 import {
   ElementOptions,
@@ -147,6 +148,6 @@ export default class ElementFactory {
    */
   private addElementTools(cellView: joint.dia.CellView) {
     const { toolsOptions } = cellView.model.attributes;
-    cellView.addTools(createElementTools(toolsOptions));
+    cellView.addTools(createElementTools(toolsOptions, this.canvas.paper));
   }
 }

@@ -1,4 +1,5 @@
 import * as joint from 'jointjs';
+
 import {
   Event,
   ShapeType,
@@ -23,9 +24,9 @@ const paperOptions = {
 };
 
 export default class Canvas {
-  private _graph: joint.dia.Graph;
-  private _paper: joint.dia.Paper;
-  private _dragStartPosition: Coordinates;
+  private graphInstance: joint.dia.Graph;
+  private paperInstance: joint.dia.Paper;
+  private dragStartPosition: Coordinates;
 
   /**
    * Constructor
@@ -39,14 +40,14 @@ export default class Canvas {
       ? { name: routerName }
       : { name: 'normal' };
 
-    this._graph = new joint.dia.Graph();
-    this._paper = new joint.dia.Paper({
+    this.graphInstance = new joint.dia.Graph();
+    this.paperInstance = new joint.dia.Paper({
       ...paperOptions,
       el: container,
-      model: this._graph,
+      model: this.graphInstance,
       defaultRouter
     });
-    this._dragStartPosition = null;
+    this.dragStartPosition = null;
 
     this.addDragging(container);
     this.addOrigin();
@@ -59,7 +60,7 @@ export default class Canvas {
    * @returns Joint graph.
    */
   public get graph() {
-    return this._graph;
+    return this.graphInstance;
   }
 
   /**
@@ -68,7 +69,7 @@ export default class Canvas {
    * @returns Joint paper.
    */
   public get paper() {
-    return this._paper;
+    return this.paperInstance;
   }
 
   /**
@@ -76,7 +77,7 @@ export default class Canvas {
    */
   public unhighlightAllElements() {
     this.getElements().forEach((model: joint.dia.Element) => {
-      this._paper.findViewByModel(model).unhighlight();
+      this.paperInstance.findViewByModel(model).unhighlight();
     });
   }
 
@@ -86,14 +87,14 @@ export default class Canvas {
    * @param model Joint element.
    */
   public unhighlightElement(model: joint.dia.Element) {
-    model.findView(this._paper).unhighlight();
+    model.findView(this.paperInstance).unhighlight();
   }
 
   /**
    * Get all elements on the canvas.
    */
   public getElements() {
-    const allElements = this._graph.getElements();
+    const allElements = this.graphInstance.getElements();
     return allElements.filter(
       (el: joint.dia.Element) =>
         !el.attributes.type.includes(ShapeNamespace.COMMON)
@@ -104,7 +105,7 @@ export default class Canvas {
    * Get all links on the canvas.
    */
   public getLinks() {
-    const allElements = this._graph.getLinks();
+    const allElements = this.graphInstance.getLinks();
     return allElements.filter(
       (el: joint.dia.Link) =>
         !el.attributes.type.includes(ShapeNamespace.COMMON)
@@ -115,7 +116,7 @@ export default class Canvas {
    * Removes all shapes from the graph.
    */
   public clear() {
-    this._graph.clear();
+    this.graphInstance.clear();
     this.addOrigin();
   }
 
@@ -123,7 +124,7 @@ export default class Canvas {
    * Sets canvas to origin.
    */
   public setToOrigin() {
-    this._paper.translate(0, 0);
+    this.paperInstance.translate(0, 0);
   }
 
   /**
@@ -132,9 +133,9 @@ export default class Canvas {
    * @param element Joint element.
    */
   public triggerElementPointerdown(element: joint.dia.Element) {
-    this._paper.trigger(
+    this.paperInstance.trigger(
       Event.ELEMENT_POINTERDOWN,
-      this._paper.findViewByModel(element)
+      this.paperInstance.findViewByModel(element)
     );
   }
 
@@ -144,9 +145,9 @@ export default class Canvas {
    * @param link Joint link.
    */
   public triggerLinkPointerdown(link: joint.dia.Link) {
-    this._paper.trigger(
+    this.paperInstance.trigger(
       Event.LINK_POINTERDOWN,
-      this._paper.findViewByModel(link)
+      this.paperInstance.findViewByModel(link)
     );
   }
 
@@ -154,7 +155,7 @@ export default class Canvas {
    * Hides tools of all shapes on the canvas.
    */
   public hideAllTools() {
-    this._paper.hideTools();
+    this.paperInstance.hideTools();
   }
 
   /**
@@ -164,7 +165,7 @@ export default class Canvas {
    * @returns Joint cell view.
    */
   public getCellView(model: joint.dia.Element) {
-    return this._paper.findViewByModel(model);
+    return this.paperInstance.findViewByModel(model);
   }
 
   /**
@@ -173,7 +174,7 @@ export default class Canvas {
    * @param cb Callback function that is executed when the user clicks on an element.
    */
   public onElementSelected(cb: (cellView?: joint.dia.CellView) => void) {
-    this._paper.on(Event.ELEMENT_POINTERDOWN, cb);
+    this.paperInstance.on(Event.ELEMENT_POINTERDOWN, cb);
   }
 
   /**
@@ -182,7 +183,7 @@ export default class Canvas {
    * @param cb Callback function that is executed when the user clicks on a link.
    */
   public onLinkSelected(cb: (cellView?: joint.dia.CellView) => void) {
-    this._paper.on(Event.LINK_POINTERDOWN, cb);
+    this.paperInstance.on(Event.LINK_POINTERDOWN, cb);
   }
 
   /**
@@ -191,7 +192,7 @@ export default class Canvas {
    * @param coordinates [[Coordinates]] object.
    */
   public findModelFromPoint(coordinates: Coordinates) {
-    const models = this._graph
+    const models = this.graphInstance
       .findModelsFromPoint(coordinates)
       .filter(
         (model: joint.dia.Element) => !isCommonType(model.attributes.type)
@@ -220,10 +221,10 @@ export default class Canvas {
    * @param container HTML element where the canvas will be rendered.
    */
   private addDragging(container: Element) {
-    this._paper.on(
+    this.paperInstance.on(
       Event.BLANK_POINTERDOWN,
       (event: MouseEvent, x: number, y: number) => {
-        this._dragStartPosition = { x: x, y: y };
+        this.dragStartPosition = { x: x, y: y };
       }
     );
 
@@ -231,20 +232,20 @@ export default class Canvas {
       Event.CELL_POINTERUP,
       Event.BLANK_POINTERUP
     ]);
-    this._paper.on(pointerupEvents, () => {
-      this._dragStartPosition = null;
+    this.paperInstance.on(pointerupEvents, () => {
+      this.dragStartPosition = null;
     });
 
     container.addEventListener(
       Event.MOUSEMOVE,
       (event: MouseEvent) => {
-        if (this._dragStartPosition !== null) {
-          const scale = this._paper.scale();
+        if (this.dragStartPosition !== null) {
+          const scale = this.paperInstance.scale();
 
-          const x = event.offsetX - this._dragStartPosition.x * scale.sx;
-          const y = event.offsetY - this._dragStartPosition.y * scale.sy;
+          const x = event.offsetX - this.dragStartPosition.x * scale.sx;
+          const y = event.offsetY - this.dragStartPosition.y * scale.sy;
 
-          this._paper.translate(x, y);
+          this.paperInstance.translate(x, y);
         }
       },
       true
@@ -313,21 +314,21 @@ export default class Canvas {
 
     const origin = new Origin();
     origin.resize(40, 40);
-    origin.addTo(this._graph);
+    origin.addTo(this.graphInstance);
   }
 
   /**
    * Registers all necessary events needed for the interaction with the canvas and elements on the canvas.
    */
   private registerPaperEvents() {
-    this._paper.on(Event.BLANK_POINTERDOWN, () => {
-      this._paper.hideTools();
+    this.paperInstance.on(Event.BLANK_POINTERDOWN, () => {
+      this.paperInstance.hideTools();
     });
 
-    this._paper.on(
+    this.paperInstance.on(
       combineStrings([Event.ELEMENT_POINTERDOWN, Event.LINK_POINTERDOWN]),
       (cellView: joint.dia.CellView) => {
-        this._paper.hideTools();
+        this.paperInstance.hideTools();
         cellView.model.toFront();
       }
     );

@@ -1,4 +1,5 @@
 import * as joint from 'jointjs';
+
 import Canvas from '../canvas';
 import {
   LinkOptions,

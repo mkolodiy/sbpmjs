@@ -1,4 +1,4 @@
-import Modeler from '../../lib/modeler';
+import Modeler from './index';
 
 export const getInputValueFromForm = (form: Element, id: string) => {
   return (form.querySelector(`#${id}`) as HTMLInputElement).value;
@@ -14,7 +14,7 @@ export const addSubject = (
   description: string,
   machine: boolean
 ) => {
-  const { elementCreator } = Modeler.getInstance();
+  const { elementCreator } = Modeler;
   return elementCreator.addStandardSubject({
     description,
     position: {
@@ -30,7 +30,7 @@ export const addMessage = (
   target: any,
   isBidirectional?: boolean
 ) => {
-  const { linkCreator } = Modeler.getInstance();
+  const { linkCreator } = Modeler;
   return linkCreator.addMessageTransition({
     source,
     target,
@@ -45,7 +45,7 @@ export const addSendState = (
   startState: boolean,
   endState: boolean
 ) => {
-  const { elementCreator } = Modeler.getInstance();
+  const { elementCreator } = Modeler;
   return elementCreator.addSendState({
     description,
     position: {
@@ -64,7 +64,7 @@ export const addReceiveState = (
   startState: boolean,
   endState: boolean
 ) => {
-  const { elementCreator } = Modeler.getInstance();
+  const { elementCreator } = Modeler;
   return elementCreator.addReceiveState({
     description,
     position: {
@@ -83,7 +83,7 @@ export const addFunctionState = (
   startState: boolean,
   endState: boolean
 ) => {
-  const { elementCreator } = Modeler.getInstance();
+  const { elementCreator } = Modeler;
   return elementCreator.addFunctionState({
     description,
     position: {

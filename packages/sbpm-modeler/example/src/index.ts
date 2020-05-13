@@ -1,13 +1,17 @@
 import './styles/style.scss';
 import '../node_modules/materialize-css/dist/js/materialize';
-import Modeler from '../../lib/modeler';
+import Modeler, { ModelerOptions } from '../../lib/modeler';
 import { subjectComponent } from './components/subject';
 import { messageComponent } from './components/message';
 import { statesComponent } from './components/basic-states';
 
-const modeler = Modeler.initialize({
+const modelerOptions: ModelerOptions = {
   container: document.querySelector('.sbpmjs')
-});
+};
+
+const modeler = new Modeler(modelerOptions);
+
+export default modeler;
 
 const { elementCreator, linkCreator, canvas } = modeler;
 

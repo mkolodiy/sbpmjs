@@ -2,7 +2,6 @@ import * as joint from 'jointjs';
 
 import { deleteIcon, callMadeIcon, openInNewIcon } from '../common/icons';
 import { ButtonOptions, ElementToolsOptions } from '../common/types';
-import Modeler from '../modeler';
 
 /**
  * Creates element tools.
@@ -10,7 +9,10 @@ import Modeler from '../modeler';
  * @param options [[ElementToolsOptions]] object.
  * @returns A new tools view.
  */
-export const createElementTools = (options: ElementToolsOptions) => {
+export const createElementTools = (
+  options: ElementToolsOptions,
+  paper: joint.dia.Paper
+) => {
   const {
     removeButtonOptions,
     openInNewButtonOptions,
@@ -29,7 +31,7 @@ export const createElementTools = (options: ElementToolsOptions) => {
   }
 
   if (linkButtonOptions) {
-    tools.push(createLinkButton(linkButtonOptions));
+    tools.push(createLinkButton(linkButtonOptions, paper));
   }
 
   const toolsView = new joint.dia.ToolsView({
@@ -83,13 +85,12 @@ const createOpenInNewButton = (options: ButtonOptions) => {
   });
 };
 
-const createLinkButton = (options: ButtonOptions) => {
+const createLinkButton = (options: ButtonOptions, paper: joint.dia.Paper) => {
   const { coordinates, event } = options;
   return new joint.elementTools.Button({
     x: coordinates.x,
     y: coordinates.y,
     action: (evt: joint.dia.Event, view: joint.dia.CellView) => {
-      const paper = Modeler.getInstance().canvas.paper;
       paper.trigger(event, evt, view);
     },
     markup: [
