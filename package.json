@@ -1,6 +1,6 @@
 {
   "name": "sbpmjs",
-  "description": "A library for managing and modeling SBPM processes.",
+  "description": "A collection of libraries for managing and modeling of SBPM processes.",
   "main": "index.js",
   "scripts": {
     "commit": "git-cz",
