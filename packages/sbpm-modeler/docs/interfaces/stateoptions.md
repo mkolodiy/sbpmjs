@@ -25,7 +25,7 @@
 
 *Inherited from [ElementOptions](elementoptions.md).[description](elementoptions.md#description)*
 
-*Defined in [common/types.ts:113](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L113)*
+*Defined in [common/types.ts:113](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L113)*
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 • **isEndState**? : *boolean*
 
-*Defined in [common/types.ts:152](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L152)*
+*Defined in [common/types.ts:152](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L152)*
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 • **isStartState**? : *boolean*
 
-*Defined in [common/types.ts:146](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L146)*
+*Defined in [common/types.ts:146](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L146)*
 
 ___
 
@@ -51,4 +51,4 @@ ___
 
 *Inherited from [ElementOptions](elementoptions.md).[position](elementoptions.md#position)*
 
-*Defined in [common/types.ts:117](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L117)*
+*Defined in [common/types.ts:117](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L117)*

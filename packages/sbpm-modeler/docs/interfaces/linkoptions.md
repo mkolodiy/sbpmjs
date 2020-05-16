@@ -27,7 +27,7 @@
 
 • **source**: *Cell | [Coordinates](coordinates.md)*
 
-*Defined in [common/types.ts:201](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L201)*
+*Defined in [common/types.ts:201](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L201)*
 
 ___
 
@@ -35,4 +35,4 @@ ___
 
 • **target**: *Cell | [Coordinates](coordinates.md)*
 
-*Defined in [common/types.ts:205](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L205)*
+*Defined in [common/types.ts:205](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L205)*

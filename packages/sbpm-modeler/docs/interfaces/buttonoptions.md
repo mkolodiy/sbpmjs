@@ -19,7 +19,7 @@
 
 • **coordinates**: *[Coordinates](coordinates.md)*
 
-*Defined in [common/types.ts:33](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L33)*
+*Defined in [common/types.ts:33](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L33)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **event**? : *string*
 
-*Defined in [common/types.ts:37](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L37)*
+*Defined in [common/types.ts:37](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L37)*

@@ -28,7 +28,7 @@
 
 • **jointOptions**: *[GenericOptions](genericoptions.md)*
 
-*Defined in [common/types.ts:47](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L47)*
+*Defined in [common/types.ts:47](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L47)*
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 • **options**: *A*
 
-*Defined in [common/types.ts:51](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L51)*
+*Defined in [common/types.ts:51](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L51)*
 
 ___
 
@@ -44,4 +44,4 @@ ___
 
 • **type**: *[ShapeType](../enums/shapetype.md)*
 
-*Defined in [common/types.ts:55](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L55)*
+*Defined in [common/types.ts:55](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L55)*

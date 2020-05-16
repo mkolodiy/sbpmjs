@@ -24,7 +24,7 @@
 
 \+ **new Modeler**(`options`: [ModelerOptions](../interfaces/modeleroptions.md)): *[Modeler](modeler.md)*
 
-*Defined in [modeler.ts:11](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/modeler.ts#L11)*
+*Defined in [modeler.ts:11](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/modeler.ts#L11)*
 
 **Parameters:**
 
@@ -40,7 +40,7 @@ Name | Type | Description |
 
 • **canvas**:
 
-*Defined in [modeler.ts:30](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/modeler.ts#L30)*
+*Defined in [modeler.ts:30](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/modeler.ts#L30)*
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 • **elementCreator**:
 
-*Defined in [modeler.ts:39](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/modeler.ts#L39)*
+*Defined in [modeler.ts:39](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/modeler.ts#L39)*
 
 ___
 
@@ -56,4 +56,4 @@ ___
 
 • **linkCreator**:
 
-*Defined in [modeler.ts:48](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/modeler.ts#L48)*
+*Defined in [modeler.ts:48](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/modeler.ts#L48)*

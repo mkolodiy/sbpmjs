@@ -26,7 +26,7 @@
 
 \+ **new ElementCreator**(`canvas`: [Canvas](canvas.md)): *[ElementCreator](elementcreator.md)*
 
-*Defined in [creators/element-creator.ts:13](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/creators/element-creator.ts#L13)*
+*Defined in [creators/element-creator.ts:13](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/creators/element-creator.ts#L13)*
 
 **Parameters:**
 
@@ -42,7 +42,7 @@ Name | Type | Description |
 
 ▸ **addFunctionState**(`options`: [StateOptions](../interfaces/stateoptions.md)): *Image‹›*
 
-*Defined in [creators/element-creator.ts:59](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/creators/element-creator.ts#L59)*
+*Defined in [creators/element-creator.ts:59](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/creators/element-creator.ts#L59)*
 
 **Parameters:**
 
@@ -58,7 +58,7 @@ ___
 
 ▸ **addReceiveState**(`options`: [StateOptions](../interfaces/stateoptions.md)): *Image‹›*
 
-*Defined in [creators/element-creator.ts:49](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/creators/element-creator.ts#L49)*
+*Defined in [creators/element-creator.ts:49](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/creators/element-creator.ts#L49)*
 
 **Parameters:**
 
@@ -74,7 +74,7 @@ ___
 
 ▸ **addSendState**(`options`: [StateOptions](../interfaces/stateoptions.md)): *Image‹›*
 
-*Defined in [creators/element-creator.ts:39](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/creators/element-creator.ts#L39)*
+*Defined in [creators/element-creator.ts:39](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/creators/element-creator.ts#L39)*
 
 **Parameters:**
 
@@ -90,7 +90,7 @@ ___
 
 ▸ **addStandardSubject**(`options`: [SubjectOptions](../interfaces/subjectoptions.md)): *Image‹›*
 
-*Defined in [creators/element-creator.ts:29](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/creators/element-creator.ts#L29)*
+*Defined in [creators/element-creator.ts:29](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/creators/element-creator.ts#L29)*
 
 **Parameters:**
 
@@ -106,7 +106,7 @@ ___
 
 ▸ **updateCurrentlySelectedElement**(`options`: [GenericOptions](../interfaces/genericoptions.md)): *void*
 
-*Defined in [creators/element-creator.ts:69](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/creators/element-creator.ts#L69)*
+*Defined in [creators/element-creator.ts:69](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/creators/element-creator.ts#L69)*
 
 **Parameters:**
 

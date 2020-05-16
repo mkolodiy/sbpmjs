@@ -29,7 +29,7 @@
 
 *Inherited from [CreationOptions](creationoptions.md).[jointOptions](creationoptions.md#jointoptions)*
 
-*Defined in [common/types.ts:47](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L47)*
+*Defined in [common/types.ts:47](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L47)*
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 *Inherited from [CreationOptions](creationoptions.md).[options](creationoptions.md#options)*
 
-*Defined in [common/types.ts:51](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L51)*
+*Defined in [common/types.ts:51](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L51)*
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 • **toolsOptions**: *[ElementToolsOptions](elementtoolsoptions.md)*
 
-*Defined in [common/types.ts:85](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L85)*
+*Defined in [common/types.ts:85](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L85)*
 
 ___
 
@@ -57,4 +57,4 @@ ___
 
 *Inherited from [CreationOptions](creationoptions.md).[type](creationoptions.md#type)*
 
-*Defined in [common/types.ts:55](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L55)*
+*Defined in [common/types.ts:55](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L55)*

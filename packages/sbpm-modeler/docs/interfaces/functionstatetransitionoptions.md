@@ -22,7 +22,7 @@
 
 • **action**: *string*
 
-*Defined in [common/types.ts:274](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L274)*
+*Defined in [common/types.ts:274](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L274)*
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 *Inherited from [LinkOptions](linkoptions.md).[source](linkoptions.md#source)*
 
-*Defined in [common/types.ts:201](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L201)*
+*Defined in [common/types.ts:201](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L201)*
 
 ___
 
@@ -42,4 +42,4 @@ ___
 
 *Inherited from [LinkOptions](linkoptions.md).[target](linkoptions.md#target)*
 
-*Defined in [common/types.ts:205](https://github.com/mkolodiy/sbpmjs/blob/6939d2f/packages/sbpm-modeler/lib/common/types.ts#L205)*
+*Defined in [common/types.ts:205](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L205)*
