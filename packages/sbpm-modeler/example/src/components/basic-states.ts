@@ -17,15 +17,27 @@ export const statesComponent = () => {
     const positionX = getInputValueFromForm(form, 'positionX');
     const positionY = getInputValueFromForm(form, 'positionY');
     const description = getInputValueFromForm(form, 'description');
-    const startState = getInputCheckedFromForm(form, 'startState');
-    const endState = getInputCheckedFromForm(form, 'endState');
+    const isStartState = getInputCheckedFromForm(form, 'startState');
+    const isEndState = getInputCheckedFromForm(form, 'endState');
 
     if (sendState) {
-      addSendState(positionX, positionY, description, startState, endState);
+      addSendState(positionX, positionY, description, isStartState, isEndState);
     } else if (receiveState) {
-      addReceiveState(positionX, positionY, description, startState, endState);
+      addReceiveState(
+        positionX,
+        positionY,
+        description,
+        isStartState,
+        isEndState
+      );
     } else if (functionState) {
-      addFunctionState(positionX, positionY, description, startState, endState);
+      addFunctionState(
+        positionX,
+        positionY,
+        description,
+        isStartState,
+        isEndState
+      );
     }
   });
 };

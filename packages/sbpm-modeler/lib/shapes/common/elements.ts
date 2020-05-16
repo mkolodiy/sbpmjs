@@ -12,13 +12,9 @@ export const createStateUpdateOptions = (
   options: StateUpdateOptions,
   jointOptions: GenericOptions
 ) => {
-  const {
-    description,
-    isStartState: startState,
-    isEndState: endState
-  } = options;
+  const { description, isStartState, isEndState } = options;
 
-  if (startState !== undefined || endState !== undefined) {
+  if (isStartState !== undefined || isEndState !== undefined) {
     return {
       ...getDescriptionProperty(description),
       ...flattenObject({
@@ -36,13 +32,13 @@ export const createStateUpdateOptions = (
  * Get state modifier options to show if a state is start or end state.
  */
 export const getStateModifierOptions = (options: GenericOptions) => {
-  const { startState, endState } = options;
+  const { isStartState, isEndState } = options;
 
   return {
-    opacity: Boolean(startState) || Boolean(endState) ? 0.5 : 0,
-    xlinkHref: Boolean(startState)
+    opacity: Boolean(isStartState) || Boolean(isEndState) ? 0.5 : 0,
+    xlinkHref: Boolean(isStartState)
       ? blueDotIcon
-      : Boolean(endState)
+      : Boolean(isEndState)
       ? redDotIcon
       : ''
   };

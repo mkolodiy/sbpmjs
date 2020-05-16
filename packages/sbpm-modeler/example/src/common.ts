@@ -42,8 +42,8 @@ export const addSendState = (
   positionX: string | number,
   positionY: string | number,
   description: string,
-  startState: boolean,
-  endState: boolean
+  isStartState: boolean,
+  isEndState: boolean
 ) => {
   const { elementCreator } = Modeler;
   return elementCreator.addSendState({
@@ -52,8 +52,8 @@ export const addSendState = (
       x: Number(positionX),
       y: Number(positionY)
     },
-    isStartState: startState,
-    isEndState: endState
+    isStartState,
+    isEndState
   });
 };
 
@@ -61,8 +61,8 @@ export const addReceiveState = (
   positionX: string | number,
   positionY: string | number,
   description: string,
-  startState: boolean,
-  endState: boolean
+  isStartState: boolean,
+  isEndState: boolean
 ) => {
   const { elementCreator } = Modeler;
   return elementCreator.addReceiveState({
@@ -71,8 +71,8 @@ export const addReceiveState = (
       x: Number(positionX),
       y: Number(positionY)
     },
-    isStartState: startState,
-    isEndState: endState
+    isStartState,
+    isEndState
   });
 };
 
@@ -80,8 +80,8 @@ export const addFunctionState = (
   positionX: string | number,
   positionY: string | number,
   description: string,
-  startState: boolean,
-  endState: boolean
+  isStartState: boolean,
+  isEndState: boolean
 ) => {
   const { elementCreator } = Modeler;
   return elementCreator.addFunctionState({
@@ -90,7 +90,7 @@ export const addFunctionState = (
       x: Number(positionX),
       y: Number(positionY)
     },
-    isStartState: startState,
-    isEndState: endState
+    isStartState,
+    isEndState
   });
 };
