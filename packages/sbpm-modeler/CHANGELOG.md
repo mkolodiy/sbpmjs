@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.4](https://github.com/mkolodiy/sbpmjs/compare/@sbpmjs/modeler@1.0.0-alpha.3...@sbpmjs/modeler@1.0.0-alpha.4) (2020-05-16)
+
+
+### Bug Fixes
+
+* **modeler:** fixed linking to origin ([941f061](https://github.com/mkolodiy/sbpmjs/commit/941f0619d450530cf938c873f34b6299a346a997))
+* **modeler:** renaming bug fix ([ceb3751](https://github.com/mkolodiy/sbpmjs/commit/ceb37514d33db7b5fd2ab564dda81f072f2c0a9b))
+* **modeler:** set selected element; start/end state update ([9fa360a](https://github.com/mkolodiy/sbpmjs/commit/9fa360aeafc090cb5d805345218cb2c69b134d1c))
+
+
+### Features
+
+* **modeler:** added function and receive state and transitions ([b86e132](https://github.com/mkolodiy/sbpmjs/commit/b86e1322fa814667f8e11f392a43587e4f699a98))
+* **modeler:** state start/state display ([082fe3d](https://github.com/mkolodiy/sbpmjs/commit/082fe3deecb16838cddc5b9b085cb630a6976aba))
+* **modeler:** update elements ([51b2b14](https://github.com/mkolodiy/sbpmjs/commit/51b2b1464f61af72881f94d81c3cec2ad105d9ca))
+* **modeler:** update message transition ([f482c17](https://github.com/mkolodiy/sbpmjs/commit/f482c17e6837766133492f268842c59be76b658f))
+* **modeler:** update standard subject ([6e37855](https://github.com/mkolodiy/sbpmjs/commit/6e3785557536cd41e978363714444d8f447b105f))
+* **modeler:** update transitions functionality ([c2d1ba7](https://github.com/mkolodiy/sbpmjs/commit/c2d1ba7939f01d408f4d6fe1870cba5e37b7e4ee))
+* **modeler:** updating shapes ([93c269e](https://github.com/mkolodiy/sbpmjs/commit/93c269e2eb706212c4d4a5fb12137de7212b21f5))
+* **modeler:** used all transition option on create ([e2499df](https://github.com/mkolodiy/sbpmjs/commit/e2499dfb584195d1594e3b036d78b1eca30b732e))
+
+
+
+
+
 # [1.0.0-alpha.3](https://github.com/mkolodiy/sbpmjs/compare/@sbpmjs/modeler@1.0.0-alpha.2...@sbpmjs/modeler@1.0.0-alpha.3) (2020-03-04)
 
 
