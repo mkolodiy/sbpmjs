@@ -12,7 +12,6 @@ npm install @sbpmjs/modeler
 
 ```
 import Modeler from '@sbpmjs/modeler';
-// const modeler = require('@sbpmjs/modeler');
 
 // Create a new Modeler instance
 const modeler = new Modeler({
@@ -58,11 +57,21 @@ Output:
 
 ## Available SBPM objects
 
+| Name                      | Description                                                 |
+| ------------------------- | ----------------------------------------------------------- |
+| Subject                   | Actor who is involved in a process                          |
+| Message                   | Information object that is exchanged between the subjects   |
+| Send state                | State in which a subject sends a message to another subject |
+| Receive state             | State in which a subject is waiting for a message to arrive |
+| Function state            | State in which a subject performs an internal action        |
+| Send state transition     | Transition from send state to another state                 |
+| Receive state transition  | Transition from receive state to another state              |
+| Function state transition | Transition from function state to another state             |
+
 ## API Overview
 
 ```
 import Modeler from '@sbpmjs/modeler';
-// const modeler = require('@sbpmjs/modeler');
 
 // Create a new Modeler instance
 const modeler = new Modeler({
