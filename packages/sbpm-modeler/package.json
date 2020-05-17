@@ -11,7 +11,7 @@
   "license": "MIT",
   "main": "dist/modeler.umd.js",
   "module": "dist/modeler.es5.js",
-  "typings": "dist/types/index.d.ts",
+  "typings": "dist/types/modeler.d.ts",
   "files": [
     "dist/"
   ],
