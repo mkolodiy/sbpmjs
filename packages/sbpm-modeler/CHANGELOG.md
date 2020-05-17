@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.6](https://github.com/mkolodiy/sbpmjs/compare/@sbpmjs/modeler@1.0.0-alpha.5...@sbpmjs/modeler@1.0.0-alpha.6) (2020-05-17)
+
+**Note:** Version bump only for package @sbpmjs/modeler
+
+
+
+
+
 # [1.0.0-alpha.5](https://github.com/mkolodiy/sbpmjs/compare/@sbpmjs/modeler@1.0.0-alpha.4...@sbpmjs/modeler@1.0.0-alpha.5) (2020-05-17)
 
 **Note:** Version bump only for package @sbpmjs/modeler
