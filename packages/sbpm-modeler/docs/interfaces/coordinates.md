@@ -19,7 +19,7 @@
 
 • **x**: *number*
 
-*Defined in [common/types.ts:19](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L19)*
+*Defined in [common/types.ts:19](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L19)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **y**: *number*
 
-*Defined in [common/types.ts:23](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L23)*
+*Defined in [common/types.ts:23](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L23)*

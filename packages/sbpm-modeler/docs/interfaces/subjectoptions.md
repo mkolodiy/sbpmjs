@@ -24,7 +24,7 @@
 
 *Inherited from [ElementOptions](elementoptions.md).[description](elementoptions.md#description)*
 
-*Defined in [common/types.ts:113](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L113)*
+*Defined in [common/types.ts:113](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L113)*
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 • **isMachine**? : *boolean*
 
-*Defined in [common/types.ts:129](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L129)*
+*Defined in [common/types.ts:129](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L129)*
 
 ___
 
@@ -42,4 +42,4 @@ ___
 
 *Inherited from [ElementOptions](elementoptions.md).[position](elementoptions.md#position)*
 
-*Defined in [common/types.ts:117](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L117)*
+*Defined in [common/types.ts:117](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L117)*

@@ -19,7 +19,7 @@
 
 • **container**: *Element*
 
-*Defined in [common/types.ts:67](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L67)*
+*Defined in [common/types.ts:67](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L67)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **routerName**? : *string*
 
-*Defined in [common/types.ts:73](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L73)*
+*Defined in [common/types.ts:73](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L73)*

@@ -20,7 +20,7 @@
 
 • **removeLabelOptions**: *[GenericOptions](genericoptions.md)*
 
-*Defined in [common/types.ts:187](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L187)*
+*Defined in [common/types.ts:187](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L187)*
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 • **removeVerticesLabelOptions**: *[GenericOptions](genericoptions.md)*
 
-*Defined in [common/types.ts:191](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L191)*
+*Defined in [common/types.ts:191](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L191)*
 
 ___
 
@@ -36,4 +36,4 @@ ___
 
 • **selectionLabelOptions**: *[GenericOptions](genericoptions.md)*
 
-*Defined in [common/types.ts:183](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L183)*
+*Defined in [common/types.ts:183](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L183)*

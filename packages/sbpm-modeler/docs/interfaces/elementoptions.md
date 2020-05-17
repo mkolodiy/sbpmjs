@@ -23,7 +23,7 @@
 
 • **description**: *string*
 
-*Defined in [common/types.ts:113](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L113)*
+*Defined in [common/types.ts:113](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L113)*
 
 ___
 
@@ -31,4 +31,4 @@ ___
 
 • **position**: *[Coordinates](coordinates.md)*
 
-*Defined in [common/types.ts:117](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L117)*
+*Defined in [common/types.ts:117](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L117)*

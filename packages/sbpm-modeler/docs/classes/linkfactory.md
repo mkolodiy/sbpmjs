@@ -30,7 +30,7 @@
 
 \+ **new LinkFactory**(`canvas`: [Canvas](canvas.md), `container`: Element): *[LinkFactory](linkfactory.md)*
 
-*Defined in [factories/link-factory.ts:96](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/factories/link-factory.ts#L96)*
+*Defined in [factories/link-factory.ts:96](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/link-factory.ts#L96)*
 
 **Parameters:**
 
@@ -47,7 +47,7 @@ Name | Type | Description |
 
 • **selectedLink**:
 
-*Defined in [factories/link-factory.ts:36](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/factories/link-factory.ts#L36)*
+*Defined in [factories/link-factory.ts:36](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/link-factory.ts#L36)*
 
 ## Methods
 
@@ -55,7 +55,7 @@ Name | Type | Description |
 
 ▸ **add**<**A**>(`creationOptions`: [LinkCreationOptions](../interfaces/linkcreationoptions.md)‹A›): *Link*
 
-*Defined in [factories/link-factory.ts:62](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/factories/link-factory.ts#L62)*
+*Defined in [factories/link-factory.ts:62](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/link-factory.ts#L62)*
 
 **Type parameters:**
 
@@ -77,7 +77,7 @@ ___
 
 ▸ **addSourceMarker**(`condition`: boolean, `link?`: Link): *void*
 
-*Defined in [factories/link-factory.ts:86](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/factories/link-factory.ts#L86)*
+*Defined in [factories/link-factory.ts:86](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/link-factory.ts#L86)*
 
 **Parameters:**
 
@@ -94,7 +94,7 @@ ___
 
 ▸ **getSelectedLinkAttributes**(): *any*
 
-*Defined in [factories/link-factory.ts:51](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/factories/link-factory.ts#L51)*
+*Defined in [factories/link-factory.ts:51](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/link-factory.ts#L51)*
 
 **Returns:** *any*
 
@@ -104,7 +104,7 @@ ___
 
 ▸ **getSelectedLinkType**(): *any*
 
-*Defined in [factories/link-factory.ts:43](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/factories/link-factory.ts#L43)*
+*Defined in [factories/link-factory.ts:43](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/link-factory.ts#L43)*
 
 **Returns:** *any*
 
@@ -114,7 +114,7 @@ ___
 
 ▸ **update**(`options`: [GenericOptions](../interfaces/genericoptions.md), `link?`: Link): *void*
 
-*Defined in [factories/link-factory.ts:78](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/factories/link-factory.ts#L78)*
+*Defined in [factories/link-factory.ts:78](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/link-factory.ts#L78)*
 
 **Parameters:**
 

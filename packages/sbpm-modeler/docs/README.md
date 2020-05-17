@@ -110,7 +110,7 @@
 
 Ƭ **FunctionStateTransitionUpdateOptions**: *Partial‹Omit‹[FunctionStateTransitionOptions](interfaces/functionstatetransitionoptions.md), "source" | "target"››*
 
-*Defined in [common/types.ts:280](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L280)*
+*Defined in [common/types.ts:280](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L280)*
 
 ___
 
@@ -118,7 +118,7 @@ ___
 
 Ƭ **MessageTransitionUpdateOptions**: *Partial‹Omit‹[MessageTransitionOptions](interfaces/messagetransitionoptions.md), "source" | "target"››*
 
-*Defined in [common/types.ts:221](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L221)*
+*Defined in [common/types.ts:221](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L221)*
 
 ___
 
@@ -126,7 +126,7 @@ ___
 
 Ƭ **ReceiveStateTransitionUpdateOptions**: *Partial‹Omit‹[ReceiveStateTransitionOptions](interfaces/receivestatetransitionoptions.md), "source" | "target"››*
 
-*Defined in [common/types.ts:263](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L263)*
+*Defined in [common/types.ts:263](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L263)*
 
 ___
 
@@ -134,7 +134,7 @@ ___
 
 Ƭ **SendStateTransitionUpdateOptions**: *Partial‹Omit‹[SendStateTransitionOptions](interfaces/sendstatetransitionoptions.md), "source" | "target"››*
 
-*Defined in [common/types.ts:242](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L242)*
+*Defined in [common/types.ts:242](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L242)*
 
 ___
 
@@ -142,7 +142,7 @@ ___
 
 Ƭ **StateUpdateOptions**: *Partial‹Omit‹[StateOptions](interfaces/stateoptions.md), "position"››*
 
-*Defined in [common/types.ts:158](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L158)*
+*Defined in [common/types.ts:158](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L158)*
 
 ___
 
@@ -150,7 +150,7 @@ ___
 
 Ƭ **SubjectUpdateOptions**: *Partial‹Omit‹[SubjectOptions](interfaces/subjectoptions.md), "position"››*
 
-*Defined in [common/types.ts:135](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L135)*
+*Defined in [common/types.ts:135](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L135)*
 
 ## Variables
 
@@ -163,7 +163,7 @@ ___
   CustomEvent.ELEMENT_ADD_FUNCTION_STATE_TRANSITION
 ]
 
-*Defined in [common/constants.ts:55](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/constants.ts#L55)*
+*Defined in [common/constants.ts:55](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L55)*
 
 ___
 
@@ -171,7 +171,7 @@ ___
 
 • **SVG_PREFIX**: *"data:image/svg+xml;utf8,"* = "data:image/svg+xml;utf8,"
 
-*Defined in [common/constants.ts:62](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/constants.ts#L62)*
+*Defined in [common/constants.ts:62](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L62)*
 
 ___
 
@@ -181,7 +181,7 @@ ___
   '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
 )
 
-*Defined in [common/icons.ts:3](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/icons.ts#L3)*
+*Defined in [common/icons.ts:3](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/icons.ts#L3)*
 
 ___
 
@@ -191,7 +191,7 @@ ___
   '<svg xmlns="http://www.w3.org/2000/svg" width="402" height="402"><circle fill="#33B" cx="201" cy="201" r="201" opacity="0.5"/><text x="121" y="299" font-size="300" fill="#fff" font-family="monospace">S</text></svg>'
 )
 
-*Defined in [common/icons.ts:19](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/icons.ts#L19)*
+*Defined in [common/icons.ts:19](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/icons.ts#L19)*
 
 ___
 
@@ -201,7 +201,7 @@ ___
   '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg>'
 )
 
-*Defined in [common/icons.ts:7](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/icons.ts#L7)*
+*Defined in [common/icons.ts:7](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/icons.ts#L7)*
 
 ___
 
@@ -211,7 +211,7 @@ ___
   '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'
 )
 
-*Defined in [common/icons.ts:11](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/icons.ts#L11)*
+*Defined in [common/icons.ts:11](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/icons.ts#L11)*
 
 ___
 
@@ -219,7 +219,7 @@ ___
 
 • **functionStateIcon**: *string* =  createIcon(iconTemplate)
 
-*Defined in [shapes/elements/function-state/icons.ts:1852](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/function-state/icons.ts#L1852)*
+*Defined in [shapes/elements/function-state/icons.ts:1852](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/function-state/icons.ts#L1852)*
 
 ___
 
@@ -229,7 +229,7 @@ ___
   '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>'
 )
 
-*Defined in [common/icons.ts:15](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/icons.ts#L15)*
+*Defined in [common/icons.ts:15](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/icons.ts#L15)*
 
 ___
 
@@ -237,7 +237,7 @@ ___
 
 • **receiveStateIcon**: *string* =  createIcon(iconTemplate)
 
-*Defined in [shapes/elements/receive-state/icons.ts:1852](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/receive-state/icons.ts#L1852)*
+*Defined in [shapes/elements/receive-state/icons.ts:1852](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/receive-state/icons.ts#L1852)*
 
 ___
 
@@ -247,7 +247,7 @@ ___
   '<svg xmlns="http://www.w3.org/2000/svg" width="402" height="402"><circle fill="#ff0000" cx="201" cy="201" r="201" opacity="0.5"/><text x="121" y="299" font-size="300" fill="#fff" font-family="monospace">E</text></svg>'
 )
 
-*Defined in [common/icons.ts:23](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/icons.ts#L23)*
+*Defined in [common/icons.ts:23](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/icons.ts#L23)*
 
 ___
 
@@ -255,7 +255,7 @@ ___
 
 • **sendStateIcon**: *string* =  createIcon(iconTemplate)
 
-*Defined in [shapes/elements/send-state/icons.ts:1852](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/send-state/icons.ts#L1852)*
+*Defined in [shapes/elements/send-state/icons.ts:1852](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/send-state/icons.ts#L1852)*
 
 ## Functions
 
@@ -263,7 +263,7 @@ ___
 
 ▸ **combineStrings**(`strings`: string[], `separator`: string): *string*
 
-*Defined in [common/utils.ts:10](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/utils.ts#L10)*
+*Defined in [common/utils.ts:10](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/utils.ts#L10)*
 
 **Parameters:**
 
@@ -280,7 +280,7 @@ ___
 
 ▸ **createElementTools**(`options`: [ElementToolsOptions](interfaces/elementtoolsoptions.md), `paper`: Paper): *ToolsView‹›*
 
-*Defined in [shape-tools/element-tools.ts:12](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shape-tools/element-tools.ts#L12)*
+*Defined in [shape-tools/element-tools.ts:12](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shape-tools/element-tools.ts#L12)*
 
 **Parameters:**
 
@@ -299,7 +299,7 @@ ___
 
 ▸ **createFunctionStateOptions**(`options`: [StateOptions](interfaces/stateoptions.md)): *[ElementCreationOptions](interfaces/elementcreationoptions.md)‹[StateOptions](interfaces/stateoptions.md)›*
 
-*Defined in [shapes/elements/function-state/index.ts:15](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/function-state/index.ts#L15)*
+*Defined in [shapes/elements/function-state/index.ts:15](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/function-state/index.ts#L15)*
 
 **Parameters:**
 
@@ -315,7 +315,7 @@ ___
 
 ▸ **createFunctionStateTransitionOptions**(`options`: [LinkOptions](interfaces/linkoptions.md)): *[LinkCreationOptions](interfaces/linkcreationoptions.md)‹[LinkOptions](interfaces/linkoptions.md)›*
 
-*Defined in [shapes/links/function-state-transition.ts:13](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/links/function-state-transition.ts#L13)*
+*Defined in [shapes/links/function-state-transition.ts:13](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/links/function-state-transition.ts#L13)*
 
 **Parameters:**
 
@@ -331,7 +331,7 @@ ___
 
 ▸ **createFunctionStateTransitionUpdateOptions**(`options`: [FunctionStateTransitionUpdateOptions](README.md#functionstatetransitionupdateoptions)): *object*
 
-*Defined in [shapes/common/link.ts:82](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/common/link.ts#L82)*
+*Defined in [shapes/common/link.ts:82](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/common/link.ts#L82)*
 
 **Parameters:**
 
@@ -347,7 +347,7 @@ ___
 
 ▸ **createFunctionStateUpdateOptions**(`options`: [StateUpdateOptions](README.md#stateupdateoptions)): *object | object*
 
-*Defined in [shapes/elements/function-state/index.ts:26](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/function-state/index.ts#L26)*
+*Defined in [shapes/elements/function-state/index.ts:26](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/function-state/index.ts#L26)*
 
 **Parameters:**
 
@@ -363,7 +363,7 @@ ___
 
 ▸ **createIcon**(`template`: string): *string*
 
-*Defined in [common/utils.ts:19](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/utils.ts#L19)*
+*Defined in [common/utils.ts:19](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/utils.ts#L19)*
 
 **Parameters:**
 
@@ -379,7 +379,7 @@ ___
 
 ▸ **createLabelBasedLinkTools**(`options`: [LabelBasedLinkToolsOptions](interfaces/labelbasedlinktoolsoptions.md)): *object | object | object[]*
 
-*Defined in [shape-tools/link-tools.ts:36](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shape-tools/link-tools.ts#L36)*
+*Defined in [shape-tools/link-tools.ts:36](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shape-tools/link-tools.ts#L36)*
 
 **Parameters:**
 
@@ -397,7 +397,7 @@ ___
 
 ▸ **createLinkTools**(`useSourceArrowhead`: boolean): *ToolsView‹›*
 
-*Defined in [shape-tools/link-tools.ts:13](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shape-tools/link-tools.ts#L13)*
+*Defined in [shape-tools/link-tools.ts:13](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shape-tools/link-tools.ts#L13)*
 
 **Parameters:**
 
@@ -415,7 +415,7 @@ ___
 
 ▸ **createMessageTransitionOptions**(`options`: [MessageTransitionOptions](interfaces/messagetransitionoptions.md)): *[LinkCreationOptions](interfaces/linkcreationoptions.md)‹[MessageTransitionOptions](interfaces/messagetransitionoptions.md)›*
 
-*Defined in [shapes/links/message-transition.ts:15](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/links/message-transition.ts#L15)*
+*Defined in [shapes/links/message-transition.ts:15](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/links/message-transition.ts#L15)*
 
 **Parameters:**
 
@@ -431,7 +431,7 @@ ___
 
 ▸ **createMessageTransitionUpdateOptions**(`options`: [MessageTransitionUpdateOptions](README.md#messagetransitionupdateoptions)): *object*
 
-*Defined in [shapes/links/message-transition.ts:28](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/links/message-transition.ts#L28)*
+*Defined in [shapes/links/message-transition.ts:28](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/links/message-transition.ts#L28)*
 
 **Parameters:**
 
@@ -447,7 +447,7 @@ ___
 
 ▸ **createReceiveStateOptions**(`options`: [StateOptions](interfaces/stateoptions.md)): *[ElementCreationOptions](interfaces/elementcreationoptions.md)‹[StateOptions](interfaces/stateoptions.md)›*
 
-*Defined in [shapes/elements/receive-state/index.ts:15](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/receive-state/index.ts#L15)*
+*Defined in [shapes/elements/receive-state/index.ts:15](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/receive-state/index.ts#L15)*
 
 **Parameters:**
 
@@ -463,7 +463,7 @@ ___
 
 ▸ **createReceiveStateTransitionOptions**(`options`: [LinkOptions](interfaces/linkoptions.md)): *[LinkCreationOptions](interfaces/linkcreationoptions.md)‹[LinkOptions](interfaces/linkoptions.md)›*
 
-*Defined in [shapes/links/receive-state-transition.ts:13](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/links/receive-state-transition.ts#L13)*
+*Defined in [shapes/links/receive-state-transition.ts:13](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/links/receive-state-transition.ts#L13)*
 
 **Parameters:**
 
@@ -479,7 +479,7 @@ ___
 
 ▸ **createReceiveStateTransitionUpdateOptions**(`options`: [ReceiveStateTransitionUpdateOptions](README.md#receivestatetransitionupdateoptions)): *object*
 
-*Defined in [shapes/common/link.ts:47](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/common/link.ts#L47)*
+*Defined in [shapes/common/link.ts:47](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/common/link.ts#L47)*
 
 **Parameters:**
 
@@ -495,7 +495,7 @@ ___
 
 ▸ **createReceiveStateUpdateOptions**(`options`: [StateUpdateOptions](README.md#stateupdateoptions)): *object | object*
 
-*Defined in [shapes/elements/receive-state/index.ts:26](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/receive-state/index.ts#L26)*
+*Defined in [shapes/elements/receive-state/index.ts:26](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/receive-state/index.ts#L26)*
 
 **Parameters:**
 
@@ -511,7 +511,7 @@ ___
 
 ▸ **createSendStateOptions**(`options`: [StateOptions](interfaces/stateoptions.md)): *[ElementCreationOptions](interfaces/elementcreationoptions.md)‹[StateOptions](interfaces/stateoptions.md)›*
 
-*Defined in [shapes/elements/send-state/index.ts:15](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/send-state/index.ts#L15)*
+*Defined in [shapes/elements/send-state/index.ts:15](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/send-state/index.ts#L15)*
 
 **Parameters:**
 
@@ -527,7 +527,7 @@ ___
 
 ▸ **createSendStateTransitionOptions**(`options`: [LinkOptions](interfaces/linkoptions.md)): *[LinkCreationOptions](interfaces/linkcreationoptions.md)‹[LinkOptions](interfaces/linkoptions.md)›*
 
-*Defined in [shapes/links/send-state-transition.ts:13](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/links/send-state-transition.ts#L13)*
+*Defined in [shapes/links/send-state-transition.ts:13](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/links/send-state-transition.ts#L13)*
 
 **Parameters:**
 
@@ -543,7 +543,7 @@ ___
 
 ▸ **createSendStateTransitionUpdateOptions**(`options`: [SendStateTransitionUpdateOptions](README.md#sendstatetransitionupdateoptions)): *object*
 
-*Defined in [shapes/common/link.ts:12](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/common/link.ts#L12)*
+*Defined in [shapes/common/link.ts:12](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/common/link.ts#L12)*
 
 **Parameters:**
 
@@ -559,7 +559,7 @@ ___
 
 ▸ **createSendStateUpdateOptions**(`options`: [StateUpdateOptions](README.md#stateupdateoptions)): *object | object*
 
-*Defined in [shapes/elements/send-state/index.ts:26](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/send-state/index.ts#L26)*
+*Defined in [shapes/elements/send-state/index.ts:26](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/send-state/index.ts#L26)*
 
 **Parameters:**
 
@@ -575,7 +575,7 @@ ___
 
 ▸ **createStandardSubjectOptions**(`options`: [SubjectOptions](interfaces/subjectoptions.md)): *[ElementCreationOptions](interfaces/elementcreationoptions.md)‹[SubjectOptions](interfaces/subjectoptions.md)›*
 
-*Defined in [shapes/elements/standard-subject/index.ts:21](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/index.ts#L21)*
+*Defined in [shapes/elements/standard-subject/index.ts:21](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/index.ts#L21)*
 
 **Parameters:**
 
@@ -591,7 +591,7 @@ ___
 
 ▸ **createStandardSubjectUpdateOptions**(`options`: [SubjectUpdateOptions](README.md#subjectupdateoptions)): *object | object | object | object*
 
-*Defined in [shapes/elements/standard-subject/index.ts:33](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/index.ts#L33)*
+*Defined in [shapes/elements/standard-subject/index.ts:33](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/index.ts#L33)*
 
 **Parameters:**
 
@@ -607,7 +607,7 @@ ___
 
 ▸ **createStateUpdateOptions**(`options`: [StateUpdateOptions](README.md#stateupdateoptions), `jointOptions`: [GenericOptions](interfaces/genericoptions.md)): *object | object*
 
-*Defined in [shapes/common/elements.ts:11](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/common/elements.ts#L11)*
+*Defined in [shapes/common/elements.ts:11](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/common/elements.ts#L11)*
 
 **Parameters:**
 
@@ -624,7 +624,7 @@ ___
 
 ▸ **flattenObject**(`object`: [GenericOptions](interfaces/genericoptions.md), `prefix`: string, `result`: [GenericOptions](interfaces/genericoptions.md)): *[GenericOptions](interfaces/genericoptions.md)*
 
-*Defined in [common/utils.ts:37](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/utils.ts#L37)*
+*Defined in [common/utils.ts:37](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/utils.ts#L37)*
 
 **Parameters:**
 
@@ -642,7 +642,7 @@ ___
 
 ▸ **getDescriptionProperty**(`description`: string): *object | object*
 
-*Defined in [shapes/common/helper.ts:1](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/common/helper.ts#L1)*
+*Defined in [shapes/common/helper.ts:1](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/common/helper.ts#L1)*
 
 **Parameters:**
 
@@ -658,7 +658,7 @@ ___
 
 ▸ **getJointOptions**(`options`: [StateOptions](interfaces/stateoptions.md) | [StateUpdateOptions](README.md#stateupdateoptions)): *object*
 
-*Defined in [shapes/elements/send-state/options.ts:32](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/send-state/options.ts#L32)*
+*Defined in [shapes/elements/send-state/options.ts:32](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/send-state/options.ts#L32)*
 
 **Parameters:**
 
@@ -670,7 +670,7 @@ Name | Type |
 
 ▸ **getJointOptions**(`options`: [StateOptions](interfaces/stateoptions.md) | [StateUpdateOptions](README.md#stateupdateoptions)): *object*
 
-*Defined in [shapes/elements/receive-state/options.ts:32](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/receive-state/options.ts#L32)*
+*Defined in [shapes/elements/receive-state/options.ts:32](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/receive-state/options.ts#L32)*
 
 **Parameters:**
 
@@ -682,7 +682,7 @@ Name | Type |
 
 ▸ **getJointOptions**(`options`: [StateOptions](interfaces/stateoptions.md) | [StateUpdateOptions](README.md#stateupdateoptions)): *object*
 
-*Defined in [shapes/elements/function-state/options.ts:32](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/function-state/options.ts#L32)*
+*Defined in [shapes/elements/function-state/options.ts:32](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/function-state/options.ts#L32)*
 
 **Parameters:**
 
@@ -698,7 +698,7 @@ ___
 
 ▸ **getStateModifierOptions**(`options`: [GenericOptions](interfaces/genericoptions.md)): *object*
 
-*Defined in [shapes/common/elements.ts:38](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/common/elements.ts#L38)*
+*Defined in [shapes/common/elements.ts:34](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/common/elements.ts#L34)*
 
 **Parameters:**
 
@@ -714,7 +714,7 @@ ___
 
 ▸ **humanSubjectIcon**(): *string*
 
-*Defined in [shapes/elements/standard-subject/icons.ts:6](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/icons.ts#L6)*
+*Defined in [shapes/elements/standard-subject/icons.ts:6](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/icons.ts#L6)*
 
 **Returns:** *string*
 
@@ -724,7 +724,7 @@ ___
 
 ▸ **isCommonType**(`type`: string): *boolean*
 
-*Defined in [common/utils.ts:28](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/utils.ts#L28)*
+*Defined in [common/utils.ts:28](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/utils.ts#L28)*
 
 **Parameters:**
 
@@ -740,7 +740,7 @@ ___
 
 ▸ **machineSubjectIcon**(): *string*
 
-*Defined in [shapes/elements/standard-subject/icons.ts:1862](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/icons.ts#L1862)*
+*Defined in [shapes/elements/standard-subject/icons.ts:1862](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/icons.ts#L1862)*
 
 **Returns:** *string*
 
@@ -750,7 +750,7 @@ ___
 
 ▸ **noop**(): *void*
 
-*Defined in [common/utils.ts:35](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/utils.ts#L35)*
+*Defined in [common/utils.ts:35](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/utils.ts#L35)*
 
 **Returns:** *void*
 
@@ -760,11 +760,11 @@ ___
 
 ### ▪ **humanSubjectJointOptions**: *object*
 
-*Defined in [shapes/elements/standard-subject/options.ts:33](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L33)*
+*Defined in [shapes/elements/standard-subject/options.ts:33](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L33)*
 
 ▪ **attrs**: *object*
 
-*Defined in [shapes/elements/standard-subject/options.ts:38](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L38)*
+*Defined in [shapes/elements/standard-subject/options.ts:38](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L38)*
 
 * **image**: *object*
 
@@ -794,7 +794,7 @@ ___
 
 ▪ **size**: *object*
 
-*Defined in [shapes/elements/standard-subject/options.ts:34](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L34)*
+*Defined in [shapes/elements/standard-subject/options.ts:34](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L34)*
 
 * **height**: *number* = 140
 
@@ -806,11 +806,11 @@ ___
 
 ### ▪ **humanSubjectToolsOptions**: *object*
 
-*Defined in [shapes/elements/standard-subject/options.ts:8](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L8)*
+*Defined in [shapes/elements/standard-subject/options.ts:8](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L8)*
 
 ▪ **linkButtonOptions**: *object*
 
-*Defined in [shapes/elements/standard-subject/options.ts:21](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L21)*
+*Defined in [shapes/elements/standard-subject/options.ts:21](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L21)*
 
 * **event**: *[CustomEvent](enums/customevent.md)* =  CustomEvent.ELEMENT_ADD_MESSAGE_TRANSITION
 
@@ -822,7 +822,7 @@ ___
 
 ▪ **openInNewButtonOptions**: *object*
 
-*Defined in [shapes/elements/standard-subject/options.ts:15](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L15)*
+*Defined in [shapes/elements/standard-subject/options.ts:15](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L15)*
 
 * **coordinates**: *object*
 
@@ -832,7 +832,7 @@ ___
 
 ▪ **removeButtonOptions**: *object*
 
-*Defined in [shapes/elements/standard-subject/options.ts:9](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L9)*
+*Defined in [shapes/elements/standard-subject/options.ts:9](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L9)*
 
 * **coordinates**: *object*
 
@@ -846,11 +846,11 @@ ___
 
 ### ▪ **machineSubjectJointOptions**: *object*
 
-*Defined in [shapes/elements/standard-subject/options.ts:86](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L86)*
+*Defined in [shapes/elements/standard-subject/options.ts:86](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L86)*
 
 ▪ **attrs**: *object*
 
-*Defined in [shapes/elements/standard-subject/options.ts:91](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L91)*
+*Defined in [shapes/elements/standard-subject/options.ts:91](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L91)*
 
 * **image**: *object*
 
@@ -880,7 +880,7 @@ ___
 
 ▪ **size**: *object*
 
-*Defined in [shapes/elements/standard-subject/options.ts:87](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L87)*
+*Defined in [shapes/elements/standard-subject/options.ts:87](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L87)*
 
 * **height**: *number* = 140
 
@@ -892,11 +892,11 @@ ___
 
 ### ▪ **machineSubjectToolsOptions**: *object*
 
-*Defined in [shapes/elements/standard-subject/options.ts:61](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L61)*
+*Defined in [shapes/elements/standard-subject/options.ts:61](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L61)*
 
 ▪ **linkButtonOptions**: *object*
 
-*Defined in [shapes/elements/standard-subject/options.ts:74](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L74)*
+*Defined in [shapes/elements/standard-subject/options.ts:74](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L74)*
 
 * **event**: *[CustomEvent](enums/customevent.md)* =  CustomEvent.ELEMENT_ADD_MESSAGE_TRANSITION
 
@@ -908,7 +908,7 @@ ___
 
 ▪ **openInNewButtonOptions**: *object*
 
-*Defined in [shapes/elements/standard-subject/options.ts:68](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L68)*
+*Defined in [shapes/elements/standard-subject/options.ts:68](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L68)*
 
 * **coordinates**: *object*
 
@@ -918,7 +918,7 @@ ___
 
 ▪ **removeButtonOptions**: *object*
 
-*Defined in [shapes/elements/standard-subject/options.ts:62](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L62)*
+*Defined in [shapes/elements/standard-subject/options.ts:62](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/standard-subject/options.ts#L62)*
 
 * **coordinates**: *object*
 
@@ -932,19 +932,19 @@ ___
 
 ### ▪ **toolsOptions**: *object*
 
-*Defined in [shapes/elements/send-state/options.ts:13](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/send-state/options.ts#L13)*
+*Defined in [shapes/elements/send-state/options.ts:13](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/send-state/options.ts#L13)*
 
-*Defined in [shapes/elements/receive-state/options.ts:13](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/receive-state/options.ts#L13)*
+*Defined in [shapes/elements/receive-state/options.ts:13](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/receive-state/options.ts#L13)*
 
-*Defined in [shapes/elements/function-state/options.ts:13](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/function-state/options.ts#L13)*
+*Defined in [shapes/elements/function-state/options.ts:13](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/function-state/options.ts#L13)*
 
 ▪ **linkButtonOptions**: *object*
 
-*Defined in [shapes/elements/send-state/options.ts:20](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/send-state/options.ts#L20)*
+*Defined in [shapes/elements/send-state/options.ts:20](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/send-state/options.ts#L20)*
 
-*Defined in [shapes/elements/receive-state/options.ts:20](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/receive-state/options.ts#L20)*
+*Defined in [shapes/elements/receive-state/options.ts:20](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/receive-state/options.ts#L20)*
 
-*Defined in [shapes/elements/function-state/options.ts:20](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/function-state/options.ts#L20)*
+*Defined in [shapes/elements/function-state/options.ts:20](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/function-state/options.ts#L20)*
 
 * **event**: *[CustomEvent](enums/customevent.md)* =  CustomEvent.ELEMENT_ADD_FUNCTION_STATE_TRANSITION
 
@@ -956,11 +956,11 @@ ___
 
 ▪ **removeButtonOptions**: *object*
 
-*Defined in [shapes/elements/send-state/options.ts:14](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/send-state/options.ts#L14)*
+*Defined in [shapes/elements/send-state/options.ts:14](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/send-state/options.ts#L14)*
 
-*Defined in [shapes/elements/receive-state/options.ts:14](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/receive-state/options.ts#L14)*
+*Defined in [shapes/elements/receive-state/options.ts:14](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/receive-state/options.ts#L14)*
 
-*Defined in [shapes/elements/function-state/options.ts:14](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/shapes/elements/function-state/options.ts#L14)*
+*Defined in [shapes/elements/function-state/options.ts:14](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/shapes/elements/function-state/options.ts#L14)*
 
 * **coordinates**: *object*
 

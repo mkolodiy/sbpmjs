@@ -30,7 +30,7 @@
 
 \+ **new ElementFactory**(`canvas`: [Canvas](canvas.md)): *[ElementFactory](elementfactory.md)*
 
-*Defined in [factories/element-factory.ts:87](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/factories/element-factory.ts#L87)*
+*Defined in [factories/element-factory.ts:87](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/element-factory.ts#L87)*
 
 **Parameters:**
 
@@ -46,7 +46,7 @@ Name | Type | Description |
 
 • **selectedElement**:
 
-*Defined in [factories/element-factory.ts:22](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/factories/element-factory.ts#L22)*
+*Defined in [factories/element-factory.ts:22](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/element-factory.ts#L22)*
 
 ## Methods
 
@@ -54,7 +54,7 @@ Name | Type | Description |
 
 ▸ **add**<**A**>(`creationOptions`: [ElementCreationOptions](../interfaces/elementcreationoptions.md)‹A›): *Image*
 
-*Defined in [factories/element-factory.ts:48](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/factories/element-factory.ts#L48)*
+*Defined in [factories/element-factory.ts:48](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/element-factory.ts#L48)*
 
 **Type parameters:**
 
@@ -76,7 +76,7 @@ ___
 
 ▸ **getSelectedElementAttributes**(): *any*
 
-*Defined in [factories/element-factory.ts:37](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/factories/element-factory.ts#L37)*
+*Defined in [factories/element-factory.ts:37](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/element-factory.ts#L37)*
 
 **Returns:** *any*
 
@@ -86,7 +86,7 @@ ___
 
 ▸ **getSelectedElementType**(): *any*
 
-*Defined in [factories/element-factory.ts:29](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/factories/element-factory.ts#L29)*
+*Defined in [factories/element-factory.ts:29](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/element-factory.ts#L29)*
 
 **Returns:** *any*
 
@@ -96,7 +96,7 @@ ___
 
 ▸ **removeSelectedElement**(): *void*
 
-*Defined in [factories/element-factory.ts:84](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/factories/element-factory.ts#L84)*
+*Defined in [factories/element-factory.ts:84](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/element-factory.ts#L84)*
 
 **Returns:** *void*
 
@@ -106,7 +106,7 @@ ___
 
 ▸ **update**(`options`: [GenericOptions](../interfaces/genericoptions.md), `element?`: Element): *void*
 
-*Defined in [factories/element-factory.ts:63](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/factories/element-factory.ts#L63)*
+*Defined in [factories/element-factory.ts:63](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/element-factory.ts#L63)*
 
 **Parameters:**
 

@@ -20,7 +20,7 @@
 
 • **linkButtonOptions**? : *[ButtonOptions](buttonoptions.md)*
 
-*Defined in [common/types.ts:103](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L103)*
+*Defined in [common/types.ts:103](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L103)*
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 • **openInNewButtonOptions**? : *[ButtonOptions](buttonoptions.md)*
 
-*Defined in [common/types.ts:99](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L99)*
+*Defined in [common/types.ts:99](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L99)*
 
 ___
 
@@ -36,4 +36,4 @@ ___
 
 • **removeButtonOptions**? : *[ButtonOptions](buttonoptions.md)*
 
-*Defined in [common/types.ts:95](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L95)*
+*Defined in [common/types.ts:95](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L95)*

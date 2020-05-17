@@ -16,7 +16,7 @@
 
 • **COMMON**: = "sbpm.common"
 
-*Defined in [common/constants.ts:5](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/constants.ts#L5)*
+*Defined in [common/constants.ts:5](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L5)*
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 • **SBD**: = "sbpm.sbd"
 
-*Defined in [common/constants.ts:7](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/constants.ts#L7)*
+*Defined in [common/constants.ts:7](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L7)*
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 • **SID**: = "sbpm.sid"
 
-*Defined in [common/constants.ts:6](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/constants.ts#L6)*
+*Defined in [common/constants.ts:6](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L6)*

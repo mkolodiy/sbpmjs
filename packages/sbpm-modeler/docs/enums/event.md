@@ -22,7 +22,7 @@
 
 • **BLANK_POINTERDOWN**: = "blank:pointerdown"
 
-*Defined in [common/constants.ts:30](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/constants.ts#L30)*
+*Defined in [common/constants.ts:30](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L30)*
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 • **BLANK_POINTERUP**: = "blank:pointerup"
 
-*Defined in [common/constants.ts:29](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/constants.ts#L29)*
+*Defined in [common/constants.ts:29](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L29)*
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 • **CELL_POINTERDOWN**: = "cell:pointerdown"
 
-*Defined in [common/constants.ts:32](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/constants.ts#L32)*
+*Defined in [common/constants.ts:32](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L32)*
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 • **CELL_POINTERUP**: = "cell:pointerup"
 
-*Defined in [common/constants.ts:31](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/constants.ts#L31)*
+*Defined in [common/constants.ts:31](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L31)*
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 • **ELEMENT_POINTERDOWN**: = "element:pointerdown"
 
-*Defined in [common/constants.ts:33](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/constants.ts#L33)*
+*Defined in [common/constants.ts:33](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L33)*
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 • **LINK_POINTERDOWN**: = "link:pointerdown"
 
-*Defined in [common/constants.ts:34](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/constants.ts#L34)*
+*Defined in [common/constants.ts:34](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L34)*
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 • **MOUSEMOVE**: = "mousemove"
 
-*Defined in [common/constants.ts:35](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/constants.ts#L35)*
+*Defined in [common/constants.ts:35](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L35)*
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 • **MOUSEUP**: = "mouseup"
 
-*Defined in [common/constants.ts:36](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/constants.ts#L36)*
+*Defined in [common/constants.ts:36](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L36)*
 
 ___
 
@@ -86,4 +86,4 @@ ___
 
 • **POINTERDOWN**: = "pointerdown"
 
-*Defined in [common/constants.ts:37](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/constants.ts#L37)*
+*Defined in [common/constants.ts:37](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L37)*

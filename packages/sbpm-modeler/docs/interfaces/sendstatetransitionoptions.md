@@ -23,7 +23,7 @@
 
 • **message**: *string*
 
-*Defined in [common/types.ts:236](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L236)*
+*Defined in [common/types.ts:236](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L236)*
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 • **receiver**: *string*
 
-*Defined in [common/types.ts:232](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L232)*
+*Defined in [common/types.ts:232](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L232)*
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 *Inherited from [LinkOptions](linkoptions.md).[source](linkoptions.md#source)*
 
-*Defined in [common/types.ts:201](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L201)*
+*Defined in [common/types.ts:201](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L201)*
 
 ___
 
@@ -51,4 +51,4 @@ ___
 
 *Inherited from [LinkOptions](linkoptions.md).[target](linkoptions.md#target)*
 
-*Defined in [common/types.ts:205](https://github.com/mkolodiy/sbpmjs/blob/51ad125/packages/sbpm-modeler/lib/common/types.ts#L205)*
+*Defined in [common/types.ts:205](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L205)*
