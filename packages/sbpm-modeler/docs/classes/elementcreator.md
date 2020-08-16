@@ -1,4 +1,4 @@
-[@sbpmjs/modeler](../README.md) › [ElementCreator](elementcreator.md)
+[@sbpmjs/modeler - v1.0.0](../README.md) › [ElementCreator](elementcreator.md)
 
 # Class: ElementCreator
 
@@ -26,7 +26,9 @@
 
 \+ **new ElementCreator**(`canvas`: [Canvas](canvas.md)): *[ElementCreator](elementcreator.md)*
 
-*Defined in [creators/element-creator.ts:13](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/creators/element-creator.ts#L13)*
+*Defined in [creators/element-creator.ts:13](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/creators/element-creator.ts#L13)*
+
+Constructor
 
 **Parameters:**
 
@@ -42,7 +44,9 @@ Name | Type | Description |
 
 ▸ **addFunctionState**(`options`: [StateOptions](../interfaces/stateoptions.md)): *Image‹›*
 
-*Defined in [creators/element-creator.ts:59](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/creators/element-creator.ts#L59)*
+*Defined in [creators/element-creator.ts:59](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/creators/element-creator.ts#L59)*
+
+Adds a new function state to the canvas.
 
 **Parameters:**
 
@@ -58,7 +62,9 @@ ___
 
 ▸ **addReceiveState**(`options`: [StateOptions](../interfaces/stateoptions.md)): *Image‹›*
 
-*Defined in [creators/element-creator.ts:49](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/creators/element-creator.ts#L49)*
+*Defined in [creators/element-creator.ts:49](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/creators/element-creator.ts#L49)*
+
+Adds a new receive state to the canvas.
 
 **Parameters:**
 
@@ -74,7 +80,9 @@ ___
 
 ▸ **addSendState**(`options`: [StateOptions](../interfaces/stateoptions.md)): *Image‹›*
 
-*Defined in [creators/element-creator.ts:39](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/creators/element-creator.ts#L39)*
+*Defined in [creators/element-creator.ts:39](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/creators/element-creator.ts#L39)*
+
+Adds a new send state to the canvas.
 
 **Parameters:**
 
@@ -90,7 +98,9 @@ ___
 
 ▸ **addStandardSubject**(`options`: [SubjectOptions](../interfaces/subjectoptions.md)): *Image‹›*
 
-*Defined in [creators/element-creator.ts:29](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/creators/element-creator.ts#L29)*
+*Defined in [creators/element-creator.ts:29](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/creators/element-creator.ts#L29)*
+
+Adds a new standard subject to the canvas.
 
 **Parameters:**
 
@@ -106,7 +116,9 @@ ___
 
 ▸ **updateCurrentlySelectedElement**(`options`: [GenericOptions](../interfaces/genericoptions.md)): *void*
 
-*Defined in [creators/element-creator.ts:69](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/creators/element-creator.ts#L69)*
+*Defined in [creators/element-creator.ts:69](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/creators/element-creator.ts#L69)*
+
+Updates currently selected element on canvas.
 
 **Parameters:**
 

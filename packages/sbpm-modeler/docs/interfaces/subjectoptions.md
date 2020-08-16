@@ -1,6 +1,8 @@
-[@sbpmjs/modeler](../README.md) › [SubjectOptions](subjectoptions.md)
+[@sbpmjs/modeler - v1.0.0](../README.md) › [SubjectOptions](subjectoptions.md)
 
 # Interface: SubjectOptions
+
+Representation of subject options.
 
 ## Hierarchy
 
@@ -24,7 +26,9 @@
 
 *Inherited from [ElementOptions](elementoptions.md).[description](elementoptions.md#description)*
 
-*Defined in [common/types.ts:113](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L113)*
+*Defined in [common/types.ts:113](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L113)*
+
+Defines description that will be shown besides the icon of the element.
 
 ___
 
@@ -32,7 +36,11 @@ ___
 
 • **isMachine**? : *boolean*
 
-*Defined in [common/types.ts:129](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L129)*
+*Defined in [common/types.ts:129](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L129)*
+
+Defines which icon (human or machine) should be used for a subject.
+
+**`default`** false
 
 ___
 
@@ -42,4 +50,6 @@ ___
 
 *Inherited from [ElementOptions](elementoptions.md).[position](elementoptions.md#position)*
 
-*Defined in [common/types.ts:117](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L117)*
+*Defined in [common/types.ts:117](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L117)*
+
+Defines position on the canvas where the element should be added at.

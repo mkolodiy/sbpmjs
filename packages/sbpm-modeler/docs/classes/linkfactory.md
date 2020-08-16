@@ -1,4 +1,4 @@
-[@sbpmjs/modeler](../README.md) › [LinkFactory](linkfactory.md)
+[@sbpmjs/modeler - v1.0.0](../README.md) › [LinkFactory](linkfactory.md)
 
 # Class: LinkFactory
 
@@ -30,7 +30,9 @@
 
 \+ **new LinkFactory**(`canvas`: [Canvas](canvas.md), `container`: Element): *[LinkFactory](linkfactory.md)*
 
-*Defined in [factories/link-factory.ts:96](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/link-factory.ts#L96)*
+*Defined in [factories/link-factory.ts:96](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/factories/link-factory.ts#L96)*
+
+Constructor
 
 **Parameters:**
 
@@ -45,17 +47,25 @@ Name | Type | Description |
 
 ###  selectedLink
 
-• **selectedLink**:
+• **get selectedLink**(): *Link‹›*
 
-*Defined in [factories/link-factory.ts:36](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/link-factory.ts#L36)*
+*Defined in [factories/link-factory.ts:36](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/factories/link-factory.ts#L36)*
+
+Get currently selected link.
+
+**Returns:** *Link‹›*
+
+Joint element.
 
 ## Methods
 
 ###  add
 
-▸ **add**<**A**>(`creationOptions`: [LinkCreationOptions](../interfaces/linkcreationoptions.md)‹A›): *Link*
+▸ **add**‹**A**›(`creationOptions`: [LinkCreationOptions](../interfaces/linkcreationoptions.md)‹A›): *Link*
 
-*Defined in [factories/link-factory.ts:62](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/link-factory.ts#L62)*
+*Defined in [factories/link-factory.ts:62](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/factories/link-factory.ts#L62)*
+
+Creates a new link and saves it internally.
 
 **Type parameters:**
 
@@ -77,7 +87,7 @@ ___
 
 ▸ **addSourceMarker**(`condition`: boolean, `link?`: Link): *void*
 
-*Defined in [factories/link-factory.ts:86](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/link-factory.ts#L86)*
+*Defined in [factories/link-factory.ts:86](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/factories/link-factory.ts#L86)*
 
 **Parameters:**
 
@@ -94,7 +104,9 @@ ___
 
 ▸ **getSelectedLinkAttributes**(): *any*
 
-*Defined in [factories/link-factory.ts:51](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/link-factory.ts#L51)*
+*Defined in [factories/link-factory.ts:51](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/factories/link-factory.ts#L51)*
+
+Get selected link attributes.
 
 **Returns:** *any*
 
@@ -104,7 +116,9 @@ ___
 
 ▸ **getSelectedLinkType**(): *any*
 
-*Defined in [factories/link-factory.ts:43](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/link-factory.ts#L43)*
+*Defined in [factories/link-factory.ts:43](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/factories/link-factory.ts#L43)*
+
+Get selected link type.
 
 **Returns:** *any*
 
@@ -114,7 +128,11 @@ ___
 
 ▸ **update**(`options`: [GenericOptions](../interfaces/genericoptions.md), `link?`: Link): *void*
 
-*Defined in [factories/link-factory.ts:78](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/factories/link-factory.ts#L78)*
+*Defined in [factories/link-factory.ts:78](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/factories/link-factory.ts#L78)*
+
+Updates a given link or as fallback a currently selected link.
+
+**`throws`** Error when no link was passed as a parameter and if no link is selected on canvas.
 
 **Parameters:**
 

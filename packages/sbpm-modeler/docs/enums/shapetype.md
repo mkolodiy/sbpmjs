@@ -1,6 +1,8 @@
-[@sbpmjs/modeler](../README.md) › [ShapeType](shapetype.md)
+[@sbpmjs/modeler - v1.0.0](../README.md) › [ShapeType](shapetype.md)
 
 # Enumeration: ShapeType
+
+Shape types used to create SBPM shapes.
 
 ## Index
 
@@ -22,7 +24,7 @@
 
 • **FUNCTION_STATE**: = "sbpm.sbd.FunctionState"
 
-*Defined in [common/constants.ts:19](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L19)*
+*Defined in [common/constants.ts:19](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L19)*
 
 ___
 
@@ -30,7 +32,7 @@ ___
 
 • **FUNCTION_STATE_TRANSITION**: = "sbpm.sbd.FunctionStateTransition"
 
-*Defined in [common/constants.ts:22](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L22)*
+*Defined in [common/constants.ts:22](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L22)*
 
 ___
 
@@ -38,7 +40,7 @@ ___
 
 • **MESSAGE_TRANSITION**: = "sbpm.sid.MessageTransition"
 
-*Defined in [common/constants.ts:15](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L15)*
+*Defined in [common/constants.ts:15](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L15)*
 
 ___
 
@@ -46,7 +48,7 @@ ___
 
 • **ORIGIN**: = "sbpm.common.Origin"
 
-*Defined in [common/constants.ts:14](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L14)*
+*Defined in [common/constants.ts:14](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L14)*
 
 ___
 
@@ -54,7 +56,7 @@ ___
 
 • **RECEIVE_STATE**: = "sbpm.sbd.ReceiveState"
 
-*Defined in [common/constants.ts:18](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L18)*
+*Defined in [common/constants.ts:18](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L18)*
 
 ___
 
@@ -62,7 +64,7 @@ ___
 
 • **RECEIVE_STATE_TRANSITION**: = "sbpm.sbd.ReceiveStateTransition"
 
-*Defined in [common/constants.ts:21](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L21)*
+*Defined in [common/constants.ts:21](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L21)*
 
 ___
 
@@ -70,7 +72,7 @@ ___
 
 • **SEND_STATE**: = "sbpm.sbd.SendState"
 
-*Defined in [common/constants.ts:17](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L17)*
+*Defined in [common/constants.ts:17](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L17)*
 
 ___
 
@@ -78,7 +80,7 @@ ___
 
 • **SEND_STATE_TRANSITION**: = "sbpm.sbd.SendStateTransition"
 
-*Defined in [common/constants.ts:20](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L20)*
+*Defined in [common/constants.ts:20](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L20)*
 
 ___
 
@@ -86,4 +88,4 @@ ___
 
 • **STANDARD_SUBJECT**: = "sbpm.sid.StandardSubject"
 
-*Defined in [common/constants.ts:16](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L16)*
+*Defined in [common/constants.ts:16](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L16)*

@@ -1,6 +1,8 @@
-[@sbpmjs/modeler](../README.md) › [LabelBasedLinkToolsOptions](labelbasedlinktoolsoptions.md)
+[@sbpmjs/modeler - v1.0.0](../README.md) › [LabelBasedLinkToolsOptions](labelbasedlinktoolsoptions.md)
 
 # Interface: LabelBasedLinkToolsOptions
+
+Representation of label based link tools options.
 
 ## Hierarchy
 
@@ -20,7 +22,9 @@
 
 • **removeLabelOptions**: *[GenericOptions](genericoptions.md)*
 
-*Defined in [common/types.ts:187](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L187)*
+*Defined in [common/types.ts:187](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L187)*
+
+Defines  remove label options.
 
 ___
 
@@ -28,7 +32,9 @@ ___
 
 • **removeVerticesLabelOptions**: *[GenericOptions](genericoptions.md)*
 
-*Defined in [common/types.ts:191](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L191)*
+*Defined in [common/types.ts:191](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L191)*
+
+Defines vertices label options.
 
 ___
 
@@ -36,4 +42,6 @@ ___
 
 • **selectionLabelOptions**: *[GenericOptions](genericoptions.md)*
 
-*Defined in [common/types.ts:183](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L183)*
+*Defined in [common/types.ts:183](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L183)*
+
+Defines selection label options.

@@ -1,6 +1,8 @@
-[@sbpmjs/modeler](../README.md) › [ElementToolsOptions](elementtoolsoptions.md)
+[@sbpmjs/modeler - v1.0.0](../README.md) › [ElementToolsOptions](elementtoolsoptions.md)
 
 # Interface: ElementToolsOptions
+
+Representation of element tools options.
 
 ## Hierarchy
 
@@ -20,7 +22,9 @@
 
 • **linkButtonOptions**? : *[ButtonOptions](buttonoptions.md)*
 
-*Defined in [common/types.ts:103](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L103)*
+*Defined in [common/types.ts:103](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L103)*
+
+Defines link button options.
 
 ___
 
@@ -28,7 +32,9 @@ ___
 
 • **openInNewButtonOptions**? : *[ButtonOptions](buttonoptions.md)*
 
-*Defined in [common/types.ts:99](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L99)*
+*Defined in [common/types.ts:99](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L99)*
+
+Defines openInNew button options.
 
 ___
 
@@ -36,4 +42,6 @@ ___
 
 • **removeButtonOptions**? : *[ButtonOptions](buttonoptions.md)*
 
-*Defined in [common/types.ts:95](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L95)*
+*Defined in [common/types.ts:95](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L95)*
+
+Defines remove button options.

@@ -1,6 +1,8 @@
-[@sbpmjs/modeler](../README.md) › [ShapeNamespace](shapenamespace.md)
+[@sbpmjs/modeler - v1.0.0](../README.md) › [ShapeNamespace](shapenamespace.md)
 
 # Enumeration: ShapeNamespace
+
+Shape namespaces used to check if a shape is a SBPM shape.
 
 ## Index
 
@@ -16,7 +18,7 @@
 
 • **COMMON**: = "sbpm.common"
 
-*Defined in [common/constants.ts:5](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L5)*
+*Defined in [common/constants.ts:5](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L5)*
 
 ___
 
@@ -24,7 +26,7 @@ ___
 
 • **SBD**: = "sbpm.sbd"
 
-*Defined in [common/constants.ts:7](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L7)*
+*Defined in [common/constants.ts:7](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L7)*
 
 ___
 
@@ -32,4 +34,4 @@ ___
 
 • **SID**: = "sbpm.sid"
 
-*Defined in [common/constants.ts:6](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L6)*
+*Defined in [common/constants.ts:6](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L6)*

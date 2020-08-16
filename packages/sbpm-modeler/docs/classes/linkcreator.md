@@ -1,4 +1,4 @@
-[@sbpmjs/modeler](../README.md) › [LinkCreator](linkcreator.md)
+[@sbpmjs/modeler - v1.0.0](../README.md) › [LinkCreator](linkcreator.md)
 
 # Class: LinkCreator
 
@@ -26,7 +26,9 @@
 
 \+ **new LinkCreator**(`canvas`: [Canvas](canvas.md), `container`: Element): *[LinkCreator](linkcreator.md)*
 
-*Defined in [creators/link-creator.ts:20](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/creators/link-creator.ts#L20)*
+*Defined in [creators/link-creator.ts:20](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/creators/link-creator.ts#L20)*
+
+Constructor
 
 **Parameters:**
 
@@ -43,7 +45,9 @@ Name | Type | Description |
 
 ▸ **addFunctionStateTransition**(`options`: [FunctionStateTransitionOptions](../interfaces/functionstatetransitionoptions.md)): *Link‹›*
 
-*Defined in [creators/link-creator.ts:69](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/creators/link-creator.ts#L69)*
+*Defined in [creators/link-creator.ts:69](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/creators/link-creator.ts#L69)*
+
+Adds a new function state transition to the canvas.
 
 **Parameters:**
 
@@ -59,7 +63,9 @@ ___
 
 ▸ **addMessageTransition**(`options`: [MessageTransitionOptions](../interfaces/messagetransitionoptions.md)): *Link‹›*
 
-*Defined in [creators/link-creator.ts:37](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/creators/link-creator.ts#L37)*
+*Defined in [creators/link-creator.ts:37](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/creators/link-creator.ts#L37)*
+
+Adds a new message transition to the canvas.
 
 **Parameters:**
 
@@ -75,7 +81,9 @@ ___
 
 ▸ **addReceiveStateTransition**(`options`: [ReceiveStateTransitionOptions](../interfaces/receivestatetransitionoptions.md)): *Link‹›*
 
-*Defined in [creators/link-creator.ts:59](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/creators/link-creator.ts#L59)*
+*Defined in [creators/link-creator.ts:59](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/creators/link-creator.ts#L59)*
+
+Adds a new receive state transition to the canvas.
 
 **Parameters:**
 
@@ -91,7 +99,9 @@ ___
 
 ▸ **addSendStateTransition**(`options`: [SendStateTransitionOptions](../interfaces/sendstatetransitionoptions.md)): *Link‹›*
 
-*Defined in [creators/link-creator.ts:49](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/creators/link-creator.ts#L49)*
+*Defined in [creators/link-creator.ts:49](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/creators/link-creator.ts#L49)*
+
+Adds a new send state transition to the canvas.
 
 **Parameters:**
 
@@ -107,7 +117,9 @@ ___
 
 ▸ **updateCurrentlySelectedLink**(`options`: [GenericOptions](../interfaces/genericoptions.md)): *void*
 
-*Defined in [creators/link-creator.ts:79](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/creators/link-creator.ts#L79)*
+*Defined in [creators/link-creator.ts:79](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/creators/link-creator.ts#L79)*
+
+Updates currently selected link on canvas.
 
 **Parameters:**
 

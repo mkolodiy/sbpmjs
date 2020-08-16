@@ -1,4 +1,4 @@
-[@sbpmjs/modeler](../README.md) › [Modeler](modeler.md)
+[@sbpmjs/modeler - v1.0.0](../README.md) › [Modeler](modeler.md)
 
 # Class: Modeler
 
@@ -24,7 +24,9 @@
 
 \+ **new Modeler**(`options`: [ModelerOptions](../interfaces/modeleroptions.md)): *[Modeler](modeler.md)*
 
-*Defined in [modeler.ts:11](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/modeler.ts#L11)*
+*Defined in [modeler.ts:11](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/modeler.ts#L11)*
+
+Constructor
 
 **Parameters:**
 
@@ -38,22 +40,40 @@ Name | Type | Description |
 
 ###  canvas
 
-• **canvas**:
+• **get canvas**(): *[Canvas](canvas.md)‹›*
 
-*Defined in [modeler.ts:30](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/modeler.ts#L30)*
+*Defined in [modeler.ts:30](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/modeler.ts#L30)*
+
+Returns canvas instance.
+
+**Returns:** *[Canvas](canvas.md)‹›*
+
+[Canvas](canvas.md) instance.
 
 ___
 
 ###  elementCreator
 
-• **elementCreator**:
+• **get elementCreator**(): *[ElementCreator](elementcreator.md)‹›*
 
-*Defined in [modeler.ts:39](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/modeler.ts#L39)*
+*Defined in [modeler.ts:39](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/modeler.ts#L39)*
+
+Returns element creator instance.
+
+**Returns:** *[ElementCreator](elementcreator.md)‹›*
+
+[ElementCreator](elementcreator.md) instance.
 
 ___
 
 ###  linkCreator
 
-• **linkCreator**:
+• **get linkCreator**(): *[LinkCreator](linkcreator.md)‹›*
 
-*Defined in [modeler.ts:48](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/modeler.ts#L48)*
+*Defined in [modeler.ts:48](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/modeler.ts#L48)*
+
+Returns link creator instance.
+
+**Returns:** *[LinkCreator](linkcreator.md)‹›*
+
+[LinkCreator](linkcreator.md) instance.

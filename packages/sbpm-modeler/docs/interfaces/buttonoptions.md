@@ -1,6 +1,8 @@
-[@sbpmjs/modeler](../README.md) › [ButtonOptions](buttonoptions.md)
+[@sbpmjs/modeler - v1.0.0](../README.md) › [ButtonOptions](buttonoptions.md)
 
 # Interface: ButtonOptions
+
+Representation of button options.
 
 ## Hierarchy
 
@@ -19,7 +21,9 @@
 
 • **coordinates**: *[Coordinates](coordinates.md)*
 
-*Defined in [common/types.ts:33](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L33)*
+*Defined in [common/types.ts:33](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L33)*
+
+Defines button position.
 
 ___
 
@@ -27,4 +31,6 @@ ___
 
 • **event**? : *string*
 
-*Defined in [common/types.ts:37](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L37)*
+*Defined in [common/types.ts:37](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L37)*
+
+Defines button event.

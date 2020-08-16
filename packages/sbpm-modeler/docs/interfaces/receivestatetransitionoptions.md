@@ -1,6 +1,8 @@
-[@sbpmjs/modeler](../README.md) › [ReceiveStateTransitionOptions](receivestatetransitionoptions.md)
+[@sbpmjs/modeler - v1.0.0](../README.md) › [ReceiveStateTransitionOptions](receivestatetransitionoptions.md)
 
 # Interface: ReceiveStateTransitionOptions
+
+Representation of receive state transition options.
 
 ## Hierarchy
 
@@ -23,7 +25,9 @@
 
 • **message**: *string*
 
-*Defined in [common/types.ts:257](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L257)*
+*Defined in [common/types.ts:257](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L257)*
+
+Defines a message that is received by a subject.
 
 ___
 
@@ -31,7 +35,9 @@ ___
 
 • **sender**: *string*
 
-*Defined in [common/types.ts:253](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L253)*
+*Defined in [common/types.ts:253](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L253)*
+
+Defines a subject that sends a message.
 
 ___
 
@@ -41,7 +47,9 @@ ___
 
 *Inherited from [LinkOptions](linkoptions.md).[source](linkoptions.md#source)*
 
-*Defined in [common/types.ts:201](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L201)*
+*Defined in [common/types.ts:201](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L201)*
+
+Defines a source element.
 
 ___
 
@@ -51,4 +59,6 @@ ___
 
 *Inherited from [LinkOptions](linkoptions.md).[target](linkoptions.md#target)*
 
-*Defined in [common/types.ts:205](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L205)*
+*Defined in [common/types.ts:205](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L205)*
+
+Defines a target element.

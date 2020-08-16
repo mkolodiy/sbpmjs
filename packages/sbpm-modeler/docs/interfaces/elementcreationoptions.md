@@ -1,6 +1,8 @@
-[@sbpmjs/modeler](../README.md) › [ElementCreationOptions](elementcreationoptions.md)
+[@sbpmjs/modeler - v1.0.0](../README.md) › [ElementCreationOptions](elementcreationoptions.md)
 
-# Interface: ElementCreationOptions <**A**>
+# Interface: ElementCreationOptions ‹**A**›
+
+Representation of element creation options.
 
 ## Type parameters
 
@@ -29,7 +31,9 @@
 
 *Inherited from [CreationOptions](creationoptions.md).[jointOptions](creationoptions.md#jointoptions)*
 
-*Defined in [common/types.ts:47](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L47)*
+*Defined in [common/types.ts:47](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L47)*
+
+Defines joint options.
 
 ___
 
@@ -39,7 +43,9 @@ ___
 
 *Inherited from [CreationOptions](creationoptions.md).[options](creationoptions.md#options)*
 
-*Defined in [common/types.ts:51](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L51)*
+*Defined in [common/types.ts:51](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L51)*
+
+Defines shape options that are provided by the users of the library.
 
 ___
 
@@ -47,7 +53,9 @@ ___
 
 • **toolsOptions**: *[ElementToolsOptions](elementtoolsoptions.md)*
 
-*Defined in [common/types.ts:85](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L85)*
+*Defined in [common/types.ts:85](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L85)*
+
+Defines element tools options.
 
 ___
 
@@ -57,4 +65,6 @@ ___
 
 *Inherited from [CreationOptions](creationoptions.md).[type](creationoptions.md#type)*
 
-*Defined in [common/types.ts:55](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/types.ts#L55)*
+*Defined in [common/types.ts:55](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/types.ts#L55)*
+
+Defines shape type.

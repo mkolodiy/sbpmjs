@@ -1,6 +1,8 @@
-[@sbpmjs/modeler](../README.md) › [CustomEvent](customevent.md)
+[@sbpmjs/modeler - v1.0.0](../README.md) › [CustomEvent](customevent.md)
 
 # Enumeration: CustomEvent
+
+Custom events.
 
 ## Index
 
@@ -19,7 +21,7 @@
 
 • **ELEMENT_ADD_FUNCTION_STATE_TRANSITION**: = "element:addFunctionTransition"
 
-*Defined in [common/constants.ts:47](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L47)*
+*Defined in [common/constants.ts:47](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L47)*
 
 ___
 
@@ -27,7 +29,7 @@ ___
 
 • **ELEMENT_ADD_MESSAGE_TRANSITION**: = "element:addMessageTransition"
 
-*Defined in [common/constants.ts:44](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L44)*
+*Defined in [common/constants.ts:44](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L44)*
 
 ___
 
@@ -35,7 +37,7 @@ ___
 
 • **ELEMENT_ADD_RECEIVE_STATE_TRANSITION**: = "element:addReceiveTransition"
 
-*Defined in [common/constants.ts:46](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L46)*
+*Defined in [common/constants.ts:46](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L46)*
 
 ___
 
@@ -43,7 +45,7 @@ ___
 
 • **ELEMENT_ADD_SEND_STATE_TRANSITION**: = "element:addSendTransition"
 
-*Defined in [common/constants.ts:45](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L45)*
+*Defined in [common/constants.ts:45](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L45)*
 
 ___
 
@@ -51,7 +53,7 @@ ___
 
 • **LINK_REMOVE**: = "link:remove"
 
-*Defined in [common/constants.ts:48](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L48)*
+*Defined in [common/constants.ts:48](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L48)*
 
 ___
 
@@ -59,4 +61,4 @@ ___
 
 • **LINK_REMOVE_VERTICES**: = "link:removeVertices"
 
-*Defined in [common/constants.ts:49](https://github.com/mkolodiy/sbpmjs/blob/56eff71/packages/sbpm-modeler/lib/common/constants.ts#L49)*
+*Defined in [common/constants.ts:49](https://github.com/mkolodiy/sbpmjs/blob/97cb194/packages/sbpm-modeler/lib/common/constants.ts#L49)*
