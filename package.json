@@ -35,7 +35,7 @@
     "@types/chai": "^4.2.12",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",
-    "commitizen": "^4.1.2",
+    "commitizen": "^4.2.1",
     "cz-conventional-changelog": "^3.2.0",
     "husky": "^3.1.0",
     "identity-obj-proxy": "^3.0.0",
