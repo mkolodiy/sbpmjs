@@ -1,0 +1,10 @@
+__test__
+coverage
+dev
+.rpt2_cache
+src
+.eslintrc.json
+.prettierrc.json
+jest.config.ts
+rollup.config.ts
+tsconfig.json
