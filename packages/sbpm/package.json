@@ -19,10 +19,10 @@
     "test:cov": "npm run test -- --coverage",
     "lint": "eslint .",
     "format": "prettier . --list-different",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
     "fix:lint": "npm run lint -- --fix",
     "fix:format": "npm run format -- --write",
-    "clean": "trash dist coverage",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "clean": "trash dist coverage"
   },
   "keywords": [],
   "author": "",
