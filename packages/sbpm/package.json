@@ -12,7 +12,7 @@
     "./dist/": "./dist/"
   },
   "scripts": {
-    "dev": "vite ./dev",
+    "dev": "vite --config vite.config.ts ./dev",
     "prebuild": "npm run clean",
     "build": "rollup --config rollup.config.ts",
     "test": "jest",
@@ -21,7 +21,8 @@
     "format": "prettier . --list-different",
     "fix:lint": "npm run lint -- --fix",
     "fix:format": "npm run format -- --write",
-    "clean": "trash dist coverage"
+    "clean": "trash dist coverage",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "keywords": [],
   "author": "",

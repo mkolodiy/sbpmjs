@@ -1,15 +1,6 @@
-# npm-lib-starter
+# @sbpmjs/sbpm
 
-A starter project for creating NPN libraries.
-
-## Includes
-
-- Vite for development
-- Rollupfor bundling
-- Typescript
-- Jest
-- Prettier
-- Eslint
+A library for managing SBPM processes.
 
 ## License
 

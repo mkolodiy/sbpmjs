@@ -24,6 +24,10 @@
     "packages/sbpm"
   ],
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.31",
+    "@tsconfig/svelte": "^2.0.1",
     "@types/backbone": "^1.4.14",
     "@types/chai": "^4.3.0",
     "@types/jest": "^27.0.3",
@@ -58,8 +62,12 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-sourcemaps": "^0.6.3",
+    "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.31.1",
+    "svelte": "^3.44.2",
+    "svelte-check": "^2.2.10",
+    "svelte-preprocess": "^4.9.8",
     "trash-cli": "^5.0.0",
     "ts-jest": "^27.1.1",
     "ts-node": "^10.4.0",

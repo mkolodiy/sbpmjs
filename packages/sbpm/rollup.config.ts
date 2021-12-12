@@ -1,6 +1,10 @@
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-typescript2';
+import svelte from 'rollup-plugin-svelte';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import sveltePreprocess from 'svelte-preprocess';
 
 function emitModulePackageFile() {
   return {
@@ -44,5 +48,13 @@ export default {
       plugins: [terser()],
     },
   ],
-  plugins: [typescript({ useTsconfigDeclarationDir: true }), sourceMaps()],
+  plugins: [
+    typescript({ useTsconfigDeclarationDir: true }),
+    sourceMaps(),
+    svelte({
+      preprocess: sveltePreprocess(),
+    }),
+    resolve({ browser: true }),
+    commonjs(),
+  ],
 };
