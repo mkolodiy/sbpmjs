@@ -1,30 +1,38 @@
 {
   "name": "@sbpmjs/sbpm",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A library for managing SBPM processes.",
-  "main": "dist/umd/lib.js",
-  "module": "dist/esm/lib.js",
-  "typings": "dist/types/lib.d.ts",
-  "exports": {
-    ".": {
-      "default": "./dist/esm/lib.min.js"
-    },
-    "./dist/": "./dist/"
+  "keywords": [
+    "sbpm"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/sbpm.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
   },
   "scripts": {
-    "dev": "vite --config vite.config.ts ./dev",
-    "prebuild": "npm run clean",
-    "build": "rollup --config rollup.config.ts",
-    "test": "jest",
-    "test:cov": "npm run test -- --coverage",
-    "lint": "eslint .",
-    "format": "prettier . --list-different",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
-    "fix:lint": "npm run lint -- --fix",
-    "fix:format": "npm run format -- --write",
-    "clean": "trash dist coverage"
+    "start": "vite --config vite.config.js ./dev",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT"
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 160,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "author": "Maksym Kolodiy"
 }

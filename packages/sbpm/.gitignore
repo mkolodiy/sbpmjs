@@ -1,4 +1,4 @@
-coverage
-dist
-.rpt2_cache
+*.log
+.DS_Store
 node_modules
+dist
