@@ -1,12 +1,9 @@
-import TestComponent from './TestComponent.svelte';
+import Main from './Main.svelte';
 
 export default function testLib(containerId: string) {
   const containerEl = document.getElementById(containerId);
-  if (containerEl) {
-    containerEl.textContent = 'Test lib';
-  }
 
-  new TestComponent({
+  new Main({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     target: containerEl,
