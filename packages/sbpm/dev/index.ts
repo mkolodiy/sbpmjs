@@ -1,3 +1,4 @@
-import testLib from '../src/index';
+import Sbpm from '../src/index';
+import './styles.css';
 
-testLib('container');
+new Sbpm('container');

@@ -51,6 +51,7 @@
     "rollup-plugin-svelte": "^7.1.0",
     "svelte": "^3.44.3",
     "svelte-check": "^2.2.11",
+    "svelte-jester": "^2.1.5",
     "svelte-preprocess": "^4.10.1",
     "trash-cli": "^5.0.0",
     "tsdx": "^0.14.1",

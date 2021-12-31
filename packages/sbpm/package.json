@@ -21,6 +21,7 @@
     "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint",
+    "svelte-check": "svelte-check",
     "prepare": "tsdx build"
   },
   "husky": {
