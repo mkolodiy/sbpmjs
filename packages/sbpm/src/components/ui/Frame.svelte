@@ -11,19 +11,18 @@
 
 <style>
     .frame {
-        border-color: var(--sbpm-main-color);
+        border-color: var(--sbpm-primary-color);
         border-style: solid;
         border-width: 1px;
-        border-radius: 5px;
+        border-radius: 3px;
         max-width: 400px;
         height: inherit;
     }
 
     .title {
         padding: 10px;
-        background-color: var(--sbpm-main-color);
+        background-color: var(--sbpm-primary-color);
         color: #fff;
-        font-weight: bold;
     }
 
     .content {

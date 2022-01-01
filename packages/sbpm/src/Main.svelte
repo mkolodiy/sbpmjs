@@ -1,5 +1,6 @@
 <script>
     import Base from './components/Base.svelte';
+    import Button from './components/ui/Button.svelte';
     import Frame from './components/ui/Frame.svelte';
     import Input from './components/ui/Input.svelte';
 
@@ -8,8 +9,17 @@
 
 <Base>
     <Frame title="Process management">
-        <Input bind:value={testValue} placeholder="Search"/>
+        <div>
+            <Input bind:value={testValue} label="Test" placeholder="Search"/>
+            <Input bind:value={testValue} label="Test" placeholder="Search"/>
+        </div>
+        <br>
+        <div>
+            <Button>Test Button</Button>
+            <Button variant="outline">Test Button</Button>
+            <Button disabled>Test Button</Button>
+            <Button variant="outline" disabled>Test Button</Button>
+        </div>
     </Frame>
-    <Input bind:value={testValue} placeholder="Search"/>
     <p>{testValue}</p>
 </Base>
