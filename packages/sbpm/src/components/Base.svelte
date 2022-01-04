@@ -17,7 +17,7 @@
    .sbpm-container {
        font-family: var(--sbpm-font-family);
        font-size: var(--sbpm-font-size);
-       height: inherit;
+       height: 100%;
    }
 
    .sbpm-container * {

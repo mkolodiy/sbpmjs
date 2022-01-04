@@ -1,6 +1,6 @@
 <script lang="ts">
-    export let variant: 'primary' | 'outline' = 'primary';
-    export let disabled = false;
+    export let variant: 'primary' | 'outline' = 'primary';    
+    const {disabled = false, ...restProps} = $$restProps;
 </script>
 
 <button 
@@ -10,7 +10,7 @@
     class:disabled={disabled}
     disabled={disabled}
     on:click
-    {...$$restProps}
+    {...restProps}
 >
         <slot></slot>
 </button>
