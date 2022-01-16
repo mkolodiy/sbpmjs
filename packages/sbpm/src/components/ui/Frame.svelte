@@ -1,9 +1,11 @@
 <script>
-  export let title;
+  export let title = undefined;
 </script>
 
 <div class="frame">
-  <div class="title">{title}</div>
+  {#if title}
+    <div class="title">{title}</div>
+  {/if}
   <div class="content"><slot /></div>
 </div>
 
