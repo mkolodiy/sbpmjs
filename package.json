@@ -53,6 +53,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.62.0",
     "rollup-plugin-svelte": "^7.1.0",
+    "rollup-plugin-svelte-svg": "^1.0.0-beta.6",
     "svelte": "^3.44.3",
     "svelte-check": "^2.2.11",
     "svelte-jester": "^2.1.5",
