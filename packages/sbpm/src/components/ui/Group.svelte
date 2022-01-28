@@ -5,7 +5,7 @@
   let selectedGroupEntry;
 
   const handleOnclick = (groupEntry) => () => {
-    onClick();
+    onClick(groupEntry);
     selectedGroupEntry = groupEntry;
   };
 </script>
@@ -14,7 +14,7 @@
   <div class="inner-group">
     {#each groupEntries as groupEntry, index (groupEntry.id)}
       <div class="group-entry" class:selected={selectedGroupEntry?.id === groupEntry.id} on:click={handleOnclick(groupEntry)}>
-        {groupEntry.name}
+        {groupEntry.label}
       </div>
     {/each}
   </div>

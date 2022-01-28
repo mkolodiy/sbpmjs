@@ -1,7 +1,13 @@
+import type { SbpmOptions } from './common/types';
 import Main from './Main.svelte';
+import { processGroups } from './stores/processGroup';
 
 export default class Sbpm {
-  constructor(containerIdentifier: string) {
+  constructor(options: SbpmOptions) {
+    const { containerIdentifier, initialProcessGroups } = options;
+
+    processGroups.set(initialProcessGroups);
+
     const containerElement = getContainerElement(containerIdentifier);
     new Main({
       target: containerElement,
