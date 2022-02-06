@@ -14,31 +14,31 @@ export type SbpmElement<T extends SbpmType = SbpmType> = {
   label: string;
 };
 
-export type SbpmContainerElement<Type extends SbpmType = SbpmType, Child extends SbpmElement = SbpmElement> = SbpmElement<Type> & {
-  children?: Child[];
+export type SbpmContainerElement<Type extends SbpmType = SbpmType> = SbpmElement<Type> & {
+  contains?: string[];
 };
 
-export type SbpmProcessGroup = SbpmContainerElement<'SBPM_PROCESS_GROUP', SbpmProcessModel>;
+export type SbpmProcessGroup = SbpmContainerElement<ProcessGroupType>;
 
-export type SbpmProcessModel = SbpmContainerElement<'SBPM_PROCESS_MODEL', SbpmStandardLayer>;
+export type SbpmProcessModel = SbpmContainerElement<ProcessModelType>;
 
-export type SbpmStandardLayer = SbpmContainerElement<'SBPM_STANDARD_LAYER', any> & {
+export type SbpmStandardLayer = SbpmContainerElement<'SBPM_STANDARD_LAYER'> & {
   implements?: SbpmElement<'SBPM_ABSTRACT_LAYER'>;
   initialElement?: SbpmElement<any>;
 };
 
-export type SbpmExtensionLayer = SbpmContainerElement<'SBPM_EXTENSION_LAYER', any> & {
+export type SbpmExtensionLayer = SbpmContainerElement<'SBPM_EXTENSION_LAYER'> & {
   extends?: SbpmElement<'SBPM_STANDARD_LAYER'>;
 };
 
-export type SbpmAbstractLayer = SbpmContainerElement<'SBPM_ABSTRACT_LAYER', any>;
+export type SbpmAbstractLayer = SbpmContainerElement<'SBPM_ABSTRACT_LAYER'>;
 
 export type SbpmProcess = (SbpmProcessGroup | SbpmProcessModel | SbpmStandardLayer)[];
 
-export type SbpmInitialData = SbpmProcess[];
+export type SbpmProcessList = SbpmProcess[];
 
 export type SbpmOptions = {
   containerIdentifier: string;
   initialProcessGroups?: SbpmProcessGroup[];
-  initialData?: SbpmInitialData;
+  initialProcessList?: SbpmProcessList;
 };

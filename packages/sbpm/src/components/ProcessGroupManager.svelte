@@ -9,6 +9,7 @@
   import ProcessNetworkTree from './process-network-tree/ProcessNetworkTree.svelte';
   import Properties from './Properties.svelte';
   import { selectedSbpmElement } from '../stores/sbpmElement';
+  import { processes } from '../stores/processes';
 
   let searchTerm;
   let selectedProcessGroup;
@@ -53,6 +54,7 @@
   {/if}
   <Properties />
 </div>
+{JSON.stringify($processes)}
 
 <style>
   .wrapper {

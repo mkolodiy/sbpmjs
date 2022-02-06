@@ -22,7 +22,7 @@
   };
 </script>
 
-<div class="node" class:node-no-children={!sbpmElement?.children}>
+<div class="node" class:node-no-children={!sbpmElement?.contains}>
   <div class="symbol-wrapper" class:symbol-active={selected} on:click={handleOnSelect}>
     <div class="symbol">
       {#if sbpmElement.type === 'SBPM_PROCESS_GROUP'}
