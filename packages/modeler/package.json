@@ -1,4 +1,5 @@
 {
+  "name": "@sbpmjs/modeler",
   "version": "0.1.0",
   "license": "MIT",
   "main": "dist/index.js",
@@ -24,17 +25,19 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@sbpmjs/modeler",
   "author": "Maksym Kolodiy",
   "module": "dist/modeler.esm.js",
   "size-limit": [
     {
       "path": "dist/modeler.cjs.production.min.js",
-      "limit": "10 KB"
+      "limit": "200 KB"
     },
     {
       "path": "dist/modeler.esm.js",
-      "limit": "10 KB"
+      "limit": "200 KB"
     }
-  ]
+  ],
+  "dependencies": {
+    "jointjs": "^3.5.1"
+  }
 }
