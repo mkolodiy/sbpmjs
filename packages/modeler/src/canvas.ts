@@ -1,10 +1,11 @@
 import * as joint from 'jointjs';
-import SbpmElementView from './element-view';
+import SbpmElementView from './shapes/element/element-view';
 import type { SbpmModelerOptions } from './common/types';
 
 const JointEvent = {
   BLANK_POINTERDOWN: 'blank:pointerdown',
   ELEMENT_POINTERDOWN: 'element:pointerdown',
+  LINK_POINTERDOWN: 'link:pointerdown',
 } as const;
 
 type EventMap = joint.dia.Paper.EventMap & {
@@ -20,7 +21,16 @@ const paperOptions: joint.dia.Paper.Options = {
     x: 0,
     y: 0,
   },
+  interactive: {
+    linkMove: true,
+  },
   elementView: SbpmElementView,
+  defaultLink: (cellView: any, magnet: any) => {
+    console.log(cellView);
+    console.log(magnet);
+
+    return new joint.shapes.standard.Link();
+  },
 };
 
 export default class SbpmCanvas {
@@ -40,6 +50,7 @@ export default class SbpmCanvas {
 
     this.registerPaperEvents();
     this.registerElementEvents();
+    this.registerLinkEvents();
   }
 
   get paper() {
@@ -52,7 +63,20 @@ export default class SbpmCanvas {
 
   private registerElementEvents() {
     this.#paper.on<keyof EventMap>(JointEvent.ELEMENT_POINTERDOWN, (sbpmElementView: SbpmElementView) => {
+      this.#paper.hideTools();
       sbpmElementView.select();
+    });
+  }
+
+  private registerLinkEvents() {
+    this.#paper.on(JointEvent.LINK_POINTERDOWN, (linkView: joint.dia.LinkView) => {
+      if (Reflect.has(linkView.model.target(), 'id')) {
+        const targetArrowhead = new joint.linkTools.TargetArrowhead();
+        const toolsView = new joint.dia.ToolsView({
+          tools: [targetArrowhead],
+        });
+        linkView.addTools(toolsView);
+      }
     });
   }
 

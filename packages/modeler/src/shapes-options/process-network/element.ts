@@ -1,5 +1,6 @@
 import * as joint from 'jointjs';
 import { FONT_FAMILY, SbpmElementType } from '../../common/constants';
+import type { SbpmElementToolsOptions } from '../../common/types';
 import { icon } from './icon';
 
 const jointOptions: joint.shapes.standard.ImageAttributes = {
@@ -25,11 +26,12 @@ const jointOptions: joint.shapes.standard.ImageAttributes = {
   },
 };
 
-const toolsOptions = [
+const toolsOptions: SbpmElementToolsOptions = [
   {
-    type: 'removeButton',
-    x: 140,
-    y: -5,
+    type: 'remove',
+    options: {
+      x: 140,
+    },
   },
 ];
 
@@ -44,7 +46,7 @@ export function getProcessNetworkOptions(options: any, representationalOptions?:
       },
     },
     position,
-    options,
+    initialOptions: options,
     jointOptions,
     toolsOptions,
     type: SbpmElementType.PROCESS_NETWORK,

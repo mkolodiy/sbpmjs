@@ -17,7 +17,8 @@
     "start:sbpm": "pnpm start --filter ./packages/sbpm",
     "build:sbpm": "pnpm build --filter ./packages/sbpm",
     "test:sbpm": "pnpm test --filter ./packages/sbpm",
-    "lint:sbpm": "pnpm lint --filter ./packages/sbpm"
+    "lint:sbpm": "pnpm lint --filter ./packages/sbpm",
+    "size:modeler": "pnpm size --filter ./packages/modeler"
   },
   "keywords": [
     "sbpm"
