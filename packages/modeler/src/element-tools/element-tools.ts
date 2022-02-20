@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 import type { SbpmBoundaryToolOptions, SbpmElementToolsOptions } from '../common';
-import { defaultBoundaryOptions, defaultButtonOptions, defaultRemoveOptions } from './options';
+import { defaultBoundaryOptions, defaultButtonOptions, defaultConnectOptions, defaultRemoveOptions } from './options';
 
 export function createElementTools(toolsOptions: SbpmElementToolsOptions) {
   const tools = [];
@@ -11,6 +11,10 @@ export function createElementTools(toolsOptions: SbpmElementToolsOptions) {
   for (const toolOptions of toolsOptions) {
     if (toolOptions.type === 'button') {
       tools.push(createButton(toolOptions.options));
+    }
+
+    if (toolOptions.type === 'connect') {
+      tools.push(createConnect(toolOptions.options));
     }
 
     if (toolOptions.type === 'remove') {
@@ -31,6 +35,10 @@ function createBoundary(options: joint.elementTools.Boundary.Options) {
 
 function createButton(options: joint.elementTools.Button.Options) {
   return new joint.elementTools.Button(joint.util.merge(joint.util.cloneDeep(defaultButtonOptions), options));
+}
+
+function createConnect(options: joint.elementTools.Connect.Options) {
+  return new joint.elementTools.Connect(joint.util.merge(joint.util.cloneDeep(defaultConnectOptions), options));
 }
 
 function createRemove(options: joint.elementTools.Button.Options) {

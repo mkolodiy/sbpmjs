@@ -33,4 +33,10 @@ export const toolsOptions: SbpmElementToolsOptions = [
       x: 140,
     },
   },
+  {
+    type: 'connect',
+    options: {
+      x: 164,
+    },
+  },
 ];

@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import { deleteIcon, touchAppIcon } from '../common';
+import { callMadeIcon, deleteIcon, touchAppIcon } from '../common';
 
 export const defaultBoundaryOptions: joint.elementTools.Boundary.Options = {
   focusOpacity: 1,
@@ -23,6 +23,22 @@ export const defaultButtonOptions: joint.elementTools.Button.Options = {
     },
   ],
 };
+
+export const defaultConnectOptions: joint.elementTools.Connect.Options = joint.util.merge(joint.util.cloneDeep(defaultButtonOptions), {
+  markup: [
+    {
+      tagName: 'image',
+      attributes: {
+        'xlink:href': callMadeIcon,
+      },
+    },
+    {
+      tagName: 'title',
+      textContent: 'Connect',
+    },
+  ],
+  focusOpacity: 0,
+});
 
 export const defaultRemoveOptions: joint.elementTools.Button.Options = joint.util.merge(joint.util.cloneDeep(defaultButtonOptions), {
   markup: [
