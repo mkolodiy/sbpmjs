@@ -4,10 +4,6 @@ export interface GenericOptions {
   [key: string]: any;
 }
 
-export type SbpmModelerOptions = {
-  container: HTMLElement;
-};
-
 export type SbpmElementAttributes<T> = joint.dia.Element.GenericAttributes<joint.shapes.standard.ImageSelectors> & {
   initialOptions: T;
   jointOptions: joint.shapes.standard.ImageAttributes;
@@ -31,3 +27,19 @@ export type SbpmElementToolsOptions = (
   | SbpmControlToolOptions
   | SbpmRemoveToolOptions
 )[];
+
+export type SbpmProcessNetworkOptions = {
+  id?: string;
+  label: string;
+  position: joint.dia.Point;
+};
+
+export type SbpmProcessModel = {
+  id?: string;
+  label: string;
+  position: joint.dia.Point;
+};
+
+export type SbpmModelerOptions = {
+  container: HTMLElement;
+};

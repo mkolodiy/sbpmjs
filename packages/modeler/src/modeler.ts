@@ -1,9 +1,8 @@
 // import '../node_modules/jointjs/dist/joint.min.css';
 import SbpmCanvas from './canvas';
-import SbpmElement from './shapes/element/element';
-import type { SbpmModelerOptions } from './common/types';
-
-import { getProcessNetworkOptions } from './shapes-options/process-network/element';
+import SbpmElement from './element';
+import type { SbpmModelerOptions, SbpmProcessNetworkOptions } from './common';
+import SbpmProcessNetwork, { createProcessNetworkOptions } from './process-network';
 
 export default class SbpmModeler {
   #canvas: SbpmCanvas;
@@ -12,18 +11,8 @@ export default class SbpmModeler {
     this.#canvas = new SbpmCanvas(options);
   }
 
-  addSbpmProcessNetwork(options: any, representationalOptions?: any) {
-    const sbpmProcessNetworkOptions = getProcessNetworkOptions(options, representationalOptions);
-    // console.log(sbpmProcessNetworkOptions);
-
-    //@ts-ignore
-    const sbpmProcessNetwork = new SbpmElement(sbpmProcessNetworkOptions);
-    // sbpmProcessNetwork.prop('test', 'test');
-    // console.log(sbpmProcessNetwork);
-    // console.log(sbpmProcessNetwork.attributes);
-    sbpmProcessNetwork.addTo(this.#canvas.graph);
-
-    return sbpmProcessNetwork;
+  addSbpmProcessNetwork(options: SbpmProcessNetworkOptions) {
+    return new SbpmProcessNetwork(createProcessNetworkOptions(options)).addTo(this.#canvas.graph);
   }
 
   updateElement(element: SbpmElement, options: any, representationalOptions?: any) {

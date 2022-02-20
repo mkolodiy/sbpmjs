@@ -1,37 +1,9 @@
 import * as joint from 'jointjs';
-import SbpmElementView from './shapes/element/element-view';
-import type { SbpmModelerOptions } from './common/types';
-
-const JointEvent = {
-  BLANK_POINTERDOWN: 'blank:pointerdown',
-  ELEMENT_POINTERDOWN: 'element:pointerdown',
-  LINK_POINTERDOWN: 'link:pointerdown',
-} as const;
-
-type EventMap = joint.dia.Paper.EventMap & {
-  'element:pointerdown': (elementView: SbpmElementView, evt: joint.dia.Event, x: number, y: number) => void;
-};
-
-const paperOptions: joint.dia.Paper.Options = {
-  width: '100%',
-  height: '100%',
-  gridSize: 1,
-  linkPinning: false,
-  origin: {
-    x: 0,
-    y: 0,
-  },
-  interactive: {
-    linkMove: true,
-  },
-  elementView: SbpmElementView,
-  defaultLink: (cellView: any, magnet: any) => {
-    console.log(cellView);
-    console.log(magnet);
-
-    return new joint.shapes.standard.Link();
-  },
-};
+import SbpmElementView from '../element-view';
+import type { SbpmModelerOptions } from '../common';
+import { paperOptions } from './options';
+import { JointEvent } from './types';
+import type { EventMap } from './types';
 
 export default class SbpmCanvas {
   #graph: joint.dia.Graph;

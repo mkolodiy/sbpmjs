@@ -1,44 +1,6 @@
 import * as joint from 'jointjs';
-import { deleteIcon, touchAppIcon } from '../../common/icons';
-import type { SbpmBoundaryToolOptions, SbpmElementToolsOptions } from '../../common/types';
-
-const defaultBoundaryOptions: joint.elementTools.Boundary.Options = {
-  focusOpacity: 1,
-  useModelGeometry: true,
-  padding: 5,
-};
-
-const defaultButtonOptions: joint.elementTools.Button.Options = {
-  y: -5,
-  markup: [
-    {
-      tagName: 'image',
-      attributes: {
-        'xlink:href': touchAppIcon,
-        cursor: 'pointer',
-      },
-    },
-    {
-      tagName: 'title',
-      textContent: 'New button with no action',
-    },
-  ],
-};
-
-const defaultRemoveOptions: joint.elementTools.Button.Options = joint.util.merge(joint.util.cloneDeep(defaultButtonOptions), {
-  markup: [
-    {
-      tagName: 'image',
-      attributes: {
-        'xlink:href': deleteIcon,
-      },
-    },
-    {
-      tagName: 'title',
-      textContent: 'Remove',
-    },
-  ],
-});
+import type { SbpmBoundaryToolOptions, SbpmElementToolsOptions } from '../common';
+import { defaultBoundaryOptions, defaultButtonOptions, defaultRemoveOptions } from './options';
 
 export function createElementTools(toolsOptions: SbpmElementToolsOptions) {
   const tools = [];
@@ -57,7 +19,6 @@ export function createElementTools(toolsOptions: SbpmElementToolsOptions) {
   }
 
   const toolsView = new joint.dia.ToolsView({
-    name: 'elementTools',
     tools,
   });
 
