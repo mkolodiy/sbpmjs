@@ -13,15 +13,15 @@ export default class SbpmElement<T = GenericOptions> extends joint.dia.Element<S
   markup = markup;
 
   get initialOptions() {
-    return this.attributes.initialOptions;
+    return this.attributes.initialOptions!;
   }
 
   get jointOptions() {
-    return this.attributes.jointOptions;
+    return this.attributes.jointOptions!;
   }
 
   get toolsOptions() {
-    return this.attributes.toolsOptions;
+    return this.attributes.toolsOptions!;
   }
 
   update(options: any, representationalOptions?: any) {
@@ -30,5 +30,14 @@ export default class SbpmElement<T = GenericOptions> extends joint.dia.Element<S
 
     this.attr('label/text', label);
     this.prop('position', position);
+  }
+
+  select() {
+    this.attr('image/cursor', 'move');
+    this.toFront();
+  }
+
+  deselect() {
+    this.attr('image/cursor', 'pointer');
   }
 }

@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import { getDefaultLink, getElementView } from './utils';
+import { getDefaultLink, getElementView, getLinkView } from './utils';
 
 export const paperOptions: joint.dia.Paper.Options = {
   width: '100%',
@@ -13,6 +13,13 @@ export const paperOptions: joint.dia.Paper.Options = {
   interactive: {
     linkMove: true,
   },
+  defaultConnectionPoint: {
+    name: 'bbox',
+    args: {
+      offset: 10,
+    },
+  },
   elementView: getElementView,
+  linkView: getLinkView,
   defaultLink: getDefaultLink,
 };

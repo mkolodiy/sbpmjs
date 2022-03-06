@@ -4,11 +4,11 @@ const modeler = new SbpmModeler({
   container: document.getElementById('container'),
 });
 
-const element = modeler.addSbpmProcessNetwork({ label: 'Test test test', position: { x: 100, y: 100 } });
+const element = modeler.addSbpmProcessNetwork({ id: 'test_1', label: 'Test test test', position: { x: 100, y: 100 } });
 console.log(element);
 
-modeler.addSbpmProcessNetwork({ label: 'Test test test', position: { x: 400, y: 400 } });
-modeler.addSbpmProcessNetwork({ label: 'Test test test', position: { x: 400, y: 600 } });
+modeler.addSbpmProcessNetwork({ id: 'test_2', label: 'Test test test', position: { x: 400, y: 400 } });
+modeler.addSbpmProcessNetwork({ id: 'test_3', label: 'Test test test', position: { x: 400, y: 600 } });
 
 // setTimeout(() => {
 //   element.update({ label: 'Updated 1' }, { position: { x: 300, y: 300 } });

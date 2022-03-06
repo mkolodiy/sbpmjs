@@ -4,6 +4,7 @@ import type { SbpmModelerOptions } from '../common';
 import { paperOptions } from './options';
 import { JointEvent } from './types';
 import type { EventMap } from './types';
+import SbpmLinkView from '../link-view';
 
 export default class SbpmCanvas {
   #graph: joint.dia.Graph;
@@ -41,14 +42,9 @@ export default class SbpmCanvas {
   }
 
   private registerLinkEvents() {
-    this.#paper.on(JointEvent.LINK_POINTERDOWN, (linkView: joint.dia.LinkView) => {
-      if (Reflect.has(linkView.model.target(), 'id')) {
-        const targetArrowhead = new joint.linkTools.TargetArrowhead();
-        const toolsView = new joint.dia.ToolsView({
-          tools: [targetArrowhead],
-        });
-        linkView.addTools(toolsView);
-      }
+    this.#paper.on<keyof EventMap>(JointEvent.LINK_POINTERDOWN, (linkView: SbpmLinkView) => {
+      this.#paper.hideTools();
+      linkView.select();
     });
   }
 

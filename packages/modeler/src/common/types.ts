@@ -4,11 +4,17 @@ export interface GenericOptions {
   [key: string]: any;
 }
 
-export type SbpmElementAttributes<T> = joint.dia.Element.GenericAttributes<joint.shapes.standard.ImageSelectors> & {
-  initialOptions: T;
-  jointOptions: joint.shapes.standard.ImageAttributes;
-  toolsOptions: SbpmElementToolsOptions;
+type SbpmShapeAttributes<InitialOptions, JointOptions, ToolsOptions> = {
+  initialOptions: InitialOptions;
+  jointOptions: JointOptions;
+  toolsOptions: ToolsOptions;
 };
+
+export type SbpmElementAttributes<T> = joint.dia.Element.GenericAttributes<joint.shapes.standard.ImageSelectors> &
+  SbpmShapeAttributes<T, joint.shapes.standard.ImageAttributes, SbpmElementToolsOptions>;
+
+export type SbpmLinkAttributes<T> = joint.dia.Link.GenericAttributes<joint.shapes.standard.LinkSelectors> &
+  SbpmShapeAttributes<T, joint.shapes.standard.LinkAttributes, SbpmLinkToolsOptions>;
 
 export type SbpmBoundaryToolOptions = { type: 'boundary'; options: joint.elementTools.Boundary.Options };
 
@@ -28,16 +34,23 @@ export type SbpmElementToolsOptions = (
   | SbpmRemoveToolOptions
 )[];
 
+export type SbpmLinkToolsOptions = any[];
+
 export type SbpmProcessNetworkOptions = {
   id?: string;
   label: string;
   position: joint.dia.Point;
 };
 
-export type SbpmProcessModel = {
+export type SbpmProcessModelOptions = {
   id?: string;
   label: string;
   position: joint.dia.Point;
+};
+
+export type SbpmProcessModelTransitionOptions = {
+  source: string;
+  target: string;
 };
 
 export type SbpmModelerOptions = {

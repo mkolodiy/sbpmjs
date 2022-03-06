@@ -1,12 +1,16 @@
 import * as joint from 'jointjs';
 import SbpmElementView from '../element-view';
+import SbpmLink from '../link';
+import SbpmLinkView from '../link-view';
 
 export function getElementView(_element: joint.dia.Element) {
   return SbpmElementView;
 }
 
-export function getDefaultLink(cellView: joint.dia.CellView, magnet: any) {
-  console.log(cellView);
-  console.log(magnet);
-  return new joint.shapes.standard.Link();
+export function getLinkView(_link: joint.dia.Link) {
+  return SbpmLinkView;
+}
+
+export function getDefaultLink(_cellView: joint.dia.CellView, _magnet: any) {
+  return new SbpmLink();
 }
