@@ -11,6 +11,16 @@ export const defaultButtonOptions: joint.elementTools.Button.Options = {
   y: -5,
   markup: [
     {
+      tagName: 'rect',
+      attributes: {
+        fill: 'white',
+        width: '24px',
+        height: '24px',
+        rx: 1,
+        ry: 1,
+      },
+    },
+    {
       tagName: 'image',
       attributes: {
         'xlink:href': touchAppIcon,
@@ -26,6 +36,7 @@ export const defaultButtonOptions: joint.elementTools.Button.Options = {
 
 export const defaultConnectOptions: joint.elementTools.Connect.Options = joint.util.merge(joint.util.cloneDeep(defaultButtonOptions), {
   markup: [
+    {},
     {
       tagName: 'image',
       attributes: {
@@ -42,6 +53,7 @@ export const defaultConnectOptions: joint.elementTools.Connect.Options = joint.u
 
 export const defaultRemoveOptions: joint.elementTools.Button.Options = joint.util.merge(joint.util.cloneDeep(defaultButtonOptions), {
   markup: [
+    {},
     {
       tagName: 'image',
       attributes: {
