@@ -52,5 +52,8 @@ export default class SbpmCanvas {
     this.#paper.on(JointEvent.BLANK_POINTERDOWN, () => {
       this.#paper.hideTools();
     });
+    this.#paper.on<keyof EventMap>(JointEvent.LINK_CONNECT, (linkView: SbpmLinkView) => {
+      // TODO
+    });
   }
 }
