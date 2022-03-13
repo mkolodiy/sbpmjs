@@ -5,7 +5,7 @@ const modeler = new SbpmModeler({
 });
 
 const element = modeler.addSbpmProcessNetwork({ id: 'test_1', label: 'Test test test', position: { x: 100, y: 100 } });
-console.log(element);
+// console.log(element);
 
 modeler.addSbpmProcessNetwork({ id: 'test_2', label: 'Test test test', position: { x: 400, y: 400 } });
 modeler.addSbpmProcessNetwork({ id: 'test_3', label: 'Test test test', position: { x: 400, y: 600 } });

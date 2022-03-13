@@ -5,10 +5,12 @@ import { paperOptions } from './options';
 import { JointEvent } from './types';
 import type { EventMap } from './types';
 import SbpmLinkView from '../link-view';
+import SbpmCanvasOrigin from '../origin';
 
 export default class SbpmCanvas {
   #graph: joint.dia.Graph;
   #paper: joint.dia.Paper;
+  #dragStartPosition: joint.dia.Point | undefined;
 
   constructor(options: SbpmModelerOptions) {
     const { container } = options;
@@ -21,6 +23,8 @@ export default class SbpmCanvas {
       defaultRouter: { name: 'normal' },
     });
 
+    this.addOrigin();
+    this.addDragging(container);
     this.registerPaperEvents();
     this.registerElementEvents();
     this.registerLinkEvents();
@@ -32,6 +36,35 @@ export default class SbpmCanvas {
 
   get graph() {
     return this.#graph;
+  }
+
+  private addOrigin() {
+    this.#graph.addCell(new SbpmCanvasOrigin());
+  }
+
+  private addDragging(container: HTMLElement) {
+    this.#paper.on('blank:pointerdown', (_evt: joint.dia.Event, x: number, y: number) => {
+      this.#dragStartPosition = { x, y };
+    });
+
+    this.#paper.on('cell:pointerup blank:pointerup', () => {
+      this.#dragStartPosition = undefined;
+    });
+
+    container.addEventListener(
+      'mousemove',
+      (evt: MouseEvent) => {
+        if (this.#dragStartPosition !== undefined) {
+          const scale = this.#paper.scale();
+
+          const x = evt.offsetX - this.#dragStartPosition.x * scale.sx;
+          const y = evt.offsetY - this.#dragStartPosition.y * scale.sy;
+
+          this.#paper.translate(x, y);
+        }
+      },
+      true
+    );
   }
 
   private registerElementEvents() {
@@ -51,9 +84,6 @@ export default class SbpmCanvas {
   private registerPaperEvents() {
     this.#paper.on(JointEvent.BLANK_POINTERDOWN, () => {
       this.#paper.hideTools();
-    });
-    this.#paper.on<keyof EventMap>(JointEvent.LINK_CONNECT, (linkView: SbpmLinkView) => {
-      // TODO
     });
   }
 }
