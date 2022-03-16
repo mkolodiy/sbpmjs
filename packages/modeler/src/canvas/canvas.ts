@@ -1,11 +1,14 @@
 import * as joint from 'jointjs';
 import SbpmElementView from '../element-view';
-import type { SbpmModelerOptions } from '../common';
+import { SbpmModelerOptions, SbpmShapeNamespace } from '../common';
 import { paperOptions } from './options';
 import { JointEvent } from './types';
 import type { EventMap } from './types';
 import SbpmLinkView from '../link-view';
 import SbpmCanvasOrigin from '../origin';
+import element from '../element';
+import SbpmElement from '../element';
+import SbpmLink from '../link';
 
 export default class SbpmCanvas {
   #graph: joint.dia.Graph;
@@ -28,14 +31,6 @@ export default class SbpmCanvas {
     this.registerPaperEvents();
     this.registerElementEvents();
     this.registerLinkEvents();
-  }
-
-  get paper() {
-    return this.#paper;
-  }
-
-  get graph() {
-    return this.#graph;
   }
 
   private addOrigin() {
@@ -69,21 +64,45 @@ export default class SbpmCanvas {
 
   private registerElementEvents() {
     this.#paper.on<keyof EventMap>(JointEvent.ELEMENT_POINTERDOWN, (sbpmElementView: SbpmElementView) => {
-      this.#paper.hideTools();
+      this.deselect();
       sbpmElementView.select();
     });
   }
 
   private registerLinkEvents() {
     this.#paper.on<keyof EventMap>(JointEvent.LINK_POINTERDOWN, (linkView: SbpmLinkView) => {
-      this.#paper.hideTools();
+      this.deselect();
       linkView.select();
     });
   }
 
   private registerPaperEvents() {
     this.#paper.on(JointEvent.BLANK_POINTERDOWN, () => {
-      this.#paper.hideTools();
+      this.deselect();
     });
+  }
+
+  public get paper() {
+    return this.#paper;
+  }
+
+  public get graph() {
+    return this.#graph;
+  }
+
+  public getElements() {
+    const allElements = this.#graph.getElements();
+    return allElements.filter((element: joint.dia.Element) => !element.get('type').includes(SbpmShapeNamespace.COMMON)) as SbpmElement[];
+  }
+
+  public getLinks() {
+    const allLinks = this.#graph.getLinks();
+    return allLinks.filter((link: joint.dia.Link) => !link.get('type').includes(SbpmShapeNamespace.COMMON)) as SbpmLink[];
+  }
+
+  public deselect() {
+    this.#paper.hideTools();
+    this.getElements().forEach((element) => element.deselect());
+    this.getLinks().forEach((link) => link.deselect());
   }
 }

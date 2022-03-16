@@ -36,17 +36,15 @@ export type SbpmElementToolsOptions = (
 
 export type SbpmLinkToolsOptions = any[];
 
-export type SbpmProcessNetworkOptions = {
+export type SbpmElementOptions = {
   id?: string;
   label: string;
   position: joint.dia.Point;
 };
 
-export type SbpmProcessModelOptions = {
-  id?: string;
-  label: string;
-  position: joint.dia.Point;
-};
+export type SbpmProcessNetworkOptions = SbpmElementOptions;
+
+export type SbpmProcessModelOptions = SbpmElementOptions;
 
 export type SbpmProcessModelTransitionOptions = {
   source: string;

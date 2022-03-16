@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import type { GenericOptions, SbpmElementAttributes } from '../common';
+import type { GenericOptions, SbpmElementAttributes, SbpmElementOptions } from '../common';
 import { attrs, markup } from './options';
 
 export default class SbpmElement<T = GenericOptions> extends joint.dia.Element<SbpmElementAttributes<T>> {
@@ -12,32 +12,31 @@ export default class SbpmElement<T = GenericOptions> extends joint.dia.Element<S
 
   markup = markup;
 
-  get initialOptions() {
+  public get initialOptions() {
     return this.attributes.initialOptions!;
   }
 
-  get jointOptions() {
+  public get jointOptions() {
     return this.attributes.jointOptions!;
   }
 
-  get toolsOptions() {
+  public get toolsOptions() {
     return this.attributes.toolsOptions!;
   }
 
-  update(options: any, representationalOptions?: any) {
-    const { label } = options;
-    const { position } = representationalOptions;
+  public update(options: SbpmElementOptions) {
+    const { label, position } = options;
 
     this.attr('label/text', label);
     this.prop('position', position);
   }
 
-  select() {
+  public select() {
     this.attr('image/cursor', 'move');
     this.toFront();
   }
 
-  deselect() {
+  public deselect() {
     this.attr('image/cursor', 'pointer');
   }
 }

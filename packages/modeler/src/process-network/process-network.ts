@@ -1,10 +1,10 @@
 import * as joint from 'jointjs';
-import type { SbpmElementAttributes, SbpmProcessNetworkOptions } from '../common';
+import type { SbpmElementAttributes, SbpmElementOptions, SbpmProcessNetworkOptions } from '../common';
 import { SbpmElementType } from '../common';
 import SbpmElement from '../element';
 import { jointOptions, toolsOptions } from './options';
 
-export function createProcessNetworkOptions(options: SbpmProcessNetworkOptions)  {
+export function createProcessNetworkOptions(options: SbpmProcessNetworkOptions) {
   const { label, ...restOptions } = options;
 
   return joint.util.merge(jointOptions, {
@@ -21,4 +21,8 @@ export function createProcessNetworkOptions(options: SbpmProcessNetworkOptions) 
   }) as SbpmElementAttributes<SbpmProcessNetworkOptions>;
 }
 
-export default class SbpmProcessNetwork extends SbpmElement<SbpmProcessNetworkOptions> {}
+export default class SbpmProcessNetwork extends SbpmElement<SbpmProcessNetworkOptions> {
+  public update(options: SbpmProcessNetworkOptions) {
+    super.update(options);
+  }
+}
