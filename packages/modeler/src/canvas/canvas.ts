@@ -6,7 +6,6 @@ import { JointEvent } from './types';
 import type { EventMap } from './types';
 import SbpmLinkView from '../link-view';
 import SbpmCanvasOrigin from '../origin';
-import element from '../element';
 import SbpmElement from '../element';
 import SbpmLink from '../link';
 
@@ -104,5 +103,15 @@ export default class SbpmCanvas {
     this.#paper.hideTools();
     this.getElements().forEach((element) => element.deselect());
     this.getLinks().forEach((link) => link.deselect());
+  }
+
+  public reset() {
+    this.#paper.translate(0, 0);
+  }
+
+  public clear() {
+    this.#graph.clear();
+    this.addOrigin();
+    this.reset();
   }
 }

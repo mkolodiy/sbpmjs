@@ -1,5 +1,6 @@
 import * as joint from 'jointjs';
 import SbpmElementView from '../element-view';
+import SbpmLink from '../link';
 import SbpmLinkView from '../link-view';
 
 export const JointEvent = {

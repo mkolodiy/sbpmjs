@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import type { SbpmElementAttributes, SbpmElementOptions, SbpmProcessNetworkOptions } from '../common';
+import type { SbpmElementAttributes, SbpmProcessNetworkOptions } from '../common';
 import { SbpmElementType } from '../common';
 import SbpmElement from '../element';
 import { jointOptions, toolsOptions } from './options';

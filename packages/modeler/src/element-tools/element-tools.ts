@@ -1,11 +1,11 @@
 import * as joint from 'jointjs';
-import type { SbpmBoundaryToolOptions, SbpmElementToolsOptions } from '../common';
+import type { SbpmElementBoundaryToolOptions, SbpmElementToolsOptions } from '../common';
 import { defaultBoundaryOptions, defaultButtonOptions, defaultConnectOptions, defaultRemoveOptions } from './options';
 
 export function createElementTools(toolsOptions: SbpmElementToolsOptions) {
   const tools = [];
 
-  const boundaryToolOptions = toolsOptions.find((toolOptions) => toolOptions.type === 'boundary') ?? ({} as SbpmBoundaryToolOptions);
+  const boundaryToolOptions = toolsOptions.find((toolOptions) => toolOptions.type === 'boundary') ?? ({} as SbpmElementBoundaryToolOptions);
   tools.push(createBoundary(boundaryToolOptions.options));
 
   for (const toolOptions of toolsOptions) {
