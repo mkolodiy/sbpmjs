@@ -1,1 +1,1 @@
-export { default } from './factory';
+export { default, getDefaultLink } from './factory';

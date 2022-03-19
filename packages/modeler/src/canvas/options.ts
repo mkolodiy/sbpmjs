@@ -1,9 +1,7 @@
 import * as joint from 'jointjs';
-import { SbpmElementType } from '../common';
 import SbpmElementView from '../element-view';
-import SbpmLink from '../link';
 import SbpmLinkView from '../link-view';
-import SbpmProcessNetworkTransition, { createProcessNetworkTransitionOptions } from '../process-network-transition';
+import { getDefaultLink } from '../factory';
 
 export const paperOptions: joint.dia.Paper.Options = {
   width: '100%',
@@ -39,13 +37,8 @@ function linkView(_link: joint.dia.Link) {
 
 function defaultLink(cellView: joint.dia.CellView) {
   const sbpmElementView = cellView as SbpmElementView;
-  const type = sbpmElementView.element.get('type')
-
-  if (type === SbpmElementType.PROCESS_NETWORK) {
-    return new SbpmProcessNetworkTransition(createProcessNetworkTransitionOptions());
-  }
-
-  return new SbpmLink();
+  const type = sbpmElementView.element.get('type');
+  return getDefaultLink(type);
 }
 
 function validateConnection(

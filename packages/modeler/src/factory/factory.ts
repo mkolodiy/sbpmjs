@@ -1,10 +1,20 @@
+import { SbpmElementType } from '../common';
 import SbpmCanvas from '../canvas';
 import SbpmElement from '../element';
+import SbpmLink from '../link';
 import SbpmProcessNetwork, { createProcessNetworkOptions } from '../process-network';
 import type { SbpmProcessNetworkOptions } from '../process-network';
 import SbpmProcessNetworkTransition, { createProcessNetworkTransitionOptions } from '../process-network-transition';
 import type { SbpmProcessModelTransitionOptions } from '../process-network-transition';
 import type { OptionsType } from './types';
+
+export function getDefaultLink(type: string) {
+  if (type === SbpmElementType.PROCESS_NETWORK) {
+    return new SbpmProcessNetworkTransition(createProcessNetworkTransitionOptions());
+  }
+
+  return new SbpmLink();
+}
 
 export default class SbpmFactory {
   #canvas: SbpmCanvas;
