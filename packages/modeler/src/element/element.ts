@@ -1,6 +1,7 @@
 import * as joint from 'jointjs';
-import type { GenericOptions, SbpmElementAttributes, SbpmElementOptions } from '../common';
+import type { GenericOptions } from '../common';
 import { attrs, markup } from './options';
+import type { SbpmElementAttributes, SbpmElementOptions } from './types';
 
 export default class SbpmElement<T = GenericOptions> extends joint.dia.Element<SbpmElementAttributes<T>> {
   defaults() {

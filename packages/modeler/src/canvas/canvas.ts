@@ -1,13 +1,13 @@
 import * as joint from 'jointjs';
-import SbpmElementView from '../element-view';
-import { SbpmModelerOptions, SbpmShapeNamespace } from '../common';
-import { paperOptions } from './options';
-import { JointEvent } from './types';
-import type { EventMap } from './types';
-import SbpmLinkView from '../link-view';
+import { SbpmShapeNamespace } from '../common';
+import { JointEvent } from './constants';
 import SbpmCanvasOrigin from '../origin';
 import SbpmElement from '../element';
+import SbpmElementView from '../element-view';
 import SbpmLink from '../link';
+import SbpmLinkView from '../link-view';
+import { paperOptions } from './options';
+import type { EventMap, SbpmModelerOptions } from './types';
 
 export default class SbpmCanvas {
   #graph: joint.dia.Graph;

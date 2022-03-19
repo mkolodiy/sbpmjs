@@ -1,14 +1,7 @@
 import * as joint from 'jointjs';
 import SbpmElementView from '../element-view';
-import SbpmLink from '../link';
 import SbpmLinkView from '../link-view';
-
-export const JointEvent = {
-  BLANK_POINTERDOWN: 'blank:pointerdown',
-  ELEMENT_POINTERDOWN: 'element:pointerdown',
-  LINK_POINTERDOWN: 'link:pointerdown',
-  LINK_CONNECT: 'link:connect',
-} as const;
+import { JointEvent } from './constants';
 
 export type EventMap = joint.dia.Paper.EventMap & {
   [JointEvent.ELEMENT_POINTERDOWN]: (elementView: SbpmElementView, evt: joint.dia.Event, x: number, y: number) => void;
@@ -20,4 +13,8 @@ export type EventMap = joint.dia.Paper.EventMap & {
     newCellViewMagnet: SVGElement,
     arrowhead: joint.dia.LinkEnd
   ) => void;
+};
+
+export type SbpmModelerOptions = {
+  container: HTMLElement;
 };

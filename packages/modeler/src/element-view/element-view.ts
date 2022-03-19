@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
-import { createElementTools } from '../element-tools/element-tools';
-import SbpmElement from '../element/element';
+import { createElementTools } from '../element-tools';
+import SbpmElement from '../element';
 
 export default class SbpmElementView extends joint.dia.ElementView {
   // Workaround to have all custom properties and methods on the model

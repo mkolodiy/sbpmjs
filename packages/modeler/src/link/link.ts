@@ -1,6 +1,7 @@
 import * as joint from 'jointjs';
-import type { GenericOptions, SbpmLinkAttributes } from '../common';
+import type { GenericOptions } from '../common';
 import { attrs, markup } from './options';
+import type { SbpmLinkAttributes } from './types';
 
 export default class SbpmLink<T = GenericOptions> extends joint.dia.Link<SbpmLinkAttributes<T>> {
   defaults() {
@@ -32,7 +33,7 @@ export default class SbpmLink<T = GenericOptions> extends joint.dia.Link<SbpmLin
     return Reflect.has(this.target(), 'id');
   }
 
-  update(options: any, representationalOptions?: any) {
+  update(_options: any) {
     // TODO
   }
 

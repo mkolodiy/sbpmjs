@@ -1,8 +1,9 @@
 import * as joint from 'jointjs';
-import type { SbpmElementAttributes, SbpmProcessNetworkOptions } from '../common';
 import { SbpmElementType } from '../common';
 import SbpmElement from '../element';
+import type { SbpmElementAttributes } from '../element';
 import { jointOptions, toolsOptions } from './options';
+import type { SbpmProcessNetworkOptions } from './types';
 
 export function createProcessNetworkOptions(options: SbpmProcessNetworkOptions) {
   const { label, ...restOptions } = options;

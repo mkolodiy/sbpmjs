@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 import { FONT_FAMILY } from '../common';
-import type { SbpmElementToolsOptions } from '../common';
+import type { SbpmElementToolsOptions } from '../element-tools';
 import { icon } from './icon';
 
 export const jointOptions: joint.shapes.standard.ImageAttributes = {

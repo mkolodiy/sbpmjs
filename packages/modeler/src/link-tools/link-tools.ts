@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
-import { SbpmLinkToolsOptions } from '../common';
-import { defaultButtonOptions, defaultRemoveOptions } from './options';
+import { defaultRemoveOptions } from './options';
+import type { SbpmLinkToolsOptions } from './types';
 
 export function createLinkTools(_toolsOptions: SbpmLinkToolsOptions) {
   const tools = [];

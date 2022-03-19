@@ -4,15 +4,15 @@ const modeler = new SbpmModeler({
   container: document.getElementById('container'),
 });
 
-const element1 = modeler.addSbpmProcessNetwork({ id: 'test_1', label: 'Test test test', position: { x: 100, y: 100 } });
+const element1 = modeler.factory.addSbpmProcessNetwork({ id: 'test_1', label: 'Test test test', position: { x: 100, y: 100 } });
 // console.log(element);
 
-// modeler.updateElement(element, { label: 'New label', position: { x: 200, y: 50 } });
+// modeler.factory.updateElement(element, { label: 'New label', position: { x: 200, y: 50 } });
 
-const element2 = modeler.addSbpmProcessNetwork({ id: 'test_2', label: 'Test test test', position: { x: 400, y: 400 } });
-modeler.addSbpmProcessNetwork({ id: 'test_3', label: 'Test test test', position: { x: 400, y: 600 } });
+const element2 = modeler.factory.addSbpmProcessNetwork({ id: 'test_2', label: 'Test test test', position: { x: 400, y: 400 } });
+modeler.factory.addSbpmProcessNetwork({ id: 'test_3', label: 'Test test test', position: { x: 400, y: 600 } });
 
-modeler.addSbpmProcessNetworkTransition({
+modeler.factory.addSbpmProcessNetworkTransition({
   source: element1,
   target: element2,
 });
@@ -22,7 +22,7 @@ modeler.addSbpmProcessNetworkTransition({
 // }, 4000);
 
 // setTimeout(() => {
-//   modeler.updateElement(element, { label: 'Updated 2' }, { position: { x: 200, y: 600 } });
+//   modeler.factory.updateElement(element, { label: 'Updated 2' }, { position: { x: 200, y: 600 } });
 // }, 8000);
 
 document.getElementById('clear-canvas').addEventListener('click', () => {

@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
-import type { SbpmElementBoundaryToolOptions, SbpmElementToolsOptions } from '../common';
 import { defaultBoundaryOptions, defaultButtonOptions, defaultConnectOptions, defaultRemoveOptions } from './options';
+import type { SbpmElementBoundaryToolOptions, SbpmElementToolsOptions } from './types';
 
 export function createElementTools(toolsOptions: SbpmElementToolsOptions) {
   const tools = [];
