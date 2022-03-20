@@ -1,8 +1,7 @@
 import * as joint from 'jointjs';
 import { SbpmElementType } from '../common';
 import SbpmLink from '../link';
-import type { SbpmLinkAttributes, SbpmLinkOptions } from '../link';
-import SbpmProcessNetwork from '../process-network';
+import type { SbpmLinkAttributes } from '../link';
 import type { SbpmProcessModelTransitionOptions } from './types';
 
 export function createProcessNetworkTransitionOptions(options?: SbpmProcessModelTransitionOptions) {
@@ -13,7 +12,7 @@ export function createProcessNetworkTransitionOptions(options?: SbpmProcessModel
       type: SbpmElementType.PROCESS_NETWORK_TRANSITION,
       ...(options ?? {}),
     }
-  ) as SbpmLinkAttributes<SbpmLinkOptions<SbpmProcessNetwork, any>>;
+  ) as SbpmLinkAttributes<SbpmProcessModelTransitionOptions>;
 }
 
-export default class SbpmProcessNetworkTransition extends SbpmLink<SbpmLinkOptions<SbpmProcessNetwork, any>> {}
+export default class SbpmProcessNetworkTransition extends SbpmLink<SbpmProcessModelTransitionOptions> {}

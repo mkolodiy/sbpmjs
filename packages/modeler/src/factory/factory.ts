@@ -6,6 +6,8 @@ import SbpmProcessNetwork, { createProcessNetworkOptions } from '../process-netw
 import type { SbpmProcessNetworkOptions } from '../process-network';
 import SbpmProcessNetworkTransition, { createProcessNetworkTransitionOptions } from '../process-network-transition';
 import type { SbpmProcessModelTransitionOptions } from '../process-network-transition';
+import SbpmProcessModel, { createProcessModelOptions } from '../process-model';
+import type { SbpmProcessModelOptions } from '../process-model';
 import type { OptionsType } from './types';
 
 export function getDefaultLink(type: string) {
@@ -28,7 +30,15 @@ export default class SbpmFactory {
   }
 
   public addSbpmProcessNetworkTransition(options: SbpmProcessModelTransitionOptions) {
+    console.log(SbpmProcessNetwork === SbpmProcessModel);
+
+    console.log(options?.target instanceof SbpmProcessModel);
+
     return new SbpmProcessNetworkTransition(createProcessNetworkTransitionOptions(options)).addTo(this.#canvas.graph);
+  }
+
+  public addSbpmProcessModel(options: SbpmProcessModelOptions) {
+    return new SbpmProcessModel(createProcessModelOptions(options)).addTo(this.#canvas.graph);
   }
 
   public updateElement<T extends SbpmElement>(element: T, options: OptionsType<T>) {

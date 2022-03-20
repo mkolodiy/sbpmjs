@@ -9,6 +9,7 @@ export const SbpmElementType = {
   ORIGIN: `${SbpmShapeNamespace.COMMON}.Origin`,
   PROCESS_NETWORK: `${SbpmShapeNamespace.PND}.ProcessNetwork`,
   PROCESS_NETWORK_TRANSITION: `${SbpmShapeNamespace.PND}.ProcessNetworkTransition`,
+  PROCESS_MODEL: `${SbpmShapeNamespace.PND}.ProcessModel`,
 };
 
 export const SVG_PREFIX = 'data:image/svg+xml;utf8,';
