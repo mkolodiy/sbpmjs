@@ -16,7 +16,7 @@ const processModel = modeler.factory.addSbpmProcessModel({ id: 'process_model_1'
 
 modeler.factory.addSbpmProcessNetworkTransition({
   source: element1,
-  target: element3,
+  target: processModel,
 });
 
 // setTimeout(() => {

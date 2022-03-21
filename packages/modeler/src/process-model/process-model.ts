@@ -23,6 +23,8 @@ export function createProcessModelOptions(options: SbpmProcessModelOptions) {
 }
 
 export default class SbpmProcessModel extends SbpmElement<SbpmProcessModelOptions> {
+  type: typeof SbpmElementType.PROCESS_MODEL = SbpmElementType.PROCESS_MODEL;
+
   public update(options: SbpmProcessModelOptions) {
     super.update(options);
   }

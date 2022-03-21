@@ -23,6 +23,8 @@ export function createProcessNetworkOptions(options: SbpmProcessNetworkOptions) 
 }
 
 export default class SbpmProcessNetwork extends SbpmElement<SbpmProcessNetworkOptions> {
+  type: typeof SbpmElementType.PROCESS_NETWORK = SbpmElementType.PROCESS_NETWORK;
+
   public update(options: SbpmProcessNetworkOptions) {
     super.update(options);
   }

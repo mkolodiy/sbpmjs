@@ -30,10 +30,6 @@ export default class SbpmFactory {
   }
 
   public addSbpmProcessNetworkTransition(options: SbpmProcessModelTransitionOptions) {
-    console.log(SbpmProcessNetwork === SbpmProcessModel);
-
-    console.log(options?.target instanceof SbpmProcessModel);
-
     return new SbpmProcessNetworkTransition(createProcessNetworkTransitionOptions(options)).addTo(this.#canvas.graph);
   }
 
