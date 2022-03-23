@@ -1,7 +1,7 @@
 import * as joint from 'jointjs';
 import SbpmElementView from '../element-view';
 import SbpmLinkView from '../link-view';
-import { getDefaultLink } from '../factory';
+import { getDefaultLink, isValidConnection } from '../factory';
 
 export const paperOptions: joint.dia.Paper.Options = {
   width: '100%',
@@ -47,17 +47,7 @@ function validateConnection(
   cellViewT: joint.dia.CellView,
   _magnetT: any,
   _end: joint.dia.LinkEnd,
-  _linkView: joint.dia.LinkView
+  linkView: joint.dia.LinkView
 ) {
-  // Prevent link to link connections
-  if (cellViewS.model.isLink() || cellViewT.model.isLink()) {
-    return false;
-  }
-
-  // Prevent source to target connection
-  if (cellViewS.model.get('id') === cellViewT.model.get('id')) {
-    return false;
-  }
-
-  return true;
+  return isValidConnection(cellViewS, cellViewT, linkView);
 }
