@@ -56,4 +56,8 @@ export default class SbpmLink<T = GenericOptions> extends joint.dia.Link<SbpmLin
   deselect() {
     // Deliberately left empty
   }
+
+  resetVertices() {
+    this.vertices([]);
+  }
 }
