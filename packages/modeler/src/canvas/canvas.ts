@@ -8,6 +8,7 @@ import SbpmLink from '../link';
 import SbpmLinkView from '../link-view';
 import { paperOptions } from './options';
 import type { EventMap, SbpmModelerOptions } from './types';
+import { combineStrings } from './utils';
 
 export default class SbpmCanvas {
   #graph: joint.dia.Graph;
@@ -37,11 +38,11 @@ export default class SbpmCanvas {
   }
 
   private addDragging(container: HTMLElement) {
-    this.#paper.on('blank:pointerdown', (_evt: joint.dia.Event, x: number, y: number) => {
+    this.#paper.on(JointEvent.BLANK_POINTERDOWN, (_evt: joint.dia.Event, x: number, y: number) => {
       this.#dragStartPosition = { x, y };
     });
 
-    this.#paper.on('cell:pointerup blank:pointerup', () => {
+    this.#paper.on(combineStrings([JointEvent.CELL_POINTERUP, JointEvent.BLANK_POINTERUP]), () => {
       this.#dragStartPosition = undefined;
     });
 

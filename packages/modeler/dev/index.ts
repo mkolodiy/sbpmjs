@@ -13,14 +13,15 @@ const element1 = modeler.factory.addSbpmProcessNetwork({ id: 'test_1', label: 'P
 const element3 = modeler.factory.addSbpmProcessNetwork({ id: 'test_3', label: 'Test test test', position: { x: 400, y: 600 } });
 
 const processModel = modeler.factory.addSbpmProcessModel({ id: 'process_model_1', label: 'Process model', position: { x: 400, y: 400 } });
+const processModel2 = modeler.factory.addSbpmProcessModel({ id: 'process_model_2', label: 'Process model', position: { x: 600, y: 400 } });
 
-modeler.factory.addSbpmProcessNetworkTransition({
+const sbpmPnt = modeler.factory.addSbpmProcessNetworkTransition({
   source: element1,
   target: processModel,
 });
 
 // setTimeout(() => {
-//   element.update({ label: 'Updated 1', position: { x: 300, y: 300 } });
+//   sbpmPnt.update({ target: processModel2 });
 // }, 4000);
 
 // setTimeout(() => {

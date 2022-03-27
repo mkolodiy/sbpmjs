@@ -1,7 +1,7 @@
 import * as joint from 'jointjs';
 import type { GenericOptions } from '../common';
 import { attrs, markup } from './options';
-import type { SbpmLinkAttributes } from './types';
+import type { SbpmLinkAttributes, SbpmLinkOptions } from './types';
 
 export default class SbpmLink<T = GenericOptions> extends joint.dia.Link<SbpmLinkAttributes<T>> {
   defaults() {
@@ -33,16 +33,27 @@ export default class SbpmLink<T = GenericOptions> extends joint.dia.Link<SbpmLin
     return Reflect.has(this.target(), 'id');
   }
 
-  update(_options: any) {
-    // TODO
+  update(options: SbpmLinkOptions) {
+    const { id, source, target } = options;
+
+    if (id) {
+      this.prop('id', id);
+    }
+
+    if (source) {
+      this.source(source);
+    }
+
+    if (target) {
+      this.target(target);
+    }
   }
 
   select() {
-    // this.attr('image/cursor', 'move');
     this.toFront();
   }
 
   deselect() {
-    // this.attr('image/cursor', 'pointer');
+    // Deliberately left empty
   }
 }

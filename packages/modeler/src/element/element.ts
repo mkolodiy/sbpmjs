@@ -26,10 +26,11 @@ export default class SbpmElement<T = GenericOptions> extends joint.dia.Element<S
   }
 
   public update(options: SbpmElementOptions) {
-    const { label, position } = options;
+    const { id, label, position } = options;
 
     this.attr('label/text', label);
     this.prop('position', position);
+    this.prop('id', id);
   }
 
   public select() {

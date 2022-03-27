@@ -15,4 +15,10 @@ export function createProcessNetworkTransitionOptions(options?: SbpmProcessModel
   ) as SbpmLinkAttributes<SbpmProcessModelTransitionOptions>;
 }
 
-export default class SbpmProcessNetworkTransition extends SbpmLink<SbpmProcessModelTransitionOptions> {}
+export default class SbpmProcessNetworkTransition extends SbpmLink<SbpmProcessModelTransitionOptions> {
+  type: typeof SbpmElementType.PROCESS_NETWORK_TRANSITION = SbpmElementType.PROCESS_NETWORK_TRANSITION;
+
+  public update(options: SbpmProcessModelTransitionOptions) {
+    super.update(options);
+  }
+}

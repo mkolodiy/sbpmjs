@@ -41,19 +41,19 @@ export function validateLinkOptions(type: string, options: SbpmLinkOptions) {
 
   switch (type) {
     case SbpmElementType.PROCESS_NETWORK_TRANSITION:
-      validateProcessNetworkTransitionOptions(source, target);
+      validateSbpmProcessNetworkTransitionOptions(source, target);
       break;
     default:
       throw Error(`${type} is not supported`);
   }
 }
 
-function validateProcessNetworkTransitionOptions(source: unknown, target: unknown) {
+function validateSbpmProcessNetworkTransitionOptions(source: unknown, target: unknown) {
   if (!(source instanceof SbpmProcessNetwork)) {
-    throw Error('source has to be of type SbpmProcessNetwork');
+    throw Error('SbpmProcessNetworkTransition: Source has to be of type SbpmProcessNetwork');
   }
 
   if (!(target instanceof SbpmProcessModel)) {
-    throw Error('target has to be of type SbpmProcessModel');
+    throw Error('SbpmProcessNetworkTransition: target has to be of type SbpmProcessModel');
   }
 }
