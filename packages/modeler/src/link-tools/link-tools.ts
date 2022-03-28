@@ -15,8 +15,6 @@ export function createLinkTools(toolsOptions: SbpmLinkToolsOptions) {
     }
 
     if (toolOption.type === 'remove') {
-      console.log(createRemove(toolOption.options));
-
       tools.push(createRemove(toolOption.options));
     }
   }

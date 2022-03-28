@@ -31,7 +31,7 @@ export default class SbpmFactory {
     return new SbpmProcessModel(createProcessModelOptions(options)).addTo(this.#canvas.graph);
   }
 
-  public updateShape<T extends SbpmElement>(element: T, options: ElementOptionsType<T>) {
+  public updateElement<T extends SbpmElement>(element: T, options: ElementOptionsType<T>) {
     element.update(options);
   }
 
