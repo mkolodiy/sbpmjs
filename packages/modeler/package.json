@@ -14,7 +14,7 @@
   "scripts": {
     "start": "vite ./dev",
     "build": "tsdx build",
-    "test": "tsdx test",
+    "test": "vite ./test",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit"
