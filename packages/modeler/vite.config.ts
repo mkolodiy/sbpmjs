@@ -6,6 +6,7 @@ export default defineConfig({
       entry: 'src/index.ts',
       name: 'MyLib',
       formats: ['es'],
+      fileName: () => `index.js`,
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
