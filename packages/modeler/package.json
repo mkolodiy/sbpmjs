@@ -2,31 +2,33 @@
   "name": "@sbpmjs/modeler",
   "version": "0.1.0",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "scripts": {
     "start": "vite ./dev",
-    "build": "tsdx build",
+    "build": "vite build && tsc",
     "test": "vite ./test",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --list-different .",
+    "format:fix": "prettier --write .",
+    "prepare": "vite build && tsc",
     "size": "size-limit"
   },
-  "prettier": {
-    "printWidth": 160,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
   "author": "Maksym Kolodiy",
-  "module": "dist/modeler.esm.js",
   "size-limit": [
     {
       "path": "dist/modeler.cjs.production.min.js",
