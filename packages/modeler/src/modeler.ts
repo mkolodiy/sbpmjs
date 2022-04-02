@@ -7,6 +7,10 @@ export default class SbpmModeler {
   #factory: SbpmFactory;
 
   constructor(options: SbpmModelerOptions) {
+    if (!options?.container) {
+      throw new Error('SbpmModeler: container is not provided');
+    }
+
     this.#canvas = new SbpmCanvas(options);
     this.#factory = new SbpmFactory(this.#canvas);
   }
