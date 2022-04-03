@@ -1,7 +1,7 @@
 import * as joint from 'jointjs';
 import { FONT_FAMILY } from '../common';
 import type { SbpmElementToolsOptions } from '../element-tools';
-import { icon } from './icon';
+import { singleProcessIcon } from './icon';
 
 export const jointOptions: joint.shapes.standard.ImageAttributes = {
   size: {
@@ -13,7 +13,7 @@ export const jointOptions: joint.shapes.standard.ImageAttributes = {
       width: 130,
       height: 70,
       cursor: 'pointer',
-      xlinkHref: icon,
+      xlinkHref: singleProcessIcon,
     },
     label: {
       textWrap: {

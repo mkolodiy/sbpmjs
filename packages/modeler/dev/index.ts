@@ -10,7 +10,12 @@ const element1 = modeler.factory.addSbpmProcessNetwork({ id: 'test_1', label: 'P
 const element3 = modeler.factory.addSbpmProcessNetwork({ id: 'test_3', label: 'Test test test', position: { x: 400, y: 600 } });
 
 const processModel = modeler.factory.addSbpmProcessModel({ id: 'process_model_1', label: 'Process model', position: { x: 400, y: 400 } });
-const processModel2 = modeler.factory.addSbpmProcessModel({ id: 'process_model_2', label: 'Process model', position: { x: 600, y: 400 } });
+const processModel2 = modeler.factory.addSbpmProcessModel({
+  id: 'process_model_2',
+  label: 'Process model',
+  position: { x: 600, y: 400 },
+  processType: 'multi',
+});
 
 const sbpmPnt = modeler.factory.addSbpmProcessNetworkTransition({
   source: element1,
@@ -18,7 +23,11 @@ const sbpmPnt = modeler.factory.addSbpmProcessNetworkTransition({
 });
 
 // setTimeout(() => {
-//   sbpmPnt.update({ target: processModel2 });
+//   processModel2.update({ processType: 'single' });
+// }, 2000);
+
+// setTimeout(() => {
+//   processModel2.update({ processType: 'multi' });
 // }, 4000);
 
 // setTimeout(() => {
