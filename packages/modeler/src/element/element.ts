@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import type { GenericOptions } from '../common';
+import type { GenericOptions, GetUpdateOptions } from '../common';
 import { attrs, markup } from './options';
 import type { SbpmElementAttributes, SbpmElementOptions } from './types';
 
@@ -25,12 +25,16 @@ export default class SbpmElement<T = GenericOptions> extends joint.dia.Element<S
     return this.attributes.toolsOptions!;
   }
 
-  public update(options: SbpmElementOptions) {
-    const { id, label, position } = options;
+  public update(options: GetUpdateOptions<SbpmElementOptions>) {
+    const { label, position } = options;
 
-    this.attr('label/text', label);
-    this.prop('position', position);
-    this.prop('id', id);
+    if (label) {
+      this.attr('label/text', label);
+    }
+
+    if (position) {
+      this.prop('position', position);
+    }
   }
 
   public select() {

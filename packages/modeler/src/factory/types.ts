@@ -1,3 +1,4 @@
+import { GetUpdateOptions } from '../common';
 import type { SbpmElementOptions } from '../element';
 import type { SbpmLinkOptions } from '../link';
 import SbpmProcessNetwork from '../process-network';
@@ -7,10 +8,14 @@ import type { SbpmProcessModelOptions } from '../process-model';
 import SbpmProcessNetworkTransition from '../process-network-transition';
 import type { SbpmProcessModelTransitionOptions } from '../process-network-transition';
 
-export type ElementOptionsType<T> = T extends SbpmProcessNetwork
+type GetElementOptionsType<T> = T extends SbpmProcessNetwork
   ? SbpmProcessNetworkOptions
   : T extends SbpmProcessModel
   ? SbpmProcessModelOptions
   : SbpmElementOptions;
 
-export type LinkOptionsType<T> = T extends SbpmProcessNetworkTransition ? SbpmProcessModelTransitionOptions : SbpmLinkOptions;
+export type ElementOptionsType<T> = GetUpdateOptions<GetElementOptionsType<T>>;
+
+type GetLinkOptionsType<T> = T extends SbpmProcessNetworkTransition ? SbpmProcessModelTransitionOptions : SbpmLinkOptions;
+
+export type LinkOptionsType<T> = GetUpdateOptions<GetLinkOptionsType<T>>;

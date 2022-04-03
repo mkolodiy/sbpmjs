@@ -34,11 +34,7 @@ export default class SbpmLink<T = GenericOptions> extends joint.dia.Link<SbpmLin
   }
 
   update(options: SbpmLinkOptions) {
-    const { id, source, target } = options;
-
-    if (id) {
-      this.prop('id', id);
-    }
+    const { source, target } = options;
 
     if (source) {
       this.source(source);

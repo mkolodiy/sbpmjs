@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import { SbpmElementType } from '../common';
+import { GetUpdateOptions, SbpmElementType } from '../common';
 import SbpmElement from '../element';
 import type { SbpmElementAttributes } from '../element';
 import { jointOptions, toolsOptions } from './options';
@@ -25,7 +25,7 @@ export function createProcessModelOptions(options: SbpmProcessModelOptions) {
 export default class SbpmProcessModel extends SbpmElement<SbpmProcessModelOptions> {
   type: typeof SbpmElementType.PROCESS_MODEL = SbpmElementType.PROCESS_MODEL;
 
-  public update(options: SbpmProcessModelOptions) {
+  public update(options: GetUpdateOptions<SbpmProcessModelOptions>) {
     super.update(options);
   }
 }

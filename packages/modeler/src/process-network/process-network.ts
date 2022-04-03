@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import { SbpmElementType } from '../common';
+import { GetUpdateOptions, SbpmElementType } from '../common';
 import SbpmElement from '../element';
 import type { SbpmElementAttributes } from '../element';
 import { jointOptions, toolsOptions } from './options';
@@ -25,7 +25,7 @@ export function createProcessNetworkOptions(options: SbpmProcessNetworkOptions) 
 export default class SbpmProcessNetwork extends SbpmElement<SbpmProcessNetworkOptions> {
   type: typeof SbpmElementType.PROCESS_NETWORK = SbpmElementType.PROCESS_NETWORK;
 
-  public update(options: SbpmProcessNetworkOptions) {
+  public update(options: GetUpdateOptions<SbpmProcessNetworkOptions>) {
     super.update(options);
   }
 }

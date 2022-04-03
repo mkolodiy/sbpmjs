@@ -1,5 +1,5 @@
 export interface GenericOptions {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export type SbpmShapeAttributes<InitialOptions, JointOptions, ToolsOptions> = {
@@ -7,3 +7,5 @@ export type SbpmShapeAttributes<InitialOptions, JointOptions, ToolsOptions> = {
   jointOptions?: JointOptions;
   toolsOptions?: ToolsOptions;
 };
+
+export type GetUpdateOptions<T> = Partial<Omit<T, 'id'>>;
