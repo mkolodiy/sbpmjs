@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import * as joint from 'jointjs';
-import { divide } from 'lodash';
 import SbpmModeler from '../src';
 // import SbpmModeler from '../dist/index';
 
@@ -472,6 +471,89 @@ describe('@sbpm/modeler', () => {
       expect(updatedFourthLink.prop('id')).to.eq(processNetworkTransition04.prop('id'));
       expect(updatedFourthLink.source().id).to.eq(processNetwork01.prop('id'));
       expect(updatedFourthLink.target().id).to.eq(processModel01.prop('id'));
+    });
+  });
+
+  describe('shapes', () => {
+    beforeEach(() => {
+      createContainer();
+    });
+
+    afterEach(() => {
+      removeContainer();
+    });
+
+    it('should have update method on SbpmProcessNetwork element', () => {
+      const { canvas, factory } = new SbpmModeler({ container });
+
+      const processNetwork01 = factory.addSbpmProcessNetwork({ id: 'process_network_1', label: 'process_network_1', position: { x: 100, y: 100 } });
+
+      const firstEl = canvas.getElements()[0];
+
+      expect(firstEl.prop('id')).to.eq(processNetwork01.prop('id'));
+      expect(firstEl.attr('label/text')).to.eq(processNetwork01.attr('label/text'));
+      expect(firstEl.prop('position').x).to.eq(processNetwork01.prop('position').x);
+      expect(firstEl.prop('position').y).to.eq(processNetwork01.prop('position').y);
+
+      processNetwork01.update({ label: 'updated_process_network_1', position: { x: 200, y: 200 } });
+
+      const updatedFirstEl = canvas.getElements()[0];
+
+      expect(updatedFirstEl.prop('id')).to.eq(processNetwork01.prop('id'));
+      expect(updatedFirstEl.attr('label/text')).to.eq('updated_process_network_1');
+      expect(updatedFirstEl.prop('position').x).to.eq(200);
+      expect(updatedFirstEl.prop('position').y).to.eq(200);
+    });
+
+    it('should have update method on SbpmProcessModel element', () => {
+      const { canvas, factory } = new SbpmModeler({ container });
+
+      const processModel01 = factory.addSbpmProcessModel({ id: 'process_model_1', label: 'process_model_1', position: { x: 100, y: 100 } });
+
+      const firstEl = canvas.getElements()[0];
+
+      expect(firstEl.prop('id')).to.eq(processModel01.prop('id'));
+      expect(firstEl.attr('label/text')).to.eq(processModel01.attr('label/text'));
+      expect(firstEl.prop('position').x).to.eq(processModel01.prop('position').x);
+      expect(firstEl.prop('position').y).to.eq(processModel01.prop('position').y);
+
+      processModel01.update({ label: 'updated_process_model_1', position: { x: 200, y: 200 } });
+
+      const updatedFirstEl = canvas.getElements()[0];
+
+      expect(updatedFirstEl.prop('id')).to.eq(processModel01.prop('id'));
+      expect(updatedFirstEl.attr('label/text')).to.eq('updated_process_model_1');
+      expect(updatedFirstEl.prop('position').x).to.eq(200);
+      expect(updatedFirstEl.prop('position').y).to.eq(200);
+    });
+
+    it('should have update method on SbpmProcessNetworkTransition element', () => {
+      const { canvas, factory } = new SbpmModeler({ container });
+
+      const processNetwork01 = factory.addSbpmProcessNetwork({ id: 'process_network_1', label: 'process_network_1', position: { x: 100, y: 100 } });
+      const processModel01 = factory.addSbpmProcessModel({ id: 'process_model_1', label: 'process_model_1', position: { x: 200, y: 200 } });
+      const processNetwork02 = factory.addSbpmProcessNetwork({ id: 'process_network_2', label: 'process_network_2', position: { x: 300, y: 300 } });
+      const processModel02 = factory.addSbpmProcessModel({ id: 'process_model_2', label: 'process_model_2', position: { x: 400, y: 400 } });
+
+      const processNetworkTransition01 = factory.addSbpmProcessNetworkTransition({
+        id: 'process_network_transition_1',
+        source: processNetwork01,
+        target: processModel01,
+      });
+
+      const firstLink = canvas.getLinks()[0];
+
+      expect(firstLink.prop('id')).to.eq(processNetworkTransition01.prop('id'));
+      expect(firstLink.source().id).to.eq(processNetwork01.prop('id'));
+      expect(firstLink.target().id).to.eq(processModel01.prop('id'));
+
+      processNetworkTransition01.update({ source: processNetwork02, target: processModel02 });
+
+      const updatedFirstLink = canvas.getLinks()[0];
+
+      expect(updatedFirstLink.prop('id')).to.eq(processNetworkTransition01.prop('id'));
+      expect(updatedFirstLink.source().id).to.eq(processNetwork02.prop('id'));
+      expect(updatedFirstLink.target().id).to.eq(processModel02.prop('id'));
     });
   });
 });
