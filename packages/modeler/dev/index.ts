@@ -34,13 +34,15 @@ const sbpmPnt = modeler.factory.addSbpmProcessNetworkTransition({
 //   modeler.factory.updateElement(element, { label: 'Updated 2' }, { position: { x: 200, y: 600 } });
 // }, 8000);
 
-// document.getElementById('clear-canvas').addEventListener('click', () => {
-//   modeler.canvas.clear();
-// });
+document.getElementById('clear-canvas').addEventListener('click', () => {
+  modeler.canvas.clear();
+});
 
-// document.getElementById('reset-canvas').addEventListener('click', () => {
-//   modeler.canvas.reset();
-// });
+document.getElementById('reset-canvas').addEventListener('click', () => {
+  modeler.canvas.reset();
+});
 
 // console.log(modeler.canvas.getElements());
 // console.log(modeler.canvas.getLinks());
+
+console.log(modeler.canvas.paper.findViewsInArea({ x: 99, y: 99, height: 200, width: 200 }));

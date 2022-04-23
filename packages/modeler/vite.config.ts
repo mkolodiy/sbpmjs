@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite';
+import packageJson from './package.json';
 
 export default defineConfig({
   build: {
     lib: {
       entry: 'src/index.ts',
-      name: 'MyLib',
+      name: packageJson.name,
       formats: ['es'],
       fileName: () => `index.js`,
     },

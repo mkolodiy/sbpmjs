@@ -1,6 +1,11 @@
 {
   "name": "@sbpmjs/modeler",
-  "version": "0.1.0",
+  "version": "1.0.2",
+  "description": "A library for working with SBPM constructs.",
+  "keywords": [
+    "sbpm",
+    "modeler"
+  ],
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -12,7 +17,11 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "src",
+    "LICENSE",
+    "package.json",
+    "README.md"
   ],
   "engines": {
     "node": ">=12"
@@ -31,11 +40,7 @@
   "author": "Maksym Kolodiy",
   "size-limit": [
     {
-      "path": "dist/modeler.cjs.production.min.js",
-      "limit": "200 KB"
-    },
-    {
-      "path": "dist/modeler.esm.js",
+      "path": "./dist/index.js",
       "limit": "200 KB"
     }
   ],
