@@ -2,6 +2,12 @@ import SbpmModeler from '../src';
 
 const modeler = new SbpmModeler({
   container: document.getElementById('container'),
+  onSelectElement: (element) => {
+    console.log(element);
+  },
+  onSelectLink: (link) => {
+    console.log(link);
+  },
 });
 
 const element1 = modeler.factory.addSbpmProcessNetwork({ id: 'test_1', label: 'Process network', position: { x: 100, y: 100 } });

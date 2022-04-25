@@ -1,6 +1,6 @@
-import type { SbpmModelerOptions } from './canvas';
-import SbpmCanvas from './canvas';
-import SbpmFactory from './factory';
+import SbpmCanvas from '../canvas';
+import SbpmFactory from '../factory';
+import type { SbpmModelerOptions } from './types';
 
 export default class SbpmModeler {
   #canvas: SbpmCanvas;

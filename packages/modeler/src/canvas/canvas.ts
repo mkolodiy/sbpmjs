@@ -7,7 +7,7 @@ import SbpmElementView from '../element-view';
 import SbpmLink from '../link';
 import SbpmLinkView from '../link-view';
 import { paperOptions } from './options';
-import type { EventMap, SbpmModelerOptions } from './types';
+import type { EventMap, SbpmCanvasOptions } from './types';
 import { combineStrings } from './utils';
 
 export default class SbpmCanvas {
@@ -15,8 +15,8 @@ export default class SbpmCanvas {
   #paper: joint.dia.Paper;
   #dragStartPosition: joint.dia.Point | undefined;
 
-  constructor(options: SbpmModelerOptions) {
-    const { container } = options;
+  constructor(options: SbpmCanvasOptions) {
+    const { container, onSelectElement, onSelectLink } = options;
 
     this.#graph = new joint.dia.Graph();
     this.#paper = new joint.dia.Paper({
@@ -29,8 +29,8 @@ export default class SbpmCanvas {
     this.addOrigin();
     this.addDragging(container);
     this.registerPaperEvents();
-    this.registerElementEvents();
-    this.registerLinkEvents();
+    this.registerElementEvents({ onSelectElement });
+    this.registerLinkEvents({ onSelectLink });
   }
 
   private addOrigin() {
@@ -62,17 +62,19 @@ export default class SbpmCanvas {
     );
   }
 
-  private registerElementEvents() {
+  private registerElementEvents({ onSelectElement }: Pick<SbpmCanvasOptions, 'onSelectElement'>) {
     this.#paper.on<keyof EventMap>(JointEvent.ELEMENT_POINTERDOWN, (sbpmElementView: SbpmElementView) => {
       this.deselect();
       sbpmElementView.select();
+      onSelectElement?.(sbpmElementView.element);
     });
   }
 
-  private registerLinkEvents() {
+  private registerLinkEvents({ onSelectLink }: Pick<SbpmCanvasOptions, 'onSelectLink'>) {
     this.#paper.on<keyof EventMap>(JointEvent.LINK_POINTERDOWN, (linkView: SbpmLinkView) => {
       this.deselect();
       linkView.select();
+      onSelectLink?.(linkView.link);
     });
   }
 
