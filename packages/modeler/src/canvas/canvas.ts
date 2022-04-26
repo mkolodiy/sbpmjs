@@ -7,16 +7,17 @@ import SbpmElementView from '../element-view';
 import SbpmLink from '../link';
 import SbpmLinkView from '../link-view';
 import { paperOptions } from './options';
-import type { EventMap, SbpmCanvasOptions } from './types';
+import type { EventMap } from './types';
 import { combineStrings } from './utils';
+import type { SbpmModelerOptions } from '../modeler';
 
 export default class SbpmCanvas {
   #graph: joint.dia.Graph;
   #paper: joint.dia.Paper;
   #dragStartPosition: joint.dia.Point | undefined;
 
-  constructor(options: SbpmCanvasOptions) {
-    const { container, onSelectElement, onSelectLink } = options;
+  constructor(options: SbpmModelerOptions) {
+    const { container } = options;
 
     this.#graph = new joint.dia.Graph();
     this.#paper = new joint.dia.Paper({
@@ -27,17 +28,17 @@ export default class SbpmCanvas {
     });
 
     this.addOrigin();
-    this.addDragging(container);
+    this.addDragging(options);
     this.registerPaperEvents();
-    this.registerElementEvents({ onSelectElement });
-    this.registerLinkEvents({ onSelectLink });
+    this.registerElementEvents(options);
+    this.registerLinkEvents(options);
   }
 
   private addOrigin() {
     this.#graph.addCell(new SbpmCanvasOrigin());
   }
 
-  private addDragging(container: HTMLElement) {
+  private addDragging({ container }: SbpmModelerOptions) {
     this.#paper.on(JointEvent.BLANK_POINTERDOWN, (_evt: joint.dia.Event, x: number, y: number) => {
       this.#dragStartPosition = { x, y };
     });
@@ -62,7 +63,7 @@ export default class SbpmCanvas {
     );
   }
 
-  private registerElementEvents({ onSelectElement }: Pick<SbpmCanvasOptions, 'onSelectElement'>) {
+  private registerElementEvents({ onSelectElement }: SbpmModelerOptions) {
     this.#paper.on<keyof EventMap>(JointEvent.ELEMENT_POINTERDOWN, (sbpmElementView: SbpmElementView) => {
       this.deselect();
       sbpmElementView.select();
@@ -70,7 +71,7 @@ export default class SbpmCanvas {
     });
   }
 
-  private registerLinkEvents({ onSelectLink }: Pick<SbpmCanvasOptions, 'onSelectLink'>) {
+  private registerLinkEvents({ onSelectLink }: SbpmModelerOptions) {
     this.#paper.on<keyof EventMap>(JointEvent.LINK_POINTERDOWN, (linkView: SbpmLinkView) => {
       this.deselect();
       linkView.select();

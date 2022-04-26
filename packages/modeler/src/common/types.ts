@@ -9,7 +9,3 @@ export type SbpmShapeAttributes<InitialOptions, JointOptions, ToolsOptions> = {
 };
 
 export type GetUpdateOptions<T> = Partial<Omit<T, 'id'>>;
-
-export type SbpmCommonOptions = {
-  container: HTMLElement;
-};

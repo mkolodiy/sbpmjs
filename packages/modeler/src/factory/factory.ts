@@ -10,16 +10,19 @@ import SbpmProcessModel, { createProcessModelOptions } from '../process-model';
 import type { SbpmProcessModelOptions } from '../process-model';
 import type { ElementOptionsType, LinkOptionsType } from './types';
 import { validateLinkOptions } from './helper';
+import type { SbpmModelerOptions } from '../modeler';
 
 export default class SbpmFactory {
   #canvas: SbpmCanvas;
+  #options: SbpmModelerOptions;
 
-  constructor(canvas: SbpmCanvas) {
+  constructor(canvas: SbpmCanvas, options: SbpmModelerOptions) {
     this.#canvas = canvas;
+    this.#options = options;
   }
 
   public addSbpmProcessNetwork(options: SbpmProcessNetworkOptions) {
-    return new SbpmProcessNetwork(createProcessNetworkOptions(options)).addTo(this.#canvas.graph);
+    return new SbpmProcessNetwork(createProcessNetworkOptions(options, this.#options)).addTo(this.#canvas.graph);
   }
 
   public addSbpmProcessNetworkTransition(options: SbpmProcessModelTransitionOptions) {
@@ -28,7 +31,7 @@ export default class SbpmFactory {
   }
 
   public addSbpmProcessModel(options: SbpmProcessModelOptions) {
-    return new SbpmProcessModel(createProcessModelOptions(options)).addTo(this.#canvas.graph);
+    return new SbpmProcessModel(createProcessModelOptions(options, this.#options)).addTo(this.#canvas.graph);
   }
 
   public updateElement<T extends SbpmElement>(element: T, options: ElementOptionsType<T>) {

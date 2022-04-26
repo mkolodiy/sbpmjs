@@ -12,7 +12,7 @@ export default class SbpmModeler {
     }
 
     this.#canvas = new SbpmCanvas(options);
-    this.#factory = new SbpmFactory(this.#canvas);
+    this.#factory = new SbpmFactory(this.#canvas, options);
   }
 
   public get canvas() {
