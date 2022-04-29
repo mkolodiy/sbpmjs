@@ -10,7 +10,7 @@ export function createLinkTools(toolsOptions: SbpmLinkToolsOptions) {
   const segments = new joint.linkTools.Segments();
 
   for (const toolOption of toolsOptions) {
-    if (toolOption.type === 'button') {
+    if (toolOption.type === 'button' || toolOption.type === 'reset-vertices') {
       tools.push(createButton(toolOption.options));
     }
 

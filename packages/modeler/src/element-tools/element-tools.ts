@@ -9,7 +9,7 @@ export function createElementTools(toolsOptions: SbpmElementToolsOptions) {
   tools.push(createBoundary(boundaryToolOptions.options));
 
   for (const toolOptions of toolsOptions) {
-    if (toolOptions.type === 'button') {
+    if (toolOptions.type === 'button' || toolOptions.type === 'open') {
       tools.push(createButton(toolOptions.options));
     }
 

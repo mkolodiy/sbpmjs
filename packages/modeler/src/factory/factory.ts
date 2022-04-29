@@ -27,7 +27,7 @@ export default class SbpmFactory {
 
   public addSbpmProcessNetworkTransition(options: SbpmProcessModelTransitionOptions) {
     validateLinkOptions(SbpmElementType.PROCESS_NETWORK_TRANSITION, options);
-    return new SbpmProcessNetworkTransition(createProcessNetworkTransitionOptions(options)).addTo(this.#canvas.graph);
+    return new SbpmProcessNetworkTransition(createProcessNetworkTransitionOptions(options, this.#options)).addTo(this.#canvas.graph);
   }
 
   public addSbpmProcessModel(options: SbpmProcessModelOptions) {

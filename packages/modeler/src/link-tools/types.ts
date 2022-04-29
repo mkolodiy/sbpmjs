@@ -4,4 +4,6 @@ export type SbpmLinkButtonToolOptions = { type: 'button'; options: joint.linkToo
 
 export type SbpmLinkRemoveToolOptions = { type: 'remove'; options: joint.linkTools.Button.Options };
 
-export type SbpmLinkToolsOptions = (SbpmLinkButtonToolOptions | SbpmLinkRemoveToolOptions)[];
+export type SbpmLinkResetVerticesToolOptions = { type: 'reset-vertices'; options: joint.linkTools.Button.Options };
+
+export type SbpmLinkToolsOptions = (SbpmLinkButtonToolOptions | SbpmLinkRemoveToolOptions | SbpmLinkResetVerticesToolOptions)[];
