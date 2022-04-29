@@ -11,6 +11,9 @@ const modeler = new SbpmModeler({
   onDeleteElement: (element) => {
     console.log(element);
   },
+  onDeleteLink: (link) => {
+    console.log(link);
+  },
 });
 
 const element1 = modeler.factory.addSbpmProcessNetwork({ id: 'test_1', label: 'Process network', position: { x: 100, y: 100 } });

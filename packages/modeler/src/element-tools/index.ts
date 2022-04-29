@@ -1,4 +1,5 @@
 export { createElementTools } from './element-tools';
+export { addActionsToToolsOptions } from './helpers';
 export type {
   SbpmElementBoundaryToolOptions,
   SbpmElementButtonToolOptions,

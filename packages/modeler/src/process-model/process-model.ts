@@ -6,26 +6,12 @@ import { jointOptions, toolsOptions } from './options';
 import type { SbpmProcessModelOptions } from './types';
 import { multiProcessIcon, singleProcessIcon } from './icon';
 import type { SbpmModelerOptions } from '../modeler';
-import type { SbpmElementToolsOptions } from '../element-tools';
-import SbpmElementView from '../element-view';
+import { addActionsToToolsOptions } from '../element-tools';
 
 export function createProcessModelOptions(options: SbpmProcessModelOptions, modelerOptions: SbpmModelerOptions) {
   const { label, processType = 'single', ...restOptions } = options;
-  const { onDeleteElement } = modelerOptions;
 
   const icon = getIcon(processType);
-
-  const additionToolsOptions: SbpmElementToolsOptions = [
-    {
-      type: 'remove',
-      options: {
-        action: (_evt: joint.dia.Event, elementView: joint.dia.ElementView, tool: joint.dia.ToolView) => {
-          onDeleteElement?.((elementView as SbpmElementView).element);
-          (elementView as SbpmElementView).element.remove({ ui: true, tool: tool.cid });
-        },
-      },
-    },
-  ];
 
   return joint.util.merge(jointOptions, {
     attrs: {
@@ -37,8 +23,8 @@ export function createProcessModelOptions(options: SbpmProcessModelOptions, mode
       },
     },
     initialOptions: joint.util.cloneDeep(options),
-    jointOptions,
-    toolsOptions: joint.util.merge(toolsOptions, additionToolsOptions),
+    jointOptions: joint.util.cloneDeep(jointOptions),
+    toolsOptions: addActionsToToolsOptions(toolsOptions, modelerOptions),
     type: SbpmElementType.PROCESS_MODEL,
     ...restOptions,
   }) as SbpmElementAttributes<SbpmProcessModelOptions>;

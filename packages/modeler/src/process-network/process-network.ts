@@ -5,24 +5,10 @@ import type { SbpmElementAttributes } from '../element';
 import { jointOptions, toolsOptions } from './options';
 import type { SbpmProcessNetworkOptions } from './types';
 import type { SbpmModelerOptions } from '../modeler';
-import SbpmElementView from '../element-view';
-import type { SbpmElementToolsOptions } from '../element-tools';
+import { addActionsToToolsOptions } from '../element-tools';
 
 export function createProcessNetworkOptions(options: SbpmProcessNetworkOptions, modelerOptions: SbpmModelerOptions) {
   const { label, ...restOptions } = options;
-  const { onDeleteElement } = modelerOptions;
-
-  const additionToolsOptions: SbpmElementToolsOptions = [
-    {
-      type: 'remove',
-      options: {
-        action: (_evt: joint.dia.Event, elementView: joint.dia.ElementView, tool: joint.dia.ToolView) => {
-          onDeleteElement?.((elementView as SbpmElementView).element);
-          (elementView as SbpmElementView).element.remove({ ui: true, tool: tool.cid });
-        },
-      },
-    },
-  ];
 
   return joint.util.merge(jointOptions, {
     attrs: {
@@ -32,7 +18,7 @@ export function createProcessNetworkOptions(options: SbpmProcessNetworkOptions, 
     },
     initialOptions: joint.util.cloneDeep(options),
     jointOptions: joint.util.cloneDeep(jointOptions),
-    toolsOptions: joint.util.merge(toolsOptions, additionToolsOptions),
+    toolsOptions: addActionsToToolsOptions(toolsOptions, modelerOptions),
     type: SbpmElementType.PROCESS_NETWORK,
     ...restOptions,
   }) as SbpmElementAttributes<SbpmProcessNetworkOptions>;

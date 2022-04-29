@@ -10,10 +10,13 @@ export type SbpmElementControlToolOptions = { type: 'control'; options: joint.el
 
 export type SbpmElementRemoveToolOptions = { type: 'remove'; options: joint.elementTools.Button.Options };
 
+export type SbpmElementOpenToolOptions = { type: 'open'; options: joint.elementTools.Button.Options };
+
 export type SbpmElementToolsOptions = (
   | SbpmElementBoundaryToolOptions
   | SbpmElementButtonToolOptions
   | SbpmElementConnectToolOptions
   | SbpmElementControlToolOptions
   | SbpmElementRemoveToolOptions
+  | SbpmElementOpenToolOptions
 )[];
