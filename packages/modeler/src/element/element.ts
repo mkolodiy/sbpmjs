@@ -1,5 +1,6 @@
 import * as joint from 'jointjs';
 import type { GenericOptions, GetUpdateOptions } from '../common';
+import type { SbpmElementToolsOptions } from '../element-tools';
 import { attrs, markup } from './options';
 import type { SbpmElementAttributes, SbpmElementOptions } from './types';
 
@@ -14,15 +15,15 @@ export default class SbpmElement<T = GenericOptions> extends joint.dia.Element<S
   markup = markup;
 
   public get initialOptions() {
-    return this.attributes.initialOptions;
+    return this.attributes.initialOptions as T;
   }
 
   public get jointOptions() {
-    return this.attributes.jointOptions;
+    return this.attributes.jointOptions as joint.shapes.standard.ImageAttributes;
   }
 
   public get toolsOptions() {
-    return this.attributes.toolsOptions;
+    return this.attributes.toolsOptions as SbpmElementToolsOptions;
   }
 
   public update(options: GetUpdateOptions<SbpmElementOptions>) {

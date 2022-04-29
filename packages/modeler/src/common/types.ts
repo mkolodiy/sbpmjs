@@ -3,9 +3,9 @@ export interface GenericOptions {
 }
 
 export type SbpmShapeAttributes<InitialOptions, JointOptions, ToolsOptions> = {
-  initialOptions: InitialOptions | undefined;
-  jointOptions: JointOptions | undefined;
-  toolsOptions: ToolsOptions | undefined;
+  initialOptions: InitialOptions;
+  jointOptions: JointOptions;
+  toolsOptions: ToolsOptions;
 };
 
 export type GetUpdateOptions<T> = Partial<Omit<T, 'id'>>;

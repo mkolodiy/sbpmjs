@@ -1,5 +1,6 @@
 import * as joint from 'jointjs';
 import type { GenericOptions } from '../common';
+import { SbpmLinkToolsOptions } from '../link-tools';
 import { attrs, markup } from './options';
 import type { SbpmLinkAttributes, SbpmLinkOptions } from './types';
 
@@ -14,15 +15,15 @@ export default class SbpmLink<T = GenericOptions> extends joint.dia.Link<SbpmLin
   markup = markup;
 
   get initialOptions() {
-    return this.attributes.initialOptions;
+    return this.attributes.initialOptions as T;
   }
 
   get jointOptions() {
-    return this.attributes.jointOptions;
+    return this.attributes.jointOptions as joint.shapes.standard.LinkAttributes;
   }
 
   get toolsOptions() {
-    return this.attributes.toolsOptions;
+    return this.attributes.toolsOptions as SbpmLinkToolsOptions;
   }
 
   hasSource() {
