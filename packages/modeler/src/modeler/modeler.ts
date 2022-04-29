@@ -8,7 +8,7 @@ export default class SbpmModeler {
 
   constructor(options: SbpmModelerOptions) {
     if (!options?.container) {
-      throw new Error('SbpmModeler: container is not provided');
+      throw new Error('Container is not provided');
     }
 
     this.#canvas = new SbpmCanvas(options);

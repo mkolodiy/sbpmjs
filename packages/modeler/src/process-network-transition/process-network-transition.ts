@@ -12,6 +12,7 @@ export function createProcessNetworkTransitionOptions(options?: SbpmProcessModel
     {},
     {
       initialOptions: joint.util.cloneDeep(options),
+      jointOptions: undefined,
       toolsOptions: addActionsToToolsOptions(toolsOptions, modelerOptions || ({} as SbpmModelerOptions)),
       type: SbpmElementType.PROCESS_NETWORK_TRANSITION,
       ...(options ?? {}),

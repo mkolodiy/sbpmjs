@@ -14,15 +14,15 @@ export default class SbpmElement<T = GenericOptions> extends joint.dia.Element<S
   markup = markup;
 
   public get initialOptions() {
-    return this.attributes.initialOptions!;
+    return this.attributes.initialOptions;
   }
 
   public get jointOptions() {
-    return this.attributes.jointOptions!;
+    return this.attributes.jointOptions;
   }
 
   public get toolsOptions() {
-    return this.attributes.toolsOptions!;
+    return this.attributes.toolsOptions;
   }
 
   public update(options: GetUpdateOptions<SbpmElementOptions>) {

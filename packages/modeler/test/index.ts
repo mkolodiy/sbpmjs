@@ -36,9 +36,9 @@ describe('@sbpm/modeler', () => {
     it('should throw error if container is undefined or null', () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
-      expect(() => new SbpmModeler()).to.throw('SbpmModeler: container is not provided');
-      expect(() => new SbpmModeler({ container: document.getElementById('invalid-container') })).to.throw('SbpmModeler: container is not provided');
-      expect(() => new SbpmModeler({ container: document.querySelector('#invalid-container') })).to.throw('SbpmModeler: container is not provided');
+      expect(() => new SbpmModeler()).to.throw('Container is not provided');
+      expect(() => new SbpmModeler({ container: document.getElementById('invalid-container') })).to.throw('Container is not provided');
+      expect(() => new SbpmModeler({ container: document.querySelector('#invalid-container') })).to.throw('Container is not provided');
     });
   });
 

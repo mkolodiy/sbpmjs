@@ -27,11 +27,11 @@ export const paperOptions: joint.dia.Paper.Options = {
   validateConnection,
 };
 
-function elementView(_element: joint.dia.Element) {
+function elementView() {
   return SbpmElementView;
 }
 
-function linkView(_link: joint.dia.Link) {
+function linkView() {
   return SbpmLinkView;
 }
 
@@ -43,9 +43,9 @@ function defaultLink(cellView: joint.dia.CellView) {
 
 function validateConnection(
   cellViewS: joint.dia.CellView,
-  _magnetS: any,
+  _magnetS: unknown,
   cellViewT: joint.dia.CellView,
-  _magnetT: any,
+  _magnetT: unknown,
   _end: joint.dia.LinkEnd,
   linkView: joint.dia.LinkView
 ) {

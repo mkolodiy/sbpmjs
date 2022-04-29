@@ -14,15 +14,15 @@ export default class SbpmLink<T = GenericOptions> extends joint.dia.Link<SbpmLin
   markup = markup;
 
   get initialOptions() {
-    return this.attributes.initialOptions!;
+    return this.attributes.initialOptions;
   }
 
   get jointOptions() {
-    return this.attributes.jointOptions!;
+    return this.attributes.jointOptions;
   }
 
   get toolsOptions() {
-    return this.attributes.toolsOptions!;
+    return this.attributes.toolsOptions;
   }
 
   hasSource() {
