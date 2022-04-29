@@ -15,3 +15,7 @@ export const callMadeIcon = createIcon(
 export const autoRenewIcon = createIcon(
   '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/></svg>'
 );
+
+export const openInNew = createIcon(
+  '<svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M21 12v7q0 .825-.587 1.413Q19.825 21 19 21H5q-.825 0-1.413-.587Q3 19.825 3 19V5q0-.825.587-1.413Q4.175 3 5 3h7v2H5v14h14v-7ZM9.7 15.7l-1.4-1.4L17.6 5H14V3h7v7h-2V6.4Z"/></svg>'
+);

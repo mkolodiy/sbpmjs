@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import { FONT_FAMILY } from '../common';
+import { FONT_FAMILY, openInNew } from '../common';
 import type { SbpmElementToolsOptions } from '../element-tools';
 import { singleProcessIcon } from './icon';
 
@@ -31,6 +31,28 @@ export const toolsOptions: SbpmElementToolsOptions = [
     type: 'remove',
     options: {
       x: 140,
+    },
+  },
+  {
+    type: 'open',
+    options: {
+      x: 164,
+      markup: [
+        {
+          tagName: 'rect',
+        },
+        {
+          tagName: 'image',
+          attributes: {
+            'xlink:href': openInNew,
+            event: 'link:removeVertices',
+          },
+        },
+        {
+          tagName: 'title',
+          textContent: 'Open',
+        },
+      ],
     },
   },
 ];

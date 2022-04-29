@@ -5,13 +5,14 @@ import type { SbpmLinkAttributes } from '../link';
 import type { SbpmProcessModelTransitionOptions } from './types';
 import { toolsOptions } from './options';
 import { addActionsToToolsOptions } from '../link-tools';
+import type { SbpmModelerOptions } from '../modeler';
 
-export function createProcessNetworkTransitionOptions(options?: SbpmProcessModelTransitionOptions, modelerOptions: SbpmModelerOptions) {
+export function createProcessNetworkTransitionOptions(options?: SbpmProcessModelTransitionOptions, modelerOptions?: SbpmModelerOptions) {
   return joint.util.merge(
     {},
     {
       initialOptions: joint.util.cloneDeep(options),
-      toolsOptions: addActionsToToolsOptions(toolsOptions, modelerOptions),
+      toolsOptions: addActionsToToolsOptions(toolsOptions, modelerOptions || ({} as SbpmModelerOptions)),
       type: SbpmElementType.PROCESS_NETWORK_TRANSITION,
       ...(options ?? {}),
     }
