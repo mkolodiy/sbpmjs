@@ -37,6 +37,15 @@ const sbpmPnt = modeler.factory.addSbpmProcessNetworkTransition({
   target: processModel,
 });
 
+modeler.factory.addSubject({
+  id: 'subject-1',
+  label: 'Subject 1',
+  position: {
+    x: 200,
+    y: 200,
+  },
+});
+
 // setTimeout(() => {
 //   processModel2.update({ processType: 'single' });
 // }, 2000);
