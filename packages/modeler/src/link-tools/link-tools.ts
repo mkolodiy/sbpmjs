@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import { defaultButtonOptions, defaultRemoveOptions } from './options';
+import { defaultButtonLabel, defaultButtonOptions, defaultIconLabel, defaultRemoveOptions, defaultSelectionLabel } from './options';
 import type { SbpmLinkToolsOptions } from './types';
 
 export function createLinkTools(toolsOptions: SbpmLinkToolsOptions) {
@@ -36,4 +36,16 @@ function createButton(options: joint.linkTools.Button.Options) {
 
 function createRemove(options: joint.linkTools.Button.Options) {
   return new joint.linkTools.Remove(joint.util.merge(joint.util.cloneDeep(defaultRemoveOptions), options));
+}
+
+export function createIconLabel(options: joint.dia.Link.Label) {
+  return joint.util.merge(joint.util.cloneDeep(defaultIconLabel), options);
+}
+
+export function createSelectionLabel(options: joint.dia.Link.Label) {
+  return joint.util.merge(joint.util.cloneDeep(defaultSelectionLabel), options);
+}
+
+export function createButtonLabel(options: joint.dia.Link.Label) {
+  return joint.util.merge(joint.util.cloneDeep(defaultButtonLabel), options);
 }

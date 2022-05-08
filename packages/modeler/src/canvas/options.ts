@@ -14,6 +14,7 @@ export const paperOptions: joint.dia.Paper.Options = {
   },
   interactive: {
     linkMove: true,
+    labelMove: false,
   },
   defaultConnectionPoint: {
     name: 'bbox',

@@ -3,19 +3,19 @@ import SbpmModeler from '../src';
 const modeler = new SbpmModeler({
   container: document.getElementById('container'),
   onSelectElement: (element) => {
-    console.log(element);
+    console.log('onSelectElement', element);
   },
   onSelectLink: (link) => {
-    console.log(link);
+    console.log('onSelectLink', link);
   },
   onDeleteElement: (element) => {
-    console.log(element);
+    console.log('onDeleteElement', element);
   },
   onDeleteLink: (link) => {
-    console.log(link);
+    console.log('onDeleteLink', link);
   },
   onOpenElement: (element) => {
-    console.log(element);
+    console.log('onOpenElement', element);
   },
 });
 
@@ -37,13 +37,27 @@ const sbpmPnt = modeler.factory.addSbpmProcessNetworkTransition({
   target: processModel,
 });
 
-modeler.factory.addSubject({
+const sub1 = modeler.factory.addSubject({
   id: 'subject-1',
   label: 'Subject 1',
   position: {
-    x: 200,
-    y: 200,
+    x: 400,
+    y: 100,
   },
+});
+
+const sub2 = modeler.factory.addSubject({
+  id: 'subject-2',
+  label: 'Subject 2',
+  position: {
+    x: 900,
+    y: 100,
+  },
+});
+
+modeler.factory.addSbpmMessageTransition({
+  source: sub1,
+  target: sub2,
 });
 
 // setTimeout(() => {

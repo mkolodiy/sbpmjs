@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 import { SbpmShapeNamespace } from '../common';
-import { JointEvent } from './constants';
+import { CustomEvent, JointEvent } from './constants';
 import SbpmCanvasOrigin from '../origin';
 import SbpmElement from '../element';
 import SbpmElementView from '../element-view';
@@ -71,11 +71,22 @@ export default class SbpmCanvas {
     });
   }
 
-  private registerLinkEvents({ onSelectLink }: SbpmModelerOptions) {
+  private registerLinkEvents({ onSelectLink, onDeleteLink }: SbpmModelerOptions) {
     this.#paper.on<keyof EventMap>(JointEvent.LINK_POINTERDOWN, (linkView: SbpmLinkView) => {
       this.deselect();
       linkView.select();
       onSelectLink?.(linkView.link);
+    });
+
+    this.#paper.on(CustomEvent.LINK_REMOVE, (linkView: SbpmLinkView, evt: MouseEvent) => {
+      evt.stopPropagation();
+      linkView.link.remove();
+      onDeleteLink?.(linkView.link);
+    });
+
+    this.#paper.on(CustomEvent.LINK_REMOVE_VERTICES, (linkView: SbpmLinkView, evt: MouseEvent) => {
+      evt.stopPropagation();
+      linkView.link.vertices([]);
     });
   }
 

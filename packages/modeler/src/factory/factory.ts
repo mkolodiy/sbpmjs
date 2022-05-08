@@ -13,6 +13,8 @@ import SbpmSubject, { createSubjectOptions } from '../subject';
 import type { SbpmSubjectOptions } from '../subject';
 import { validateLinkOptions } from './helper';
 import type { SbpmModelerOptions } from '../modeler';
+import SbpmMessageTransition, { createMessageTransitionOptions } from '../message-transition';
+import type { SbpmMessageTransitionOptions } from '../message-transition';
 
 export default class SbpmFactory {
   #canvas: SbpmCanvas;
@@ -38,6 +40,11 @@ export default class SbpmFactory {
 
   public addSubject(options: SbpmSubjectOptions) {
     return new SbpmSubject(createSubjectOptions(options, this.#options)).addTo(this.#canvas.graph);
+  }
+
+  public addSbpmMessageTransition(options: SbpmMessageTransitionOptions) {
+    validateLinkOptions(SbpmElementType.MESSAGE_TRANSITION, options);
+    return new SbpmMessageTransition(createMessageTransitionOptions(options)).addTo(this.#canvas.graph);
   }
 
   public updateElement<T extends SbpmElement>(element: T, options: ElementOptionsType<T>) {

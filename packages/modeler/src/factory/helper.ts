@@ -5,35 +5,31 @@ import type { SbpmLinkOptions } from '../link';
 import SbpmProcessModel from '../process-model';
 import SbpmProcessNetwork from '../process-network';
 import SbpmProcessNetworkTransition, { createProcessNetworkTransitionOptions } from '../process-network-transition';
+import SbpmMessageTransition, { createMessageTransitionOptions } from '../message-transition';
+import SbpmSubject from '../subject';
 
 export function getDefaultLink(type: string) {
   if (type === SbpmElementType.PROCESS_NETWORK) {
     return new SbpmProcessNetworkTransition(createProcessNetworkTransitionOptions());
   }
 
+  if (type === SbpmElementType.SUBJECT) {
+    return new SbpmMessageTransition(createMessageTransitionOptions());
+  }
+
   return new SbpmLink();
 }
 
-export function isValidConnection(cellViewS: joint.dia.CellView, cellViewT: joint.dia.CellView, linkView: joint.dia.LinkView) {
-  // Prevent link to link connections
-  if (cellViewS.model.isLink() || cellViewT.model.isLink()) {
-    return false;
-  }
-
-  // Prevent source to target connection
-  if (cellViewS.model.get('id') === cellViewT.model.get('id')) {
-    return false;
-  }
-
+export function isValidConnection(_cellViewS: joint.dia.CellView, cellViewT: joint.dia.CellView, linkView: joint.dia.LinkView) {
   if (cellViewT.model.isElement() && cellViewT.model instanceof SbpmProcessModel && linkView.model instanceof SbpmProcessNetworkTransition) {
     return true;
   }
 
-  if (cellViewT.model.isElement() && cellViewT.model instanceof SbpmProcessNetwork && linkView.model instanceof SbpmProcessNetworkTransition) {
-    return false;
+  if (cellViewT.model.isElement() && cellViewT.model instanceof SbpmSubject && linkView.model instanceof SbpmMessageTransition) {
+    return true;
   }
 
-  return true;
+  return false;
 }
 
 export function validateLinkOptions(type: string, options: SbpmLinkOptions) {
@@ -43,6 +39,9 @@ export function validateLinkOptions(type: string, options: SbpmLinkOptions) {
     case SbpmElementType.PROCESS_NETWORK_TRANSITION:
       validateSbpmProcessNetworkTransitionOptions(source, target);
       break;
+    case SbpmElementType.MESSAGE_TRANSITION:
+      validateSbpmMessageTransitionOptions(source, target);
+      break;
     default:
       throw Error(`${type} is not supported`);
   }
@@ -50,10 +49,20 @@ export function validateLinkOptions(type: string, options: SbpmLinkOptions) {
 
 function validateSbpmProcessNetworkTransitionOptions(source: unknown, target: unknown) {
   if (!(source instanceof SbpmProcessNetwork)) {
-    throw Error('SbpmProcessNetworkTransition: Source has to be of type SbpmProcessNetwork');
+    throw Error('Source has to be of type SbpmProcessNetwork');
   }
 
   if (!(target instanceof SbpmProcessModel)) {
-    throw Error('SbpmProcessNetworkTransition: target has to be of type SbpmProcessModel');
+    throw Error('Target has to be of type SbpmProcessModel');
+  }
+}
+
+function validateSbpmMessageTransitionOptions(source: unknown, target: unknown) {
+  if (!(source instanceof SbpmSubject)) {
+    throw Error('Source has to be of type SbpmSubject');
+  }
+
+  if (!(target instanceof SbpmSubject)) {
+    throw Error('Target has to be of type SbpmSubject');
   }
 }
