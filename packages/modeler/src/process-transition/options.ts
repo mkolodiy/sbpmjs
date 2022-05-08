@@ -25,7 +25,6 @@ export const toolsOptions: SbpmLinkToolsOptions = [
           tagName: 'image',
           attributes: {
             'xlink:href': autoRenewIcon,
-            event: 'link:removeVertices',
           },
         },
         {

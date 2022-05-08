@@ -4,13 +4,13 @@ import SbpmLink from '../link';
 import type { SbpmLinkOptions } from '../link';
 import SbpmProcessModel from '../process-model';
 import SbpmProcessNetwork from '../process-network';
-import SbpmProcessNetworkTransition, { createProcessNetworkTransitionOptions } from '../process-network-transition';
+import SbpmProcessTransition, { createProcessTransitionOptions } from '../process-transition';
 import SbpmMessageTransition, { createMessageTransitionOptions } from '../message-transition';
 import SbpmSubject from '../subject';
 
 export function getDefaultLink(type: string) {
   if (type === SbpmElementType.PROCESS_NETWORK) {
-    return new SbpmProcessNetworkTransition(createProcessNetworkTransitionOptions());
+    return new SbpmProcessTransition(createProcessTransitionOptions());
   }
 
   if (type === SbpmElementType.SUBJECT) {
@@ -21,7 +21,7 @@ export function getDefaultLink(type: string) {
 }
 
 export function isValidConnection(_cellViewS: joint.dia.CellView, cellViewT: joint.dia.CellView, linkView: joint.dia.LinkView) {
-  if (cellViewT.model.isElement() && cellViewT.model instanceof SbpmProcessModel && linkView.model instanceof SbpmProcessNetworkTransition) {
+  if (cellViewT.model.isElement() && cellViewT.model instanceof SbpmProcessModel && linkView.model instanceof SbpmProcessTransition) {
     return true;
   }
 
@@ -36,8 +36,8 @@ export function validateLinkOptions(type: string, options: SbpmLinkOptions) {
   const { source, target } = options;
 
   switch (type) {
-    case SbpmElementType.PROCESS_NETWORK_TRANSITION:
-      validateSbpmProcessNetworkTransitionOptions(source, target);
+    case SbpmElementType.PROCESS_TRANSITION:
+      validateSbpmProcessTransitionOptions(source, target);
       break;
     case SbpmElementType.MESSAGE_TRANSITION:
       validateSbpmMessageTransitionOptions(source, target);
@@ -47,7 +47,7 @@ export function validateLinkOptions(type: string, options: SbpmLinkOptions) {
   }
 }
 
-function validateSbpmProcessNetworkTransitionOptions(source: unknown, target: unknown) {
+function validateSbpmProcessTransitionOptions(source: unknown, target: unknown) {
   if (!(source instanceof SbpmProcessNetwork)) {
     throw Error('Source has to be of type SbpmProcessNetwork');
   }

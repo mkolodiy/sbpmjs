@@ -8,7 +8,7 @@ export const SbpmShapeNamespace = {
 export const SbpmElementType = {
   ORIGIN: `${SbpmShapeNamespace.COMMON}.Origin`,
   PROCESS_NETWORK: `${SbpmShapeNamespace.PND}.ProcessNetwork`,
-  PROCESS_NETWORK_TRANSITION: `${SbpmShapeNamespace.PND}.ProcessNetworkTransition`,
+  PROCESS_TRANSITION: `${SbpmShapeNamespace.PND}.ProcessTransition`,
   PROCESS_MODEL: `${SbpmShapeNamespace.PND}.ProcessModel`,
   SUBJECT: `${SbpmShapeNamespace.SID}.Subject`,
   MESSAGE_TRANSITION: `${SbpmShapeNamespace.SID}.MessageTransition`,

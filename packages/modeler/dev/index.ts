@@ -32,7 +32,7 @@ const processModel2 = modeler.factory.addSbpmProcessModel({
   processType: 'multi',
 });
 
-const sbpmPnt = modeler.factory.addSbpmProcessNetworkTransition({
+const sbpmPnt = modeler.factory.addSbpmProcessTransition({
   source: element1,
   target: processModel,
 });

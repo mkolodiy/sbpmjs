@@ -4,8 +4,8 @@ import SbpmElement from '../element';
 import SbpmLink from '../link';
 import SbpmProcessNetwork, { createProcessNetworkOptions } from '../process-network';
 import type { SbpmProcessNetworkOptions } from '../process-network';
-import SbpmProcessNetworkTransition, { createProcessNetworkTransitionOptions } from '../process-network-transition';
-import type { SbpmProcessModelTransitionOptions } from '../process-network-transition';
+import SbpmProcessTransition, { createProcessTransitionOptions } from '../process-transition';
+import type { SbpmProcessTransitionOptions } from '../process-transition';
 import SbpmProcessModel, { createProcessModelOptions } from '../process-model';
 import type { SbpmProcessModelOptions } from '../process-model';
 import type { ElementOptionsType, LinkOptionsType } from './types';
@@ -29,9 +29,9 @@ export default class SbpmFactory {
     return new SbpmProcessNetwork(createProcessNetworkOptions(options, this.#options)).addTo(this.#canvas.graph);
   }
 
-  public addSbpmProcessNetworkTransition(options: SbpmProcessModelTransitionOptions) {
-    validateLinkOptions(SbpmElementType.PROCESS_NETWORK_TRANSITION, options);
-    return new SbpmProcessNetworkTransition(createProcessNetworkTransitionOptions(options, this.#options)).addTo(this.#canvas.graph);
+  public addSbpmProcessTransition(options: SbpmProcessTransitionOptions) {
+    validateLinkOptions(SbpmElementType.PROCESS_TRANSITION, options);
+    return new SbpmProcessTransition(createProcessTransitionOptions(options, this.#options)).addTo(this.#canvas.graph);
   }
 
   public addSbpmProcessModel(options: SbpmProcessModelOptions) {
