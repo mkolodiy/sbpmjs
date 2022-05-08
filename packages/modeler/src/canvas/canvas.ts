@@ -26,6 +26,7 @@ export default class SbpmCanvas {
       model: this.#graph,
       defaultRouter: { name: 'normal' },
     });
+    this.#paper.$el.css('cursor', 'grab');
 
     this.addOrigin();
     this.addDragging(options);
@@ -92,6 +93,12 @@ export default class SbpmCanvas {
 
   private registerPaperEvents() {
     this.#paper.on(JointEvent.BLANK_POINTERDOWN, () => {
+      this.#paper.$el.css('cursor', 'grabbing');
+      this.deselect();
+    });
+
+    this.#paper.on(JointEvent.BLANK_POINTERUP, () => {
+      this.#paper.$el.css('cursor', 'grab');
       this.deselect();
     });
   }
