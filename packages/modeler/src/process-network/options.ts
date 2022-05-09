@@ -18,8 +18,9 @@ export const jointOptions: joint.shapes.standard.ImageAttributes = {
     label: {
       textWrap: {
         width: 130,
+        height: 180,
+        text: 'Process network',
       },
-      text: 'Process network',
       fontFamily: FONT_FAMILY,
       pointerEvents: 'none',
     },

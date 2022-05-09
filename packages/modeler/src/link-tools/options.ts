@@ -49,12 +49,25 @@ export const defaultIconLabel: joint.dia.Link.Label = {
       tagName: 'image',
       selector: 'iconLabel',
     },
+    {
+      tagName: 'text',
+      selector: 'text',
+    },
   ],
   attrs: {
     iconLabel: {
       cursor: 'pointer',
       xAlignment: 'middle',
       yAlignment: 'middle',
+    },
+    text: {
+      xAlignment: 'middle',
+      yAlignment: 'middle',
+      textWrap: {
+        height: 180,
+      },
+      textVerticalAnchor: 'middle',
+      textAnchor: 'middle',
     },
   },
 };

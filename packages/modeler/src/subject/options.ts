@@ -17,9 +17,10 @@ export const jointOptions: joint.shapes.standard.ImageAttributes = {
     },
     label: {
       textWrap: {
-        width: 90,
+        width: 85,
+        height: 180,
+        text: 'Subject',
       },
-      text: 'Subject',
       fontFamily: FONT_FAMILY,
       pointerEvents: 'none',
     },

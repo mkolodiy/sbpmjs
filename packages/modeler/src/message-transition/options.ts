@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 import { CustomEvent } from '../canvas';
-import { autoRenewIcon, deleteIcon } from '../common';
+import { autoRenewIcon, deleteIcon, FONT_FAMILY } from '../common';
 import { icon } from './icon';
 
 export const iconLabel: joint.dia.Link.Label = {
@@ -10,6 +10,16 @@ export const iconLabel: joint.dia.Link.Label = {
       'xlink:href': icon,
       width: 85,
       height: 55,
+    },
+    text: {
+      yAlignment: '32.5',
+      textWrap: {
+        text: 'Message transition',
+        width: 85,
+      },
+      fontFamily: FONT_FAMILY,
+      fontSize: 14,
+      pointerEvents: 'none',
     },
   },
 };
