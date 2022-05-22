@@ -10,4 +10,5 @@ export const JointEvent = {
 export const CustomEvent = {
   LINK_REMOVE: 'link:remove',
   LINK_REMOVE_VERTICES: 'link:removeVertices',
+  ELEMENT_UPDATED: 'element:updated',
 } as const;

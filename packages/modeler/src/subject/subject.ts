@@ -2,24 +2,21 @@ import * as joint from 'jointjs';
 import { GetUpdateOptions, SbpmElementType } from '../common';
 import SbpmElement from '../element';
 import type { SbpmElementAttributes } from '../element';
-import { jointOptions, toolsOptions } from './options';
+import { humanTypeJointOptions, machineTypeJointOptions, humanToolsOptions, machineToolsOptions } from './options';
 import type { SbpmSubjectOptions } from './types';
-import { humanSubjectIcon, machineSubjectIcon } from './icon';
 import type { SbpmModelerOptions } from '../modeler';
 import { addActionsToToolsOptions } from '../element-tools';
 
 export function createSubjectOptions(options: SbpmSubjectOptions, modelerOptions: SbpmModelerOptions) {
   const { label, type = 'human', ...restOptions } = options;
 
-  const icon = getIcon(type);
+  const jointOptions = type === 'human' ? humanTypeJointOptions : machineTypeJointOptions;
+  const toolsOptions = type === 'human' ? humanToolsOptions : machineToolsOptions;
 
   return joint.util.merge(jointOptions, {
     attrs: {
       label: {
         text: label,
-      },
-      image: {
-        xlinkHref: icon,
       },
     },
     initialOptions: joint.util.cloneDeep(options),
@@ -37,14 +34,21 @@ export default class SbpmSubject extends SbpmElement<SbpmSubjectOptions> {
     const { type, ...restOptions } = options;
 
     if (type) {
-      const icon = getIcon(type);
-      this.attr('image/xlinkHref', icon);
+      const jointOptions = type === 'human' ? humanTypeJointOptions : machineTypeJointOptions;
+      const toolsOptions = type === 'human' ? humanToolsOptions : machineToolsOptions;
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.size(jointOptions.size);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.attr('image/xlinkHref', jointOptions.attrs?.image.xlinkHref);
+      this.attr('image/width', jointOptions.attrs?.image?.width);
+      this.attr('image/height', jointOptions.attrs?.image?.height);
+      this.attr('image/height', jointOptions.attrs?.image?.height);
+      this.prop('toolsOptions', toolsOptions);
     }
 
     super.update(restOptions);
   }
-}
-
-function getIcon(type: string) {
-  return type === 'human' ? humanSubjectIcon : machineSubjectIcon;
 }

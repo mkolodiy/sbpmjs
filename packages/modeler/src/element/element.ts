@@ -1,4 +1,5 @@
 import * as joint from 'jointjs';
+import { CustomEvent } from '../canvas';
 import type { GenericOptions, GetUpdateOptions } from '../common';
 import type { SbpmElementToolsOptions } from '../element-tools';
 import { attrs, markup } from './options';
@@ -36,6 +37,8 @@ export default class SbpmElement<T = GenericOptions> extends joint.dia.Element<S
     if (position) {
       this.prop('position', position);
     }
+
+    this.trigger(CustomEvent.ELEMENT_UPDATED, this);
   }
 
   public select() {

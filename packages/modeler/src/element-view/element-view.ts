@@ -12,4 +12,11 @@ export default class SbpmElementView extends joint.dia.ElementView {
     this.element.select();
     this.addTools(createElementTools(this.element.toolsOptions));
   }
+
+  public refresh() {
+    if (this.hasTools()) {
+      this.hideTools();
+      this.addTools(createElementTools(this.element.toolsOptions));
+    }
+  }
 }

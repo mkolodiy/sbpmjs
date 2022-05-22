@@ -53,6 +53,7 @@ const sub2 = modeler.factory.addSubject({
     x: 900,
     y: 100,
   },
+  type: 'machine',
 });
 
 modeler.factory.addSbpmMessageTransition({
@@ -60,12 +61,14 @@ modeler.factory.addSbpmMessageTransition({
   target: sub2,
 });
 
-// setTimeout(() => {
-//   processModel2.update({ processType: 'single' });
-// }, 2000);
+setTimeout(() => {
+  sub1.update({ type: 'machine' });
+  // modeler.factory.updateElement(sub1, { type: 'machine' });
+}, 2000);
 
 // setTimeout(() => {
-//   processModel2.update({ processType: 'multi' });
+//   // sub1.update({ type: 'human' });
+//   modeler.factory.updateElement(sub1, { type: 'human' });
 // }, 4000);
 
 // setTimeout(() => {
@@ -79,8 +82,3 @@ document.getElementById('clear-canvas').addEventListener('click', () => {
 document.getElementById('reset-canvas').addEventListener('click', () => {
   modeler.canvas.reset();
 });
-
-// console.log(modeler.canvas.getElements());
-// console.log(modeler.canvas.getLinks());
-
-console.log(modeler.canvas.paper.findViewsInArea({ x: 99, y: 99, height: 200, width: 200 }));

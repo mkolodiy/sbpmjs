@@ -1,9 +1,10 @@
+/* eslint-disable prettier/prettier */
 import * as joint from 'jointjs';
 import { FONT_FAMILY, openInNew } from '../common';
 import type { SbpmElementToolsOptions } from '../element-tools';
-import { humanSubjectIcon } from './icon';
+import { humanSubjectIcon, machineSubjectIcon } from './icon';
 
-export const jointOptions: joint.shapes.standard.ImageAttributes = {
+export const humanTypeJointOptions: joint.shapes.standard.ImageAttributes = {
   size: {
     width: 85,
     height: 140,
@@ -27,7 +28,26 @@ export const jointOptions: joint.shapes.standard.ImageAttributes = {
   },
 };
 
-export const toolsOptions: SbpmElementToolsOptions = [
+export const machineTypeJointOptions: joint.shapes.standard.ImageAttributes = joint.util.merge(joint.util.cloneDeep(humanTypeJointOptions), {
+  size: {
+    width: 105,
+    height: 140,
+  },
+  attrs: {
+    image: {
+      width: 105,
+      height: 140,
+      xlinkHref: machineSubjectIcon,
+    },
+    label: {
+      textWrap: {
+        width: 105,
+      },
+    },
+  },
+});
+
+export const humanToolsOptions: SbpmElementToolsOptions = [
   {
     type: 'remove',
     options: {
@@ -52,7 +72,6 @@ export const toolsOptions: SbpmElementToolsOptions = [
           tagName: 'image',
           attributes: {
             'xlink:href': openInNew,
-            event: 'link:removeVertices',
           },
         },
         {
@@ -63,3 +82,24 @@ export const toolsOptions: SbpmElementToolsOptions = [
     },
   },
 ];
+
+export const machineToolsOptions: SbpmElementToolsOptions = joint.util.merge(joint.util.cloneDeep(humanToolsOptions), [
+  {
+    type: 'remove',
+    options: {
+      x: 115,
+    },
+  },
+  {
+    type: 'connect',
+    options: {
+      x: 139,
+    },
+  },
+  {
+    type: 'open',
+    options: {
+      x: 163,
+    },
+  },
+]) as SbpmElementToolsOptions;

@@ -70,6 +70,11 @@ export default class SbpmCanvas {
       sbpmElementView.select();
       onSelectElement?.(sbpmElementView.element);
     });
+
+    this.#graph.on('element:updated', (element: SbpmElement) => {
+      const elementView = this.#paper.findViewByModel<SbpmElementView>(element);
+      elementView.refresh();
+    });
   }
 
   private registerLinkEvents({ onSelectLink, onDeleteLink }: SbpmModelerOptions) {
