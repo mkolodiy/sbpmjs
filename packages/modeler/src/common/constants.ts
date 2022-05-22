@@ -12,6 +12,7 @@ export const SbpmElementType = {
   PROCESS_MODEL: `${SbpmShapeNamespace.PND}.ProcessModel`,
   SUBJECT: `${SbpmShapeNamespace.SID}.Subject`,
   MESSAGE_TRANSITION: `${SbpmShapeNamespace.SID}.MessageTransition`,
+  FUNCTION_STATE: `${SbpmShapeNamespace.SBD}.FunctionState`,
 } as const;
 
 export const SVG_PREFIX = 'data:image/svg+xml;utf8,';

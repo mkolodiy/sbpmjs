@@ -15,6 +15,8 @@ import { validateLinkOptions } from './helper';
 import type { SbpmModelerOptions } from '../modeler';
 import SbpmMessageTransition, { createMessageTransitionOptions } from '../message-transition';
 import type { SbpmMessageTransitionOptions } from '../message-transition';
+import SbpmFunctionState, { createFunctionStateOptions } from '../function-state';
+import type { SbpmFunctionStateOptions } from '../function-state';
 
 export default class SbpmFactory {
   #canvas: SbpmCanvas;
@@ -45,6 +47,10 @@ export default class SbpmFactory {
   public addSbpmMessageTransition(options: SbpmMessageTransitionOptions) {
     validateLinkOptions(SbpmElementType.MESSAGE_TRANSITION, options);
     return new SbpmMessageTransition(createMessageTransitionOptions(options)).addTo(this.#canvas.graph);
+  }
+
+  public addSbpmFunctionState(options: SbpmFunctionStateOptions) {
+    return new SbpmFunctionState(createFunctionStateOptions(options, this.#options)).addTo(this.#canvas.graph);
   }
 
   public updateElement<T extends SbpmElement>(element: T, options: ElementOptionsType<T>) {

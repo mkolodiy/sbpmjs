@@ -8,7 +8,9 @@ import type { SbpmProcessModelOptions } from '../process-model';
 import SbpmProcessTransition from '../process-transition';
 import type { SbpmProcessTransitionOptions } from '../process-transition';
 import SbpmSubject from '../subject';
-import { SbpmSubjectOptions } from '../subject';
+import type { SbpmSubjectOptions } from '../subject';
+import SbpmFunctionState from '../function-state';
+import type { SbpmFunctionStateOptions } from '../function-state';
 
 type GetElementOptionsType<T> = T extends SbpmProcessNetwork
   ? SbpmProcessNetworkOptions
@@ -16,6 +18,8 @@ type GetElementOptionsType<T> = T extends SbpmProcessNetwork
   ? SbpmProcessModelOptions
   : T extends SbpmSubject
   ? SbpmSubjectOptions
+  : T extends SbpmFunctionState
+  ? SbpmFunctionStateOptions
   : SbpmElementOptions;
 
 export type ElementOptionsType<T> = GetUpdateOptions<GetElementOptionsType<T>>;

@@ -19,3 +19,11 @@ export const autoRenewIcon = createIcon(
 export const openInNew = createIcon(
   '<svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M21 12v7q0 .825-.587 1.413Q19.825 21 19 21H5q-.825 0-1.413-.587Q3 19.825 3 19V5q0-.825.587-1.413Q4.175 3 5 3h7v2H5v14h14v-7ZM9.7 15.7l-1.4-1.4L17.6 5H14V3h7v7h-2V6.4Z"/></svg>'
 );
+
+export const blueDotIcon = createIcon(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="402" height="402"><circle fill="#33B" cx="201" cy="201" r="201" opacity="0.5"/><text x="121" y="299" font-size="300" fill="#fff" font-family="monospace">S</text></svg>'
+);
+
+export const redDotIcon = createIcon(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="402" height="402"><circle fill="#ff0000" cx="201" cy="201" r="201" opacity="0.5"/><text x="121" y="299" font-size="300" fill="#fff" font-family="monospace">E</text></svg>'
+);

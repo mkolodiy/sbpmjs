@@ -19,52 +19,60 @@ const modeler = new SbpmModeler({
   },
 });
 
-const element1 = modeler.factory.addSbpmProcessNetwork({ id: 'test_1', label: 'Process network', position: { x: 100, y: 100 } });
-
-// const element2 = modeler.factory.addSbpmProcessNetwork({ id: 'test_2', label: 'Test test test', position: { x: 400, y: 400 } });
-const element3 = modeler.factory.addSbpmProcessNetwork({ id: 'test_3', label: 'Test test test', position: { x: 400, y: 600 } });
-
-const processModel = modeler.factory.addSbpmProcessModel({ id: 'process_model_1', label: 'Process model', position: { x: 400, y: 400 } });
-const processModel2 = modeler.factory.addSbpmProcessModel({
-  id: 'process_model_2',
-  label: 'Process model',
-  position: { x: 600, y: 400 },
-  processType: 'multi',
-});
-
-const sbpmPnt = modeler.factory.addSbpmProcessTransition({
-  source: element1,
-  target: processModel,
-});
-
-const sub1 = modeler.factory.addSubject({
-  id: 'subject-1',
-  label: 'Subject 1',
+modeler.factory.addSbpmFunctionState({
+  label: 'Test',
   position: {
-    x: 400,
+    x: 100,
     y: 100,
   },
 });
 
-const sub2 = modeler.factory.addSubject({
-  id: 'subject-2',
-  label: 'Subject 2',
-  position: {
-    x: 900,
-    y: 100,
-  },
-  type: 'machine',
-});
+// const element1 = modeler.factory.addSbpmProcessNetwork({ id: 'test_1', label: 'Process network', position: { x: 100, y: 100 } });
 
-modeler.factory.addSbpmMessageTransition({
-  source: sub1,
-  target: sub2,
-});
+// // const element2 = modeler.factory.addSbpmProcessNetwork({ id: 'test_2', label: 'Test test test', position: { x: 400, y: 400 } });
+// const element3 = modeler.factory.addSbpmProcessNetwork({ id: 'test_3', label: 'Test test test', position: { x: 400, y: 600 } });
 
-setTimeout(() => {
-  sub1.update({ type: 'machine' });
-  // modeler.factory.updateElement(sub1, { type: 'machine' });
-}, 2000);
+// const processModel = modeler.factory.addSbpmProcessModel({ id: 'process_model_1', label: 'Process model', position: { x: 400, y: 400 } });
+// const processModel2 = modeler.factory.addSbpmProcessModel({
+//   id: 'process_model_2',
+//   label: 'Process model',
+//   position: { x: 600, y: 400 },
+//   processType: 'multi',
+// });
+
+// const sbpmPnt = modeler.factory.addSbpmProcessTransition({
+//   source: element1,
+//   target: processModel,
+// });
+
+// const sub1 = modeler.factory.addSubject({
+//   id: 'subject-1',
+//   label: 'Subject 1',
+//   position: {
+//     x: 400,
+//     y: 100,
+//   },
+// });
+
+// const sub2 = modeler.factory.addSubject({
+//   id: 'subject-2',
+//   label: 'Subject 2',
+//   position: {
+//     x: 900,
+//     y: 100,
+//   },
+//   type: 'machine',
+// });
+
+// modeler.factory.addSbpmMessageTransition({
+//   source: sub1,
+//   target: sub2,
+// });
+
+// setTimeout(() => {
+//   sub1.update({ type: 'machine' });
+//   // modeler.factory.updateElement(sub1, { type: 'machine' });
+// }, 2000);
 
 // setTimeout(() => {
 //   // sub1.update({ type: 'human' });
