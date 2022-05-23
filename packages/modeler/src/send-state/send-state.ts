@@ -3,11 +3,11 @@ import { blueDotIcon, GetUpdateOptions, redDotIcon, SbpmElementType } from '../c
 import SbpmElement from '../element';
 import type { SbpmElementAttributes } from '../element';
 import { jointOptions, toolsOptions } from './options';
-import type { SbpmFunctionStateOptions } from './types';
+import type { SbpmSendStateOptions } from './types';
 import type { SbpmModelerOptions } from '../modeler';
 import { addActionsToToolsOptions } from '../element-tools';
 
-export function createFunctionStateOptions(options: SbpmFunctionStateOptions, modelerOptions: SbpmModelerOptions) {
+export function createSendStateOptions(options: SbpmSendStateOptions, modelerOptions: SbpmModelerOptions) {
   const { label, ...restOptions } = options;
 
   return joint.util.merge(jointOptions, {
@@ -22,15 +22,15 @@ export function createFunctionStateOptions(options: SbpmFunctionStateOptions, mo
     initialOptions: joint.util.cloneDeep(options),
     jointOptions: joint.util.cloneDeep(jointOptions),
     toolsOptions: addActionsToToolsOptions(toolsOptions, modelerOptions),
-    type: SbpmElementType.FUNCTION_STATE,
+    type: SbpmElementType.SEND_STATE,
     ...restOptions,
-  }) as SbpmElementAttributes<SbpmFunctionStateOptions>;
+  }) as SbpmElementAttributes<SbpmSendStateOptions>;
 }
 
-export default class SbpmFunctionState extends SbpmElement<SbpmFunctionStateOptions> {
-  type: typeof SbpmElementType.FUNCTION_STATE = SbpmElementType.FUNCTION_STATE;
+export default class SbpmSendState extends SbpmElement<SbpmSendStateOptions> {
+  type: typeof SbpmElementType.SEND_STATE = SbpmElementType.SEND_STATE;
 
-  public update(options: GetUpdateOptions<SbpmFunctionStateOptions>) {
+  public update(options: GetUpdateOptions<SbpmSendStateOptions>) {
     const { state = 'none' } = options;
 
     if (state !== 'none') {
@@ -49,7 +49,7 @@ export default class SbpmFunctionState extends SbpmElement<SbpmFunctionStateOpti
   }
 }
 
-function getStateModifierOptions(options: SbpmFunctionStateOptions) {
+function getStateModifierOptions(options: SbpmSendStateOptions) {
   const { state = 'none' } = options;
 
   if (state !== 'none') {

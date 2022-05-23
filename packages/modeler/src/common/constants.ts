@@ -13,6 +13,8 @@ export const SbpmElementType = {
   SUBJECT: `${SbpmShapeNamespace.SID}.Subject`,
   MESSAGE_TRANSITION: `${SbpmShapeNamespace.SID}.MessageTransition`,
   FUNCTION_STATE: `${SbpmShapeNamespace.SBD}.FunctionState`,
+  SEND_STATE: `${SbpmShapeNamespace.SBD}.SendState`,
+  RECEIVE_STATE: `${SbpmShapeNamespace.SBD}.ReceiveState`,
 } as const;
 
 export const SVG_PREFIX = 'data:image/svg+xml;utf8,';

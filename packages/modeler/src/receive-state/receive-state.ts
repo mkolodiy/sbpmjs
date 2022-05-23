@@ -3,11 +3,11 @@ import { blueDotIcon, GetUpdateOptions, redDotIcon, SbpmElementType } from '../c
 import SbpmElement from '../element';
 import type { SbpmElementAttributes } from '../element';
 import { jointOptions, toolsOptions } from './options';
-import type { SbpmFunctionStateOptions } from './types';
+import type { SbpReceiveStateOptions } from './types';
 import type { SbpmModelerOptions } from '../modeler';
 import { addActionsToToolsOptions } from '../element-tools';
 
-export function createFunctionStateOptions(options: SbpmFunctionStateOptions, modelerOptions: SbpmModelerOptions) {
+export function createReceiveStateOptions(options: SbpReceiveStateOptions, modelerOptions: SbpmModelerOptions) {
   const { label, ...restOptions } = options;
 
   return joint.util.merge(jointOptions, {
@@ -22,15 +22,15 @@ export function createFunctionStateOptions(options: SbpmFunctionStateOptions, mo
     initialOptions: joint.util.cloneDeep(options),
     jointOptions: joint.util.cloneDeep(jointOptions),
     toolsOptions: addActionsToToolsOptions(toolsOptions, modelerOptions),
-    type: SbpmElementType.FUNCTION_STATE,
+    type: SbpmElementType.RECEIVE_STATE,
     ...restOptions,
-  }) as SbpmElementAttributes<SbpmFunctionStateOptions>;
+  }) as SbpmElementAttributes<SbpReceiveStateOptions>;
 }
 
-export default class SbpmFunctionState extends SbpmElement<SbpmFunctionStateOptions> {
-  type: typeof SbpmElementType.FUNCTION_STATE = SbpmElementType.FUNCTION_STATE;
+export default class SbpmReceiveState extends SbpmElement<SbpReceiveStateOptions> {
+  type: typeof SbpmElementType.RECEIVE_STATE = SbpmElementType.RECEIVE_STATE;
 
-  public update(options: GetUpdateOptions<SbpmFunctionStateOptions>) {
+  public update(options: GetUpdateOptions<SbpReceiveStateOptions>) {
     const { state = 'none' } = options;
 
     if (state !== 'none') {
@@ -49,7 +49,7 @@ export default class SbpmFunctionState extends SbpmElement<SbpmFunctionStateOpti
   }
 }
 
-function getStateModifierOptions(options: SbpmFunctionStateOptions) {
+function getStateModifierOptions(options: SbpReceiveStateOptions) {
   const { state = 'none' } = options;
 
   if (state !== 'none') {

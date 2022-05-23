@@ -27,6 +27,22 @@ modeler.factory.addSbpmFunctionState({
   },
 });
 
+modeler.factory.addSbpmSendState({
+  label: 'Test',
+  position: {
+    x: 300,
+    y: 100,
+  },
+});
+
+modeler.factory.addSbpmReceiveState({
+  label: 'Test',
+  position: {
+    x: 600,
+    y: 100,
+  },
+});
+
 // const element1 = modeler.factory.addSbpmProcessNetwork({ id: 'test_1', label: 'Process network', position: { x: 100, y: 100 } });
 
 // // const element2 = modeler.factory.addSbpmProcessNetwork({ id: 'test_2', label: 'Test test test', position: { x: 400, y: 400 } });
