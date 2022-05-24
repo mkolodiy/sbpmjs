@@ -1,5 +1,5 @@
 import type { SbpmElementOptions } from '../element';
 
-export type SbpReceiveStateOptions = SbpmElementOptions & {
+export type SbpmReceiveStateOptions = SbpmElementOptions & {
   state?: 'start' | 'end' | 'none';
 };

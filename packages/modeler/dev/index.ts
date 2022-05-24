@@ -1,4 +1,5 @@
 import SbpmModeler from '../src';
+import sendState from '../src/send-state';
 
 const modeler = new SbpmModeler({
   container: document.getElementById('container'),
@@ -19,7 +20,7 @@ const modeler = new SbpmModeler({
   },
 });
 
-modeler.factory.addSbpmFunctionState({
+const functionState = modeler.factory.addSbpmFunctionState({
   label: 'Test',
   position: {
     x: 100,
@@ -27,10 +28,10 @@ modeler.factory.addSbpmFunctionState({
   },
 });
 
-modeler.factory.addSbpmSendState({
+const sendState = modeler.factory.addSbpmSendState({
   label: 'Test',
   position: {
-    x: 300,
+    x: 800,
     y: 100,
   },
 });
@@ -38,10 +39,26 @@ modeler.factory.addSbpmSendState({
 modeler.factory.addSbpmReceiveState({
   label: 'Test',
   position: {
-    x: 600,
+    x: 1000,
     y: 100,
   },
 });
+
+const functionStateTransition = modeler.factory.addSbpmFunctionStateTransition({
+  source: functionState,
+  target: sendState,
+  label: 'New',
+});
+
+// functionStateTransition.update({
+//   label: 'Test',
+// });
+
+setTimeout(() => {
+  functionStateTransition.update({
+    label: 'Test',
+  });
+}, 2000);
 
 // const element1 = modeler.factory.addSbpmProcessNetwork({ id: 'test_1', label: 'Process network', position: { x: 100, y: 100 } });
 
