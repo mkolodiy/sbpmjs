@@ -1,5 +1,4 @@
 import SbpmModeler from '../src';
-import sendState from '../src/send-state';
 
 const modeler = new SbpmModeler({
   container: document.getElementById('container'),
@@ -36,11 +35,11 @@ const sendState = modeler.factory.addSbpmSendState({
   },
 });
 
-modeler.factory.addSbpmReceiveState({
+const receiveState = modeler.factory.addSbpmReceiveState({
   label: 'Test',
   position: {
     x: 1000,
-    y: 100,
+    y: 500,
   },
 });
 
@@ -50,13 +49,21 @@ const functionStateTransition = modeler.factory.addSbpmFunctionStateTransition({
   label: 'New',
 });
 
+const sendStateTransition = modeler.factory.addSbpmSendStateTransition({
+  source: sendState,
+  target: receiveState,
+  sender: 'Some sender',
+  message: 'Some message',
+});
+
 // functionStateTransition.update({
 //   label: 'Test',
 // });
 
 setTimeout(() => {
-  functionStateTransition.update({
-    label: 'Test',
+  sendStateTransition.update({
+    sender: 'New sender',
+    message: 'New message',
   });
 }, 2000);
 

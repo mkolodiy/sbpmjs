@@ -11,6 +11,7 @@ import SbpmFunctionState from '../function-state';
 import SbpmSendState from '../send-state';
 import SbpmReceiveState from '../receive-state';
 import SbpmFunctionStateTransition, { createFunctionStateTransitionOptions } from '../functional-state-transition';
+import SbpmSendStateTransition, { createSendStateTransitionOptions } from '../send-state-transition';
 
 export function getDefaultLink(type: string) {
   if (type === SbpmElementType.PROCESS_NETWORK) {
@@ -23,6 +24,10 @@ export function getDefaultLink(type: string) {
 
   if (type === SbpmElementType.FUNCTION_STATE) {
     return new SbpmFunctionStateTransition(createFunctionStateTransitionOptions());
+  }
+
+  if (type === SbpmElementType.SEND_STATE) {
+    return new SbpmSendStateTransition(createSendStateTransitionOptions());
   }
 
   return new SbpmLink();
@@ -45,6 +50,14 @@ export function isValidConnection(_cellViewS: joint.dia.CellView, cellViewT: joi
     return true;
   }
 
+  if (
+    cellViewT.model.isElement() &&
+    (cellViewT.model instanceof SbpmFunctionState || cellViewT.model instanceof SbpmReceiveState) &&
+    linkView.model instanceof SbpmSendStateTransition
+  ) {
+    return true;
+  }
+
   return false;
 }
 
@@ -60,6 +73,9 @@ export function validateLinkOptions(type: string, options: SbpmLinkOptions) {
       break;
     case SbpmElementType.FUNCTION_STATE_TRANSITION:
       validateSbpmFunctionStateTransitionOptions(source, target);
+      break;
+    case SbpmElementType.SEND_STATE_TRANSITION:
+      validateSbpmSendStateTransitionOptions(source, target);
       break;
     default:
       throw Error(`${type} is not supported`);
@@ -91,11 +107,17 @@ function validateSbpmFunctionStateTransitionOptions(source: unknown, target: unk
     throw Error('Source has to be of type SbpmFunctionState');
   }
 
-  if (!(target instanceof SbpmSendState)) {
+  if (!(target instanceof SbpmSendState) && !(target instanceof SbpmReceiveState)) {
     throw Error('Target has to be of type SbpmSendState or SbpmReceiveState');
   }
+}
 
-  // if (!(target instanceof SbpmReceiveState)) {
-  //   throw Error('Target has to be of type SbpmSendState or SbpmReceiveState');
-  // }
+function validateSbpmSendStateTransitionOptions(source: unknown, target: unknown) {
+  if (!(source instanceof SbpmSendState)) {
+    throw Error('Source has to be of type SbpmFunctionState');
+  }
+
+  if (!(target instanceof SbpmFunctionState) && !(target instanceof SbpmReceiveState)) {
+    throw Error('Target has to be of type SbpmSendState or SbpmReceiveState');
+  }
 }
