@@ -17,6 +17,7 @@ export const SbpmElementType = {
   RECEIVE_STATE: `${SbpmShapeNamespace.SBD}.ReceiveState`,
   FUNCTION_STATE_TRANSITION: `${SbpmShapeNamespace.SBD}.FunctionStateTransition`,
   SEND_STATE_TRANSITION: `${SbpmShapeNamespace.SBD}.SendStateTransition`,
+  RECEIVE_STATE_TRANSITION: `${SbpmShapeNamespace.SBD}.ReceiveStateTransition`,
 } as const;
 
 export const SVG_PREFIX = 'data:image/svg+xml;utf8,';

@@ -25,6 +25,8 @@ import SbpmFunctionStateTransition, { createFunctionStateTransitionOptions } fro
 import type { SbpmFunctionStateTransitionOptions } from '../functional-state-transition';
 import SbpmSendStateTransition, { createSendStateTransitionOptions } from '../send-state-transition';
 import type { SbpmSendStateTransitionOptions } from '../send-state-transition';
+import SbpmReceiveStateTransition, { createReceiveStateTransitionOptions } from '../receive-state-transition';
+import type { SbpmReceiveStateTransitionOptions } from '../receive-state-transition';
 
 export default class SbpmFactory {
   #canvas: SbpmCanvas;
@@ -77,6 +79,11 @@ export default class SbpmFactory {
   public addSbpmSendStateTransition(options: SbpmSendStateTransitionOptions) {
     validateLinkOptions(SbpmElementType.SEND_STATE_TRANSITION, options);
     return new SbpmSendStateTransition(createSendStateTransitionOptions(options)).addTo(this.#canvas.graph);
+  }
+
+  public addSbpmReceiveStateTransition(options: SbpmReceiveStateTransitionOptions) {
+    validateLinkOptions(SbpmElementType.RECEIVE_STATE_TRANSITION, options);
+    return new SbpmReceiveStateTransition(createReceiveStateTransitionOptions(options)).addTo(this.#canvas.graph);
   }
 
   public updateElement<T extends SbpmElement>(element: T, options: ElementOptionsType<T>) {

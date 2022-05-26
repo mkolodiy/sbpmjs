@@ -12,6 +12,7 @@ import SbpmSendState from '../send-state';
 import SbpmReceiveState from '../receive-state';
 import SbpmFunctionStateTransition, { createFunctionStateTransitionOptions } from '../functional-state-transition';
 import SbpmSendStateTransition, { createSendStateTransitionOptions } from '../send-state-transition';
+import SbpmReceiveStateTransition, { createReceiveStateTransitionOptions } from '../receive-state-transition';
 
 export function getDefaultLink(type: string) {
   if (type === SbpmElementType.PROCESS_NETWORK) {
@@ -28,6 +29,10 @@ export function getDefaultLink(type: string) {
 
   if (type === SbpmElementType.SEND_STATE) {
     return new SbpmSendStateTransition(createSendStateTransitionOptions());
+  }
+
+  if (type === SbpmElementType.RECEIVE_STATE) {
+    return new SbpmReceiveStateTransition(createReceiveStateTransitionOptions());
   }
 
   return new SbpmLink();
@@ -58,6 +63,14 @@ export function isValidConnection(_cellViewS: joint.dia.CellView, cellViewT: joi
     return true;
   }
 
+  if (
+    cellViewT.model.isElement() &&
+    (cellViewT.model instanceof SbpmFunctionState || cellViewT.model instanceof SbpmSendState) &&
+    linkView.model instanceof SbpmReceiveStateTransition
+  ) {
+    return true;
+  }
+
   return false;
 }
 
@@ -76,6 +89,9 @@ export function validateLinkOptions(type: string, options: SbpmLinkOptions) {
       break;
     case SbpmElementType.SEND_STATE_TRANSITION:
       validateSbpmSendStateTransitionOptions(source, target);
+      break;
+    case SbpmElementType.RECEIVE_STATE_TRANSITION:
+      validateSbpmReceiveStateTransitionOptions(source, target);
       break;
     default:
       throw Error(`${type} is not supported`);
@@ -118,6 +134,16 @@ function validateSbpmSendStateTransitionOptions(source: unknown, target: unknown
   }
 
   if (!(target instanceof SbpmFunctionState) && !(target instanceof SbpmReceiveState)) {
+    throw Error('Target has to be of type SbpmSendState or SbpmReceiveState');
+  }
+}
+
+function validateSbpmReceiveStateTransitionOptions(source: unknown, target: unknown) {
+  if (!(source instanceof SbpmReceiveState)) {
+    throw Error('Source has to be of type SbpmFunctionState');
+  }
+
+  if (!(target instanceof SbpmFunctionState) && !(target instanceof SbpmSendState)) {
     throw Error('Target has to be of type SbpmSendState or SbpmReceiveState');
   }
 }

@@ -52,6 +52,13 @@ const functionStateTransition = modeler.factory.addSbpmFunctionStateTransition({
 const sendStateTransition = modeler.factory.addSbpmSendStateTransition({
   source: sendState,
   target: receiveState,
+  receiver: 'Some receiver',
+  message: 'Some message',
+});
+
+const receiveStateTransition = modeler.factory.addSbpmReceiveStateTransition({
+  source: receiveState,
+  target: functionState,
   sender: 'Some sender',
   message: 'Some message',
 });
@@ -60,12 +67,12 @@ const sendStateTransition = modeler.factory.addSbpmSendStateTransition({
 //   label: 'Test',
 // });
 
-setTimeout(() => {
-  sendStateTransition.update({
-    sender: 'New sender',
-    message: 'New message',
-  });
-}, 2000);
+// setTimeout(() => {
+//   sendStateTransition.update({
+//     receiver: 'New sender',
+//     message: 'New message',
+//   });
+// }, 2000);
 
 // const element1 = modeler.factory.addSbpmProcessNetwork({ id: 'test_1', label: 'Process network', position: { x: 100, y: 100 } });
 

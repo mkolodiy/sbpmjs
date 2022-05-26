@@ -24,21 +24,21 @@ export default class SbpmSendStateTransition extends SbpmLink<SbpmSendStateTrans
 
   constructor(attributes: SbpmLinkAttributes<SbpmSendStateTransitionOptions> | undefined, opt?: joint.dia.Graph.Options | undefined) {
     super(attributes, opt);
-    this.appendLabel(getIconLabel(attributes?.initialOptions?.sender, attributes?.initialOptions?.message));
+    this.appendLabel(getIconLabel(attributes?.initialOptions?.receiver, attributes?.initialOptions?.message));
   }
 
   public update(options: GetUpdateOptions<SbpmSendStateTransitionOptions>) {
-    const { sender, message, ...restOptions } = options;
+    const { receiver, message, ...restOptions } = options;
 
-    if (sender && message) {
+    if (receiver && message) {
       this.removeLabel(0);
-      this.insertLabel(0, getIconLabel(sender, message));
+      this.insertLabel(0, getIconLabel(receiver, message));
     } else {
       const existingIconLabel = this.label(0);
       this.removeLabel(0);
 
-      if (sender) {
-        this.insertLabel(0, getIconLabelSender(existingIconLabel, sender));
+      if (receiver) {
+        this.insertLabel(0, getIconLabelSender(existingIconLabel, receiver));
       }
 
       if (message) {
@@ -64,12 +64,12 @@ export default class SbpmSendStateTransition extends SbpmLink<SbpmSendStateTrans
   }
 }
 
-function getIconLabel(sender = '', message = '') {
-  return joint.util.merge(iconLabel, { attrs: { headerText: { textWrap: { text: sender } }, bodyText: { textWrap: { text: message } } } });
+function getIconLabel(receiver = '', message = '') {
+  return joint.util.merge(iconLabel, { attrs: { headerText: { textWrap: { text: receiver } }, bodyText: { textWrap: { text: message } } } });
 }
 
-function getIconLabelSender(existingIconLabel: joint.dia.Link.Label, sender = '') {
-  return joint.util.merge(joint.util.cloneDeep(existingIconLabel), { attrs: { headerText: { textWrap: { text: sender } } } });
+function getIconLabelSender(existingIconLabel: joint.dia.Link.Label, receiver = '') {
+  return joint.util.merge(joint.util.cloneDeep(existingIconLabel), { attrs: { headerText: { textWrap: { text: receiver } } } });
 }
 
 function getIconLabelMessage(existingIconLabel: joint.dia.Link.Label, message = '') {
