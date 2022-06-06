@@ -5,19 +5,40 @@ export const SbpmShapeNamespace = {
   SBD: 'sbpm.sbd',
 } as const;
 
+export const SbpmCommonType = {
+  ORIGIN: 'Origin',
+} as const;
+
 export const SbpmElementType = {
-  ORIGIN: `${SbpmShapeNamespace.COMMON}.Origin`,
-  PROCESS_NETWORK: `${SbpmShapeNamespace.PND}.ProcessNetwork`,
-  PROCESS_TRANSITION: `${SbpmShapeNamespace.PND}.ProcessTransition`,
-  PROCESS_MODEL: `${SbpmShapeNamespace.PND}.ProcessModel`,
-  SUBJECT: `${SbpmShapeNamespace.SID}.Subject`,
-  MESSAGE_TRANSITION: `${SbpmShapeNamespace.SID}.MessageTransition`,
-  FUNCTION_STATE: `${SbpmShapeNamespace.SBD}.FunctionState`,
-  SEND_STATE: `${SbpmShapeNamespace.SBD}.SendState`,
-  RECEIVE_STATE: `${SbpmShapeNamespace.SBD}.ReceiveState`,
-  FUNCTION_STATE_TRANSITION: `${SbpmShapeNamespace.SBD}.FunctionStateTransition`,
-  SEND_STATE_TRANSITION: `${SbpmShapeNamespace.SBD}.SendStateTransition`,
-  RECEIVE_STATE_TRANSITION: `${SbpmShapeNamespace.SBD}.ReceiveStateTransition`,
+  PROCESS_NETWORK: 'ProcessNetwork',
+  PROCESS_MODEL: 'ProcessModel',
+  SUBJECT: 'Subject',
+  FUNCTION_STATE: 'FunctionState',
+  SEND_STATE: 'SendState',
+  RECEIVE_STATE: 'ReceiveState',
+} as const;
+
+export const SbpmLinkType = {
+  PROCESS_TRANSITION: 'ProcessTransition',
+  MESSAGE_TRANSITION: 'MessageTransition',
+  FUNCTION_STATE_TRANSITION: 'FunctionStateTransition',
+  SEND_STATE_TRANSITION: 'SendStateTransition',
+  RECEIVE_STATE_TRANSITION: 'ReceiveStateTransition',
+} as const;
+
+export const JointEvent = {
+  CELL_POINTERUP: 'cell:pointerup',
+  BLANK_POINTERDOWN: 'blank:pointerdown',
+  BLANK_POINTERUP: 'blank:pointerup',
+  ELEMENT_POINTERDOWN: 'element:pointerdown',
+  LINK_POINTERDOWN: 'link:pointerdown',
+  LINK_CONNECT: 'link:connect',
+} as const;
+
+export const CustomEvent = {
+  LINK_REMOVE: 'link:remove',
+  LINK_REMOVE_VERTICES: 'link:removeVertices',
+  ELEMENT_UPDATED: 'element:updated',
 } as const;
 
 export const SVG_PREFIX = 'data:image/svg+xml;utf8,';
