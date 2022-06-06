@@ -12,3 +12,7 @@ export function combineStrings(strings: string[], separator = ' ') {
 export function createJointType(namespace: SbpmShapeNamespaceKey, type: SbpmCommonTypeKey | SbpmElementTypeKey | SbpmLinkTypeKey) {
   return `${namespace}.${type}`;
 }
+
+export function getSbpmType(type: string) {
+  return type.split('.')[2];
+}

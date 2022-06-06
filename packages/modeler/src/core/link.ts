@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
-import type { SbpmLinkTypeKey, SbpmShapeAttributes, SbpmShapeOptions } from '../common';
-import SbpmElement from './element';
+import type { GetUpdateOptions, SbpmLinkTypeKey, SbpmShapeAttributes, SbpmShapeOptions } from '../common';
+import { SbpmElement } from './element';
 import type { SbpmLinkToolsOptions } from './link-tools';
 
 export const attrs = {
@@ -71,7 +71,7 @@ export class SbpmLink<T extends SbpmLinkTypeKey = SbpmLinkTypeKey> extends joint
     return Reflect.has(this.target(), 'id');
   }
 
-  public update(options: SbpmLinkOptions<T>) {
+  public update(options: GetUpdateOptions<SbpmLinkOptions<T>>) {
     const { source, target } = options;
 
     if (source) {

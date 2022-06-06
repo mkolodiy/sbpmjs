@@ -19,7 +19,7 @@ const modeler = new SbpmModeler({
   },
 });
 
-const processNetwork = modeler.addElement({
+const processNetwork1 = modeler.addElement({
   type: 'ProcessNetwork',
   label: 'Test',
   position: {
@@ -28,7 +28,14 @@ const processNetwork = modeler.addElement({
   },
 });
 
-// modeler.canvas.graph.addCell(processNetwork);
+const processNetwork2 = modeler.addElement({
+  type: 'ProcessNetwork',
+  label: 'Test',
+  position: {
+    x: 500,
+    y: 100,
+  },
+});
 
 document.getElementById('clear-canvas').addEventListener('click', () => {
   modeler.canvas.clear();

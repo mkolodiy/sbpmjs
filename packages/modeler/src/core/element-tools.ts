@@ -1,7 +1,7 @@
 import * as joint from 'jointjs';
 import { callMadeIcon, deleteIcon, touchAppIcon } from '../common';
-import { SbpmModelerOptions } from '../modeler';
-import SbpmElementView from './element-view';
+import type { SbpmModelerOptions } from './canvas';
+import { SbpmElementView } from './element-view';
 
 const defaultBoundaryOptions: joint.elementTools.Boundary.Options = {
   focusOpacity: 1,
@@ -133,7 +133,7 @@ export function createElementTools(toolsOptions: SbpmElementToolsOptions) {
   return toolsView;
 }
 
-export function addActionsToToolsOptions(toolsOptions: SbpmElementToolsOptions, modelerOptions: SbpmModelerOptions): SbpmElementToolsOptions {
+export function addActionsToElementToolsOptions(toolsOptions: SbpmElementToolsOptions, modelerOptions: SbpmModelerOptions): SbpmElementToolsOptions {
   const { onDeleteElement, onOpenElement } = modelerOptions;
   const toolsOptionsCopy = joint.util.cloneDeep(toolsOptions);
 

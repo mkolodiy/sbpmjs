@@ -1,7 +1,7 @@
-import type { SbpmModelerOptions } from './core';
-import { SbpmCanvas } from './core';
-import { typeToClassMapping } from './sbpm';
-import type { SbpmElementOptions } from './sbpm';
+import type { SbpmElement, SbpmLink, SbpmModelerOptions } from './core';
+import { SbpmCanvas } from './canvas';
+import { ElementOptionsType, elementTypeToElementClassMapping, LinkOptionsType, linkTypeToLinkClassMapping } from './sbpm';
+import type { SbpmElementOptions, SbpmLinkOptions } from './sbpm';
 
 export default class SbpmModeler {
   #canvas: SbpmCanvas;
@@ -22,26 +22,27 @@ export default class SbpmModeler {
 
   public createElement(options: SbpmElementOptions) {
     const { type } = options;
-    return new typeToClassMapping[type](options, this.#options);
+    return new elementTypeToElementClassMapping[type](options, this.#options);
   }
 
-  public createLink() {
-    // TODO
+  public createLink(options: SbpmLinkOptions) {
+    const { type } = options;
+    return new linkTypeToLinkClassMapping[type](options, this.#options);
   }
 
-  public updateElement() {
-    // TODO
+  public updateElement<T extends SbpmElement>(element: T, options: ElementOptionsType<T>) {
+    element.update(options);
   }
 
-  public updateLink() {
-    // TODO
+  public updateLink<T extends SbpmLink>(link: T, options: LinkOptionsType<T>) {
+    link.update(options);
   }
 
   public addElement(options: SbpmElementOptions) {
     return this.createElement(options).addTo(this.#canvas.graph);
   }
 
-  public addLink() {
-    // TODO
+  public addLink(options: SbpmLinkOptions) {
+    return this.createLink(options).addTo(this.#canvas.graph);
   }
 }
