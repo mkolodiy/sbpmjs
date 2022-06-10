@@ -1,7 +1,7 @@
 import * as joint from 'jointjs';
 import { SbpmShapeNamespace, CustomEvent, JointEvent, combineStrings } from './common';
 import { SbpmCanvasOrigin, SbpmElement, SbpmElementView, SbpmLink, SbpmLinkView } from './core';
-import { getDefaultLink } from './sbpm';
+import { getDefaultLink, isValidConnection } from './sbpm';
 
 const paperOptions: joint.dia.Paper.Options = {
   width: '100%',
@@ -25,7 +25,7 @@ const paperOptions: joint.dia.Paper.Options = {
   elementView,
   linkView,
   defaultLink,
-  // validateConnection,
+  validateConnection,
 };
 
 function elementView() {
@@ -45,16 +45,16 @@ function defaultLink(cellView: joint.dia.CellView) {
   // return new SbpmLink();
 }
 
-// function validateConnection(
-//   cellViewS: joint.dia.CellView,
-//   _magnetS: unknown,
-//   cellViewT: joint.dia.CellView,
-//   _magnetT: unknown,
-//   _end: joint.dia.LinkEnd,
-//   linkView: joint.dia.LinkView
-// ) {
-//   return isValidConnection(cellViewS, cellViewT, linkView);
-// }
+function validateConnection(
+  cellViewS: joint.dia.CellView,
+  _magnetS: unknown,
+  cellViewT: joint.dia.CellView,
+  _magnetT: unknown,
+  _end: joint.dia.LinkEnd,
+  linkView: joint.dia.LinkView
+) {
+  return isValidConnection(cellViewS, cellViewT, linkView);
+}
 
 type EventMap = joint.dia.Paper.EventMap & {
   [JointEvent.ELEMENT_POINTERDOWN]: (elementView: SbpmElementView, evt: joint.dia.Event, x: number, y: number) => void;
