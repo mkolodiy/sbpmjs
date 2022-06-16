@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
-import { CustomEvent, SbpmShapeOptions, SbpmElementTypeKey } from '../common';
-import type { GetUpdateOptions, SbpmShapeAttributes } from '../common';
+import { CustomEvent, SbpmShapeOptions } from '../common';
+import type { GetUpdateOptions, SbpmShapeAttributes, SbpmElementType } from '../common';
 import type { SbpmElementToolsOptions } from './element-tools';
 
 const attrs = {
@@ -32,12 +32,12 @@ const markup = [
 
 export type SbpmElementAttributes = joint.dia.Element.GenericAttributes<joint.shapes.standard.ImageSelectors> & SbpmShapeAttributes<SbpmElementToolsOptions>;
 
-export type SbpmElementOptions<T extends SbpmElementTypeKey = SbpmElementTypeKey> = SbpmShapeOptions<T> & {
+export type SbpmElementOptions = SbpmShapeOptions & {
   label: string;
   position: joint.dia.Point;
 };
 
-export class SbpmElement<T extends SbpmElementTypeKey = SbpmElementTypeKey> extends joint.dia.Element<SbpmElementAttributes> {
+export class SbpmElement extends joint.dia.Element<SbpmElementAttributes> {
   defaults() {
     return {
       ...super.defaults,
@@ -51,7 +51,7 @@ export class SbpmElement<T extends SbpmElementTypeKey = SbpmElementTypeKey> exte
     return this.attributes.toolsOptions as SbpmElementToolsOptions;
   }
 
-  public update(options: GetUpdateOptions<SbpmElementOptions<T>>) {
+  public update(options: GetUpdateOptions<SbpmElementOptions>) {
     const { label, position } = options;
 
     if (label) {

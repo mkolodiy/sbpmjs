@@ -1,5 +1,6 @@
 import * as joint from 'jointjs';
-import { SbpmShapeNamespace, CustomEvent, JointEvent, combineStrings } from './common';
+import { SbpmShapeNamespace, CustomEvent, JointEvent, combineStrings, getSbpmType } from './common';
+import type { SbpmElementType } from './common';
 import { SbpmCanvasOrigin, SbpmElement, SbpmElementView, SbpmLink, SbpmLinkView } from './core';
 import { getDefaultLink, isValidConnection } from './sbpm';
 
@@ -37,12 +38,9 @@ function linkView() {
 }
 
 function defaultLink(cellView: joint.dia.CellView) {
-  // const { getDefaultLink } = await import('../sbpm');
   const sbpmElementView = cellView as SbpmElementView;
-  const type = sbpmElementView.element.get('type');
-  console.log(getDefaultLink(type));
+  const type = getSbpmType(sbpmElementView.element.get('type')) as SbpmElementType;
   return getDefaultLink(type);
-  // return new SbpmLink();
 }
 
 function validateConnection(

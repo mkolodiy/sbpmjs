@@ -5,27 +5,6 @@ export const SbpmShapeNamespace = {
   SBD: 'sbpm.sbd',
 } as const;
 
-export const SbpmCommonType = {
-  ORIGIN: 'Origin',
-} as const;
-
-export const SbpmElementType = {
-  PROCESS_NETWORK: 'ProcessNetwork',
-  PROCESS_MODEL: 'ProcessModel',
-  SUBJECT: 'Subject',
-  FUNCTION_STATE: 'FunctionState',
-  SEND_STATE: 'SendState',
-  RECEIVE_STATE: 'ReceiveState',
-} as const;
-
-export const SbpmLinkType = {
-  PROCESS_TRANSITION: 'ProcessTransition',
-  MESSAGE_TRANSITION: 'MessageTransition',
-  FUNCTION_STATE_TRANSITION: 'FunctionStateTransition',
-  SEND_STATE_TRANSITION: 'SendStateTransition',
-  RECEIVE_STATE_TRANSITION: 'ReceiveStateTransition',
-} as const;
-
 export const JointEvent = {
   CELL_POINTERUP: 'cell:pointerup',
   BLANK_POINTERDOWN: 'blank:pointerdown',

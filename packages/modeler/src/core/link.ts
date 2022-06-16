@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import type { GetUpdateOptions, SbpmLinkTypeKey, SbpmShapeAttributes, SbpmShapeOptions } from '../common';
+import type { GetUpdateOptions, SbpmShapeAttributes, SbpmShapeOptions } from '../common';
 import { SbpmElement } from './element';
 import type { SbpmLinkToolsOptions } from './link-tools';
 
@@ -44,12 +44,12 @@ export const markup = [
 
 export type SbpmLinkAttributes = joint.dia.Link.GenericAttributes<joint.shapes.standard.LinkSelectors> & SbpmShapeAttributes<SbpmLinkToolsOptions>;
 
-export type SbpmLinkOptions<Type extends SbpmLinkTypeKey = SbpmLinkTypeKey, Source = SbpmElement, Target = SbpmElement> = SbpmShapeOptions<Type> & {
+export type SbpmLinkOptions<Source = SbpmElement, Target = SbpmElement> = SbpmShapeOptions & {
   source?: Source;
   target?: Target;
 };
 
-export class SbpmLink<T extends SbpmLinkTypeKey = SbpmLinkTypeKey> extends joint.dia.Link<SbpmLinkAttributes> {
+export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
   defaults() {
     return {
       ...super.defaults,
@@ -71,7 +71,7 @@ export class SbpmLink<T extends SbpmLinkTypeKey = SbpmLinkTypeKey> extends joint
     return Reflect.has(this.target(), 'id');
   }
 
-  public update(options: GetUpdateOptions<SbpmLinkOptions<T>>) {
+  public update(options: GetUpdateOptions<SbpmLinkOptions>) {
     const { source, target } = options;
 
     if (source) {

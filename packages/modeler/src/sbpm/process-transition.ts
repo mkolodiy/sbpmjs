@@ -1,10 +1,11 @@
 import * as joint from 'jointjs';
-import { SbpmLinkType, autoRenewIcon, createJointType } from '../common';
-import type { GetUpdateOptions } from '../common';
+import { autoRenewIcon, createJointType } from '../common';
+import type { GetUpdateOptions, SbpmProcessTransitionType } from '../common';
 import { SbpmLink, SbpmLinkView, addActionsToLinkToolsOptions } from '../core';
 import type { SbpmLinkAttributes, SbpmLinkToolsOptions, SbpmLinkOptions } from '../core';
 import { SbpmProcessNetwork } from './process-network';
 import type { SbpmModelerOptions } from '../canvas';
+import { SbpmProcessModel } from './process-model';
 
 const toolsOptions: SbpmLinkToolsOptions = [
   {
@@ -39,20 +40,18 @@ const toolsOptions: SbpmLinkToolsOptions = [
   },
 ];
 
-export type SbpmProcessTransitionOptions = SbpmLinkOptions<'ProcessTransition', SbpmProcessNetwork, SbpmProcessNetwork>;
+export type SbpmProcessTransitionOptions = SbpmLinkOptions<SbpmProcessNetwork | SbpmProcessModel, SbpmProcessModel>;
 
 export class SbpmProcessTransition extends SbpmLink {
-  type: typeof SbpmLinkType.PROCESS_TRANSITION = SbpmLinkType.PROCESS_TRANSITION;
+  type: SbpmProcessTransitionType = 'ProcessTransition';
 
   constructor(options: SbpmProcessTransitionOptions = {} as SbpmProcessTransitionOptions, modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions) {
-    const { type, ...restOptions } = options;
-
     const attributes = joint.util.merge(
       {},
       {
         toolsOptions: addActionsToLinkToolsOptions(toolsOptions, modelerOptions),
-        type: createJointType('sbpm.pnd', type),
-        ...restOptions,
+        type: createJointType('sbpm.pnd', 'ProcessTransition'),
+        ...options,
       }
     ) as SbpmLinkAttributes;
 

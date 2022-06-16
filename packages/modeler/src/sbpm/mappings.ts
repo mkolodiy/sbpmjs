@@ -1,20 +1,37 @@
-import { SbpmElementType, SbpmLinkType } from '../common';
+import { SbpmFunctionStateTransition } from './functional-state-transition';
 import { SbpmProcessNetwork } from './process-network';
+import { SbpmProcessModel } from './process-model';
+import { SbpmSubject } from './subject';
+import { SbpmSendState } from './send-state';
+import { SbpmReceiveState } from './receive-state';
+import { SbpmFunctionState } from './function-state';
 import { SbpmProcessTransition } from './process-transition';
+import { SbpmMessageTransition } from './message-transition';
+import { SbpmSendStateTransition } from './send-state-transition';
+import { SbpmReceiveStateTransition } from './receive-state-transition';
 
 export const elementTypeToElementClassMapping = {
-  [SbpmElementType.PROCESS_NETWORK]: SbpmProcessNetwork,
+  ProcessNetwork: SbpmProcessNetwork,
+  ProcessModel: SbpmProcessModel,
+  Subject: SbpmSubject,
+  SendState: SbpmSendState,
+  ReceiveState: SbpmReceiveState,
+  FunctionState: SbpmFunctionState,
 } as const;
 
 export const linkTypeToLinkClassMapping = {
-  [SbpmLinkType.PROCESS_TRANSITION]: SbpmProcessTransition,
+  ProcessTransition: SbpmProcessTransition,
+  MessageTransition: SbpmMessageTransition,
+  SendStateTransition: SbpmMessageTransition,
+  ReceiveStateTransition: SbpmReceiveStateTransition,
+  FunctionStateTransition: SbpmFunctionStateTransition,
 } as const;
 
 export const elementTypeToLinkClassMapping = {
-  [SbpmElementType.PROCESS_NETWORK]: SbpmProcessTransition,
-  // [SbpmElementType.PROCESS_MODEL]: SbpmProcessTransition,
-  // [SbpmElementType.SUBJECT]: SbpmProcessTransition,
-  // [SbpmElementType.SEND_STATE]: SbpmProcessTransition,
-  // [SbpmElementType.RECEIVE_STATE]: SbpmProcessTransition,
-  // [SbpmElementType.FUNCTION_STATE]: SbpmProcessTransition,
+  ProcessNetwork: SbpmProcessTransition,
+  ProcessModel: SbpmProcessTransition,
+  Subject: SbpmMessageTransition,
+  SendState: SbpmSendStateTransition,
+  ReceiveState: SbpmReceiveStateTransition,
+  FunctionState: SbpmFunctionStateTransition,
 } as const;

@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
 import { createLinkTools } from './link-tools';
-import SbpmLink from './link';
+import { SbpmLink } from './link';
 
 export class SbpmLinkView extends joint.dia.LinkView {
   // Workaround to have all custom properties and methods on the model
