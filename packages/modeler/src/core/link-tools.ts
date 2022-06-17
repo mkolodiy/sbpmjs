@@ -1,7 +1,5 @@
 import * as joint from 'jointjs';
 import { deleteIcon, touchAppIcon } from '../common';
-import { SbpmModelerOptions } from './canvas';
-import { SbpmLinkView } from './link-view';
 
 const defaultButtonOptions: joint.linkTools.Button.Options = {
   markup: [
@@ -179,27 +177,4 @@ export function createLinkTools(toolsOptions: SbpmLinkToolsOptions) {
   });
 
   return toolsView;
-}
-
-export function addActionsToLinkToolsOptions(toolsOptions: SbpmLinkToolsOptions, modelerOptions: SbpmModelerOptions): SbpmLinkToolsOptions {
-  const { onDeleteLink, onOpenLink } = modelerOptions;
-
-  const toolsOptionsCopy = joint.util.cloneDeep(toolsOptions);
-
-  for (const toolOption of toolsOptionsCopy) {
-    if (toolOption.type === 'remove') {
-      toolOption.options.action = (_evt: joint.dia.Event, linkView: joint.dia.LinkView, tool: joint.dia.ToolView) => {
-        onDeleteLink?.((linkView as SbpmLinkView).link);
-        (linkView as SbpmLinkView).link.remove({ ui: true, tool: tool.cid });
-      };
-    }
-
-    if (toolOption.type === 'open') {
-      toolOption.options.action = (_evt: joint.dia.Event, linkView: joint.dia.LinkView) => {
-        onOpenLink?.((linkView as SbpmLinkView).link);
-      };
-    }
-  }
-
-  return toolsOptionsCopy;
 }

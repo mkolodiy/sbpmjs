@@ -13,6 +13,6 @@ export function createJointType(namespace: SbpmShapeNamespaceType, type: SbpmSha
   return `${namespace}.${type}`;
 }
 
-export function getSbpmType(type: string) {
+export function getSbpmShapeType(type: string) {
   return type.split('.')[2];
 }
