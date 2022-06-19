@@ -131,6 +131,13 @@ export type SbpmLinkResetVerticesToolOptions = { type: 'reset-vertices'; options
 
 export type SbpmLinkToolsOptions = (SbpmLinkButtonToolOptions | SbpmLinkRemoveToolOptions | SbpmLinkOpenToolOptions | SbpmLinkResetVerticesToolOptions)[];
 
+export type SbpmLinkLabelToolsOptions = {
+  iconLabel: joint.dia.Link.Label;
+  selectionLabel: joint.dia.Link.Label;
+  removeLabel: joint.dia.Link.Label;
+  removeVerticesLabel: joint.dia.Link.Label;
+};
+
 function createButton(options: joint.linkTools.Button.Options) {
   return new joint.linkTools.Button(joint.util.merge(joint.util.cloneDeep(defaultButtonOptions), options));
 }

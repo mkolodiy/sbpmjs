@@ -22,7 +22,7 @@ export const elementTypeToElementClassMapping = {
 export const linkTypeToLinkClassMapping = {
   ProcessTransition: SbpmProcessTransition,
   MessageTransition: SbpmMessageTransition,
-  SendStateTransition: SbpmMessageTransition,
+  SendStateTransition: SbpmSendStateTransition,
   ReceiveStateTransition: SbpmReceiveStateTransition,
   FunctionStateTransition: SbpmFunctionStateTransition,
 } as const;

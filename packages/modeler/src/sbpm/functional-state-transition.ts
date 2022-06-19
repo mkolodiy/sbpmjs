@@ -1,12 +1,12 @@
 import * as joint from 'jointjs';
-import { autoRenewIcon, createJointType, FONT_FAMILY, deleteIcon, CustomEvent } from '../common';
-import type { GetUpdateOptions, SbpmFunctionStateTransitionType } from '../common';
-import { SbpmLink, createIconLabel, createSelectionLabel, createButtonLabel } from '../core';
-import type { SbpmLinkAttributes, SbpmLinkOptions } from '../core';
+import { autoRenewIcon, FONT_FAMILY, deleteIcon, CustomEvent } from '../common';
+import type { SbpmLinkLabelToolsOptions } from '../core';
 import type { SbpmModelerOptions } from '../canvas';
 import { SbpmFunctionState } from './function-state';
 import { SbpmSendState } from './send-state';
 import { SbpmReceiveState } from './receive-state';
+import { SbpmStateTransition } from './state-transition';
+import type { SbpmStateTransitionOptions } from './state-transition';
 
 const jointOptions: joint.shapes.standard.ImageAttributes = {
   attrs: {
@@ -24,7 +24,7 @@ const iconLabel: joint.dia.Link.Label = {
     },
     {
       tagName: 'text',
-      selector: 'text',
+      selector: 'bodyText',
     },
   ],
   attrs: {
@@ -38,7 +38,7 @@ const iconLabel: joint.dia.Link.Label = {
       yAlignment: 'middle',
       cursor: 'pointer',
     },
-    text: {
+    bodyText: {
       xAlignment: 'middle',
       yAlignment: 'middle',
       textWrap: {
@@ -99,57 +99,20 @@ const removeVerticesLabel: joint.dia.Link.Label = {
   },
 };
 
-export type SbpmFunctionStateTransitionOptions = SbpmLinkOptions<SbpmFunctionState, SbpmSendState | SbpmReceiveState> & {
-  label: string;
+const labelToolsOptions: SbpmLinkLabelToolsOptions = {
+  iconLabel,
+  removeLabel,
+  removeVerticesLabel,
+  selectionLabel,
 };
 
-export class SbpmFunctionStateTransition extends SbpmLink {
-  type: SbpmFunctionStateTransitionType = 'FunctionStateTransition';
+export type SbpmFunctionStateTransitionOptions = Omit<SbpmStateTransitionOptions<SbpmFunctionState, SbpmSendState | SbpmReceiveState>, 'subject'>;
 
+export class SbpmFunctionStateTransition extends SbpmStateTransition<'FunctionStateTransition'> {
   constructor(
     options: SbpmFunctionStateTransitionOptions = {} as SbpmFunctionStateTransitionOptions,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions
+    modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions
   ) {
-    const { label, ...restOptions } = options;
-
-    const attributes = joint.util.merge(jointOptions, {
-      toolsOptions: [],
-      type: createJointType('sbpm.sbd', 'FunctionStateTransition'),
-      ...restOptions,
-    }) as SbpmLinkAttributes;
-
-    super(attributes);
-
-    this.appendLabel(createIconLabel(getIconLabel(label)));
+    super('FunctionStateTransition', jointOptions, [], labelToolsOptions, options, modelerOptions);
   }
-
-  public update(options: GetUpdateOptions<SbpmFunctionStateTransitionOptions>) {
-    const { label, ...restOptions } = options;
-
-    if (label) {
-      this.removeLabel(0);
-      this.insertLabel(0, createIconLabel(getIconLabel(label)));
-    }
-
-    super.update(restOptions);
-  }
-
-  public select() {
-    super.select();
-    this.appendLabel(createSelectionLabel(selectionLabel));
-    this.appendLabel(createButtonLabel(removeLabel));
-    this.appendLabel(createButtonLabel(removeVerticesLabel));
-  }
-
-  public deselect() {
-    super.deselect();
-    this.labels()
-      .slice(1)
-      .forEach(() => this.removeLabel(-1));
-  }
-}
-
-function getIconLabel(label = '') {
-  return joint.util.merge(iconLabel, { attrs: { text: { textWrap: { text: label } } } });
 }

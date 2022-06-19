@@ -1,12 +1,11 @@
 import * as joint from 'jointjs';
-import { autoRenewIcon, createJointType, FONT_FAMILY, deleteIcon, CustomEvent } from '../common';
-import type { GetUpdateOptions, SbpmSendStateTransitionType } from '../common';
-import { SbpmLink, createSelectionLabel, createButtonLabel } from '../core';
-import type { SbpmLinkAttributes, SbpmLinkOptions } from '../core';
+import { autoRenewIcon, FONT_FAMILY, deleteIcon, CustomEvent } from '../common';
+import type { SbpmLinkLabelToolsOptions } from '../core';
 import type { SbpmModelerOptions } from '../canvas';
 import { SbpmFunctionState } from './function-state';
 import { SbpmSendState } from './send-state';
 import { SbpmReceiveState } from './receive-state';
+import { SbpmStateTransition, SbpmStateTransitionOptions } from './state-transition';
 
 const jointOptions: joint.shapes.standard.ImageAttributes = {
   attrs: {
@@ -60,7 +59,7 @@ const iconLabel: joint.dia.Link.Label = {
       xAlignment: 'middle',
       yAlignment: -25,
       textWrap: {
-        text: 'Sender',
+        text: 'Receiver',
         width: 180,
         height: 30,
       },
@@ -131,77 +130,17 @@ const removeVerticesLabel: joint.dia.Link.Label = {
   },
 };
 
-export type SbpmSendStateTransitionOptions = SbpmLinkOptions<SbpmSendState, SbpmFunctionState | SbpmReceiveState> & {
-  receiver: string;
-  message: string;
+const labelToolsOptions: SbpmLinkLabelToolsOptions = {
+  iconLabel,
+  removeLabel,
+  removeVerticesLabel,
+  selectionLabel,
 };
 
-export class SbpmSendStateTransition extends SbpmLink {
-  type: SbpmSendStateTransitionType = 'SendStateTransition';
+export type SbpmSendStateTransitionOptions = SbpmStateTransitionOptions<SbpmSendState, SbpmFunctionState | SbpmReceiveState>;
 
-  constructor(
-    options: SbpmSendStateTransitionOptions = {} as SbpmSendStateTransitionOptions,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions
-  ) {
-    const { receiver, message, ...restOptions } = options;
-
-    const attributes = joint.util.merge(jointOptions, {
-      toolsOptions: [],
-      type: createJointType('sbpm.sbd', 'SendStateTransition'),
-      ...restOptions,
-    }) as SbpmLinkAttributes;
-
-    super(attributes);
-
-    this.appendLabel(getIconLabel(receiver, message));
+export class SbpmSendStateTransition extends SbpmStateTransition<'SendStateTransition'> {
+  constructor(options: SbpmSendStateTransitionOptions = {} as SbpmSendStateTransitionOptions, modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions) {
+    super('SendStateTransition', jointOptions, [], labelToolsOptions, options, modelerOptions);
   }
-
-  public update(options: GetUpdateOptions<SbpmSendStateTransitionOptions>) {
-    const { receiver, message, ...restOptions } = options;
-
-    if (receiver && message) {
-      this.removeLabel(0);
-      this.insertLabel(0, getIconLabel(receiver, message));
-    } else {
-      const existingIconLabel = this.label(0);
-      this.removeLabel(0);
-
-      if (receiver) {
-        this.insertLabel(0, getIconLabelSender(existingIconLabel, receiver));
-      }
-
-      if (message) {
-        this.insertLabel(0, getIconLabelMessage(existingIconLabel, message));
-      }
-    }
-
-    super.update(restOptions);
-  }
-
-  public select() {
-    super.select();
-    this.appendLabel(createSelectionLabel(selectionLabel));
-    this.appendLabel(createButtonLabel(removeLabel));
-    this.appendLabel(createButtonLabel(removeVerticesLabel));
-  }
-
-  public deselect() {
-    super.deselect();
-    this.labels()
-      .slice(1)
-      .forEach(() => this.removeLabel(-1));
-  }
-}
-
-function getIconLabel(receiver = '', message = '') {
-  return joint.util.merge(iconLabel, { attrs: { headerText: { textWrap: { text: receiver } }, bodyText: { textWrap: { text: message } } } });
-}
-
-function getIconLabelSender(existingIconLabel: joint.dia.Link.Label, receiver = '') {
-  return joint.util.merge(joint.util.cloneDeep(existingIconLabel), { attrs: { headerText: { textWrap: { text: receiver } } } });
-}
-
-function getIconLabelMessage(existingIconLabel: joint.dia.Link.Label, message = '') {
-  return joint.util.merge(joint.util.cloneDeep(existingIconLabel), { attrs: { bodyText: { textWrap: { text: message } } } });
 }

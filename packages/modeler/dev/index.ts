@@ -94,7 +94,12 @@ const receiveState = modeler.addElement({
   },
 });
 
-console.log(receiveState);
+const sendStateTransition = modeler.addLink({
+  type: 'SendStateTransition',
+  source: sendState,
+  target: receiveState,
+  subject: 'test',
+});
 
 const functionState = modeler.addElement({
   type: 'FunctionState',

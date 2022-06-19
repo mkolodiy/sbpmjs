@@ -1,12 +1,12 @@
 import * as joint from 'jointjs';
-import { autoRenewIcon, createJointType, FONT_FAMILY, deleteIcon, CustomEvent } from '../common';
-import type { GetUpdateOptions, SbpmReceiveStateTransitionType } from '../common';
-import { SbpmLink, createSelectionLabel, createButtonLabel } from '../core';
-import type { SbpmLinkAttributes, SbpmLinkOptions } from '../core';
+import { autoRenewIcon, FONT_FAMILY, deleteIcon, CustomEvent } from '../common';
+import type { SbpmLinkLabelToolsOptions } from '../core';
 import type { SbpmModelerOptions } from '../canvas';
 import { SbpmFunctionState } from './function-state';
 import { SbpmSendState } from './send-state';
 import { SbpmReceiveState } from './receive-state';
+import { SbpmStateTransition } from './state-transition';
+import type { SbpmStateTransitionOptions } from './state-transition';
 
 const jointOptions: joint.shapes.standard.ImageAttributes = {
   attrs: {
@@ -131,77 +131,20 @@ const removeVerticesLabel: joint.dia.Link.Label = {
   },
 };
 
-export type SbpmReceiveStateTransitionOptions = SbpmLinkOptions<SbpmReceiveState, SbpmFunctionState | SbpmSendState> & {
-  sender: string;
-  message: string;
+const labelToolsOptions: SbpmLinkLabelToolsOptions = {
+  iconLabel,
+  removeLabel,
+  removeVerticesLabel,
+  selectionLabel,
 };
 
-export class SbpmReceiveStateTransition extends SbpmLink {
-  type: SbpmReceiveStateTransitionType = 'ReceiveStateTransition';
+export type SbpmReceiveStateTransitionOptions = SbpmStateTransitionOptions<SbpmReceiveState, SbpmFunctionState | SbpmSendState>;
 
+export class SbpmReceiveStateTransition extends SbpmStateTransition<'ReceiveStateTransition'> {
   constructor(
     options: SbpmReceiveStateTransitionOptions = {} as SbpmReceiveStateTransitionOptions,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions
+    modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions
   ) {
-    const { sender, message, ...restOptions } = options;
-
-    const attributes = joint.util.merge(jointOptions, {
-      toolsOptions: [],
-      type: createJointType('sbpm.sbd', 'ReceiveStateTransition'),
-      ...restOptions,
-    }) as SbpmLinkAttributes;
-
-    super(attributes);
-
-    this.appendLabel(getIconLabel(sender, message));
+    super('ReceiveStateTransition', jointOptions, [], labelToolsOptions, options, modelerOptions);
   }
-
-  public update(options: GetUpdateOptions<SbpmReceiveStateTransitionOptions>) {
-    const { sender, message, ...restOptions } = options;
-
-    if (sender && message) {
-      this.removeLabel(0);
-      this.insertLabel(0, getIconLabel(sender, message));
-    } else {
-      const existingIconLabel = this.label(0);
-      this.removeLabel(0);
-
-      if (sender) {
-        this.insertLabel(0, getIconLabelSender(existingIconLabel, sender));
-      }
-
-      if (message) {
-        this.insertLabel(0, getIconLabelMessage(existingIconLabel, message));
-      }
-    }
-
-    super.update(restOptions);
-  }
-
-  public select() {
-    super.select();
-    this.appendLabel(createSelectionLabel(selectionLabel));
-    this.appendLabel(createButtonLabel(removeLabel));
-    this.appendLabel(createButtonLabel(removeVerticesLabel));
-  }
-
-  public deselect() {
-    super.deselect();
-    this.labels()
-      .slice(1)
-      .forEach(() => this.removeLabel(-1));
-  }
-}
-
-function getIconLabel(sender = '', message = '') {
-  return joint.util.merge(iconLabel, { attrs: { headerText: { textWrap: { text: sender } }, bodyText: { textWrap: { text: message } } } });
-}
-
-function getIconLabelSender(existingIconLabel: joint.dia.Link.Label, sender = '') {
-  return joint.util.merge(joint.util.cloneDeep(existingIconLabel), { attrs: { headerText: { textWrap: { text: sender } } } });
-}
-
-function getIconLabelMessage(existingIconLabel: joint.dia.Link.Label, message = '') {
-  return joint.util.merge(joint.util.cloneDeep(existingIconLabel), { attrs: { bodyText: { textWrap: { text: message } } } });
 }

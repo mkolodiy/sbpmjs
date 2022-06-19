@@ -1,7 +1,7 @@
 import * as joint from 'jointjs';
 import type { GetUpdateOptions, SbpmShapeAttributes, SbpmShapeOptions } from '../common';
 import { SbpmElement } from './element';
-import type { SbpmLinkToolsOptions } from './link-tools';
+import type { SbpmLinkLabelToolsOptions, SbpmLinkToolsOptions } from './link-tools';
 
 export const attrs = {
   line: {
@@ -45,8 +45,8 @@ export const markup = [
 export type SbpmLinkAttributes = joint.dia.Link.GenericAttributes<joint.shapes.standard.LinkSelectors> & SbpmShapeAttributes<SbpmLinkToolsOptions>;
 
 export type SbpmLinkOptions<Source = SbpmElement, Target = SbpmElement> = SbpmShapeOptions & {
-  source?: Source;
-  target?: Target;
+  source: Source;
+  target: Target;
 };
 
 export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
@@ -61,6 +61,10 @@ export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
 
   public get toolsOptions() {
     return this.attributes.toolsOptions as SbpmLinkToolsOptions;
+  }
+
+  public get labelToolsOptions() {
+    return this.attributes.labelToolsOptions as SbpmLinkLabelToolsOptions;
   }
 
   public hasSource() {

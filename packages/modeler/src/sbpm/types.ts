@@ -97,7 +97,7 @@ export type ElementTypeToElementClassMapping = {
 export type LinkTypeToLinkClassMapping = {
   ProcessTransition: SbpmProcessTransition;
   MessageTransition: SbpmMessageTransition;
-  SendStateTransition: SbpmMessageTransition;
+  SendStateTransition: SbpmSendStateTransition;
   ReceiveStateTransition: SbpmReceiveStateTransition;
   FunctionStateTransition: SbpmFunctionStateTransition;
 };

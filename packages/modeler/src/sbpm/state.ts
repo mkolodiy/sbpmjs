@@ -23,7 +23,7 @@ export class SbpmState<
   ) {
     const { label, ...restOptions } = options;
 
-    const attributes = joint.util.merge(jointOptions, {
+    const attributes = joint.util.merge(joint.util.cloneDeep(jointOptions), {
       attrs: {
         label: {
           textWrap: {
@@ -34,7 +34,7 @@ export class SbpmState<
           ...getStateModifierOptions(options),
         },
       },
-      toolsOptions: addActionsToElementToolsOptions(toolsOptions, modelerOptions),
+      toolsOptions: addActionsToElementToolsOptions(joint.util.cloneDeep(toolsOptions), modelerOptions),
       type: createJointType('sbpm.pnd', type),
       ...restOptions,
     }) as SbpmElementAttributes;

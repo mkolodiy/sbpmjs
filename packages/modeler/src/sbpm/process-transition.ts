@@ -56,8 +56,6 @@ export class SbpmProcessTransition extends SbpmLink {
     ) as SbpmLinkAttributes;
 
     super(attributes);
-
-    // this.update(restOptions);
   }
 
   public update(options: GetUpdateOptions<SbpmProcessTransitionOptions>) {
