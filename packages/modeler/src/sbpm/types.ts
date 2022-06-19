@@ -31,8 +31,8 @@ import { SbpmMessageTransition } from './message-transition';
 import type { SbpmMessageTransitionOptions } from './message-transition';
 import { SbpmSendStateTransition } from './send-state-transition';
 import type { SbpmSendStateTransitionOptions } from './send-state-transition';
-import { SbpmFunctionStateTransition } from './functional-state-transition';
-import type { SbpmFunctionStateTransitionOptions } from './functional-state-transition';
+import { SbpmFunctionStateTransition } from './function-state-transition';
+import type { SbpmFunctionStateTransitionOptions } from './function-state-transition';
 import { SbpmReceiveStateTransition } from './receive-state-transition';
 import type { SbpmReceiveStateTransitionOptions } from './receive-state-transition';
 

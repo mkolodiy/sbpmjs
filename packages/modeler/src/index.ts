@@ -1,1 +1,13 @@
 export { default } from './modeler';
+export type { SbpmModelerOptions } from './canvas';
+export type { SbpmProcessNetworkOptions } from './sbpm';
+export type { SbpmProcessModelOptions } from './sbpm';
+export type { SbpmSubjectOptions } from './sbpm';
+export type { SbpmSendStateOptions } from './sbpm';
+export type { SbpmReceiveStateOptions } from './sbpm';
+export type { SbpmFunctionStateOptions } from './sbpm';
+export type { SbpmProcessTransitionOptions } from './sbpm';
+export type { SbpmMessageTransitionOptions } from './sbpm';
+export type { SbpmSendStateTransitionOptions } from './sbpm';
+export type { SbpmReceiveStateTransitionOptions } from './sbpm';
+export type { SbpmFunctionStateTransitionOptions } from './sbpm';

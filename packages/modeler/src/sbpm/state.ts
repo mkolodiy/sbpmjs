@@ -6,7 +6,7 @@ import type { SbpmElementOptions, SbpmElementToolsOptions, SbpmElementAttributes
 import type { SbpmModelerOptions } from '../canvas';
 
 export type SbpmStateOptions = SbpmElementOptions & {
-  state?: 'start' | 'end' | 'none';
+  role?: 'start' | 'end' | 'none';
 };
 
 export class SbpmState<
@@ -45,17 +45,17 @@ export class SbpmState<
   }
 
   public update(options: GetUpdateOptions<SbpmStateOptions>) {
-    const { state = 'none' } = options;
+    const { role = 'none' } = options;
 
-    if (state !== 'none') {
+    if (role !== 'none') {
       this.attr('stateModifier/opacity', 0.5);
     }
 
-    if (state === 'start') {
+    if (role === 'start') {
       this.attr('stateModifier/xlinkHref', blueDotIcon);
     }
 
-    if (state === 'end') {
+    if (role === 'end') {
       this.attr('stateModifier/xlinkHref', redDotIcon);
     }
 
@@ -64,11 +64,11 @@ export class SbpmState<
 }
 
 function getStateModifierOptions(options: SbpmStateOptions) {
-  const { state = 'none' } = options;
+  const { role = 'none' } = options;
 
-  if (state !== 'none') {
+  if (role !== 'none') {
     return {
-      xlinkHref: state === 'start' ? blueDotIcon : redDotIcon,
+      xlinkHref: role === 'start' ? blueDotIcon : redDotIcon,
       opacity: '0.5',
     };
   }

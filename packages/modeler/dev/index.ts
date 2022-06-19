@@ -1,7 +1,8 @@
 import SbpmModeler from '../src';
 
 const modeler = new SbpmModeler({
-  container: document.getElementById('container'),
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  container: document.getElementById('container')!,
   onSelectElement: (element) => {
     console.log('onSelectElement', element);
   },
@@ -110,10 +111,12 @@ const functionState = modeler.addElement({
   },
 });
 
-document.getElementById('clear-canvas').addEventListener('click', () => {
+modeler.updateElement(functionState, {})
+
+document.getElementById('clear-canvas')?.addEventListener('click', () => {
   modeler.canvas.clear();
 });
 
-document.getElementById('reset-canvas').addEventListener('click', () => {
+document.getElementById('reset-canvas')?.addEventListener('click', () => {
   modeler.canvas.reset();
 });

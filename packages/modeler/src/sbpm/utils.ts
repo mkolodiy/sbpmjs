@@ -11,7 +11,7 @@ import { SbpmProcessTransition } from './process-transition';
 import { SbpmMessageTransition } from './message-transition';
 import { SbpmSendStateTransition } from './send-state-transition';
 import { SbpmReceiveStateTransition } from './receive-state-transition';
-import { SbpmFunctionStateTransition } from './functional-state-transition';
+import { SbpmFunctionStateTransition } from './function-state-transition';
 
 export function getDefaultLink(type: SbpmElementType) {
   return new elementTypeToLinkClassMapping[type]();

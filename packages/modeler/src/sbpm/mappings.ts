@@ -1,4 +1,4 @@
-import { SbpmFunctionStateTransition } from './functional-state-transition';
+import { SbpmFunctionStateTransition } from './function-state-transition';
 import { SbpmProcessNetwork } from './process-network';
 import { SbpmProcessModel } from './process-model';
 import { SbpmSubject } from './subject';
