@@ -48,7 +48,7 @@ const jointOptions: joint.shapes.standard.ImageAttributes = {
     label: {
       textWrap: {
         width: 90,
-        height: 180,
+        height: 140,
         text: 'Functional state',
       },
       pointerEvents: 'none',

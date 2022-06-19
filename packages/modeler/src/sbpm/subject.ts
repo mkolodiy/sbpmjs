@@ -32,7 +32,7 @@ const humanTypeJointOptions: joint.shapes.standard.ImageAttributes = {
     label: {
       textWrap: {
         width: 85,
-        height: 180,
+        height: 140,
         text: 'Subject',
       },
       fontFamily: FONT_FAMILY,

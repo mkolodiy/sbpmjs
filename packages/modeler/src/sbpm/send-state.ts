@@ -46,8 +46,8 @@ const jointOptions: joint.shapes.standard.ImageAttributes = {
     },
     label: {
       textWrap: {
-        width: 150,
-        height: 180,
+        width: 140,
+        height: 95,
         text: 'Send state',
       },
       pointerEvents: 'none',

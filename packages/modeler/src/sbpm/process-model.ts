@@ -32,7 +32,7 @@ const jointOptions: joint.shapes.standard.ImageAttributes = {
     label: {
       textWrap: {
         width: 130,
-        height: 180,
+        height: 70,
         text: 'Process network',
       },
       fontFamily: FONT_FAMILY,
