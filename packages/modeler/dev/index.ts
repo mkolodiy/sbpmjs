@@ -94,6 +94,8 @@ const receiveState = modeler.addElement({
   },
 });
 
+console.log(receiveState);
+
 const functionState = modeler.addElement({
   type: 'FunctionState',
   label: 'Function state 1',

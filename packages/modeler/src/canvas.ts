@@ -136,7 +136,7 @@ export class SbpmCanvas {
       onSelectElement?.(sbpmElementView.element);
     });
 
-    this.#graph.on('element:updated', (element: SbpmElement) => {
+    this.#graph.on(CustomEvent.ELEMENT_UPDATED, (element: SbpmElement) => {
       const elementView = this.#paper.findViewByModel<SbpmElementView>(element);
       elementView.refresh();
     });

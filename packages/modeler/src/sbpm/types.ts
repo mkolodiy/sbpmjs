@@ -67,7 +67,7 @@ type GetElementOptionsType<T> = T extends SbpmProcessNetwork | SbpmProcessNetwor
 
 export type GetSbpmElementOptions<T> = GetElementOptionsType<T>;
 
-export type GetElementUpdateOptions<T> = GetUpdateOptions<GetElementOptionsType<T>>;
+export type GetSbpmElementUpdateOptions<T> = GetUpdateOptions<GetElementOptionsType<T>>;
 
 type GetLinkOptionsType<T> = T extends SbpmProcessTransition | SbpmProcessTransitionType
   ? SbpmProcessTransitionOptions

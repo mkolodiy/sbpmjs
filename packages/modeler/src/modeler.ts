@@ -9,8 +9,6 @@ import type {
   GetSbpmLinkUpdateOptions,
   ElementTypeToElementClassMapping,
   LinkTypeToLinkClassMapping,
-  SbpmElementOptions,
-  SbpmLinkOptions,
 } from './sbpm';
 import type { SbpmElementType, SbpmLinkType, Typed } from './common';
 

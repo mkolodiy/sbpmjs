@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
-import { CustomEvent, SbpmShapeOptions } from '../common';
-import type { GetUpdateOptions, SbpmShapeAttributes, SbpmElementType } from '../common';
+import { CustomEvent } from '../common';
+import type { GetUpdateOptions, SbpmShapeAttributes, SbpmShapeOptions } from '../common';
 import type { SbpmElementToolsOptions } from './element-tools';
 
 const attrs = {
