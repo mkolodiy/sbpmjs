@@ -53,7 +53,9 @@ export class SbpmMessage extends SbpmElement {
     const attributes = joint.util.merge(jointOptions, {
       attrs: {
         label: {
-          text: label,
+          textWrap: {
+            text: label,
+          },
         },
       },
       toolsOptions: addActionsToElementToolsOptions(toolsOptions, modelerOptions),

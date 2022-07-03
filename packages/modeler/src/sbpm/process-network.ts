@@ -61,14 +61,16 @@ export class SbpmProcessNetwork extends SbpmElement {
     const attributes = joint.util.merge(jointOptions, {
       attrs: {
         label: {
-          text: label,
+          textWrap: {
+            text: label,
+          },
         },
       },
       toolsOptions: addActionsToElementToolsOptions(toolsOptions, modelerOptions),
       type: createJointType('sbpm.pnd', 'ProcessNetwork'),
       ...restOptions,
     }) as SbpmElementAttributes;
-
+    console.log(attributes);
     super(attributes);
   }
 

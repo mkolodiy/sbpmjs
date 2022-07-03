@@ -90,7 +90,9 @@ export class SbpmProcessModel extends SbpmElement {
     const attributes = joint.util.merge(jointOptions, {
       attrs: {
         label: {
-          text: label,
+          textWrap: {
+            text: label,
+          },
         },
         image: {
           xlinkHref: icon,

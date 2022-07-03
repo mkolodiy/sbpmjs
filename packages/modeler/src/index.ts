@@ -3,6 +3,7 @@ export type { SbpmModelerOptions } from './canvas';
 export type { SbpmProcessNetworkOptions } from './sbpm';
 export type { SbpmProcessModelOptions } from './sbpm';
 export type { SbpmSubjectOptions } from './sbpm';
+export type { SbpmMessageOptions } from './sbpm';
 export type { SbpmSendStateOptions } from './sbpm';
 export type { SbpmReceiveStateOptions } from './sbpm';
 export type { SbpmFunctionStateOptions } from './sbpm';

@@ -3,7 +3,7 @@ export * from './types';
 export * from './utils';
 export type { SbpmProcessNetworkOptions } from './process-network';
 export type { SbpmProcessModelOptions } from './process-model';
-export type { SbpmMessage } from './message';
+export type { SbpmMessageOptions } from './message';
 export type { SbpmSubjectOptions } from './subject';
 export type { SbpmSendStateOptions } from './send-state';
 export type { SbpmReceiveStateOptions } from './receive-state';
