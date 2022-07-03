@@ -1,6 +1,7 @@
 import { SbpmFunctionStateTransition } from './function-state-transition';
 import { SbpmProcessNetwork } from './process-network';
 import { SbpmProcessModel } from './process-model';
+import { SbpmMessage } from './message';
 import { SbpmSubject } from './subject';
 import { SbpmSendState } from './send-state';
 import { SbpmReceiveState } from './receive-state';
@@ -13,6 +14,7 @@ import { SbpmReceiveStateTransition } from './receive-state-transition';
 export const elementTypeToElementClassMapping = {
   ProcessNetwork: SbpmProcessNetwork,
   ProcessModel: SbpmProcessModel,
+  Message: SbpmMessage,
   Subject: SbpmSubject,
   SendState: SbpmSendState,
   ReceiveState: SbpmReceiveState,

@@ -2,6 +2,7 @@ import type {
   GetUpdateOptions,
   SbpmProcessNetworkType,
   SbpmProcessModelType,
+  SbpmMessageType,
   SbpmSubjectType,
   SbpmSendStateType,
   SbpmReceiveStateType,
@@ -17,6 +18,8 @@ import { SbpmProcessNetwork } from './process-network';
 import type { SbpmProcessNetworkOptions } from './process-network';
 import { SbpmProcessModel } from './process-model';
 import type { SbpmProcessModelOptions } from './process-model';
+import { SbpmMessage } from './message';
+import type { SbpmMessageOptions } from './message';
 import { SbpmSubject } from './subject';
 import type { SbpmSubjectOptions } from './subject';
 import { SbpmSendState } from './send-state';
@@ -39,6 +42,7 @@ import type { SbpmReceiveStateTransitionOptions } from './receive-state-transiti
 export type SbpmElementOptions =
   | SbpmProcessNetworkOptions
   | SbpmProcessModelOptions
+  | SbpmMessageOptions
   | SbpmSubjectOptions
   | SbpmSendStateOptions
   | SbpmReceiveStateOptions
@@ -55,6 +59,8 @@ type GetElementOptionsType<T> = T extends SbpmProcessNetwork | SbpmProcessNetwor
   ? SbpmProcessNetworkOptions
   : T extends SbpmProcessModel | SbpmProcessModelType
   ? SbpmProcessModelOptions
+  : T extends SbpmMessage | SbpmMessageType
+  ? SbpmMessageOptions
   : T extends SbpmSubject | SbpmSubjectType
   ? SbpmSubjectOptions
   : T extends SbpmSendState | SbpmSendStateType
@@ -88,6 +94,7 @@ export type GetSbpmLinkUpdateOptions<T> = GetUpdateOptions<GetLinkOptionsType<T>
 export type ElementTypeToElementClassMapping = {
   ProcessNetwork: SbpmProcessNetwork;
   ProcessModel: SbpmProcessModel;
+  Message: SbpmMessage;
   Subject: SbpmSubject;
   SendState: SbpmSendState;
   ReceiveState: SbpmReceiveState;

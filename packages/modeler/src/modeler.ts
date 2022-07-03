@@ -10,7 +10,7 @@ import type {
   ElementTypeToElementClassMapping,
   LinkTypeToLinkClassMapping,
 } from './sbpm';
-import type { SbpmElementType, SbpmLinkType, Typed } from './common';
+import type { SbpmElementType, SbpmLinkType } from './common';
 
 export default class SbpmModeler {
   #canvas: SbpmCanvas;
@@ -29,17 +29,17 @@ export default class SbpmModeler {
     return this.#canvas;
   }
 
-  public createElement<Type extends SbpmElementType>(options: Typed<Type> & GetSbpmElementOptions<Type>) {
-    const { type, ...restOptions } = options;
-    return new elementTypeToElementClassMapping[type](restOptions, this.#options) as ElementTypeToElementClassMapping[Type];
+  public createElement<Type extends SbpmElementType>(type: Type, options: GetSbpmElementOptions<Type>) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return new elementTypeToElementClassMapping[type](options, this.#options) as ElementTypeToElementClassMapping[Type];
   }
 
-  public createLink<Type extends SbpmLinkType>(options: Typed<Type> & GetSbpmLinkOptions<Type>) {
-    const { type, ...restOptions } = options;
+  public createLink<Type extends SbpmLinkType>(type: Type, options: GetSbpmLinkOptions<Type>) {
     validateLinkOptions(type, options);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    return new linkTypeToLinkClassMapping[type](restOptions, this.#options) as LinkTypeToLinkClassMapping[Type];
+    return new linkTypeToLinkClassMapping[type](options, this.#options) as LinkTypeToLinkClassMapping[Type];
   }
 
   public updateElement<T extends SbpmElement>(element: T, options: GetSbpmElementUpdateOptions<T>) {
@@ -50,14 +50,14 @@ export default class SbpmModeler {
     link.update(options);
   }
 
-  public addElement<Type extends SbpmElementType>(options: Typed<Type> & GetSbpmElementOptions<Type>) {
-    const element = this.createElement(options);
+  public addElement<Type extends SbpmElementType>(type: Type, options: GetSbpmElementOptions<Type>) {
+    const element = this.createElement(type, options);
     element.addTo(this.#canvas.graph);
     return element;
   }
 
-  public addLink<Type extends SbpmLinkType>(options: Typed<Type> & GetSbpmLinkOptions<Type>) {
-    const link = this.createLink(options);
+  public addLink<Type extends SbpmLinkType>(type: Type, options: GetSbpmLinkOptions<Type>) {
+    const link = this.createLink(type, options);
     link.addTo(this.#canvas.graph);
     return link;
   }

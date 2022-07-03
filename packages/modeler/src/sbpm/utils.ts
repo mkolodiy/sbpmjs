@@ -13,7 +13,7 @@ import { SbpmSendStateTransition } from './send-state-transition';
 import { SbpmReceiveStateTransition } from './receive-state-transition';
 import { SbpmFunctionStateTransition } from './function-state-transition';
 
-export function getDefaultLink(type: SbpmElementType) {
+export function getDefaultLink(type: Exclude<SbpmElementType, 'Message'>) {
   return new elementTypeToLinkClassMapping[type]();
 }
 

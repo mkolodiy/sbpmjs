@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import { autoRenewIcon, createJointType, createIcon, FONT_FAMILY, deleteIcon, CustomEvent } from '../common';
+import { autoRenewIcon, createJointType, createIcon, FONT_FAMILY, deleteIcon, CustomEvent, openInNew } from '../common';
 import type { GetUpdateOptions, SbpmMessageTransitionType } from '../common';
 import { SbpmLink, createIconLabel, createSelectionLabel, createButtonLabel } from '../core';
 import type { SbpmLinkAttributes, SbpmLinkOptions } from '../core';
@@ -77,6 +77,23 @@ const removeVerticesLabel: joint.dia.Link.Label = {
   },
 };
 
+const openLabel: joint.dia.Link.Label = {
+  markup: [],
+  attrs: {
+    background: {
+      xAlignment: 102.5,
+      yAlignment: -35,
+    },
+    buttonLabel: {
+      'xlink:href': openInNew,
+      event: CustomEvent.LINK_OPEN,
+      xAlignment: 102.5,
+      yAlignment: -35,
+      title: 'Open',
+    },
+  },
+};
+
 export type SbpmMessageTransitionOptions = SbpmLinkOptions<SbpmSubject, SbpmSubject>;
 
 export class SbpmMessageTransition extends SbpmLink {
@@ -108,6 +125,7 @@ export class SbpmMessageTransition extends SbpmLink {
     this.appendLabel(createSelectionLabel(selectionLabel));
     this.appendLabel(createButtonLabel(removeLabel));
     this.appendLabel(createButtonLabel(removeVerticesLabel));
+    this.appendLabel(createButtonLabel(openLabel));
   }
 
   public deselect() {

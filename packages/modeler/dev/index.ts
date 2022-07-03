@@ -18,10 +18,12 @@ const modeler = new SbpmModeler({
   onOpenElement: (element) => {
     console.log('onOpenElement', element);
   },
+  onOpenLink: (link) => {
+    console.log('onOpenLink', link);
+  },
 });
 
-const processNetwork1 = modeler.addElement({
-  type: 'ProcessNetwork',
+const processNetwork1 = modeler.addElement('ProcessNetwork', {
   label: 'Test',
   position: {
     x: 100,
@@ -29,8 +31,7 @@ const processNetwork1 = modeler.addElement({
   },
 });
 
-const processModel1 = modeler.addElement({
-  type: 'ProcessModel',
+const processModel1 = modeler.addElement('ProcessModel', {
   label: 'Test',
   position: {
     x: 700,
@@ -38,8 +39,7 @@ const processModel1 = modeler.addElement({
   },
 });
 
-const processModel2 = modeler.addElement({
-  type: 'ProcessModel',
+const processModel2 = modeler.addElement('ProcessModel', {
   label: 'Test ',
   position: {
     x: 1200,
@@ -47,20 +47,17 @@ const processModel2 = modeler.addElement({
   },
 });
 
-const processTransition1 = modeler.addLink({
-  type: 'ProcessTransition',
+const processTransition1 = modeler.addLink('ProcessTransition', {
   source: processNetwork1,
   target: processModel1,
 });
 
-const processTransition2 = modeler.addLink({
-  type: 'ProcessTransition',
+const processTransition2 = modeler.addLink('ProcessTransition', {
   source: processModel1,
   target: processModel2,
 });
 
-const subject1 = modeler.addElement({
-  type: 'Subject',
+const subject1 = modeler.addElement('Subject', {
   label: 'Subject 1',
   position: {
     x: 100,
@@ -68,8 +65,7 @@ const subject1 = modeler.addElement({
   },
 });
 
-const subject2 = modeler.addElement({
-  type: 'Subject',
+const subject2 = modeler.addElement('Subject', {
   label: 'Subject 2',
   position: {
     x: 700,
@@ -77,8 +73,20 @@ const subject2 = modeler.addElement({
   },
 });
 
-const sendState = modeler.addElement({
-  type: 'SendState',
+const messageTransition = modeler.addLink('MessageTransition', {
+  source: subject1,
+  target: subject2,
+});
+
+const message = modeler.addElement('Message', {
+  label: 'Test',
+  position: {
+    x: 900,
+    y: 300,
+  },
+});
+
+const sendState = modeler.addElement('SendState', {
   label: 'Send state 1',
   position: {
     x: 100,
@@ -86,8 +94,7 @@ const sendState = modeler.addElement({
   },
 });
 
-const receiveState = modeler.addElement({
-  type: 'ReceiveState',
+const receiveState = modeler.addElement('ReceiveState', {
   label: 'Receive state 1',
   position: {
     x: 700,
@@ -95,15 +102,13 @@ const receiveState = modeler.addElement({
   },
 });
 
-const sendStateTransition = modeler.addLink({
-  type: 'SendStateTransition',
+const sendStateTransition = modeler.addLink('SendStateTransition', {
   source: sendState,
   target: receiveState,
   subject: 'test',
 });
 
-const functionState = modeler.addElement({
-  type: 'FunctionState',
+const functionState = modeler.addElement('FunctionState', {
   label: 'Function state 1',
   position: {
     x: 400,
@@ -111,7 +116,17 @@ const functionState = modeler.addElement({
   },
 });
 
-modeler.updateElement(functionState, {})
+const receiveStateTransition = modeler.addLink('ReceiveStateTransition', {
+  source: receiveState,
+  target: functionState,
+  subject: 'test',
+});
+
+const functionStateTransition = modeler.addLink('FunctionStateTransition', {
+  source: functionState,
+  target: sendState,
+  message: 'test',
+});
 
 document.getElementById('clear-canvas')?.addEventListener('click', () => {
   modeler.canvas.clear();

@@ -142,7 +142,7 @@ export class SbpmCanvas {
     });
   }
 
-  private registerLinkEvents({ onSelectLink, onDeleteLink }: SbpmModelerOptions) {
+  private registerLinkEvents({ onSelectLink, onDeleteLink, onOpenLink }: SbpmModelerOptions) {
     this.#paper.on<keyof EventMap>(JointEvent.LINK_POINTERDOWN, (linkView: SbpmLinkView) => {
       this.deselect();
       linkView.select();
@@ -158,6 +158,11 @@ export class SbpmCanvas {
     this.#paper.on(CustomEvent.LINK_REMOVE_VERTICES, (linkView: SbpmLinkView, evt: MouseEvent) => {
       evt.stopPropagation();
       linkView.link.vertices([]);
+    });
+
+    this.#paper.on(CustomEvent.LINK_OPEN, (linkView: SbpmLinkView, evt: MouseEvent) => {
+      evt.stopPropagation();
+      onOpenLink?.(linkView.link);
     });
   }
 

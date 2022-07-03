@@ -16,6 +16,8 @@ export type SbpmProcessNetworkType = 'ProcessNetwork';
 
 export type SbpmProcessModelType = 'ProcessModel';
 
+export type SbpmMessageType = 'Message';
+
 export type SbpmSubjectType = 'Subject';
 
 export type SbpmSendStateType = 'SendState';
@@ -39,6 +41,7 @@ export type SbpmCommonType = SbpmOriginType;
 export type SbpmElementType =
   | SbpmProcessNetworkType
   | SbpmProcessModelType
+  | SbpmMessageType
   | SbpmSubjectType
   | SbpmSendStateType
   | SbpmReceiveStateType
@@ -60,7 +63,3 @@ export type SbpmShapeOptions = {
 };
 
 export type GetUpdateOptions<T> = Partial<Omit<T, 'id'>>;
-
-export type Typed<T> = {
-  type: T;
-};
