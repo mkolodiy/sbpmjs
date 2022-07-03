@@ -118,17 +118,22 @@ const machineToolsOptions: SbpmElementToolsOptions = joint.util.merge(joint.util
 ]) as SbpmElementToolsOptions;
 
 export type SbpmSubjectOptions = SbpmElementOptions & {
-  subjectType?: 'human' | 'machine';
+  /**
+   * The type of the subject.
+   *
+   * @defaultValue `human`
+   */
+  type?: 'human' | 'machine';
 };
 
 export class SbpmSubject extends SbpmElement {
   type: SbpmSubjectType = 'Subject';
 
   constructor(options: SbpmSubjectOptions, modelerOptions: SbpmModelerOptions) {
-    const { label, subjectType = 'human', ...restOptions } = options;
+    const { label, type = 'human', ...restOptions } = options;
 
-    const jointOptions = subjectType === 'human' ? humanTypeJointOptions : machineTypeJointOptions;
-    const toolsOptions = subjectType === 'human' ? humanToolsOptions : machineToolsOptions;
+    const jointOptions = type === 'human' ? humanTypeJointOptions : machineTypeJointOptions;
+    const toolsOptions = type === 'human' ? humanToolsOptions : machineToolsOptions;
 
     const attributes = joint.util.merge(jointOptions, {
       attrs: {
@@ -145,11 +150,11 @@ export class SbpmSubject extends SbpmElement {
   }
 
   public update(options: GetUpdateOptions<SbpmSubjectOptions>) {
-    const { subjectType, ...restOptions } = options;
+    const { type, ...restOptions } = options;
 
-    if (subjectType) {
-      const jointOptions = subjectType === 'human' ? humanTypeJointOptions : machineTypeJointOptions;
-      const toolsOptions = subjectType === 'human' ? humanToolsOptions : machineToolsOptions;
+    if (type) {
+      const jointOptions = type === 'human' ? humanTypeJointOptions : machineTypeJointOptions;
+      const toolsOptions = type === 'human' ? humanToolsOptions : machineToolsOptions;
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

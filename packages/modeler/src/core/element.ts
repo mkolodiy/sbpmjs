@@ -33,7 +33,13 @@ const markup = [
 export type SbpmElementAttributes = joint.dia.Element.GenericAttributes<joint.shapes.standard.ImageSelectors> & SbpmShapeAttributes<SbpmElementToolsOptions>;
 
 export type SbpmElementOptions = SbpmShapeOptions & {
+  /**
+   * The label that will be shown under the icon of the element.
+   */
   label: string;
+  /**
+   * The position on the canvas where the element should be added at.
+   */
   position: joint.dia.Point;
 };
 

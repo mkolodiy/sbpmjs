@@ -39,7 +39,7 @@ function linkView() {
 
 function defaultLink(cellView: joint.dia.CellView) {
   const sbpmElementView = cellView as SbpmElementView;
-  const type = getSbpmShapeType(sbpmElementView.element.get('type')) as SbpmElementType;
+  const type = getSbpmShapeType(sbpmElementView.element.get('type')) as Exclude<SbpmElementType, 'Message'>;
   return getDefaultLink(type);
 }
 
@@ -67,6 +67,9 @@ type EventMap = joint.dia.Paper.EventMap & {
 };
 
 export type SbpmModelerOptions = {
+  /**
+   * A HTML element where the modeler should be rended to.
+   */
   container: HTMLElement;
   onSelectElement?: (element: SbpmElement) => void;
   onSelectLink?: (element: SbpmLink) => void;
@@ -178,34 +181,63 @@ export class SbpmCanvas {
     });
   }
 
+  /**
+   * Get the jointjs paper instance.
+   *
+   * @returns The jointjs paper instance.
+   */
   public get paper() {
     return this.#paper;
   }
 
+  /**
+   * Get the jointjs graph instance.
+   *
+   * @returns The jointjs graph instance.
+   */
   public get graph() {
     return this.#graph;
   }
 
+  /**
+   * Get all elements that are present on the canvas.
+   *
+   * @returns A list with all elements.
+   */
   public getElements() {
     const allElements = this.#graph.getElements();
     return allElements.filter((element: joint.dia.Element) => !element.get('type').includes(SbpmShapeNamespace.COMMON)) as SbpmElement[];
   }
 
+  /**
+   * Get all links that are present on the canvas.
+   *
+   * @returns A list with all links.
+   */
   public getLinks() {
     const allLinks = this.#graph.getLinks();
     return allLinks.filter((link: joint.dia.Link) => !link.get('type').includes(SbpmShapeNamespace.COMMON)) as SbpmLink[];
   }
 
+  /**
+   * Remove selection from all shapes on the canvas.
+   */
   public deselect() {
     this.#paper.hideTools();
     this.getElements().forEach((element) => element.deselect());
     this.getLinks().forEach((link) => link.deselect());
   }
 
+  /**
+   * Set the origin to 0/0.
+   */
   public reset() {
     this.#paper.translate(0, 0);
   }
 
+  /**
+   * Remove all shapes from the canvas and set the origin to 0/0.
+   */
   public clear() {
     this.#graph.clear();
     this.addOrigin();

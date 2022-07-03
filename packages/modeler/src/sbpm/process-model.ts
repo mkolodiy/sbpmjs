@@ -72,15 +72,20 @@ const toolsOptions: SbpmElementToolsOptions = [
 ];
 
 export type SbpmProcessModelOptions = SbpmElementOptions & {
-  role?: 'single' | 'multi';
+  /**
+   * The type of the process model.
+   *
+   * @defaultValue `single`
+   */
+  type?: 'single' | 'multi';
 };
 
 export class SbpmProcessModel extends SbpmElement {
   type: SbpmProcessModelType = 'ProcessModel';
 
   constructor(options: SbpmProcessModelOptions, modelerOptions: SbpmModelerOptions) {
-    const { label, role = 'single', ...restOptions } = options;
-    const icon = getIcon(role);
+    const { label, type = 'single', ...restOptions } = options;
+    const icon = getIcon(type);
 
     const attributes = joint.util.merge(jointOptions, {
       attrs: {
@@ -100,10 +105,10 @@ export class SbpmProcessModel extends SbpmElement {
   }
 
   public update(options: GetUpdateOptions<SbpmProcessModelOptions>) {
-    const { role, ...restOptions } = options;
+    const { type, ...restOptions } = options;
 
-    if (role) {
-      const icon = getIcon(role);
+    if (type) {
+      const icon = getIcon(type);
       this.attr('image/xlinkHref', icon);
     }
 
@@ -111,6 +116,6 @@ export class SbpmProcessModel extends SbpmElement {
   }
 }
 
-function getIcon(role: string) {
-  return role === 'single' ? singleProcessIcon : multiProcessIcon;
+function getIcon(type: string) {
+  return type === 'single' ? singleProcessIcon : multiProcessIcon;
 }

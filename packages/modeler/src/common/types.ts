@@ -59,6 +59,9 @@ export type SbpmShapeType = SbpmCommonType | SbpmElementType | SbpmLinkType;
 export type SbpmShapeNamespaceType = ValueOf<typeof SbpmShapeNamespace>;
 
 export type SbpmShapeOptions = {
+  /**
+   * A custom id to be used by jointjs graph. If not provided jointjs graph will generate one automatically.
+   */
   id?: string;
 };
 

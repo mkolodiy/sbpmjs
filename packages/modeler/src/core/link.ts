@@ -45,7 +45,13 @@ export const markup = [
 export type SbpmLinkAttributes = joint.dia.Link.GenericAttributes<joint.shapes.standard.LinkSelectors> & SbpmShapeAttributes<SbpmLinkToolsOptions>;
 
 export type SbpmLinkOptions<Source = SbpmElement, Target = SbpmElement> = SbpmShapeOptions & {
+  /**
+   * The source element.
+   */
   source: Source;
+  /**
+   * The target element.
+   */
   target: Target;
 };
 

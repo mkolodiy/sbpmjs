@@ -23,6 +23,8 @@ const modeler = new SbpmModeler({
   },
 });
 
+// modeler.canvas.
+
 const processNetwork1 = modeler.addElement('ProcessNetwork', {
   label: 'Test',
   position: {
@@ -37,6 +39,7 @@ const processModel1 = modeler.addElement('ProcessModel', {
     x: 700,
     y: 100,
   },
+  type: 'multi',
 });
 
 const processModel2 = modeler.addElement('ProcessModel', {
@@ -71,6 +74,7 @@ const subject2 = modeler.addElement('Subject', {
     x: 700,
     y: 300,
   },
+  type: 'machine',
 });
 
 const messageTransition = modeler.addLink('MessageTransition', {
@@ -92,6 +96,7 @@ const sendState = modeler.addElement('SendState', {
     x: 100,
     y: 600,
   },
+  type: 'start',
 });
 
 const receiveState = modeler.addElement('ReceiveState', {
@@ -114,6 +119,7 @@ const functionState = modeler.addElement('FunctionState', {
     x: 400,
     y: 800,
   },
+  type: 'end',
 });
 
 const receiveStateTransition = modeler.addLink('ReceiveStateTransition', {

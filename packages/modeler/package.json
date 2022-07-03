@@ -34,17 +34,10 @@
     "lint:fix": "eslint --fix .",
     "format": "prettier --list-different .",
     "format:fix": "prettier --write .",
-    "prepare": "vite build && tsc",
-    "size": "size-limit"
+    "prepare": "vite build && tsc"
   },
   "author": "Maksym Kolodiy",
-  "size-limit": [
-    {
-      "path": "./dist/index.js",
-      "limit": "200 KB"
-    }
-  ],
   "dependencies": {
-    "jointjs": "^3.5.1"
+    "jointjs": "^3.5.5"
   }
 }
