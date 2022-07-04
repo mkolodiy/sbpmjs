@@ -73,6 +73,15 @@ Output:
   - [`SbpmModeler.addLink`](#sbpmmodeleraddlink)
   - [`SbpmModeler.updateElement`](#sbpmmodelerupdateelement)
   - [`SbpmModeler.updateLink`](#sbpmmodelerupdatelink)
+  - [`SbpmModeler.canvas`](#sbpmmodelercanvas)
+- [`SbpmCanvas`](#sbpmmodeler)
+  - [`SbpmCanvas.paper`](#sbpmcanvaspaper)
+  - [`SbpmCanvas.graph`](#sbpmcanvasgraph)
+  - [`SbpmCanvas.getElements`](#sbpmcanvasgetelements)
+  - [`SbpmCanvas.getLinks`](#sbpmcanvasgetlinks)
+  - [`SbpmCanvas.deselect`](#sbpmcanvasdeselect)
+  - [`SbpmCanvas.reset`](#sbpmcanvasreset)
+  - [`SbpmCanvas.clear`](#sbpmcanvasclear)
 
 ### `SbpmModeler`
 
@@ -83,7 +92,7 @@ The module export.
 import SbpmModeler from '@sbpmjs/modeler';
 
 // Types
-import {
+import type {
   SbpmModelerOptions,
   SbpmProcessNetworkOptions,
   SbpmProcessModelOptions,
@@ -104,6 +113,7 @@ A new SBPM modeler can be created as following:
 
 ```ts
 import SbpmModeler from '@sbpmjs/modeler';
+import type { SbpmModelerOptions } from '@sbpmjs/modeler';
 
 const modeler = new SbpmModeler({
   container: document.getElementById('container'),
@@ -200,7 +210,7 @@ const modeler = new SbpmModeler({
 
 // Create a process network and a process model
 
-const link = modeler.createLink('ProcessTransition', {
+const link = modeler.addLink('ProcessTransition', {
   source: processNetwork,
   target: processModel,
 });
@@ -248,9 +258,125 @@ const link = modeler.createLink('ProcessTransition', {
   target: processModel,
 });
 
+// Create another process network
+
 modeler.updateLink(link, {
   source: anotherProcessNetwork,
 });
+```
+
+#### `SbpmModeler.canvas`
+
+Get the canvas instance.
+
+```ts
+import SbpmModeler from '@sbpmjs/modeler';
+
+const modeler = new SbpmModeler({
+  container: document.getElementById('container'),
+});
+
+const canvas = modeler.canvas;
+```
+
+### `SbpmCanvas`
+
+#### `SbpmCanvas.paper`
+
+Get the jointjs paper instance.
+
+```ts
+import SbpmModeler from '@sbpmjs/modeler';
+
+const modeler = new SbpmModeler({
+  container: document.getElementById('container'),
+});
+
+const paper = modeler.canvas.paper;
+```
+
+#### `SbpmCanvas.graph`
+
+Get the jointjs graph instance.
+
+```ts
+import SbpmModeler from '@sbpmjs/modeler';
+
+const modeler = new SbpmModeler({
+  container: document.getElementById('container'),
+});
+
+const graph = modeler.canvas.graph;
+```
+
+#### `SbpmCanvas.getElements`
+
+Get all elements that are present on the canvas.
+
+```ts
+import SbpmModeler from '@sbpmjs/modeler';
+
+const modeler = new SbpmModeler({
+  container: document.getElementById('container'),
+});
+
+const elements = modeler.canvas.getElements();
+```
+
+#### `SbpmCanvas.getLinks`
+
+Get all links that are present on the canvas.
+
+```ts
+import SbpmModeler from '@sbpmjs/modeler';
+
+const modeler = new SbpmModeler({
+  container: document.getElementById('container'),
+});
+
+const links = modeler.canvas.getLinks();
+```
+
+#### `SbpmCanvas.deselect`
+
+Remove selection from all shapes on the canvas.
+
+```ts
+import SbpmModeler from '@sbpmjs/modeler';
+
+const modeler = new SbpmModeler({
+  container: document.getElementById('container'),
+});
+
+modeler.canvas.deselect();
+```
+
+#### `SbpmCanvas.reset`
+
+Set the origin to 0/0.
+
+```ts
+import SbpmModeler from '@sbpmjs/modeler';
+
+const modeler = new SbpmModeler({
+  container: document.getElementById('container'),
+});
+
+modeler.canvas.reset();
+```
+
+#### `SbpmCanvas.clear`
+
+Remove all shapes from the canvas and set the origin to 0/0.
+
+```ts
+import SbpmModeler from '@sbpmjs/modeler';
+
+const modeler = new SbpmModeler({
+  container: document.getElementById('container'),
+});
+
+modeler.canvas.clear();
 ```
 
 ## License
