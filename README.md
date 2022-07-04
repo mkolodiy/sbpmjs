@@ -2,9 +2,9 @@
 
 A collection of libraries for managing and modeling of SBPM processes. Following is included:
 
-| Name                                                                                                                                             | Description                                 |
-| ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
-| [@sbpmjs/modeler](<[/github.com/mkolodiy/sbpmjs/tree/master/packages/modeler](https://github.com/mkolodiy/sbpmjs/tree/master/packages/modeler)>) | A library for working with SBPM constructs. |
+| Name                                                                               | Description                                 |
+| ---------------------------------------------------------------------------------- | ------------------------------------------- |
+| [@sbpmjs/modeler](https://github.com/mkolodiy/sbpmjs/tree/master/packages/modeler) | A library for working with SBPM constructs. |
 
 ## License
 
