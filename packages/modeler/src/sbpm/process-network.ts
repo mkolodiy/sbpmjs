@@ -70,7 +70,7 @@ export class SbpmProcessNetwork extends SbpmElement {
       type: createJointType('sbpm.pnd', 'ProcessNetwork'),
       ...restOptions,
     }) as SbpmElementAttributes;
-    console.log(attributes);
+
     super(attributes);
   }
 

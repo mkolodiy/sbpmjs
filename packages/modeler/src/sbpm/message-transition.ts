@@ -2,7 +2,7 @@ import * as joint from 'jointjs';
 import { autoRenewIcon, createJointType, createIcon, FONT_FAMILY, deleteIcon, CustomEvent, openInNew } from '../common';
 import type { GetUpdateOptions, SbpmMessageTransitionType } from '../common';
 import { SbpmLink, createIconLabel, createSelectionLabel, createButtonLabel } from '../core';
-import type { SbpmLinkAttributes, SbpmLinkOptions } from '../core';
+import type { SbpmLinkAttributes, SbpmLinkOptions, SbpmLinkToolsOptions } from '../core';
 import type { SbpmModelerOptions } from '../canvas';
 import { SbpmSubject } from './subject';
 
@@ -94,30 +94,42 @@ const openLabel: joint.dia.Link.Label = {
   },
 };
 
-export type SbpmMessageTransitionOptions = SbpmLinkOptions<SbpmSubject, SbpmSubject>;
+const toolsOptions: SbpmLinkToolsOptions = [
+  {
+    type: 'source-arrowhead',
+    options: undefined,
+  },
+];
+
+export type SbpmMessageTransitionOptions = SbpmLinkOptions<SbpmSubject, SbpmSubject> & {
+  type: 'unidirectional' | 'bidirectional';
+};
 
 export class SbpmMessageTransition extends SbpmLink {
   type: SbpmMessageTransitionType = 'MessageTransition';
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(options: SbpmMessageTransitionOptions = {} as SbpmMessageTransitionOptions, _modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions) {
+    const { type = 'unidirectional', ...restOptions } = options;
+
     const attributes = joint.util.merge(
       {},
       {
-        toolsOptions: [],
+        toolsOptions: getToolsOptions(type),
         type: createJointType('sbpm.pnd', 'MessageTransition'),
-        ...options,
+        ...restOptions,
       }
     ) as SbpmLinkAttributes;
 
     super(attributes);
     this.appendLabel(createIconLabel(iconLabel));
-
-    // this.update(restOptions);
+    handleType(this, type);
   }
 
   public update(options: GetUpdateOptions<SbpmMessageTransitionOptions>) {
-    super.update(options);
+    const { type = 'unidirectional', ...restOptions } = options;
+    handleType(this, type);
+    super.update(restOptions);
   }
 
   public select() {
@@ -133,5 +145,22 @@ export class SbpmMessageTransition extends SbpmLink {
     this.labels()
       .slice(1)
       .forEach(() => this.removeLabel(-1));
+  }
+}
+
+function getToolsOptions(type: 'unidirectional' | 'bidirectional') {
+  return type === 'unidirectional' ? [] : toolsOptions;
+}
+
+function handleType(link: SbpmMessageTransition, type: 'unidirectional' | 'bidirectional') {
+  if (type === 'unidirectional') {
+    link.removeAttr('line/sourceMarker');
+    link.toolsOptions = [];
+  } else {
+    link.attr('line/sourceMarker', {
+      type: 'path',
+      d: 'M 10 -5 0 0 10 5 z',
+    });
+    link.toolsOptions = toolsOptions;
   }
 }

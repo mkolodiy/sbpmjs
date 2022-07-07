@@ -129,7 +129,15 @@ export type SbpmLinkOpenToolOptions = { type: 'open'; options: joint.linkTools.B
 
 export type SbpmLinkResetVerticesToolOptions = { type: 'reset-vertices'; options: joint.linkTools.Button.Options };
 
-export type SbpmLinkToolsOptions = (SbpmLinkButtonToolOptions | SbpmLinkRemoveToolOptions | SbpmLinkOpenToolOptions | SbpmLinkResetVerticesToolOptions)[];
+export type SbpmSourceArrowheadToolOptions = { type: 'source-arrowhead'; options: undefined };
+
+export type SbpmLinkToolsOptions = (
+  | SbpmLinkButtonToolOptions
+  | SbpmLinkRemoveToolOptions
+  | SbpmLinkOpenToolOptions
+  | SbpmLinkResetVerticesToolOptions
+  | SbpmSourceArrowheadToolOptions
+)[];
 
 export type SbpmLinkLabelToolsOptions = {
   iconLabel: joint.dia.Link.Label;
@@ -172,6 +180,10 @@ export function createLinkTools(toolsOptions: SbpmLinkToolsOptions) {
 
     if (toolOption.type === 'remove') {
       tools.push(createRemove(toolOption.options));
+    }
+
+    if (toolOption.type === 'source-arrowhead') {
+      tools.push(new joint.linkTools.SourceArrowhead());
     }
   }
 

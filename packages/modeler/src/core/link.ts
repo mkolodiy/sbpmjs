@@ -69,6 +69,10 @@ export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
     return this.attributes.toolsOptions as SbpmLinkToolsOptions;
   }
 
+  public set toolsOptions(newToolsOptions: SbpmLinkToolsOptions) {
+    this.attributes.toolsOptions = newToolsOptions;
+  }
+
   public get labelToolsOptions() {
     return this.attributes.labelToolsOptions as SbpmLinkLabelToolsOptions;
   }
