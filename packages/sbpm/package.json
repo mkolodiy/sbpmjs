@@ -1,10 +1,9 @@
 {
-  "name": "@sbpmjs/modeler",
-  "version": "1.0.2",
-  "description": "A library for working with SBPM constructs.",
+  "name": "@sbpmjs/sbpm",
+  "version": "0.1.0",
+  "description": "A library for managing SBPM processes.",
   "keywords": [
-    "sbpm",
-    "modeler"
+    "sbpm"
   ],
   "license": "MIT",
   "main": "./dist/index.js",
@@ -34,10 +33,12 @@
     "lint:fix": "eslint --fix .",
     "format": "prettier --list-different .",
     "format:fix": "prettier --write .",
+    "svelte-check": "svelte-check",
     "prepare": "vite build && tsc"
   },
   "author": "Maksym Kolodiy",
   "dependencies": {
-    "jointjs": "^3.5.5"
+    "@sbpmjs/modeler": "workspace:^",
+    "graphology": "^0.24.1"
   }
 }
