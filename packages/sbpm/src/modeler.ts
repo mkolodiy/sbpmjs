@@ -1,4 +1,5 @@
 import SbpmModeler from '@sbpmjs/modeler';
+import { openView } from './graph';
 
 export let modeler: SbpmModeler = undefined as unknown as SbpmModeler;
 
@@ -11,5 +12,8 @@ export function initModeler() {
 
   modeler = new SbpmModeler({
     container,
+    onOpenElement: (element) => {
+      openView(String(element.id));
+    },
   });
 }

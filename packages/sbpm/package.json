@@ -40,5 +40,8 @@
   "dependencies": {
     "@sbpmjs/modeler": "workspace:^",
     "graphology": "^0.24.1"
+  },
+  "devDependencies": {
+    "graphology-types": "^0.24.4"
   }
 }

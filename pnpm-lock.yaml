@@ -68,9 +68,12 @@ importers:
     specifiers:
       '@sbpmjs/modeler': workspace:^
       graphology: ^0.24.1
+      graphology-types: ^0.24.4
     dependencies:
       '@sbpmjs/modeler': link:../modeler
-      graphology: 0.24.1
+      graphology: 0.24.1_graphology-types@0.24.4
+    devDependencies:
+      graphology-types: 0.24.4
 
 packages:
 
@@ -3034,12 +3037,16 @@ packages:
       lodash: 4.17.21
     dev: false
 
-  /graphology/0.24.1:
+  /graphology-types/0.24.4:
+    resolution: {integrity: sha512-CSgmycWiviCctMFO86YoUTJN1t4/PLKC5Pos2Hite+7kCUXTr+mGlDUAOgpcKG1IfFaeL9VDmTjFpzs2rTnPWw==}
+
+  /graphology/0.24.1_graphology-types@0.24.4:
     resolution: {integrity: sha512-6lNz1PNTAe9Q6ioHKrXu0Lp047sgvOoHa4qmP/8mnJWCGv2iIZPQkuHPUb2/OWDWCqHpw2hKgJLJ55X/66xmHg==}
     peerDependencies:
       graphology-types: '>=0.24.0'
     dependencies:
       events: 3.3.0
+      graphology-types: 0.24.4
       obliterator: 2.0.4
     dev: false
 
