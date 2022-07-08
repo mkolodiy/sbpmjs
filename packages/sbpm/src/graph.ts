@@ -57,19 +57,19 @@ graph.addEdgeWithKey('messageTransition01', 'subject01', 'subject02', {
   __type: 'MessageTransition',
 });
 
-console.log(graph.export());
+// console.log(graph.export());
 
 const views: Record<string, string[]> = {
   defaultView: ['processNetwork01', 'processModel01', 'processTransition01'],
   processModel01: ['subject01', 'subject02', 'messageTransition01'],
 };
 
-export function openView(id: string) {
+export function openView_v1(id: string) {
   modeler.canvas.clear();
-  restoreView(id);
+  restoreView_v1(id);
 }
 
-export function restoreView(view: string) {
+export function restoreView_v1(view: string) {
   const ids = views[view];
   const elements = [];
   const links = [];

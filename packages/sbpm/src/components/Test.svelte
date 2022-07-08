@@ -1,6 +1,6 @@
 <script>
-  import { restoreView } from '../graph';
-  import { modeler } from '../modeler';
+  import { restoreView_v1 } from '../graph';
+  import { modeler, restoreView_v2 } from '../modeler';
 
   const addElement = () => {
     // const processNetwork = modeler.addElement('ProcessNetwork', {
@@ -29,7 +29,7 @@
 
     // console.log(modeler.canvas.graph.toJSON());
 
-    restoreView('defaultView');
+    restoreView_v2('defaultView');
   };
 </script>
 
