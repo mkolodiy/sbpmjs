@@ -1,7 +1,7 @@
 import type { SbpmElement, SbpmLink } from './core';
 import { SbpmCanvas } from './canvas';
 import type { SbpmModelerOptions } from './canvas';
-import { linkTypeToLinkClassMapping, elementTypeToElementClassMapping, validateLinkOptions } from './sbpm';
+import { linkTypeToLinkClassMapping, elementTypeToElementClassMapping } from './sbpm';
 import type {
   GetSbpmElementOptions,
   GetSbpmElementUpdateOptions,

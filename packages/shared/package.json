@@ -1,0 +1,39 @@
+{
+  "name": "@sbpmjs/shared",
+  "version": "0.1.0",
+  "description": "A shared functionality for @sbpmjs packages.",
+  "keywords": [
+    "sbpm"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "package.json",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "build": "vite build && tsc",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --list-different .",
+    "format:fix": "prettier --write .",
+    "prepare": "vite build && tsc"
+  },
+  "author": "Maksym Kolodiy"
+}
