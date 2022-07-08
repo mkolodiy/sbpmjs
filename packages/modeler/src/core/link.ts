@@ -48,11 +48,11 @@ export type SbpmLinkOptions<Source = SbpmElement, Target = SbpmElement> = SbpmSh
   /**
    * The source element.
    */
-  source: Source;
+  source: Source | { id: string };
   /**
    * The target element.
    */
-  target: Target;
+  target: Target | { id: string };
 };
 
 export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {

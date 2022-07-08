@@ -82,7 +82,7 @@ export default class SbpmModeler {
    * ```
    */
   public createLink<Type extends SbpmLinkType>(type: Type, options: GetSbpmLinkOptions<Type>) {
-    validateLinkOptions(type, options);
+    // validateLinkOptions(type, options);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     return new linkTypeToLinkClassMapping[type](options, this.#options) as LinkTypeToLinkClassMapping[Type];

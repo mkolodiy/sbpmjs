@@ -26,6 +26,7 @@ const modeler = new SbpmModeler({
 // modeler.canvas.
 
 const processNetwork1 = modeler.addElement('ProcessNetwork', {
+  id: 'processNetwork1',
   label: 'Test',
   position: {
     x: 100,
@@ -34,6 +35,7 @@ const processNetwork1 = modeler.addElement('ProcessNetwork', {
 });
 
 const processModel1 = modeler.addElement('ProcessModel', {
+  id: 'processModel1',
   label: 'Test',
   position: {
     x: 700,
@@ -43,7 +45,8 @@ const processModel1 = modeler.addElement('ProcessModel', {
 });
 
 const processModel2 = modeler.addElement('ProcessModel', {
-  label: 'Test ',
+  // id: 'processModel2',
+  label: 'Test',
   position: {
     x: 1200,
     y: 100,
@@ -51,8 +54,8 @@ const processModel2 = modeler.addElement('ProcessModel', {
 });
 
 const processTransition1 = modeler.addLink('ProcessTransition', {
-  source: processNetwork1,
-  target: processModel1,
+  source: { id: 'processNetwork1' },
+  target: { id: 'processModel1' },
 });
 
 const processTransition2 = modeler.addLink('ProcessTransition', {
