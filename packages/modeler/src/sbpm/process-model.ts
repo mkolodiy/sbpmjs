@@ -87,7 +87,7 @@ export class SbpmProcessModel extends SbpmElement {
     const { label, type = 'single', ...restOptions } = options;
     const icon = getIcon(type);
 
-    const attributes = joint.util.merge(jointOptions, {
+    const attributes = joint.util.merge(joint.util.cloneDeep(jointOptions), {
       attrs: {
         label: {
           textWrap: {

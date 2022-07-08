@@ -135,7 +135,7 @@ export class SbpmSubject extends SbpmElement {
     const jointOptions = type === 'human' ? humanTypeJointOptions : machineTypeJointOptions;
     const toolsOptions = type === 'human' ? humanToolsOptions : machineToolsOptions;
 
-    const attributes = joint.util.merge(jointOptions, {
+    const attributes = joint.util.merge(joint.util.cloneDeep(jointOptions), {
       attrs: {
         label: {
           textWrap: {

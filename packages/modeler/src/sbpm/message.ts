@@ -50,7 +50,7 @@ export class SbpmMessage extends SbpmElement {
   constructor(options: SbpmMessageOptions, modelerOptions: SbpmModelerOptions) {
     const { label, ...restOptions } = options;
 
-    const attributes = joint.util.merge(jointOptions, {
+    const attributes = joint.util.merge(joint.util.cloneDeep(jointOptions), {
       attrs: {
         label: {
           textWrap: {

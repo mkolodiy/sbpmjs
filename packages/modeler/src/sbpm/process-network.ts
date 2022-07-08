@@ -58,7 +58,7 @@ export class SbpmProcessNetwork extends SbpmElement {
   constructor(options: SbpmProcessNetworkOptions, modelerOptions: SbpmModelerOptions) {
     const { label, ...restOptions } = options;
 
-    const attributes = joint.util.merge(jointOptions, {
+    const attributes = joint.util.merge(joint.util.cloneDeep(jointOptions), {
       attrs: {
         label: {
           textWrap: {
