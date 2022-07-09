@@ -45,82 +45,132 @@ export type SbpmLinkType =
 
 export type SbpmShapeType = SbpmElementType | SbpmLinkType;
 
-export type SbpmShape<Type extends SbpmShapeType = SbpmShapeType> = {
-  type: Type;
+export type SbpmShape = {
   id: string;
+};
+
+export type SbpmContainerShape = {
   contains?: SbpmShape[];
 };
 
-export type SbpmElement<Type extends SbpmElementType = SbpmElementType> = SbpmShape<Type> & {
+export type SbpmElement = SbpmShape & {
   label: string;
   position: Coordinates;
 };
 
-export type SbpmLink<Type extends SbpmLinkType = SbpmLinkType> = SbpmShape<Type> & {
-  source: Omit<SbpmShape, 'type'>;
-  target: Omit<SbpmShape, 'type'>;
+export type SbpmLink = SbpmShape & {
+  source: SbpmShape;
+  target: SbpmShape;
 };
 
-export type SbpmState<
-  Type extends SbpmSendStateType | SbpmReceiveStateType | SbpmFunctionStateType = SbpmSendStateType | SbpmReceiveStateType | SbpmFunctionStateType
-> = SbpmElement<Type> & {
+export type SbpmState = SbpmElement & {
   role?: 'start' | 'end' | 'none';
 };
 
-export type SbpmStateTransition<
-  Type extends SbpmSendStateTransitionType | SbpmReceiveStateTransitionType | SbpmFunctionStateTransitionType =
-    | SbpmSendStateTransitionType
-    | SbpmReceiveStateTransitionType
-    | SbpmFunctionStateTransitionType
-> = SbpmLink<Type> & {
+export type SbpmStateTransition = SbpmLink & {
   subject?: string;
   message?: string;
 };
 
-export type SbpmProcessNetwork = SbpmElement<'ProcessNetwork'>;
+export type SbpmProcessNetwork = SbpmElement;
 
-export type SbpmProcessModel = SbpmElement<'ProcessModel'> & {
-  role?: 'single' | 'multi';
+export type SbpmProcessModel = SbpmElement &
+  SbpmContainerShape & {
+    role?: 'single' | 'multi';
+  };
+
+export type SbpmMessage = SbpmElement;
+
+export type SbpmSubject = SbpmElement &
+  SbpmContainerShape & {
+    representation?: 'human' | 'machine';
+  };
+
+export type SbpmSendState = SbpmState;
+
+export type SbpmReceiveState = SbpmState;
+
+export type SbpmFunctionState = SbpmState;
+
+export type SbpmProcessTransition = SbpmLink;
+
+export type SbpmMessageTransition = SbpmLink &
+  SbpmContainerShape & {
+    role?: 'unidirectional' | 'bidirectional';
+  };
+
+export type SbpmSendStateTransition = SbpmStateTransition;
+
+export type SbpmReceiveStateTransition = SbpmStateTransition;
+
+export type SbpmFunctionStateTransition = Omit<SbpmStateTransition, 'subject'>;
+
+export type GetSbpmElement<Type extends SbpmElementType = SbpmElementType> = Type extends SbpmProcessNetworkType
+  ? SbpmProcessNetwork
+  : Type extends SbpmProcessModelType
+  ? SbpmProcessModel
+  : Type extends SbpmMessageType
+  ? SbpmMessage
+  : Type extends SbpmSubjectType
+  ? SbpmSubject
+  : Type extends SbpmSendStateType
+  ? SbpmSendState
+  : Type extends SbpmReceiveStateType
+  ? SbpmReceiveState
+  : Type extends SbpmFunctionStateType
+  ? SbpmFunctionState
+  : undefined;
+
+export type GetSbpmLink<Type extends SbpmLinkType = SbpmLinkType> = Type extends SbpmProcessTransitionType
+  ? SbpmProcessTransition
+  : Type extends SbpmMessageTransitionType
+  ? SbpmMessageTransition
+  : Type extends SbpmFunctionStateTransitionType
+  ? SbpmFunctionStateTransition
+  : Type extends SbpmSendStateTransitionType
+  ? SbpmSendStateTransition
+  : Type extends SbpmReceiveStateTransitionType
+  ? SbpmReceiveStateTransition
+  : undefined;
+
+export type SbpmElementItem<Type extends SbpmElementType = SbpmElementType> = {
+  type: Type;
+  item: GetSbpmElement<Type>;
 };
 
-export type SbpmMessage = SbpmElement<'Message'>;
-
-export type SbpmSubject = SbpmElement<'Subject'> & {
-  icon?: 'human' | 'machine';
+export type SbpmLinkItem<Type extends SbpmLinkType = SbpmLinkType> = {
+  type: Type;
+  item: GetSbpmLink<Type>;
 };
 
-export type SbpmSendState = SbpmState<'SendState'>;
+export type SbpmProcessItem<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType> =
+  | SbpmElementItem<ElementType>
+  | SbpmLinkItem<LinkType>;
 
-export type SbpmReceiveState = SbpmState<'ReceiveState'>;
+export type SbpmProcess<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType> = SbpmProcessItem<
+  ElementType,
+  LinkType
+>[];
 
-export type SbpmFunctionState = SbpmState<'FunctionState'>;
+export function constructSbpmElementItem<Type extends SbpmElementType = SbpmElementType>(item: SbpmElementItem<Type>) {
+  return item;
+}
 
-export type SbpmProcessTransition = SbpmLink<'ProcessTransition'>;
+export function constructSbpmLinkItem<Type extends SbpmLinkType = SbpmLinkType>(item: SbpmLinkItem<Type>) {
+  return item;
+}
 
-export type SbpmMessageTransition = SbpmLink<'MessageTransition'> & {
-  role?: 'unidirectional' | 'bidirectional';
-};
+export function constructSbpmProcessItem<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType>(
+  item: SbpmProcessItem<ElementType, LinkType>
+) {
+  return item;
+}
 
-export type SbpmSendStateTransition = SbpmStateTransition<'SendStateTransition'>;
-
-export type SbpmReceiveStateTransition = SbpmStateTransition<'ReceiveStateTransition'>;
-
-export type SbpmFunctionStateTransition = Omit<SbpmStateTransition<'FunctionStateTransition'>, 'subject'>;
-
-export type SbpmProcess = (
-  | SbpmProcessNetwork
-  | SbpmProcessModel
-  | SbpmMessage
-  | SbpmSubject
-  | SbpmSendState
-  | SbpmReceiveState
-  | SbpmFunctionState
-  | SbpmProcessTransition
-  | SbpmMessageTransition
-  | SbpmSendStateTransition
-  | SbpmReceiveStateTransition
-  | SbpmFunctionStateTransition
-)[];
+export function constructSbpmProcess<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType>(
+  item: SbpmProcess<ElementType, LinkType>
+) {
+  return item;
+}
 
 export function isSbpmLinkType(type: SbpmShapeType) {
   return type.includes('Transition');
