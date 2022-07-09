@@ -45,22 +45,22 @@ export type SbpmLinkType =
 
 export type SbpmShapeType = SbpmElementType | SbpmLinkType;
 
-export type SbpmShape = {
+export type SbpmBasicShape = {
   id: string;
 };
 
 export type SbpmContainerShape = {
-  contains?: SbpmShape[];
+  contains?: SbpmBasicShape[];
 };
 
-export type SbpmElement = SbpmShape & {
+export type SbpmElement = SbpmBasicShape & {
   label: string;
   position: Coordinates;
 };
 
-export type SbpmLink = SbpmShape & {
-  source: SbpmShape;
-  target: SbpmShape;
+export type SbpmLink = SbpmBasicShape & {
+  source: SbpmBasicShape;
+  target: SbpmBasicShape;
 };
 
 export type SbpmState = SbpmElement & {

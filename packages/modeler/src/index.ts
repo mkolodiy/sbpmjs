@@ -13,8 +13,5 @@ export type {
   SbpmSendStateTransitionOptions,
   SbpmReceiveStateTransitionOptions,
   SbpmFunctionStateTransitionOptions,
-  SbpmElementViewItem,
-  SbpmLinkViewItem,
-  SbpmViewItem,
-  SbpmView,
 } from './sbpm';
+export { constructSbpmElementViewItem, constructSbpmLinkViewItem, constructSbpmViewItem, constructSbpmView } from './sbpm';
