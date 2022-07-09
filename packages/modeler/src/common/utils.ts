@@ -16,3 +16,7 @@ export function createJointType(namespace: SbpmShapeNamespaceType, type: SbpmSha
 export function getSbpmShapeType(type: string) {
   return type.split('.')[2];
 }
+
+export function isSbpmLinkType(type: SbpmShapeType) {
+  return type.includes('Transition');
+}

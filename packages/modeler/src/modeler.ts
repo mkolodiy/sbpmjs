@@ -1,4 +1,4 @@
-import type { SbpmElement, SbpmLink } from './core';
+import { SbpmElement, SbpmLink } from './core';
 import { SbpmCanvas } from './canvas';
 import type { SbpmModelerOptions } from './canvas';
 import { linkTypeToLinkClassMapping, elementTypeToElementClassMapping } from './sbpm';
@@ -9,8 +9,9 @@ import type {
   GetSbpmLinkUpdateOptions,
   ElementTypeToElementClassMapping,
   LinkTypeToLinkClassMapping,
+  SbpmView,
 } from './sbpm';
-import type { SbpmElementType, SbpmLinkType } from './common';
+import { isSbpmLinkType, SbpmElementType, SbpmLinkType } from './common';
 
 export default class SbpmModeler {
   #canvas: SbpmCanvas;
@@ -194,5 +195,18 @@ export default class SbpmModeler {
     const link = this.createLink(type, options);
     link.addTo(this.#canvas.graph);
     return link;
+  }
+
+  public restoreView<ElementType extends SbpmElementType, LinkType extends SbpmLinkType>(view: SbpmView<ElementType, LinkType>) {
+    this.#canvas.clear();
+
+    const elements = view.filter(({ type }) => !isSbpmLinkType(type));
+    const links = view.filter(({ type }) => isSbpmLinkType(type));
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    elements.forEach(({ type, options }) => this.addElement(type, options));
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    links.forEach(({ type, options }) => this.addLink(type, options));
   }
 }

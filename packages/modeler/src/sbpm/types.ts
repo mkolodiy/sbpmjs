@@ -12,6 +12,8 @@ import type {
   SbpmSendStateTransitionType,
   SbpmReceiveStateTransitionType,
   SbpmFunctionStateTransitionType,
+  SbpmElementType,
+  SbpmLinkType,
 } from '../common';
 import type { SbpmElementOptions as SbpmElementOptionsCore, SbpmLinkOptions as SbpmLinkOptionsCore } from '../core';
 import { SbpmProcessNetwork } from './process-network';
@@ -108,3 +110,22 @@ export type LinkTypeToLinkClassMapping = {
   ReceiveStateTransition: SbpmReceiveStateTransition;
   FunctionStateTransition: SbpmFunctionStateTransition;
 };
+
+export type SbpmElementViewItem<Type extends SbpmElementType = SbpmElementType> = {
+  type: Type;
+  options: GetSbpmElementOptions<Type>;
+};
+
+export type SbpmLinkViewItem<Type extends SbpmLinkType = SbpmLinkType> = {
+  type: Type;
+  options: GetSbpmLinkOptions<Type>;
+};
+
+export type SbpmViewItem<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType> =
+  | SbpmElementViewItem<ElementType>
+  | SbpmLinkViewItem<LinkType>;
+
+export type SbpmView<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType> = SbpmViewItem<
+  ElementType,
+  LinkType
+>[];
