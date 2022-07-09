@@ -1,5 +1,4 @@
 <script>
-  import { restoreView_v1 } from '../graph';
   import { modeler, restoreView_v2 } from '../modeler';
 
   const addElement = () => {

@@ -48,6 +48,7 @@ export type SbpmShapeType = SbpmElementType | SbpmLinkType;
 export type SbpmShape<Type extends SbpmShapeType = SbpmShapeType> = {
   type: Type;
   id: string;
+  contains?: SbpmShape[];
 };
 
 export type SbpmElement<Type extends SbpmElementType = SbpmElementType> = SbpmShape<Type> & {
@@ -102,9 +103,24 @@ export type SbpmMessageTransition = SbpmLink<'MessageTransition'> & {
 
 export type SbpmSendStateTransition = SbpmStateTransition<'SendStateTransition'>;
 
-export type SbpmFunctionStateTransition = SbpmStateTransition<'ReceiveStateTransition'>;
+export type SbpmReceiveStateTransition = SbpmStateTransition<'ReceiveStateTransition'>;
 
-export type SbpmReceiveStateTransition = Omit<SbpmStateTransition<'FunctionStateTransition'>, 'subject'>;
+export type SbpmFunctionStateTransition = Omit<SbpmStateTransition<'FunctionStateTransition'>, 'subject'>;
+
+export type SbpmProcess = (
+  | SbpmProcessNetwork
+  | SbpmProcessModel
+  | SbpmMessage
+  | SbpmSubject
+  | SbpmSendState
+  | SbpmReceiveState
+  | SbpmFunctionState
+  | SbpmProcessTransition
+  | SbpmMessageTransition
+  | SbpmSendStateTransition
+  | SbpmReceiveStateTransition
+  | SbpmFunctionStateTransition
+)[];
 
 export function isSbpmLinkType(type: SbpmShapeType) {
   return type.includes('Transition');
