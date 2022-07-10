@@ -1,7 +1,7 @@
 import * as joint from 'jointjs';
 import { autoRenewIcon, createJointType, createIcon, FONT_FAMILY, deleteIcon, CustomEvent, openInNew } from '../common';
 import type { GetUpdateOptions, SbpmMessageTransitionType } from '../common';
-import { SbpmLink, createIconLabel, createSelectionLabel, createButtonLabel } from '../core';
+import { SbpmLink, createIconLabel, createSelectionLabel, createButtonLabel, handleEndpoint } from '../core';
 import type { SbpmLinkAttributes, SbpmLinkOptions, SbpmLinkToolsOptions } from '../core';
 import type { SbpmModelerOptions } from '../canvas';
 import { SbpmSubject } from './subject';
@@ -110,13 +110,15 @@ export class SbpmMessageTransition extends SbpmLink {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(options: SbpmMessageTransitionOptions = {} as SbpmMessageTransitionOptions, _modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions) {
-    const { type = 'unidirectional', ...restOptions } = options;
+    const { source, target, type = 'unidirectional', ...restOptions } = options;
 
     const attributes = joint.util.merge(
       {},
       {
         toolsOptions: getToolsOptions(type),
         type: createJointType('sbpm.pnd', 'MessageTransition'),
+        source: handleEndpoint(source),
+        target: handleEndpoint(target),
         ...restOptions,
       }
     ) as SbpmLinkAttributes;

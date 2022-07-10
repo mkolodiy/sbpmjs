@@ -113,12 +113,12 @@ export type LinkTypeToLinkClassMapping = {
 
 export type SbpmElementViewItem<Type extends SbpmElementType = SbpmElementType> = {
   type: Type;
-  options: GetSbpmElementOptions<Type>;
+  properties: GetSbpmElementOptions<Type>;
 };
 
 export type SbpmLinkViewItem<Type extends SbpmLinkType = SbpmLinkType> = {
   type: Type;
-  options: GetSbpmLinkOptions<Type>;
+  properties: GetSbpmLinkOptions<Type>;
 };
 
 export type SbpmViewItem<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType> =

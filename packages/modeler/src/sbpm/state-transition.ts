@@ -1,7 +1,7 @@
 import * as joint from 'jointjs';
 import { createJointType } from '../common';
 import type { GetUpdateOptions, SbpmSendStateTransitionType, SbpmReceiveStateTransitionType, SbpmFunctionStateTransitionType } from '../common';
-import { SbpmLink, createSelectionLabel, createButtonLabel, SbpmElement, createIconLabel } from '../core';
+import { SbpmLink, createSelectionLabel, createButtonLabel, SbpmElement, createIconLabel, handleEndpoint } from '../core';
 import type { SbpmLinkAttributes, SbpmLinkOptions, SbpmLinkToolsOptions, SbpmLinkLabelToolsOptions } from '../core';
 import type { SbpmModelerOptions } from '../canvas';
 
@@ -27,12 +27,14 @@ export class SbpmStateTransition<
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions
   ) {
-    const { subject, message, ...restOptions } = options;
+    const { source, target, subject, message, ...restOptions } = options;
 
     const attributes = joint.util.merge(joint.util.cloneDeep(jointOptions), {
       toolsOptions: joint.util.cloneDeep(toolsOptions),
       labelToolsOptions: joint.util.cloneDeep(labelToolsOptions),
       type: createJointType('sbpm.sbd', type),
+      source: handleEndpoint(source),
+      target: handleEndpoint(target),
       ...restOptions,
     }) as SbpmLinkAttributes;
 

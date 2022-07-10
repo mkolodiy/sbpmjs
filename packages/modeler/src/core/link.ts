@@ -48,11 +48,11 @@ export type SbpmLinkOptions<Source = SbpmElement, Target = SbpmElement> = SbpmSh
   /**
    * The source element.
    */
-  source: Source | { id: string };
+  source: Source | string;
   /**
    * The target element.
    */
-  target: Target | { id: string };
+  target: Target | string;
 };
 
 export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
@@ -89,11 +89,11 @@ export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
     const { source, target } = options;
 
     if (source) {
-      this.source(source);
+      this.source(handleEndpoint(source));
     }
 
     if (target) {
-      this.target(target);
+      this.target(handleEndpoint(target));
     }
   }
 
@@ -108,4 +108,14 @@ export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
   public resetVertices() {
     this.vertices([]);
   }
+}
+
+export function handleEndpoint(endpoint: SbpmElement | string) {
+  if (typeof endpoint === 'string') {
+    return {
+      id: endpoint,
+    };
+  }
+
+  return endpoint;
 }

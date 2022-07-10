@@ -204,9 +204,9 @@ export default class SbpmModeler {
     const links = view.filter(({ type }) => isSbpmLinkType(type));
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    elements.forEach(({ type, options }) => this.addElement(type, options));
+    elements.forEach(({ type, properties: options }) => this.addElement(type, options));
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    links.forEach(({ type, options }) => this.addLink(type, options));
+    links.forEach(({ type, properties: options }) => this.addLink(type, options));
   }
 }
