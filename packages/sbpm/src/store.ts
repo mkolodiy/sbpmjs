@@ -1,21 +1,32 @@
-export const store: Record<string, any> = {};
+import type { SbpmProcessItem, SbpmShapeType, SbpmProcess } from '@sbpmjs/shared';
+
+export const store: Record<string, SbpmProcessItem> = {};
 
 export const views: Record<string, string[]> = {
   defaultView: [],
 };
 
-export function loadProcess(process: any[]) {
+export function loadProcess(process: SbpmProcess) {
   process.forEach((item) => {
-    store[item.id] = item;
+    const type = item.type;
+    const id = item.properties.id;
 
-    if (item.type === 'ProcessNetwork' || item.type === 'ProcessModel' || item.type === 'ProcessTransition') {
-      views.defaultView = [...views.defaultView, item.id];
+    store[id] = item;
+
+    if (isDefaultViewType(type)) {
+      views.defaultView = [...views.defaultView, id];
     }
 
-    if ('contains' in item) {
-      views[item.id] = item.contains;
+    if ('contains' in item.properties) {
+      views[id] = item.properties?.contains ?? [];
     }
   });
-  console.log(store);
-  console.log(views);
+}
+
+export function getItems(ids: string[]) {
+  return ids.map((id) => store[id]);
+}
+
+function isDefaultViewType(type: SbpmShapeType) {
+  return type === 'ProcessNetwork' || type === 'ProcessModel' || type === 'ProcessTransition';
 }

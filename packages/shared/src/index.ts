@@ -50,7 +50,7 @@ export type SbpmBasicShape = {
 };
 
 export type SbpmContainerShape = {
-  contains?: SbpmBasicShape[];
+  contains?: string[];
 };
 
 export type SbpmElement = SbpmBasicShape & {
@@ -59,8 +59,8 @@ export type SbpmElement = SbpmBasicShape & {
 };
 
 export type SbpmLink = SbpmBasicShape & {
-  source: SbpmBasicShape;
-  target: SbpmBasicShape;
+  source: string;
+  target: string;
 };
 
 export type SbpmState = SbpmElement & {
@@ -135,12 +135,12 @@ export type GetSbpmLink<Type extends SbpmLinkType = SbpmLinkType> = Type extends
 
 export type SbpmElementItem<Type extends SbpmElementType = SbpmElementType> = {
   type: Type;
-  item: GetSbpmElement<Type>;
+  properties: GetSbpmElement<Type>;
 };
 
 export type SbpmLinkItem<Type extends SbpmLinkType = SbpmLinkType> = {
   type: Type;
-  item: GetSbpmLink<Type>;
+  properties: GetSbpmLink<Type>;
 };
 
 export type SbpmProcessItem<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType> =
@@ -160,11 +160,11 @@ export function constructSbpmLinkItem<Type extends SbpmLinkType = SbpmLinkType>(
   return item;
 }
 
-export function constructSbpmProcessItem<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType>(
-  item: SbpmProcessItem<ElementType, LinkType>
-) {
-  return item;
-}
+// export function constructSbpmProcessItem<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType>(
+//   item: SbpmProcessItem<ElementType, LinkType>
+// ) {
+//   return item;
+// }
 
 export function constructSbpmProcess<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType>(
   item: SbpmProcess<ElementType, LinkType>

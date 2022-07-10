@@ -1,4 +1,4 @@
-import SbpmModeler, { SbpmView } from '../src';
+import SbpmModeler, { constructSbpmView } from '../src';
 
 const modeler = new SbpmModeler({
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -23,10 +23,10 @@ const modeler = new SbpmModeler({
   },
 });
 
-const view: SbpmView = [
+const view = constructSbpmView([
   {
     type: 'ProcessNetwork',
-    options: {
+    properties: {
       id: 'processNetwork1',
       label: 'Test',
       position: {
@@ -37,7 +37,7 @@ const view: SbpmView = [
   },
   {
     type: 'ProcessModel',
-    options: {
+    properties: {
       id: 'processModel1',
       label: 'Test',
       position: {
@@ -49,12 +49,12 @@ const view: SbpmView = [
   },
   {
     type: 'ProcessTransition',
-    options: {
-      source: { id: 'processNetwork1' },
-      target: { id: 'processModel1' },
+    properties: {
+      source: 'processNetwork1',
+      target: 'processModel1',
     },
   },
-];
+]);
 
 modeler.restoreView(view);
 
