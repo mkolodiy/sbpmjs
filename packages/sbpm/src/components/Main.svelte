@@ -1,7 +1,12 @@
 <script>
   import { onMount } from 'svelte';
-  import { initModeler } from '../modeler';
+  import { initModeler, handleOnDrop } from '../manager';
   import Controls from './Controls.svelte';
+
+  const drop = (event) => {
+    const type = event.dataTransfer.getData('text/plain');
+    handleOnDrop(type, { x: event.x, y: event.y });
+  };
 
   onMount(() => {
     initModeler();
@@ -9,7 +14,7 @@
 </script>
 
 <div class="sbpm-main">
-  <div class="sbpm-modeler" />
+  <div class="sbpm-modeler" on:drop={drop} ondragover="return false" />
   <Controls />
 </div>
 
@@ -45,6 +50,6 @@
   }
 
   .sbpm-modeler {
-    z-index: 1  
+    z-index: 1;
   }
 </style>

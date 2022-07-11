@@ -1,10 +1,7 @@
 import type { SbpmProcessItem, SbpmShapeType, SbpmProcess } from '@sbpmjs/shared';
+import { setView } from './core';
 
-export const store: Record<string, SbpmProcessItem> = {};
-
-export const views: Record<string, string[]> = {
-  defaultView: [],
-};
+const store: Record<string, SbpmProcessItem> = {};
 
 export function loadProcess(process: SbpmProcess) {
   process.forEach((item) => {
@@ -14,11 +11,11 @@ export function loadProcess(process: SbpmProcess) {
     store[id] = item;
 
     if (isDefaultViewType(type)) {
-      views.defaultView = [...views.defaultView, id];
+      setView('defaultView', [id]);
     }
 
     if ('contains' in item.properties) {
-      views[id] = item.properties?.contains ?? [];
+      setView(id, item.properties?.contains ?? []);
     }
   });
 }

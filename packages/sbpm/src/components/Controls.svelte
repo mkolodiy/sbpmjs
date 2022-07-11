@@ -1,17 +1,13 @@
 <script>
   import Palette from './Palette.svelte';
+  import Properties from './Properties.svelte';
   import Frame from './ui/Frame.svelte';
 </script>
-
-<!-- <div>
-  <br />
-  <div>TEst</div>
-</div> -->
 
 <div class="sbpm-controls">
   <div class="sbpm-controls-top">Top</div>
   <div class="sbpm-controls-left"><Palette /></div>
-  <div class="sbpm-controls-right">Right</div>
+  <div class="sbpm-controls-right"><Properties /></div>
   <div class="sbpm-controls-bottom">Bottom</div>
 </div>
 
