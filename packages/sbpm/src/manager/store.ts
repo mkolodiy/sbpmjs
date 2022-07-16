@@ -7,6 +7,7 @@ export function loadProcess(process: SbpmProcess) {
   process.forEach((item) => {
     const type = item.type;
     const id = item.properties.id;
+    const properties = item.properties;
 
     store[id] = item;
 
@@ -14,8 +15,8 @@ export function loadProcess(process: SbpmProcess) {
       setView('defaultView', [id]);
     }
 
-    if ('contains' in item.properties) {
-      setView(id, item.properties?.contains ?? []);
+    if ('contains' in properties) {
+      setView(id, properties?.contains ?? []);
     }
   });
 }
