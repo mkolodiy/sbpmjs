@@ -1,5 +1,5 @@
 import type { Coordinates, SbpmElementType } from '@sbpmjs/shared';
-import { addSbpmElement, reset } from './modeler';
+import { addSbpmElement, reset, clear } from './modeler';
 import { currentlySelectedSbpmShape } from './core';
 
 export function handleOnDrop(type: SbpmElementType, position: Coordinates) {
@@ -9,4 +9,8 @@ export function handleOnDrop(type: SbpmElementType, position: Coordinates) {
 
 export function handleOnReset() {
   reset();
+}
+
+export function handleOnClear() {
+  clear();
 }

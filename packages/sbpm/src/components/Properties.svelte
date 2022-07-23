@@ -1,9 +1,9 @@
 <script>
-  import { currentlySelectedSbpmShape } from '../manager';
+  import { currentlySelectedSbpmShape, uiVisible } from '../manager';
   import Frame from './ui/Frame.svelte';
 </script>
 
-{#if $currentlySelectedSbpmShape}
+{#if $currentlySelectedSbpmShape && $uiVisible}
   <div class="sbpm-properties">
     <Frame title="properties">
       {JSON.stringify($currentlySelectedSbpmShape?.attributes?.id)}

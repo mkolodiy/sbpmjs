@@ -23,6 +23,10 @@ export function initModeler() {
     },
   });
 
+  addInitialElement();
+}
+
+export function addInitialElement() {
   addSbpmElement('ProcessNetwork', { x: 400, y: 100 });
 }
 
@@ -53,4 +57,14 @@ export function addSbpmElement(type: SbpmElementType, position: Coordinates) {
 
 export function reset() {
   modeler.canvas.reset();
+}
+
+export function clear() {
+  // TODO: Change to use a dialog
+  const confirmation = confirm('This will delete all elements and their children. Proceed?');
+  if (!confirmation) {
+    return;
+  }
+  modeler.canvas.clear();
+  addInitialElement();
 }

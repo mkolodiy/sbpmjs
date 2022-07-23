@@ -27,6 +27,7 @@
     --sbpm-outline-color: #ffffff;
     --sbpm-outline-color-dark-variant-1: #f5f5f5;
     --sbpm-outline-color-dark-variant-2: #ebebeb;
+    --sbpm-shade-color: #ebfaff;
     --sbpm-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-;
     --sbpm-font-size: 16px;
   }

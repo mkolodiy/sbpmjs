@@ -1,12 +1,13 @@
 <script>
   export let title = undefined;
+  export let padded = true;
 </script>
 
 <div class="frame">
   {#if title}
-    <div class="title">{title}</div>
+    <div class="title" class:title-padded={padded}>{title}</div>
   {/if}
-  <div class="content"><slot /></div>
+  <div class="content" class:content-padded={padded}><slot /></div>
 </div>
 
 <style>
@@ -25,11 +26,17 @@
   .title {
     background-color: var(--sbpm-primary-color);
     color: #fff;
+  }
+
+  .title-padded {
     padding: 10px;
   }
 
   .content {
-    padding: 10px;
     flex: 1;
+  }
+
+  .content-padded {
+    padding: 10px;
   }
 </style>
