@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import { CustomEvent } from '../common';
+import { CustomEvent, SbpmElementType } from '../common';
 import type { GetUpdateOptions, SbpmShapeAttributes, SbpmShapeOptions } from '../common';
 import type { SbpmElementToolsOptions } from './element-tools';
 
@@ -44,6 +44,8 @@ export type SbpmElementOptions = SbpmShapeOptions & {
 };
 
 export class SbpmElement extends joint.dia.Element<SbpmElementAttributes> {
+  type: SbpmElementType = undefined as unknown as SbpmElementType;
+
   defaults() {
     return {
       ...super.defaults,

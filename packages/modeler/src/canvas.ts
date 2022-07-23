@@ -236,11 +236,10 @@ export class SbpmCanvas {
   }
 
   /**
-   * Remove all shapes from the canvas and set the origin to 0/0.
+   * Remove all shapes from the canvas.
    */
   public clear() {
     this.#graph.clear();
     this.addOrigin();
-    this.reset();
   }
 }
