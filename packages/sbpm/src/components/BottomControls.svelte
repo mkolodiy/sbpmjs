@@ -27,6 +27,6 @@
 
   .frame-content {
     display: flex;
-    padding: 0 5px;
+    padding: 5px;
   }
 </style>

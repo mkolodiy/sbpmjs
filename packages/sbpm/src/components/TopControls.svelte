@@ -33,10 +33,11 @@
     position: relative;
     width: min-content;
     z-index: 2;
+    flex: auto;
   }
 
   .frame-content {
     display: flex;
-    padding: 0 5px;
+    padding: 5px;
   }
 </style>

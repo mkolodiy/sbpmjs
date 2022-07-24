@@ -1,5 +1,6 @@
 <script>
   import BottomControls from './BottomControls.svelte';
+  import ElementNavigator from './ElementNavigator.svelte';
   import Palette from './Palette.svelte';
   import Properties from './Properties.svelte';
   import TopControls from './TopControls.svelte';
@@ -7,7 +8,7 @@
 </script>
 
 <div class="sbpm-layout">
-  <div class="sbpm-layout-top"><TopControls /></div>
+  <div class="sbpm-layout-top"><TopControls /><ElementNavigator /></div>
   <div class="sbpm-layout-left"><Palette /></div>
   <div class="sbpm-layout-right"><Properties /></div>
   <div class="sbpm-layout-bottom"><BottomControls /></div>
@@ -27,6 +28,7 @@
 
   .sbpm-layout-top {
     grid-area: a;
+    display: flex;
   }
 
   .sbpm-layout-left {

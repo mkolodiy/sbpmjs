@@ -56,16 +56,16 @@ const view = constructSbpmView([
   },
 ]);
 
-modeler.restoreView(view);
+// modeler.restoreView(view);
 
-// const processNetwork1 = modeler.addElement('ProcessNetwork', {
-//   id: 'processNetwork1',
-//   label: 'Test',
-//   position: {
-//     x: 100,
-//     y: 80,
-//   },
-// });
+const processNetwork1 = modeler.addElement('ProcessNetwork', {
+  id: 'processNetwork1',
+  label: 'Test',
+  position: {
+    x: 100,
+    y: 80,
+  },
+});
 
 // const processModel1 = modeler.addElement('ProcessModel', {
 //   id: 'processModel1',
@@ -181,4 +181,8 @@ document.getElementById('clear-canvas')?.addEventListener('click', () => {
 
 document.getElementById('reset-canvas')?.addEventListener('click', () => {
   modeler.canvas.reset();
+});
+
+document.getElementById('restore-view')?.addEventListener('click', () => {
+  modeler.restoreView(view);
 });

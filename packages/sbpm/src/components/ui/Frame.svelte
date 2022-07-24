@@ -17,10 +17,11 @@
     border-style: solid;
     border-width: 1px;
     border-radius: 3px;
-    max-width: 400px;
+    width: fit-content;
     height: inherit;
     display: flex;
     flex-direction: column;
+    height: fit-content;
   }
 
   .title {

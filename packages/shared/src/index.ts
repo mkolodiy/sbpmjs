@@ -47,6 +47,7 @@ export type SbpmShapeType = SbpmElementType | SbpmLinkType;
 
 export type SbpmBasicShape = {
   id: string;
+  label: string;
 };
 
 export type SbpmContainerShape = {
@@ -54,7 +55,6 @@ export type SbpmContainerShape = {
 };
 
 export type SbpmElement = SbpmBasicShape & {
-  label: string;
   position: Coordinates;
 };
 

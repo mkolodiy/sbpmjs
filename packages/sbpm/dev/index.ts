@@ -8,7 +8,7 @@ const processNetwork01 = constructSbpmElementItem({
     id: 'processNetwork01',
     label: 'Process network - Test',
     position: {
-      x: 100,
+      x: 300,
       y: 100,
     },
   },
@@ -20,7 +20,7 @@ const processModel01 = constructSbpmElementItem({
     id: 'processModel01',
     label: 'Process model',
     position: {
-      x: 600,
+      x: 900,
       y: 100,
     },
     contains: ['subject01', 'subject02', 'messageTransition01'],
@@ -31,6 +31,7 @@ const processTransition01 = constructSbpmLinkItem({
   type: 'ProcessTransition',
   properties: {
     id: 'processTransition01',
+    label: 'Process transition',
     source: 'processNetwork01',
     target: 'processModel01',
   },
@@ -66,7 +67,7 @@ const message01 = constructSbpmElementItem({
     id: 'message01',
     label: 'Message 1',
     position: {
-      x: 100,
+      x: 300,
       y: 100,
     },
   },
@@ -76,6 +77,7 @@ const messageTransition01 = constructSbpmLinkItem({
   type: 'MessageTransition',
   properties: {
     id: 'messageTransition01',
+    label: 'Message transition',
     source: 'subject01',
     target: 'subject02',
     contains: ['message01'],

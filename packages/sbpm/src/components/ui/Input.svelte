@@ -1,6 +1,8 @@
 <script>
   export let value = '';
   export let label = undefined;
+  export let placeholder = '';
+  export let input = undefined;
 
   const { name, ...restProps } = $$restProps;
 </script>
@@ -9,7 +11,7 @@
   {#if label}
     <label class="label" for={name}>{label}</label>
   {/if}
-  <input class="input" bind:value {name} {...restProps} />
+  <input class="input" {placeholder} bind:value {name} on:focus bind:this={input} {...restProps} />
 </span>
 
 <style>

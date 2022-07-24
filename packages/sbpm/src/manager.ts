@@ -1,8 +1,31 @@
 import SbpmModeler from '@sbpmjs/modeler';
-import { constructSbpmElementItem, type Coordinates, type SbpmElementType, type SbpmProcess, type SbpmProcessItem, type SbpmShapeType } from '@sbpmjs/shared';
+import {
+  constructSbpmElementItem,
+  type Coordinates,
+  type SbpmElementType,
+  type SbpmMessageTransitionType,
+  type SbpmProcess,
+  type SbpmProcessItem,
+  type SbpmProcessModelType,
+  type SbpmShapeType,
+  type SbpmSubjectType,
+} from '@sbpmjs/shared';
 import { writable } from 'svelte/store';
 import { createRandomUUID } from './common';
 import { processModelIcon, subjectIcon, messageIcon, sendStateIcon, receiveStateIcon, functionStateIcon } from './icons';
+
+const defaultViewKey = 'defaultView';
+type DefaultViewKey = typeof defaultViewKey;
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const defaultViewItem = constructSbpmElementItem<DefaultViewKey>({
+  type: 'defaultView',
+  properties: {
+    id: defaultViewKey,
+    label: 'Default view',
+  },
+});
 
 type PaletteItem = {
   type: SbpmElementType;
@@ -24,7 +47,9 @@ const processModelPaletteItem: PaletteItem = {
   title: 'Process Model',
 };
 
-const PaletteItems: Record<SbpmShapeType | string, PaletteItem[]> = {
+type PaletteItemKey = DefaultViewKey | SbpmProcessModelType | SbpmMessageTransitionType | SbpmSubjectType;
+
+const PaletteItems: Record<PaletteItemKey, PaletteItem[]> = {
   defaultView: [processModelPaletteItem],
   ProcessModel: [
     {
@@ -85,29 +110,28 @@ export const currentlySelectedSbpmShape = writable();
 
 export const activePaletteItems = writable<PaletteItem[]>([processModelPaletteItem]);
 
-export function setActivePaletteItems(palette: SbpmShapeType | string) {
+export function setActivePaletteItems(palette: PaletteItemKey) {
   activePaletteItems.update(() => PaletteItems[palette]);
 }
 
 const views: Record<string, string[]> = {
-  defaultView: [],
+  [defaultViewKey]: [],
 };
 
 type ViewBreadcrumb = {
-  type: SbpmShapeType | string;
+  type: SbpmShapeType | DefaultViewKey;
   id: string;
 };
 
 const defaultViewBreadcrumb: ViewBreadcrumb = {
   type: 'defaultView',
-  id: 'defaultView',
+  id: defaultViewKey,
 };
 
 const viewBreadcrumbs: ViewBreadcrumb[] = [defaultViewBreadcrumb];
 
 function addViewBreadcrumb(breadcrumb: ViewBreadcrumb) {
   viewBreadcrumbs.push(breadcrumb);
-  console.log(viewBreadcrumbs);
 }
 
 function removeLastViewBreadcrumb() {
@@ -140,6 +164,12 @@ export function setView(view: string, items: string[]) {
 
 const store: Record<string, SbpmProcessItem> = {};
 
+export const elementNavigatorItems = writable<SbpmProcessItem[]>();
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+export const currentlySelectedNavigatorItem = writable<SbpmProcessItem>(defaultViewItem);
+
 export function loadProcess(process: SbpmProcess) {
   process.forEach((item) => {
     const type = item.type;
@@ -149,7 +179,7 @@ export function loadProcess(process: SbpmProcess) {
     store[id] = item;
 
     if (isDefaultViewType(type)) {
-      setView('defaultView', [id]);
+      setView(defaultViewKey, [id]);
     }
 
     if ('contains' in properties) {
@@ -157,11 +187,25 @@ export function loadProcess(process: SbpmProcess) {
     }
   });
 
-  restoreView('defaultView');
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  store[defaultViewKey] = defaultViewItem;
+
+  restoreView(defaultViewKey);
+  initElementNavigatorItems();
+
+  console.log(getViews());
+  console.log(store);
 }
 
 export function getItems(ids: string[]) {
   return ids.map((id) => store[id]);
+}
+
+export function initElementNavigatorItems() {
+  const views = getViews();
+  const ids = Object.keys(views);
+  elementNavigatorItems.update(() => getItems(ids));
 }
 
 let modeler: SbpmModeler = undefined as unknown as SbpmModeler;
@@ -176,20 +220,22 @@ export function initModeler() {
   modeler = new SbpmModeler({
     container,
     onOpenElement: (element) => {
-      setActivePaletteItems(element.type);
+      setActivePaletteItems(element.type as PaletteItemKey);
       addViewBreadcrumb({
         type: element.type,
         id: String(element.id),
       });
       restoreView(String(element.id));
+      initElementNavigatorItems();
     },
     onOpenLink: (link) => {
-      setActivePaletteItems(link.type);
+      setActivePaletteItems(link.type as PaletteItemKey);
       addViewBreadcrumb({
         type: link.type,
         id: String(link.id),
       });
       restoreView(String(link.id));
+      initElementNavigatorItems();
     },
   });
 
@@ -201,8 +247,6 @@ export function addInitialElement() {
 }
 
 export function restoreView(view: string) {
-  console.log(view);
-
   const ids = getView(view);
   const items = getItems(ids);
   modeler.restoreView(items);
@@ -237,6 +281,7 @@ export function clear() {
   if (!confirmation) {
     return;
   }
+  modeler.canvas.reset();
   modeler.canvas.clear();
   addInitialElement();
 }
@@ -259,7 +304,7 @@ export function handleGoHome() {
   if (lastViewBreadcrumb.type !== 'defaultView') {
     addViewBreadcrumb(defaultViewBreadcrumb);
     restoreView(defaultViewBreadcrumb.id);
-    setActivePaletteItems(defaultViewBreadcrumb.id);
+    setActivePaletteItems(defaultViewBreadcrumb.type as PaletteItemKey);
   }
 }
 
@@ -267,9 +312,18 @@ export function handleGoBack() {
   const previousViewBreadcrumb = getPreviousViewBreadcrumb();
   if (previousViewBreadcrumb) {
     restoreView(previousViewBreadcrumb.id);
-    setActivePaletteItems(previousViewBreadcrumb.type);
+    setActivePaletteItems(previousViewBreadcrumb.type as PaletteItemKey);
     removeLastViewBreadcrumb();
   }
+}
+
+export function handleOnSelectNavigationItem(item: SbpmProcessItem) {
+  addViewBreadcrumb({
+    id: item.properties.id,
+    type: item.type,
+  });
+  setActivePaletteItems(item.type as PaletteItemKey);
+  restoreView(item.properties.id);
 }
 
 function isDefaultViewType(type: SbpmShapeType) {
