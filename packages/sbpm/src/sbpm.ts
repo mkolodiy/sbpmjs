@@ -1,4 +1,4 @@
-import type { SbpmProcess } from '@sbpmjs/shared';
+import type { SbpmProcessItemGroup } from '@sbpmjs/shared';
 import Main from './components/Main.svelte';
 import { loadProcess } from './manager';
 
@@ -18,7 +18,7 @@ export default class Sbpm {
     });
   }
 
-  public loadProcess(process: SbpmProcess) {
+  public loadProcess(process: SbpmProcessItemGroup) {
     loadProcess(process);
   }
 }

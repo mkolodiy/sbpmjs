@@ -3,6 +3,8 @@ export type Coordinates = {
   y: number;
 };
 
+export type SbpmProcessType = 'Process';
+
 export type SbpmProcessNetworkType = 'ProcessNetwork';
 
 export type SbpmProcessModelType = 'ProcessModel';
@@ -27,6 +29,8 @@ export type SbpmSendStateTransitionType = 'SendStateTransition';
 
 export type SbpmReceiveStateTransitionType = 'ReceiveStateTransition';
 
+export type SbpmGeneralEntityType = SbpmProcessType;
+
 export type SbpmElementType =
   | SbpmProcessNetworkType
   | SbpmProcessModelType
@@ -45,6 +49,8 @@ export type SbpmLinkType =
 
 export type SbpmShapeType = SbpmElementType | SbpmLinkType;
 
+export type SbpmType = SbpmGeneralEntityType | SbpmShapeType;
+
 export type SbpmBasicShape = {
   id: string;
   label: string;
@@ -53,6 +59,8 @@ export type SbpmBasicShape = {
 export type SbpmContainerShape = {
   contains?: string[];
 };
+
+export type SbpmProcess = SbpmBasicShape & Required<SbpmContainerShape>;
 
 export type SbpmElement = SbpmBasicShape & {
   position: Coordinates;
@@ -105,6 +113,8 @@ export type SbpmReceiveStateTransition = SbpmStateTransition;
 
 export type SbpmFunctionStateTransition = Omit<SbpmStateTransition, 'subject'>;
 
+export type GetSbpmSbpmGeneralEntity<Type extends SbpmGeneralEntityType = SbpmGeneralEntityType> = Type extends SbpmProcessType ? SbpmProcess : undefined;
+
 export type GetSbpmElement<Type extends SbpmElementType = SbpmElementType> = Type extends SbpmProcessNetworkType
   ? SbpmProcessNetwork
   : Type extends SbpmProcessModelType
@@ -133,6 +143,11 @@ export type GetSbpmLink<Type extends SbpmLinkType = SbpmLinkType> = Type extends
   ? SbpmReceiveStateTransition
   : undefined;
 
+export type SbpmGeneralEntityItem<Type extends SbpmGeneralEntityType = SbpmGeneralEntityType> = {
+  type: Type;
+  properties: GetSbpmSbpmGeneralEntity<Type>;
+};
+
 export type SbpmElementItem<Type extends SbpmElementType = SbpmElementType> = {
   type: Type;
   properties: GetSbpmElement<Type>;
@@ -143,32 +158,43 @@ export type SbpmLinkItem<Type extends SbpmLinkType = SbpmLinkType> = {
   properties: GetSbpmLink<Type>;
 };
 
-export type SbpmProcessItem<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType> =
-  | SbpmElementItem<ElementType>
-  | SbpmLinkItem<LinkType>;
+export type SbpmProcessItem<
+  GeneralEntityType extends SbpmGeneralEntityType = SbpmGeneralEntityType,
+  ElementType extends SbpmElementType = SbpmElementType,
+  LinkType extends SbpmLinkType = SbpmLinkType
+> = SbpmGeneralEntityItem<GeneralEntityType> | SbpmElementItem<ElementType> | SbpmLinkItem<LinkType>;
 
-export type SbpmProcess<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType> = SbpmProcessItem<
-  ElementType,
-  LinkType
->[];
+export type SbpmProcessItemGroup<
+  GeneralEntityType extends SbpmGeneralEntityType = SbpmGeneralEntityType,
+  ElementType extends SbpmElementType = SbpmElementType,
+  LinkType extends SbpmLinkType = SbpmLinkType
+> = SbpmProcessItem<GeneralEntityType, ElementType, LinkType>[];
 
-export function constructSbpmElementItem<Type extends SbpmElementType = SbpmElementType>(item: SbpmElementItem<Type>) {
+export function createSbpmGeneralEntityItem<Type extends SbpmGeneralEntityType = SbpmGeneralEntityType>(item: SbpmGeneralEntityItem<Type>) {
   return item;
 }
 
-export function constructSbpmLinkItem<Type extends SbpmLinkType = SbpmLinkType>(item: SbpmLinkItem<Type>) {
+export function createSbpmElementItem<Type extends SbpmElementType = SbpmElementType>(item: SbpmElementItem<Type>) {
   return item;
 }
 
-// export function constructSbpmProcessItem<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType>(
-//   item: SbpmProcessItem<ElementType, LinkType>
-// ) {
-//   return item;
-// }
+export function createSbpmLinkItem<Type extends SbpmLinkType = SbpmLinkType>(item: SbpmLinkItem<Type>) {
+  return item;
+}
 
-export function constructSbpmProcess<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType>(
-  item: SbpmProcess<ElementType, LinkType>
-) {
+export function createSbpmProcessItem<
+  GeneralEntityType extends SbpmGeneralEntityType = SbpmGeneralEntityType,
+  ElementType extends SbpmElementType = SbpmElementType,
+  LinkType extends SbpmLinkType = SbpmLinkType
+>(item: SbpmProcessItem<GeneralEntityType, ElementType, LinkType>) {
+  return item;
+}
+
+export function createSbpmProcessItemGroup<
+  GeneralEntityType extends SbpmGeneralEntityType = SbpmGeneralEntityType,
+  ElementType extends SbpmElementType = SbpmElementType,
+  LinkType extends SbpmLinkType = SbpmLinkType
+>(item: SbpmProcessItemGroup<GeneralEntityType, ElementType, LinkType>) {
   return item;
 }
 

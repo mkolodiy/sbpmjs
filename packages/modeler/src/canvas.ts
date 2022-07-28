@@ -66,17 +66,25 @@ type EventMap = joint.dia.Paper.EventMap & {
   ) => void;
 };
 
+export type ElementEventHandlerParams = SbpmElement;
+
+export type LinkEventHandlerParams = SbpmLink;
+
+export type ElementEventHandler = (element: ElementEventHandlerParams) => void;
+
+export type LinkEventHandler = (element: LinkEventHandlerParams) => void;
+
 export type SbpmModelerOptions = {
   /**
    * A HTML element where the modeler should be rended to.
    */
   container: HTMLElement;
-  onSelectElement?: (element: SbpmElement) => void;
-  onSelectLink?: (element: SbpmLink) => void;
-  onDeleteElement?: (element: SbpmElement) => void;
-  onDeleteLink?: (element: SbpmLink) => void;
-  onOpenElement?: (element: SbpmElement) => void;
-  onOpenLink?: (element: SbpmLink) => void;
+  onSelectElement?: ElementEventHandler;
+  onSelectLink?: LinkEventHandler;
+  onDeleteElement?: ElementEventHandler;
+  onDeleteLink?: LinkEventHandler;
+  onOpenElement?: ElementEventHandler;
+  onOpenLink?: LinkEventHandler;
 };
 
 export class SbpmCanvas {

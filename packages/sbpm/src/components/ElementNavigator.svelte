@@ -1,7 +1,13 @@
 <script lang="ts">
   import type { SbpmProcessItem } from '@sbpmjs/shared';
   import Input from './ui/Input.svelte';
-  import { uiVisible, elementNavigatorItems, handleOnSelectNavigationItem, currentlySelectedNavigatorItem } from '../manager';
+  import {
+    uiVisible,
+    elementNavigatorItems,
+    handleOnSelectNavigationItem,
+    currentlySelectedNavigatorItem,
+    updateCurrentlySelectedNavigatorItem,
+  } from '../manager';
 
   let value = '';
   let isFocused = false;
@@ -25,7 +31,7 @@
   };
 
   const onSelectItem = (item: SbpmProcessItem) => () => {
-    currentlySelectedNavigatorItem.update(() => item);
+    updateCurrentlySelectedNavigatorItem(item);
     value = '';
     isFocused = false;
     handleOnSelectNavigationItem(item);
@@ -37,7 +43,7 @@
 {#if $uiVisible}
   <div class="element-navigator" bind:this={element}>
     <Input
-      placeholder={`${$currentlySelectedNavigatorItem.properties.label} (${$currentlySelectedNavigatorItem.properties.id})`}
+      placeholder={`${$currentlySelectedNavigatorItem?.properties.label} (${$currentlySelectedNavigatorItem?.properties.id})`}
       bind:value
       on:focus={onFocus}
       bind:input
@@ -113,5 +119,6 @@
 
   .select-item-selected {
     background-color: var(--sbpm-primary-color);
+    color: #fff;
   }
 </style>

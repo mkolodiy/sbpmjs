@@ -1,8 +1,17 @@
 import Sbpm from '../src';
 
-import { constructSbpmElementItem, constructSbpmLinkItem, constructSbpmProcess } from '@sbpmjs/shared';
+import { createSbpmElementItem, createSbpmLinkItem, createSbpmProcessItemGroup, createSbpmGeneralEntityItem } from '@sbpmjs/shared';
 
-const processNetwork01 = constructSbpmElementItem({
+const process = createSbpmGeneralEntityItem({
+  type: 'Process',
+  properties: {
+    id: 'process01',
+    label: 'Test Process',
+    contains: ['processNetwork01', 'processModel01', 'processTransition01'],
+  },
+});
+
+const processNetwork01 = createSbpmElementItem({
   type: 'ProcessNetwork',
   properties: {
     id: 'processNetwork01',
@@ -14,7 +23,7 @@ const processNetwork01 = constructSbpmElementItem({
   },
 });
 
-const processModel01 = constructSbpmElementItem({
+const processModel01 = createSbpmElementItem({
   type: 'ProcessModel',
   properties: {
     id: 'processModel01',
@@ -27,7 +36,7 @@ const processModel01 = constructSbpmElementItem({
   },
 });
 
-const processTransition01 = constructSbpmLinkItem({
+const processTransition01 = createSbpmLinkItem({
   type: 'ProcessTransition',
   properties: {
     id: 'processTransition01',
@@ -37,7 +46,7 @@ const processTransition01 = constructSbpmLinkItem({
   },
 });
 
-const subject01 = constructSbpmElementItem({
+const subject01 = createSbpmElementItem({
   type: 'Subject',
   properties: {
     id: 'subject01',
@@ -49,7 +58,7 @@ const subject01 = constructSbpmElementItem({
   },
 });
 
-const subject02 = constructSbpmElementItem({
+const subject02 = createSbpmElementItem({
   type: 'Subject',
   properties: {
     id: 'subject02',
@@ -61,7 +70,7 @@ const subject02 = constructSbpmElementItem({
   },
 });
 
-const message01 = constructSbpmElementItem({
+const message01 = createSbpmElementItem({
   type: 'Message',
   properties: {
     id: 'message01',
@@ -73,7 +82,7 @@ const message01 = constructSbpmElementItem({
   },
 });
 
-const messageTransition01 = constructSbpmLinkItem({
+const messageTransition01 = createSbpmLinkItem({
   type: 'MessageTransition',
   properties: {
     id: 'messageTransition01',
@@ -86,11 +95,20 @@ const messageTransition01 = constructSbpmLinkItem({
 
 // export const process = [processNetwork01, processModel01, processTransition01, subject01, subject02, messageTransition01];
 
-const process = constructSbpmProcess([processNetwork01, processModel01, processTransition01, subject01, subject02, message01, messageTransition01]);
+const processItemGroup = createSbpmProcessItemGroup([
+  process,
+  processNetwork01,
+  processModel01,
+  processTransition01,
+  subject01,
+  subject02,
+  message01,
+  messageTransition01,
+]);
 
 const sbpm = new Sbpm({
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   container: document.getElementById('container')!,
 });
 
-sbpm.loadProcess(process);
+sbpm.loadProcess(processItemGroup);
