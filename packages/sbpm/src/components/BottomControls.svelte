@@ -1,22 +1,20 @@
 <script>
   import Frame from './ui/Frame.svelte';
-  import { handleOnReset, handleOnClear, uiVisible } from '../manager';
+  import { handleOnReset, handleOnClear } from '../manager';
   import { centerFocusStrongIcon, clearIcon, zoomInIcon, zoomOutIcon } from '../icons';
   import IconButton from './ui/IconButton.svelte';
 </script>
 
-{#if $uiVisible}
-  <div class="sbpm-bottom-constrols">
-    <Frame padded={false}>
-      <div class="frame-content">
-        <IconButton src={clearIcon} title="Clear canvas" on:click={handleOnClear} />
-        <IconButton src={centerFocusStrongIcon} title="Center canvas" on:click={handleOnReset} />
-        <IconButton src={zoomInIcon} title="Zoom in canvas" />
-        <IconButton src={zoomOutIcon} title="Zoom out canvas" />
-      </div>
-    </Frame>
-  </div>
-{/if}
+<div class="sbpm-bottom-constrols">
+  <Frame padded={false}>
+    <div class="frame-content">
+      <IconButton src={clearIcon} title="Clear canvas" on:click={handleOnClear} />
+      <IconButton src={centerFocusStrongIcon} title="Center canvas" on:click={handleOnReset} />
+      <IconButton src={zoomInIcon} title="Zoom in canvas" />
+      <IconButton src={zoomOutIcon} title="Zoom out canvas" />
+    </div>
+  </Frame>
+</div>
 
 <style>
   .sbpm-bottom-constrols {

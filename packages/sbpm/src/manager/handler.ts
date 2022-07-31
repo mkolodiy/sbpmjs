@@ -2,7 +2,7 @@ import type { SbpmElementType, Coordinates, SbpmProcessItem } from '@sbpmjs/shar
 import { get } from 'svelte/store';
 import {
   addSbpmElement,
-  currentlySelectedSbpmShape,
+  updateCurrentlySelectedSbpmShape,
   reset,
   clear,
   restoreView,
@@ -12,11 +12,31 @@ import {
   getLastViewBreadcrumb,
   removeLastViewBreadcrumb,
   defaultViewBreadcrumb,
+  addItem,
+  updateView,
+  currentlySelectedNavigatorItem,
+  getItems,
+  getViews,
+  currentlySelectedSbpmShape,
+  updateItem,
 } from '../manager';
 
 export function handleOnDrop(type: SbpmElementType, position: Coordinates) {
   const element = addSbpmElement(type, position);
-  currentlySelectedSbpmShape.update(() => element);
+  const id = String(element.id);
+  updateCurrentlySelectedSbpmShape(element);
+  addItem({
+    type: type,
+    properties: {
+      id,
+      position,
+      label: 'New element',
+    },
+  });
+  updateView(get(currentlySelectedNavigatorItem).properties.id, [id]);
+
+  console.log(getItems());
+  console.log(getViews());
 }
 
 export function handleOnReset() {
@@ -59,4 +79,13 @@ export function handleOnSelectNavigationItem(item: SbpmProcessItem) {
   });
   updateActivePaletteItems(item.type);
   restoreView(item.properties.id);
+}
+
+export function handleOnUpdate(label: string, position: Coordinates) {
+  const shape = get(currentlySelectedSbpmShape);
+  shape.update({
+    label,
+    position,
+  });
+  updateItem(String(shape.id), label, position);
 }

@@ -1,5 +1,5 @@
 <script>
-  import { activePaletteItems, uiVisible } from '../manager';
+  import { activePaletteItems } from '../manager';
   import Frame from './ui/Frame.svelte';
 
   const dragStart = (event) => {
@@ -8,15 +8,13 @@
   };
 </script>
 
-{#if $uiVisible}
-  <div class="sbpm-palette">
-    <Frame>
-      {#each $activePaletteItems as { type, icon, size: { width, height }, title }}
-        <img class="sbpm-palette-item" src={icon} alt={title} {title} {width} {height} draggable="true" data-type={type} on:dragstart={dragStart} />
-      {/each}
-    </Frame>
-  </div>
-{/if}
+<div class="sbpm-palette">
+  <Frame>
+    {#each $activePaletteItems as { type, icon, size: { width, height }, title }}
+      <img class="sbpm-palette-item" src={icon} alt={title} {title} {width} {height} draggable="true" data-type={type} on:dragstart={dragStart} />
+    {/each}
+  </Frame>
+</div>
 
 <style>
   .sbpm-palette {

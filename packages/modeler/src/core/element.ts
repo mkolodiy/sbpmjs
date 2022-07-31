@@ -63,7 +63,7 @@ export class SbpmElement extends joint.dia.Element<SbpmElementAttributes> {
     const { label, position } = options;
 
     if (label) {
-      this.attr('label/text', label);
+      this.attr('label/textWrap/text', label);
     }
 
     if (position) {

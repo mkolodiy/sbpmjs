@@ -1,13 +1,7 @@
 <script lang="ts">
   import type { SbpmProcessItem } from '@sbpmjs/shared';
   import Input from './ui/Input.svelte';
-  import {
-    uiVisible,
-    elementNavigatorItems,
-    handleOnSelectNavigationItem,
-    currentlySelectedNavigatorItem,
-    updateCurrentlySelectedNavigatorItem,
-  } from '../manager';
+  import { elementNavigatorItems, handleOnSelectNavigationItem, currentlySelectedNavigatorItem, updateCurrentlySelectedNavigatorItem } from '../manager';
 
   let value = '';
   let isFocused = false;
@@ -40,33 +34,31 @@
 
 <svelte:window on:focusin={onFocusIn} on:click={onFocusIn} />
 
-{#if $uiVisible}
-  <div class="element-navigator" bind:this={element}>
-    <Input
-      placeholder={`${$currentlySelectedNavigatorItem?.properties.label} (${$currentlySelectedNavigatorItem?.properties.id})`}
-      bind:value
-      on:focus={onFocus}
-      bind:input
-    />
-    {#if isFocused}
-      <div class="select">
-        {#if filteredItems.length === 0}
-          <div class="not-found-item">No elements found</div>
-        {:else}
-          {#each filteredItems as item}
-            <div
-              class="select-item"
-              class:select-item-selected={compareLabels(item.properties.label, $currentlySelectedNavigatorItem.properties.label)}
-              on:click={onSelectItem(item)}
-            >
-              {item.properties.label} ({item.properties.id})
-            </div>
-          {/each}
-        {/if}
-      </div>
-    {/if}
-  </div>
-{/if}
+<div class="element-navigator" bind:this={element}>
+  <Input
+    placeholder={`${$currentlySelectedNavigatorItem?.properties.label} (${$currentlySelectedNavigatorItem?.properties.id})`}
+    bind:value
+    on:focus={onFocus}
+    bind:input
+  />
+  {#if isFocused}
+    <div class="select">
+      {#if filteredItems.length === 0}
+        <div class="not-found-item">No elements found</div>
+      {:else}
+        {#each filteredItems as item}
+          <div
+            class="select-item"
+            class:select-item-selected={compareLabels(item.properties.label, $currentlySelectedNavigatorItem.properties.label)}
+            on:click={onSelectItem(item)}
+          >
+            {item.properties.label} ({item.properties.id})
+          </div>
+        {/each}
+      {/if}
+    </div>
+  {/if}
+</div>
 
 <style>
   .element-navigator {

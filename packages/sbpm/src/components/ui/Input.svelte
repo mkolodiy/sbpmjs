@@ -4,14 +4,14 @@
   export let placeholder = '';
   export let input = undefined;
 
-  const { name, ...restProps } = $$restProps;
+  const { name, disabled = false, ...restProps } = $$restProps;
 </script>
 
 <span class="container">
   {#if label}
     <label class="label" for={name}>{label}</label>
   {/if}
-  <input class="input" {placeholder} bind:value {name} on:focus bind:this={input} {...restProps} />
+  <input class="input" class:input-disabled={disabled} {disabled} {placeholder} bind:value {name} on:focus bind:this={input} {...restProps} />
 </span>
 
 <style>
@@ -31,6 +31,10 @@
     border-style: solid;
     border-width: 1px;
     border-radius: 3px;
+  }
+
+  .input-disabled {
+    cursor: not-allowed;
   }
 
   .input:focus-visible {

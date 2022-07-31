@@ -53,6 +53,7 @@ export type SbpmLinkOptions<Source = SbpmElement, Target = SbpmElement> = SbpmSh
    * The target element.
    */
   target: Target | string;
+  label?: string;
 };
 
 export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
@@ -88,7 +89,7 @@ export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
   }
 
   public update(options: GetUpdateOptions<SbpmLinkOptions>) {
-    const { source, target } = options;
+    const { source, target, label } = options;
 
     if (source) {
       this.source(handleEndpoint(source));
@@ -96,6 +97,18 @@ export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
 
     if (target) {
       this.target(handleEndpoint(target));
+    }
+
+    if (label && this.hasLabels()) {
+      this.label(0, {
+        attrs: {
+          text: {
+            textWrap: {
+              text: label,
+            },
+          },
+        },
+      });
     }
   }
 

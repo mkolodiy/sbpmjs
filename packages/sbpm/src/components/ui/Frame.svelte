@@ -21,7 +21,6 @@
     height: inherit;
     display: flex;
     flex-direction: column;
-    height: fit-content;
   }
 
   .title {

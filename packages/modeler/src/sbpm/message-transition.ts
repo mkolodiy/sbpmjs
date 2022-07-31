@@ -110,7 +110,7 @@ export class SbpmMessageTransition extends SbpmLink {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(options: SbpmMessageTransitionOptions = {} as SbpmMessageTransitionOptions, _modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions) {
-    const { source, target, type = 'unidirectional', ...restOptions } = options;
+    const { source, target, type = 'unidirectional', label, ...restOptions } = options;
 
     const attributes = joint.util.merge(
       {},
@@ -124,7 +124,15 @@ export class SbpmMessageTransition extends SbpmLink {
     ) as SbpmLinkAttributes;
 
     super(attributes);
-    this.appendLabel(createIconLabel(iconLabel));
+    this.appendLabel(
+      createIconLabel(
+        joint.util.merge(joint.util.cloneDeep(iconLabel), {
+          attrs: {
+            text: { textWrap: { text: label } },
+          },
+        })
+      )
+    );
     handleType(this, type);
   }
 

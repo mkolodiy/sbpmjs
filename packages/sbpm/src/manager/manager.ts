@@ -1,4 +1,5 @@
 import SbpmModeler from '@sbpmjs/modeler';
+import type { ElementEventHandlerParams, LinkEventHandlerParams } from '@sbpmjs/modeler';
 import {
   createSbpmGeneralEntityItem,
   type Coordinates,
@@ -8,7 +9,7 @@ import {
   type SbpmType,
 } from '@sbpmjs/shared';
 import { createSbpmElementItem } from '@sbpmjs/shared';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import { createRandomUUID } from '../common';
 import { processModelIcon, subjectIcon, messageIcon, sendStateIcon, receiveStateIcon, functionStateIcon } from '../icons';
 
@@ -107,7 +108,11 @@ const paletteItems: Record<SbpmType, PaletteItem[]> = {
 
 export const uiVisible = writable(true);
 
-export const currentlySelectedSbpmShape = writable();
+export const currentlySelectedSbpmShape = writable<ElementEventHandlerParams | LinkEventHandlerParams>();
+
+export function updateCurrentlySelectedSbpmShape(shape: ElementEventHandlerParams | LinkEventHandlerParams) {
+  currentlySelectedSbpmShape.update(() => shape);
+}
 
 export const activePaletteItems = writable<PaletteItem[]>([processModelPaletteItem]);
 
@@ -120,7 +125,7 @@ type ViewBreadcrumb = {
   id: string;
 };
 
-const viewBreadcrumbs: ViewBreadcrumb[] = [];
+export const viewBreadcrumbs: ViewBreadcrumb[] = [];
 
 export const defaultViewBreadcrumb = writable<SbpmProcessItem<'Process'>>(defaultProcess);
 
@@ -146,10 +151,6 @@ export function getPreviousViewBreadcrumb() {
 
 const views: Record<string, string[]> = {};
 
-export function getView(view: string) {
-  return views[view];
-}
-
 export function getViews() {
   return views;
 }
@@ -171,7 +172,7 @@ export const elementNavigatorItems = writable<SbpmProcessItem[]>([defaultProcess
 export function initElementNavigatorItems() {
   const views = getViews();
   const ids = Object.keys(views);
-  elementNavigatorItems.update(() => getItems(ids));
+  elementNavigatorItems.update(() => getItemsByIds(ids));
 }
 
 export const currentlySelectedNavigatorItem = writable<SbpmProcessItem>(defaultProcess);
@@ -182,8 +183,28 @@ export function updateCurrentlySelectedNavigatorItem(item: SbpmProcessItem) {
 
 const store: Record<string, SbpmProcessItem> = {};
 
-export function getItems(ids: string[]) {
+export function getItems() {
+  return store;
+}
+
+export function getItemsByIds(ids: string[]) {
   return ids.map((id) => store[id]);
+}
+
+export function addItem(item: SbpmProcessItem) {
+  const id = item.properties.id;
+  store[id] = item;
+}
+
+export function updateItem(id: string, label: string, position: Coordinates) {
+  const item = store[id];
+  console.log(item);
+
+  item.properties.label = label;
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  item.properties.position = position;
+  console.log(store);
 }
 
 export function loadProcess(processItemGroup: SbpmProcessItemGroup) {
@@ -191,7 +212,7 @@ export function loadProcess(processItemGroup: SbpmProcessItemGroup) {
     const id = item.properties.id;
     const properties = item.properties;
 
-    store[id] = item;
+    addItem(item);
 
     if ('contains' in properties) {
       updateView(id, properties?.contains ?? []);
@@ -205,6 +226,10 @@ export function loadProcess(processItemGroup: SbpmProcessItemGroup) {
 
   restoreView(process.properties.id);
   updateDefaultViewBreadcrumb(process);
+  addViewBreadcrumb({
+    type: process.type,
+    id: process.properties.id,
+  });
   updateCurrentlySelectedNavigatorItem(process);
   initElementNavigatorItems();
 }
@@ -238,6 +263,12 @@ export function initModeler() {
       restoreView(String(link.id));
       initElementNavigatorItems();
     },
+    onSelectElement: (element) => {
+      updateCurrentlySelectedSbpmShape(element);
+    },
+    onSelectLink: (link) => {
+      updateCurrentlySelectedSbpmShape(link);
+    },
   });
 
   addInitialElement();
@@ -248,8 +279,10 @@ export function addInitialElement() {
 }
 
 export function restoreView(view: string) {
-  const ids = getView(view);
-  const items = getItems(ids);
+  const ids = getOrCreateView(view);
+  const items = getItemsByIds(ids);
+  console.log(items);
+
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   modeler.restoreView(items);

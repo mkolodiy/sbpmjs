@@ -198,7 +198,6 @@ export default class SbpmModeler {
   }
 
   public restoreView<ElementType extends SbpmElementType, LinkType extends SbpmLinkType>(view: SbpmView<ElementType, LinkType>) {
-    this.#canvas.reset();
     this.#canvas.clear();
 
     const elements = view.filter(({ type }) => !isSbpmLinkType(type));

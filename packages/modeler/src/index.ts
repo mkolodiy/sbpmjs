@@ -14,4 +14,5 @@ export type {
   SbpmReceiveStateTransitionOptions,
   SbpmFunctionStateTransitionOptions,
 } from './sbpm';
+export type { ElementEventHandler, ElementEventHandlerParams, LinkEventHandler, LinkEventHandlerParams } from './canvas';
 export { constructSbpmElementViewItem, constructSbpmLinkViewItem, constructSbpmViewItem, constructSbpmView } from './sbpm';
