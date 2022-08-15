@@ -1,5 +1,5 @@
 <script>
-  import { currentlySelectedSbpmShape, uiVisible } from '../manager';
+  import { showProperties, uiVisible } from '../manager';
   import BottomControls from './BottomControls.svelte';
   import ElementNavigator from './ElementNavigator.svelte';
   import Palette from './Palette.svelte';
@@ -16,7 +16,7 @@
     {#if $uiVisible}<Palette /> {/if}
   </div>
   <div class="sbpm-layout-right">
-    {#if $currentlySelectedSbpmShape && $uiVisible}
+    {#if $showProperties && $uiVisible}
       <Properties />
     {/if}
   </div>

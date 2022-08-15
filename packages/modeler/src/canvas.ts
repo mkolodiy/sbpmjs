@@ -85,6 +85,7 @@ export type SbpmModelerOptions = {
   onDeleteLink?: LinkEventHandler;
   onOpenElement?: ElementEventHandler;
   onOpenLink?: LinkEventHandler;
+  onClickCanvas?: () => void;
 };
 
 export class SbpmCanvas {
@@ -106,7 +107,7 @@ export class SbpmCanvas {
 
     this.addOrigin();
     this.addDragging(options);
-    this.registerPaperEvents();
+    this.registerPaperEvents(options);
     this.registerElementEvents(options);
     this.registerLinkEvents(options);
   }
@@ -155,9 +156,11 @@ export class SbpmCanvas {
 
   private registerLinkEvents({ onSelectLink, onDeleteLink, onOpenLink }: SbpmModelerOptions) {
     this.#paper.on<keyof EventMap>(JointEvent.LINK_POINTERDOWN, (linkView: SbpmLinkView) => {
-      this.deselect();
-      linkView.select();
-      onSelectLink?.(linkView.link);
+      if (linkView.link.hasTarget()) {
+        this.deselect();
+        linkView.select();
+        onSelectLink?.(linkView.link);
+      }
     });
 
     this.#paper.on(CustomEvent.LINK_REMOVE, (linkView: SbpmLinkView, evt: MouseEvent) => {
@@ -177,15 +180,17 @@ export class SbpmCanvas {
     });
   }
 
-  private registerPaperEvents() {
+  private registerPaperEvents({ onClickCanvas }: SbpmModelerOptions) {
     this.#paper.on(JointEvent.BLANK_POINTERDOWN, () => {
       this.#paper.$el.css('cursor', 'grabbing');
       this.deselect();
+      onClickCanvas?.();
     });
 
     this.#paper.on(JointEvent.BLANK_POINTERUP, () => {
       this.#paper.$el.css('cursor', 'grab');
       this.deselect();
+      onClickCanvas?.();
     });
   }
 

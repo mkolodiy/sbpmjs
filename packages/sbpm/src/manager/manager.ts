@@ -106,6 +106,8 @@ const paletteItems: Record<SbpmType, PaletteItem[]> = {
   ReceiveStateTransition: [],
 };
 
+export const showProperties = writable(false);
+
 export const uiVisible = writable(true);
 
 export const currentlySelectedSbpmShape = writable<ElementEventHandlerParams | LinkEventHandlerParams>();
@@ -183,6 +185,10 @@ export function updateCurrentlySelectedNavigatorItem(item: SbpmProcessItem) {
 
 const store: Record<string, SbpmProcessItem> = {};
 
+export function getItemById(id: string) {
+  return store[id];
+}
+
 export function getItems() {
   return store;
 }
@@ -196,15 +202,21 @@ export function addItem(item: SbpmProcessItem) {
   store[id] = item;
 }
 
-export function updateItem(id: string, label: string, position: Coordinates) {
+export function updateItem(id: string, optionsContainer: Omit<OptionsContainer, 'id'>) {
   const item = store[id];
+  console.log(id);
   console.log(item);
 
-  item.properties.label = label;
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  item.properties.position = position;
-  console.log(store);
+  for (const key of Object.keys(optionsContainer)) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const value = optionsContainer[key];
+    if (value) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      item.properties[key] = optionsContainer[key];
+    }
+  }
 }
 
 export function loadProcess(processItemGroup: SbpmProcessItemGroup) {
@@ -264,10 +276,18 @@ export function initModeler() {
       initElementNavigatorItems();
     },
     onSelectElement: (element) => {
+      console.log('test');
+
       updateCurrentlySelectedSbpmShape(element);
+      showProperties.update(() => true);
     },
     onSelectLink: (link) => {
+      console.log('test');
       updateCurrentlySelectedSbpmShape(link);
+      showProperties.update(() => true);
+    },
+    onClickCanvas: () => {
+      showProperties.update(() => false);
     },
   });
 
@@ -281,7 +301,6 @@ export function addInitialElement() {
 export function restoreView(view: string) {
   const ids = getOrCreateView(view);
   const items = getItemsByIds(ids);
-  console.log(items);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -321,3 +340,19 @@ export function clear() {
   modeler.canvas.clear();
   addInitialElement();
 }
+
+export type OptionsContainer = {
+  id: string;
+  label?: string;
+  position?: Coordinates;
+  subject?: string;
+  message?: string;
+};
+
+export const optionsContainer = writable<OptionsContainer>({
+  id: '',
+  label: '',
+  position: { x: 0, y: 0 },
+  subject: '',
+  message: '',
+});

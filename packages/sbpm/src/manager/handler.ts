@@ -19,6 +19,9 @@ import {
   getViews,
   currentlySelectedSbpmShape,
   updateItem,
+  updateCurrentlySelectedNavigatorItem,
+  getItemById,
+  type OptionsContainer,
 } from '../manager';
 
 export function handleOnDrop(type: SbpmElementType, position: Coordinates) {
@@ -60,6 +63,7 @@ export function handleGoHome() {
     });
     restoreView(id);
     updateActivePaletteItems(type);
+    updateCurrentlySelectedNavigatorItem(get(defaultViewBreadcrumb));
   }
 }
 
@@ -68,6 +72,7 @@ export function handleGoBack() {
   if (previousViewBreadcrumb) {
     restoreView(previousViewBreadcrumb.id);
     updateActivePaletteItems(previousViewBreadcrumb.type);
+    updateCurrentlySelectedNavigatorItem(getItemById(previousViewBreadcrumb.id));
     removeLastViewBreadcrumb();
   }
 }
@@ -81,11 +86,9 @@ export function handleOnSelectNavigationItem(item: SbpmProcessItem) {
   restoreView(item.properties.id);
 }
 
-export function handleOnUpdate(label: string, position: Coordinates) {
+export function handleOnUpdate(optionsContainer: OptionsContainer) {
+  const { id, ...restOptions } = optionsContainer;
   const shape = get(currentlySelectedSbpmShape);
-  shape.update({
-    label,
-    position,
-  });
-  updateItem(String(shape.id), label, position);
+  shape.update(restOptions);
+  updateItem(id, restOptions);
 }

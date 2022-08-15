@@ -67,15 +67,15 @@ const processNetwork1 = modeler.addElement('ProcessNetwork', {
   },
 });
 
-// const processModel1 = modeler.addElement('ProcessModel', {
-//   id: 'processModel1',
-//   label: 'Test',
-//   position: {
-//     x: 700,
-//     y: 100,
-//   },
-//   type: 'multi',
-// });
+const processModel1 = modeler.addElement('ProcessModel', {
+  id: 'processModel1',
+  label: 'Test',
+  position: {
+    x: 700,
+    y: 100,
+  },
+  type: 'multi',
+});
 
 // const processModel2 = modeler.addElement('ProcessModel', {
 //   // id: 'processModel2',

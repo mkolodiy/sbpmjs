@@ -81,4 +81,11 @@ export class SbpmElement extends joint.dia.Element<SbpmElementAttributes> {
   public deselect() {
     this.attr('image/cursor', 'pointer');
   }
+
+  public getUpdatableOptions(): GetUpdateOptions<SbpmElementOptions> {
+    return {
+      label: this.attr('label/textWrap/text'),
+      position: this.position(),
+    };
+  }
 }

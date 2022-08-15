@@ -1,37 +1,35 @@
 <script>
   import { isSbpmLinkType } from '@sbpmjs/shared';
-  import { currentlySelectedSbpmShape, uiVisible, handleOnUpdate } from '../manager';
+  import { currentlySelectedSbpmShape, uiVisible, handleOnUpdate, optionsContainer } from '../manager';
+  import { optionsMapping } from '../manager/options-mapping';
   import Frame from './ui/Frame.svelte';
   import Input from './ui/Input.svelte';
 
-  let id = $currentlySelectedSbpmShape?.attributes?.id;
-  let label;
-  let position;
+  const type = $currentlySelectedSbpmShape.type;
 
   currentlySelectedSbpmShape.subscribe((value) => {
-    console.log(value);
-    id = value.id;
-    label = value.attr('label/textWrap/text');
-    if (isSbpmLinkType(value.type)) {
-      label = value.label(0).attrs?.text?.textWrap?.text;
+    const updatableOptions = value.getUpdatableOptions();
+
+    for (const key of Object.keys($optionsContainer)) {
+      $optionsContainer[key] = updatableOptions[key];
     }
-    position = { ...value.position() };
+
+    $optionsContainer.id = value.id;
+
     value.on('change', (shape) => {
-      position = { ...shape.position() };
+      $optionsContainer.position = { ...shape.position() };
     });
   });
 
-  $: handleOnUpdate(label, position);
+  $: handleOnUpdate($optionsContainer);
 </script>
 
 <div class="sbpm-properties">
   <Frame title="properties">
     <div class="content">
-      <Input label="Id:" disabled={true} value={id} />
-      {#if label}
-        <br />
-        <Input label="Label:" bind:value={label} />
-      {/if}
+      {#each Object.entries(optionsMapping[type]) as option}
+        <Input label={option[1].label} disabled={option[1].disabled} bind:value={$optionsContainer[option[0]]} />
+      {/each}
     </div>
   </Frame>
 </div>

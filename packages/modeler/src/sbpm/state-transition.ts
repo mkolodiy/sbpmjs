@@ -67,6 +67,15 @@ export class SbpmStateTransition<
       .slice(1)
       .forEach(() => this.removeLabel(-1));
   }
+
+  public getUpdatableOptions(): GetUpdateOptions<SbpmStateTransitionOptions> {
+    const options: GetUpdateOptions<SbpmStateTransitionOptions> = super.getUpdatableOptions();
+
+    options.message = this.label(0).attrs?.bodyText?.textWrap?.text;
+    options.subject = this.label(0).attrs?.headerText?.textWrap?.text;
+
+    return options;
+  }
 }
 
 function getIconLabel(iconLabel: joint.dia.Link.Label, subject: string | undefined, message: string | undefined) {

@@ -81,11 +81,11 @@ export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
   }
 
   public hasSource() {
-    return Reflect.has(this.source(), 'id');
+    return 'id' in this.source();
   }
 
   public hasTarget() {
-    return Reflect.has(this.target(), 'id');
+    return 'id' in this.target();
   }
 
   public update(options: GetUpdateOptions<SbpmLinkOptions>) {
@@ -122,6 +122,25 @@ export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
 
   public resetVertices() {
     this.vertices([]);
+  }
+
+  public getUpdatableOptions(): GetUpdateOptions<SbpmLinkOptions> {
+    const options: GetUpdateOptions<SbpmLinkOptions> = {
+      label: this.label(0).attrs?.text?.textWrap?.text,
+    };
+
+    const sourceId = String(this.source().id);
+    const targetId = String(this.target().id);
+
+    if (sourceId) {
+      options.source = sourceId;
+    }
+
+    if (targetId) {
+      options.target = targetId;
+    }
+
+    return options;
   }
 }
 
