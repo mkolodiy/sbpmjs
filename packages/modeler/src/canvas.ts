@@ -85,6 +85,7 @@ export type SbpmModelerOptions = {
   onDeleteLink?: LinkEventHandler;
   onOpenElement?: ElementEventHandler;
   onOpenLink?: LinkEventHandler;
+  onConnectLink?: LinkEventHandler;
   onClickCanvas?: () => void;
 };
 
@@ -154,13 +155,17 @@ export class SbpmCanvas {
     });
   }
 
-  private registerLinkEvents({ onSelectLink, onDeleteLink, onOpenLink }: SbpmModelerOptions) {
+  private registerLinkEvents({ onSelectLink, onDeleteLink, onOpenLink, onConnectLink }: SbpmModelerOptions) {
     this.#paper.on<keyof EventMap>(JointEvent.LINK_POINTERDOWN, (linkView: SbpmLinkView) => {
       if (linkView.link.hasTarget()) {
         this.deselect();
         linkView.select();
         onSelectLink?.(linkView.link);
       }
+    });
+
+    this.#paper.on<keyof EventMap>(JointEvent.LINK_CONNECT, (linkView: SbpmLinkView) => {
+      onConnectLink?.(linkView.link);
     });
 
     this.#paper.on(CustomEvent.LINK_REMOVE, (linkView: SbpmLinkView, evt: MouseEvent) => {

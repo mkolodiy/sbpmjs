@@ -22,9 +22,11 @@ import {
   updateCurrentlySelectedNavigatorItem,
   getItemById,
   type OptionsContainer,
+  showProperties,
 } from '../manager';
 
 export function handleOnDrop(type: SbpmElementType, position: Coordinates) {
+  showProperties.update(() => false);
   const element = addSbpmElement(type, position);
   const id = String(element.id);
   updateCurrentlySelectedSbpmShape(element);
@@ -43,14 +45,17 @@ export function handleOnDrop(type: SbpmElementType, position: Coordinates) {
 }
 
 export function handleOnReset() {
+  showProperties.update(() => false);
   reset();
 }
 
 export function handleOnClear() {
+  showProperties.update(() => false);
   clear();
 }
 
 export function handleGoHome() {
+  showProperties.update(() => false);
   const lastViewBreadcrumb = getLastViewBreadcrumb();
   if (lastViewBreadcrumb.type !== 'Process') {
     const {
@@ -68,6 +73,7 @@ export function handleGoHome() {
 }
 
 export function handleGoBack() {
+  showProperties.update(() => false);
   const previousViewBreadcrumb = getPreviousViewBreadcrumb();
   if (previousViewBreadcrumb) {
     restoreView(previousViewBreadcrumb.id);
@@ -78,6 +84,7 @@ export function handleGoBack() {
 }
 
 export function handleOnSelectNavigationItem(item: SbpmProcessItem) {
+  showProperties.update(() => false);
   addViewBreadcrumb({
     id: item.properties.id,
     type: item.type,

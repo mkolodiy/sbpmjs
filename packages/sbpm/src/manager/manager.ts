@@ -276,15 +276,27 @@ export function initModeler() {
       initElementNavigatorItems();
     },
     onSelectElement: (element) => {
-      console.log('test');
-
       updateCurrentlySelectedSbpmShape(element);
       showProperties.update(() => true);
     },
     onSelectLink: (link) => {
-      console.log('test');
       updateCurrentlySelectedSbpmShape(link);
       showProperties.update(() => true);
+    },
+    onConnectLink: (link) => {
+      console.log('test', link.getUpdatableOptions());
+      const id = link.id;
+      addItem({
+        type: link.type,
+        properties: {
+          id,
+          ...link.getUpdatableOptions(),
+        },
+      });
+      updateView(get(currentlySelectedNavigatorItem).properties.id, [id]);
+
+      console.log(getViews());
+      console.log(getItems());
     },
     onClickCanvas: () => {
       showProperties.update(() => false);
