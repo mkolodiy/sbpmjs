@@ -3,21 +3,8 @@
   "description": "A collection of libraries for managing and modeling of SBPM processes.",
   "main": "index.js",
   "scripts": {
-    "commit": "git-cz",
-    "lerna": "lerna",
-    "bootstrap": "lerna bootstrap",
-    "publish": "lerna publish --conventional-commits",
-    "build": "lerna run build",
-    "clean": "lerna run clean",
-    "test": "lerna run test",
-    "docs": "lerna run docs",
-    "test:watch": "lerna run test:watch",
-    "test:prod": "lerna run test:prod",
-    "fix": "lerna run fix",
-    "start:sbpm": "pnpm start --filter ./packages/sbpm",
-    "build:sbpm": "pnpm build --filter ./packages/sbpm",
-    "test:sbpm": "pnpm test --filter ./packages/sbpm",
-    "lint:sbpm": "pnpm lint --filter ./packages/sbpm"
+    "turbo": "turbo",
+    "build": "turbo run build"
   },
   "keywords": [
     "sbpm"

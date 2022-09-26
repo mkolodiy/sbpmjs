@@ -263,7 +263,7 @@ export function initModeler() {
         type: element.type,
         id: String(element.id),
       });
-      updateCurrentlySelectedNavigatorItem(getItemById(element.id));
+      updateCurrentlySelectedNavigatorItem(getItemById(String(element.id)));
       restoreView(String(element.id));
       initElementNavigatorItems();
     },
@@ -289,12 +289,14 @@ export function initModeler() {
       const id = link.id;
       addItem({
         type: link.type,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         properties: {
-          id,
+          id: String(id),
           ...link.getUpdatableOptions(),
         },
       });
-      updateView(get(currentlySelectedNavigatorItem).properties.id, [id]);
+      updateView(get(currentlySelectedNavigatorItem).properties.id, [String(id)]);
 
       console.log(getViews());
       console.log(getItems());
