@@ -5,7 +5,7 @@
   import Frame from './ui/Frame.svelte';
   import Input from './ui/Input.svelte';
 
-  const type = $currentlySelectedSbpmShape.type;
+  $: type = $currentlySelectedSbpmShape.type;
 
   currentlySelectedSbpmShape.subscribe((value) => {
     const updatableOptions = value.getUpdatableOptions();

@@ -33,8 +33,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --list-different .",
-    "format:fix": "prettier --write .",
-    "prepare": "vite build && tsc"
+    "format:fix": "prettier --write ."
   },
   "author": "Maksym Kolodiy",
   "dependencies": {

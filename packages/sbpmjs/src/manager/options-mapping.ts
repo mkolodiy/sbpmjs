@@ -32,7 +32,9 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
   SendState: commonOptions,
   ReceiveState: commonOptions,
   FunctionState: commonOptions,
-  ProcessTransition: {},
+  ProcessTransition: {
+    id: { ...id },
+  },
   MessageTransition: commonOptions,
   FunctionStateTransition: {
     id: { ...id },

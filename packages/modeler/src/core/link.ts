@@ -125,9 +125,11 @@ export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
   }
 
   public getUpdatableOptions(): GetUpdateOptions<SbpmLinkOptions> {
-    const options: GetUpdateOptions<SbpmLinkOptions> = {
-      label: this.label(0).attrs?.text?.textWrap?.text,
-    };
+    const options: GetUpdateOptions<SbpmLinkOptions> = {};
+
+    if (this.hasLabels()) {
+      options.label = this.label(0).attrs?.text?.textWrap?.text;
+    }
 
     const sourceId = String(this.source().id);
     const targetId = String(this.target().id);

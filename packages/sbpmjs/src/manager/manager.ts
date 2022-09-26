@@ -263,6 +263,7 @@ export function initModeler() {
         type: element.type,
         id: String(element.id),
       });
+      updateCurrentlySelectedNavigatorItem(getItemById(element.id));
       restoreView(String(element.id));
       initElementNavigatorItems();
     },
