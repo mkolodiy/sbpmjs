@@ -1,8 +1,9 @@
 import * as joint from 'jointjs';
+import type { SbpmProcessModelType, SbpmProcessModel as SbpmProcessModelOptions } from '@sbpmjs/shared';
 import { createIcon, createJointType, FONT_FAMILY, openInNew } from '../common';
-import type { GetUpdateOptions, SbpmProcessModelType } from '../common';
+import type { GetUpdateOptions } from '../common';
 import { addActionsToElementToolsOptions, SbpmElement } from '../core';
-import type { SbpmElementOptions, SbpmElementToolsOptions, SbpmElementAttributes } from '../core';
+import type { SbpmElementToolsOptions, SbpmElementAttributes } from '../core';
 import type { SbpmModelerOptions } from '../canvas';
 
 const singleProcessIconTemplate = `
@@ -49,9 +50,15 @@ const toolsOptions: SbpmElementToolsOptions = [
     },
   },
   {
-    type: 'open',
+    type: 'connect',
     options: {
       x: 164,
+    },
+  },
+  {
+    type: 'open',
+    options: {
+      x: 188,
       markup: [
         {
           tagName: 'rect',
@@ -71,21 +78,12 @@ const toolsOptions: SbpmElementToolsOptions = [
   },
 ];
 
-export type SbpmProcessModelOptions = SbpmElementOptions & {
-  /**
-   * The type of the process model.
-   *
-   * @defaultValue `single`
-   */
-  type?: 'single' | 'multi';
-};
-
 export class SbpmProcessModel extends SbpmElement {
   type: SbpmProcessModelType = 'ProcessModel';
 
   constructor(options: SbpmProcessModelOptions, modelerOptions: SbpmModelerOptions) {
-    const { label, type = 'single', ...restOptions } = options;
-    const icon = getIcon(type);
+    const { label, role = 'single', ...restOptions } = options;
+    const icon = getIcon(role);
 
     const attributes = joint.util.merge(joint.util.cloneDeep(jointOptions), {
       attrs: {
@@ -107,10 +105,10 @@ export class SbpmProcessModel extends SbpmElement {
   }
 
   public update(options: GetUpdateOptions<SbpmProcessModelOptions>) {
-    const { type, ...restOptions } = options;
+    const { role, ...restOptions } = options;
 
-    if (type) {
-      const icon = getIcon(type);
+    if (role) {
+      const icon = getIcon(role);
       this.attr('image/xlinkHref', icon);
     }
 
@@ -118,6 +116,6 @@ export class SbpmProcessModel extends SbpmElement {
   }
 }
 
-function getIcon(type: string) {
-  return type === 'single' ? singleProcessIcon : multiProcessIcon;
+function getIcon(role: SbpmProcessModelOptions['role']) {
+  return role === 'single' ? singleProcessIcon : multiProcessIcon;
 }

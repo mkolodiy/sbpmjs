@@ -1,11 +1,9 @@
 import * as joint from 'jointjs';
+import type { SbpmSendStateTransition as SbpmSendStateTransitionOptions } from '@sbpmjs/shared';
 import { autoRenewIcon, FONT_FAMILY, deleteIcon, CustomEvent } from '../common';
 import type { SbpmLinkLabelToolsOptions } from '../core';
 import type { SbpmModelerOptions } from '../canvas';
-import { SbpmFunctionState } from './function-state';
-import { SbpmSendState } from './send-state';
-import { SbpmReceiveState } from './receive-state';
-import { SbpmStateTransition, SbpmStateTransitionOptions } from './state-transition';
+import { SbpmStateTransition } from './state-transition';
 
 const jointOptions: joint.shapes.standard.ImageAttributes = {
   attrs: {
@@ -136,8 +134,6 @@ const labelToolsOptions: SbpmLinkLabelToolsOptions = {
   removeVerticesLabel,
   selectionLabel,
 };
-
-export type SbpmSendStateTransitionOptions = SbpmStateTransitionOptions<SbpmSendState, SbpmFunctionState | SbpmReceiveState>;
 
 export class SbpmSendStateTransition extends SbpmStateTransition<'SendStateTransition'> {
   constructor(options: SbpmSendStateTransitionOptions = {} as SbpmSendStateTransitionOptions, modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions) {

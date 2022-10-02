@@ -26,7 +26,7 @@
     "node": ">=16"
   },
   "scripts": {
-    "start": "vite --config vite.config.ts ./dev",
+    "dev": "vite --config vite.config.ts ./dev",
     "build": "vite build && tsc",
     "test": "vite --config vite.config.ts ./test",
     "lint": "eslint .",

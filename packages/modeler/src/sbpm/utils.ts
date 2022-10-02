@@ -1,6 +1,4 @@
-import type { SbpmElementType, SbpmLinkType } from '../common';
-import type { SbpmLinkOptions } from '../core';
-import type { SbpmElementViewItem, SbpmLinkViewItem, SbpmViewItem, SbpmView } from './types';
+import type { SbpmElementType, SbpmLinkType, SbpmLink as SbpmLinkOptions } from '@sbpmjs/shared';
 import { elementTypeToLinkClassMapping } from './mappings';
 import { SbpmProcessNetwork } from './process-network';
 import { SbpmProcessModel } from './process-model';
@@ -103,24 +101,4 @@ function validateSbpmReceiveStateTransitionOptions(source: unknown, target: unkn
   if (!(target instanceof SbpmFunctionState) && !(target instanceof SbpmSendState)) {
     throw Error('Target has to be of type SbpmSendState or SbpmReceiveState');
   }
-}
-
-export function constructSbpmElementViewItem<Type extends SbpmElementType = SbpmElementType>(item: SbpmElementViewItem<Type>) {
-  return item;
-}
-
-export function constructSbpmLinkViewItem<Type extends SbpmLinkType = SbpmLinkType>(item: SbpmLinkViewItem<Type>) {
-  return item;
-}
-
-export function constructSbpmViewItem<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType>(
-  item: SbpmViewItem<ElementType, LinkType>
-) {
-  return item;
-}
-
-export function constructSbpmView<ElementType extends SbpmElementType = SbpmElementType, LinkType extends SbpmLinkType = SbpmLinkType>(
-  item: SbpmView<ElementType, LinkType>
-) {
-  return item;
 }

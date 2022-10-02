@@ -1,6 +1,7 @@
 import * as joint from 'jointjs';
-import { CustomEvent, SbpmElementType } from '../common';
-import type { GetUpdateOptions, SbpmShapeAttributes, SbpmShapeOptions } from '../common';
+import type { SbpmElementType, SbpmElement as SbpmElementOptions } from '@sbpmjs/shared';
+import { CustomEvent } from '../common';
+import type { GetUpdateOptions, SbpmShapeAttributes } from '../common';
 import type { SbpmElementToolsOptions } from './element-tools';
 
 const attrs = {
@@ -31,17 +32,6 @@ const markup = [
 ];
 
 export type SbpmElementAttributes = joint.dia.Element.GenericAttributes<joint.shapes.standard.ImageSelectors> & SbpmShapeAttributes<SbpmElementToolsOptions>;
-
-export type SbpmElementOptions = SbpmShapeOptions & {
-  /**
-   * The label that will be shown under the icon of the element.
-   */
-  label: string;
-  /**
-   * The position on the canvas where the element should be added at.
-   */
-  position: joint.dia.Point;
-};
 
 export class SbpmElement extends joint.dia.Element<SbpmElementAttributes> {
   type: SbpmElementType = undefined as unknown as SbpmElementType;

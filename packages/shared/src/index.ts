@@ -158,17 +158,15 @@ export type SbpmLinkItem<Type extends SbpmLinkType = SbpmLinkType> = {
   properties: GetSbpmLink<Type>;
 };
 
-export type SbpmProcessItem<
-  GeneralEntityType extends SbpmGeneralEntityType = SbpmGeneralEntityType,
-  ElementType extends SbpmElementType = SbpmElementType,
-  LinkType extends SbpmLinkType = SbpmLinkType
-> = SbpmGeneralEntityItem<GeneralEntityType> | SbpmElementItem<ElementType> | SbpmLinkItem<LinkType>;
+export type SbpmProcessItem<T> = T extends SbpmGeneralEntityType
+  ? SbpmGeneralEntityItem<T>
+  : T extends SbpmElementType
+  ? SbpmElementItem<T>
+  : T extends SbpmLinkType
+  ? SbpmLinkItem<T>
+  : undefined;
 
-export type SbpmProcessItemGroup<
-  GeneralEntityType extends SbpmGeneralEntityType = SbpmGeneralEntityType,
-  ElementType extends SbpmElementType = SbpmElementType,
-  LinkType extends SbpmLinkType = SbpmLinkType
-> = SbpmProcessItem<GeneralEntityType, ElementType, LinkType>[];
+export type SbpmProcessItemGroup<T> = SbpmProcessItem<T>[];
 
 export function createSbpmGeneralEntityItem<Type extends SbpmGeneralEntityType = SbpmGeneralEntityType>(item: SbpmGeneralEntityItem<Type>) {
   return item;
@@ -182,22 +180,14 @@ export function createSbpmLinkItem<Type extends SbpmLinkType = SbpmLinkType>(ite
   return item;
 }
 
-export function createSbpmProcessItem<
-  GeneralEntityType extends SbpmGeneralEntityType = SbpmGeneralEntityType,
-  ElementType extends SbpmElementType = SbpmElementType,
-  LinkType extends SbpmLinkType = SbpmLinkType
->(item: SbpmProcessItem<GeneralEntityType, ElementType, LinkType>) {
+export function createSbpmProcessItem<T>(item: SbpmProcessItem<T>) {
   return item;
 }
 
-export function createSbpmProcessItemGroup<
-  GeneralEntityType extends SbpmGeneralEntityType = SbpmGeneralEntityType,
-  ElementType extends SbpmElementType = SbpmElementType,
-  LinkType extends SbpmLinkType = SbpmLinkType
->(item: SbpmProcessItemGroup<GeneralEntityType, ElementType, LinkType>) {
+export function createSbpmProcessItemGroup<T>(item: SbpmProcessItemGroup<T>) {
   return item;
 }
 
-export function isSbpmLinkType(type: SbpmShapeType) {
+export function isSbpmLinkType(type: SbpmType) {
   return type.includes('Transition');
 }

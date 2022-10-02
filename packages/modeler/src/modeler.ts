@@ -1,17 +1,10 @@
+import type { SbpmShapeType, SbpmElementType, SbpmLinkType, SbpmElementItem, SbpmLinkItem, SbpmProcessItemGroup } from '@sbpmjs/shared';
+import { isSbpmLinkType } from '@sbpmjs/shared';
 import { SbpmElement, SbpmLink } from './core';
 import { SbpmCanvas } from './canvas';
 import type { SbpmModelerOptions } from './canvas';
 import { linkTypeToLinkClassMapping, elementTypeToElementClassMapping } from './sbpm';
-import type {
-  GetSbpmElementOptions,
-  GetSbpmElementUpdateOptions,
-  GetSbpmLinkOptions,
-  GetSbpmLinkUpdateOptions,
-  ElementTypeToElementClassMapping,
-  LinkTypeToLinkClassMapping,
-  SbpmView,
-} from './sbpm';
-import { isSbpmLinkType, SbpmElementType, SbpmLinkType } from './common';
+import type { GetSbpmElementUpdateOptions, GetSbpmLinkUpdateOptions, ElementTypeToElementClassMapping, LinkTypeToLinkClassMapping } from './sbpm';
 
 export default class SbpmModeler {
   #canvas: SbpmCanvas;
@@ -57,10 +50,10 @@ export default class SbpmModeler {
    * });
    * ```
    */
-  public createElement<Type extends SbpmElementType>(type: Type, options: GetSbpmElementOptions<Type>) {
+  public createSbpmElement<Type extends SbpmElementType = SbpmElementType>({ type, properties }: SbpmElementItem<Type>) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    return new elementTypeToElementClassMapping[type](options, this.#options) as ElementTypeToElementClassMapping[Type];
+    return new elementTypeToElementClassMapping[type](properties, this.#options) as ElementTypeToElementClassMapping[Type];
   }
 
   /**
@@ -82,11 +75,11 @@ export default class SbpmModeler {
    * });
    * ```
    */
-  public createLink<Type extends SbpmLinkType>(type: Type, options: GetSbpmLinkOptions<Type>) {
+  public createSbpmLink<Type extends SbpmLinkType = SbpmLinkType>({ type, properties }: SbpmLinkItem<Type>) {
     // validateLinkOptions(type, options);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    return new linkTypeToLinkClassMapping[type](options, this.#options) as LinkTypeToLinkClassMapping[Type];
+    return new linkTypeToLinkClassMapping[type](properties, this.#options) as LinkTypeToLinkClassMapping[Type];
   }
 
   /**
@@ -166,8 +159,8 @@ export default class SbpmModeler {
    * });
    * ```
    */
-  public addElement<Type extends SbpmElementType>(type: Type, options: GetSbpmElementOptions<Type>) {
-    const element = this.createElement(type, options);
+  public addSbpmElement<Type extends SbpmElementType = SbpmElementType>(item: SbpmElementItem<Type>) {
+    const element = this.createSbpmElement(item);
     element.addTo(this.#canvas.graph);
     return element;
   }
@@ -191,22 +184,17 @@ export default class SbpmModeler {
    * });
    * ```
    */
-  public addLink<Type extends SbpmLinkType>(type: Type, options: GetSbpmLinkOptions<Type>) {
-    const link = this.createLink(type, options);
+  public addSbpmLink<Type extends SbpmLinkType = SbpmLinkType>(item: SbpmLinkItem<Type>) {
+    const link = this.createSbpmLink(item);
     link.addTo(this.#canvas.graph);
     return link;
   }
 
-  public restoreView<ElementType extends SbpmElementType, LinkType extends SbpmLinkType>(view: SbpmView<ElementType, LinkType>) {
+  public restoreView<Type extends SbpmShapeType = SbpmShapeType>(view: SbpmProcessItemGroup<Type>) {
     this.#canvas.clear();
-
     const elements = view.filter(({ type }) => !isSbpmLinkType(type));
     const links = view.filter(({ type }) => isSbpmLinkType(type));
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    elements.forEach(({ type, properties: options }) => this.addElement(type, options));
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    links.forEach(({ type, properties: options }) => this.addLink(type, options));
+    elements.forEach((item) => this.addSbpmElement(item as SbpmElementItem));
+    links.forEach((item) => this.addSbpmLink(item as SbpmLinkItem));
   }
 }

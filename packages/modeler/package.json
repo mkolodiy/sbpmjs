@@ -27,7 +27,7 @@
     "node": ">=16"
   },
   "scripts": {
-    "start": "vite --config vite.config.ts ./dev",
+    "dev": "vite --config vite.config.ts ./dev",
     "build": "vite build && tsc",
     "test": "vite --config vite.config.ts ./test",
     "lint": "eslint .",
@@ -37,6 +37,7 @@
   },
   "author": "Maksym Kolodiy",
   "dependencies": {
-    "jointjs": "^3.5.5"
+    "jointjs": "^3.5.5",
+    "@sbpmjs/shared": "workspace:^"
   }
 }

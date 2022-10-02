@@ -64,11 +64,13 @@ importers:
 
   packages/modeler:
     specifiers:
+      '@sbpmjs/shared': workspace:^
       jointjs: ^3.5.5
     dependencies:
+      '@sbpmjs/shared': link:../shared
       jointjs: 3.5.5
 
-  packages/sbpm:
+  packages/sbpmjs:
     specifiers:
       '@sbpmjs/modeler': workspace:^
       '@sbpmjs/shared': workspace:^

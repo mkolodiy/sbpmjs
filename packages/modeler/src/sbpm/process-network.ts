@@ -1,8 +1,9 @@
 import * as joint from 'jointjs';
+import type { SbpmProcessNetworkType, SbpmProcessNetwork as SbpmProcessNetworkOptions } from '@sbpmjs/shared';
 import { createIcon, createJointType, FONT_FAMILY } from '../common';
-import type { GetUpdateOptions, SbpmProcessNetworkType } from '../common';
+import type { GetUpdateOptions } from '../common';
 import { addActionsToElementToolsOptions, SbpmElement } from '../core';
-import type { SbpmElementOptions, SbpmElementToolsOptions, SbpmElementAttributes } from '../core';
+import type { SbpmElementToolsOptions, SbpmElementAttributes } from '../core';
 import type { SbpmModelerOptions } from '../canvas';
 
 const iconTemplate = `
@@ -49,8 +50,6 @@ const toolsOptions: SbpmElementToolsOptions = [
     },
   },
 ];
-
-export type SbpmProcessNetworkOptions = SbpmElementOptions;
 
 export class SbpmProcessNetwork extends SbpmElement {
   type: SbpmProcessNetworkType = 'ProcessNetwork';

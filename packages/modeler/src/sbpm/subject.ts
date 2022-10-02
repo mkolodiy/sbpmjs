@@ -1,8 +1,9 @@
 import * as joint from 'jointjs';
+import type { SbpmSubjectType, SbpmSubject as SbpmSubjectOptions } from '@sbpmjs/shared';
 import { createIcon, createJointType, FONT_FAMILY, openInNew } from '../common';
-import type { GetUpdateOptions, SbpmSubjectType } from '../common';
+import type { GetUpdateOptions } from '../common';
 import { addActionsToElementToolsOptions, SbpmElement } from '../core';
-import type { SbpmElementOptions, SbpmElementToolsOptions, SbpmElementAttributes } from '../core';
+import type { SbpmElementToolsOptions, SbpmElementAttributes } from '../core';
 import type { SbpmModelerOptions } from '../canvas';
 
 const humanSubjectTemplate = `
@@ -117,23 +118,14 @@ const machineToolsOptions: SbpmElementToolsOptions = joint.util.merge(joint.util
   },
 ]) as SbpmElementToolsOptions;
 
-export type SbpmSubjectOptions = SbpmElementOptions & {
-  /**
-   * The type of the subject.
-   *
-   * @defaultValue `human`
-   */
-  type?: 'human' | 'machine';
-};
-
 export class SbpmSubject extends SbpmElement {
   type: SbpmSubjectType = 'Subject';
 
   constructor(options: SbpmSubjectOptions, modelerOptions: SbpmModelerOptions) {
-    const { label, type = 'human', ...restOptions } = options;
+    const { label, representation = 'human', ...restOptions } = options;
 
-    const jointOptions = type === 'human' ? humanTypeJointOptions : machineTypeJointOptions;
-    const toolsOptions = type === 'human' ? humanToolsOptions : machineToolsOptions;
+    const jointOptions = representation === 'human' ? humanTypeJointOptions : machineTypeJointOptions;
+    const toolsOptions = representation === 'human' ? humanToolsOptions : machineToolsOptions;
 
     const attributes = joint.util.merge(joint.util.cloneDeep(jointOptions), {
       attrs: {
@@ -152,11 +144,11 @@ export class SbpmSubject extends SbpmElement {
   }
 
   public update(options: GetUpdateOptions<SbpmSubjectOptions>) {
-    const { type, ...restOptions } = options;
+    const { representation, ...restOptions } = options;
 
-    if (type) {
-      const jointOptions = type === 'human' ? humanTypeJointOptions : machineTypeJointOptions;
-      const toolsOptions = type === 'human' ? humanToolsOptions : machineToolsOptions;
+    if (representation) {
+      const jointOptions = representation === 'human' ? humanTypeJointOptions : machineTypeJointOptions;
+      const toolsOptions = representation === 'human' ? humanToolsOptions : machineToolsOptions;
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

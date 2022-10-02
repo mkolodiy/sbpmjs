@@ -1,6 +1,6 @@
 import * as joint from 'jointjs';
+import type { SbpmElementType } from '@sbpmjs/shared';
 import { SbpmShapeNamespace, CustomEvent, JointEvent, combineStrings, getSbpmShapeType } from './common';
-import type { SbpmElementType } from './common';
 import { SbpmCanvasOrigin, SbpmElement, SbpmElementView, SbpmLink, SbpmLinkView } from './core';
 import { getDefaultLink, isValidConnection } from './sbpm';
 

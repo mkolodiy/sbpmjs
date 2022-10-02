@@ -1,5 +1,6 @@
 import * as joint from 'jointjs';
-import type { GetUpdateOptions, SbpmLinkType, SbpmShapeAttributes, SbpmShapeOptions } from '../common';
+import type { SbpmLinkType, SbpmLink as SbpmLinkOptions } from '@sbpmjs/shared';
+import type { GetUpdateOptions, SbpmShapeAttributes } from '../common';
 import { SbpmElement } from './element';
 import type { SbpmLinkLabelToolsOptions, SbpmLinkToolsOptions } from './link-tools';
 
@@ -43,18 +44,6 @@ export const markup = [
 ];
 
 export type SbpmLinkAttributes = joint.dia.Link.GenericAttributes<joint.shapes.standard.LinkSelectors> & SbpmShapeAttributes<SbpmLinkToolsOptions>;
-
-export type SbpmLinkOptions<Source = SbpmElement, Target = SbpmElement> = SbpmShapeOptions & {
-  /**
-   * The source element.
-   */
-  source: Source | string;
-  /**
-   * The target element.
-   */
-  target: Target | string;
-  label?: string;
-};
 
 export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
   type: SbpmLinkType = undefined as unknown as SbpmLinkType;

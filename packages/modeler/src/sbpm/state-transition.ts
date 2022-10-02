@@ -1,14 +1,15 @@
 import * as joint from 'jointjs';
+import type {
+  SbpmSendStateTransitionType,
+  SbpmReceiveStateTransitionType,
+  SbpmFunctionStateTransitionType,
+  SbpmStateTransition as SbpmStateTransitionOptions,
+} from '@sbpmjs/shared';
 import { createJointType } from '../common';
-import type { GetUpdateOptions, SbpmSendStateTransitionType, SbpmReceiveStateTransitionType, SbpmFunctionStateTransitionType } from '../common';
-import { SbpmLink, createSelectionLabel, createButtonLabel, SbpmElement, createIconLabel, handleEndpoint } from '../core';
-import type { SbpmLinkAttributes, SbpmLinkOptions, SbpmLinkToolsOptions, SbpmLinkLabelToolsOptions } from '../core';
+import type { GetUpdateOptions } from '../common';
+import { SbpmLink, createSelectionLabel, createButtonLabel, createIconLabel, handleEndpoint } from '../core';
+import type { SbpmLinkAttributes, SbpmLinkToolsOptions, SbpmLinkLabelToolsOptions } from '../core';
 import type { SbpmModelerOptions } from '../canvas';
-
-export type SbpmStateTransitionOptions<Source = SbpmElement, Target = SbpmElement> = SbpmLinkOptions<Source, Target> & {
-  subject?: string;
-  message?: string;
-};
 
 export class SbpmStateTransition<
   T extends SbpmSendStateTransitionType | SbpmReceiveStateTransitionType | SbpmFunctionStateTransitionType =

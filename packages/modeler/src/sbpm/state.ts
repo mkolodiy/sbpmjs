@@ -1,18 +1,10 @@
 import * as joint from 'jointjs';
+import type { SbpmSendStateType, SbpmReceiveStateType, SbpmFunctionStateType, SbpmState as SbpmStateOptions } from '@sbpmjs/shared';
 import { blueDotIcon, createJointType, redDotIcon } from '../common';
-import type { GetUpdateOptions, SbpmSendStateType, SbpmReceiveStateType, SbpmFunctionStateType } from '../common';
+import type { GetUpdateOptions } from '../common';
 import { addActionsToElementToolsOptions, SbpmElement } from '../core';
-import type { SbpmElementOptions, SbpmElementToolsOptions, SbpmElementAttributes } from '../core';
+import type { SbpmElementToolsOptions, SbpmElementAttributes } from '../core';
 import type { SbpmModelerOptions } from '../canvas';
-
-export type SbpmStateOptions = SbpmElementOptions & {
-  /**
-   * The type of the state.
-   *
-   * @defaultValue `none`
-   */
-  type?: 'start' | 'end' | 'none';
-};
 
 export class SbpmState<
   T extends SbpmSendStateType | SbpmReceiveStateType | SbpmFunctionStateType = SbpmSendStateType | SbpmReceiveStateType | SbpmFunctionStateType
@@ -50,17 +42,17 @@ export class SbpmState<
   }
 
   public update(options: GetUpdateOptions<SbpmStateOptions>) {
-    const { type = 'none' } = options;
+    const { role = 'none' } = options;
 
-    if (type !== 'none') {
+    if (role !== 'none') {
       this.attr('stateModifier/opacity', 0.5);
     }
 
-    if (type === 'start') {
+    if (role === 'start') {
       this.attr('stateModifier/xlinkHref', blueDotIcon);
     }
 
-    if (type === 'end') {
+    if (role === 'end') {
       this.attr('stateModifier/xlinkHref', redDotIcon);
     }
 
@@ -69,11 +61,11 @@ export class SbpmState<
 }
 
 function getStateModifierOptions(options: SbpmStateOptions) {
-  const { type = 'none' } = options;
+  const { role = 'none' } = options;
 
-  if (type !== 'none') {
+  if (role !== 'none') {
     return {
-      xlinkHref: type === 'start' ? blueDotIcon : redDotIcon,
+      xlinkHref: role === 'start' ? blueDotIcon : redDotIcon,
       opacity: '0.5',
     };
   }

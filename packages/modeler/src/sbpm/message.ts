@@ -1,8 +1,9 @@
 import * as joint from 'jointjs';
+import type { SbpmMessageType, SbpmMessage as SbpmMessageOptions } from '@sbpmjs/shared';
 import { createIcon, createJointType, FONT_FAMILY } from '../common';
-import type { GetUpdateOptions, SbpmMessageType } from '../common';
+import type { GetUpdateOptions } from '../common';
 import { addActionsToElementToolsOptions, SbpmElement } from '../core';
-import type { SbpmElementOptions, SbpmElementToolsOptions, SbpmElementAttributes } from '../core';
+import type { SbpmElementToolsOptions, SbpmElementAttributes } from '../core';
 import type { SbpmModelerOptions } from '../canvas';
 
 const iconTemplate = `
@@ -43,8 +44,6 @@ const toolsOptions: SbpmElementToolsOptions = [
     },
   },
 ];
-
-export type SbpmMessageOptions = SbpmElementOptions;
 
 export class SbpmMessage extends SbpmElement {
   type: SbpmMessageType = 'Message';
