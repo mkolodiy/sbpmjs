@@ -75,7 +75,7 @@ export type SbpmState = SbpmElement & {
   role?: 'start' | 'end' | 'none';
 };
 
-export type SbpmStateTransition = SbpmLink & {
+export type SbpmStateTransition = Omit<SbpmLink, 'label'> & {
   subject?: string;
   message?: string;
 };
@@ -100,7 +100,7 @@ export type SbpmReceiveState = SbpmState;
 
 export type SbpmFunctionState = SbpmState;
 
-export type SbpmProcessTransition = SbpmLink;
+export type SbpmProcessTransition = Omit<SbpmLink, 'label'>;
 
 export type SbpmMessageTransition = SbpmLink &
   SbpmContainerShape & {

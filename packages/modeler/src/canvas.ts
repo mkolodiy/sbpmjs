@@ -72,7 +72,7 @@ export type LinkEventHandlerParams = SbpmLink;
 
 export type ElementEventHandler = (element: ElementEventHandlerParams) => void;
 
-export type LinkEventHandler = (element: LinkEventHandlerParams) => void;
+export type LinkEventHandler = (link: LinkEventHandlerParams) => void;
 
 export type SbpmModelerOptions = {
   /**

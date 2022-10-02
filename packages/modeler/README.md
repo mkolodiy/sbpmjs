@@ -34,27 +34,38 @@ const modeler = new SbpmModeler({
 });
 
 // Create a new element, e.g. process network
-const processNetwork = modeler.addElement('ProcessNetwork', {
-  label: 'Test',
-  position: {
-    x: 100,
-    y: 80,
+const processNetwork = modeler.createSbpmElement({
+  type: 'ProcessNetwork',
+  properties: {
+    id: 'processNetwork',
+    label: 'Test process network',
+    position: {
+      x: 100,
+      y: 100,
+    },
   },
 });
 
 // Create a new element, e.g. process model
-const processModel = modeler.addElement('ProcessModel', {
-  label: 'Test',
-  position: {
-    x: 700,
-    y: 100,
+const processModel = modeler.createSbpmElement({
+  type: 'ProcessModel',
+  properties: {
+    id: 'processModel',
+    label: 'Test process model',
+    position: {
+      x: 100,
+      y: 100,
+    },
   },
 });
 
 // Create a new link, e.g. process transition between process network and process model
-const processTransition = modeler.addLink('ProcessTransition', {
-  source: processNetwork,
-  target: processModel,
+const processTransition = modeler.createSbpmLink({
+  type: 'ProcessTransition',
+  properties: {
+    source: 'processNetwork',
+    target: 'processModel',
+  },
 });
 ```
 
@@ -92,28 +103,13 @@ The module export.
 import SbpmModeler from '@sbpmjs/modeler';
 
 // Types
-import type {
-  SbpmModelerOptions,
-  SbpmProcessNetworkOptions,
-  SbpmProcessModelOptions,
-  SbpmProcessTransitionOptions,
-  SbpmSubjectOptions,
-  SbpmMessageOptions,
-  SbpmMessageTransitionOptions,
-  SbpmSendStateOptions,
-  SbpmSendStateTransitionOptions,
-  SbpmReceiveStateOptions,
-  SbpmReceiveStateTransitionOptions,
-  SbpmFunctionStateOptions,
-  SbpmFunctionStateTransitionOptions,
-} from '@sbpmjs/modeler';
+import type { SbpmModelerOptions } from '@sbpmjs/modeler';
 ```
 
 A new SBPM modeler can be created as following:
 
 ```ts
 import SbpmModeler from '@sbpmjs/modeler';
-import type { SbpmModelerOptions } from '@sbpmjs/modeler';
 
 const modeler = new SbpmModeler({
   container: document.getElementById('container'),
@@ -135,10 +131,16 @@ const modeler = new SbpmModeler({
   onOpenLink: (link) => {
     // React when a link is opened
   },
+  onConnectLink: (link) => {
+    // React when a link connected
+  },
+  onClickCanvas: () => {
+    // React when there is a click on the canvas
+  },
 });
 ```
 
-#### `SbpmModeler.createElement`
+#### `SbpmModeler.createSbpmElement`
 
 Create a new element.
 
@@ -149,16 +151,19 @@ const modeler = new SbpmModeler({
   container: document.getElementById('container'),
 });
 
-const element = modeler.createElement('ProcessNetwork', {
-  label: 'Test',
-  position: {
-    x: 100,
-    y: 80,
+const element = modeler.createSbpmElement({
+  type: 'ProcessNetwork',
+  properties: {
+    label: 'Test process network',
+    position: {
+      x: 100,
+      y: 100,
+    },
   },
 });
 ```
 
-#### `SbpmModeler.createLink`
+#### `SbpmModeler.createSbpmLink`
 
 Create a new link.
 
@@ -171,13 +176,16 @@ const modeler = new SbpmModeler({
 
 // Create a process network and a process model
 
-const link = modeler.createLink('ProcessTransition', {
-  source: processNetwork,
-  target: processModel,
+const link = modeler.createSbpmLink({
+  type: 'ProcessTransition',
+  properties: {
+    source: 'processNetwork',
+    target: 'processModel',
+  },
 });
 ```
 
-#### `SbpmModeler.addElement`
+#### `SbpmModeler.addSbpmElement`
 
 Create a new element add it to the canvas.
 
@@ -188,16 +196,19 @@ const modeler = new SbpmModeler({
   container: document.getElementById('container'),
 });
 
-const element = modeler.addElement('ProcessNetwork', {
-  label: 'Test',
-  position: {
-    x: 100,
-    y: 80,
+const element = modeler.addSbpmElement({
+  type: 'ProcessNetwork',
+  properties: {
+    label: 'Test process network',
+    position: {
+      x: 100,
+      y: 100,
+    },
   },
 });
 ```
 
-#### `SbpmModeler.addLink`
+#### `SbpmModeler.addSbpmLink`
 
 Create a new link and add it to the canvas.
 
@@ -210,13 +221,16 @@ const modeler = new SbpmModeler({
 
 // Create a process network and a process model
 
-const link = modeler.addLink('ProcessTransition', {
-  source: processNetwork,
-  target: processModel,
+const link = modeler.addSbpmLink({
+  type: 'ProcessTransition',
+  properties: {
+    source: 'processNetwork',
+    target: 'processModel',
+  },
 });
 ```
 
-#### `SbpmModeler.updateElement`
+#### `SbpmModeler.updateSbpmElement`
 
 Update an element.
 
@@ -227,20 +241,30 @@ const modeler = new SbpmModeler({
   container: document.getElementById('container'),
 });
 
-const element = modeler.createElement('ProcessNetwork', {
-  label: 'Test',
-  position: {
-    x: 100,
-    y: 80,
+const element = modeler.addSbpmElement({
+  type: 'ProcessNetwork',
+  properties: {
+    label: 'Test process network',
+    position: {
+      x: 100,
+      y: 100,
+    },
   },
 });
 
-modeler.updateElement(element, {
+// Update using the modeler instance:
+
+modeler.updateSbpmElement(element, {
+  label: 'New label',
+});
+
+// Update using the element instance:
+element.update({
   label: 'New label',
 });
 ```
 
-#### `SbpmModeler.updateLink`
+#### `SbpmModeler.updateSbpmLink`
 
 Create a new element.
 
@@ -253,15 +277,23 @@ const modeler = new SbpmModeler({
 
 // Create a process network and a process model
 
-const link = modeler.createLink('ProcessTransition', {
-  source: processNetwork,
-  target: processModel,
+const link = modeler.addSbpmLink({
+  type: 'ProcessTransition',
+  properties: {
+    source: 'processNetwork',
+    target: 'processModel',
+  },
 });
 
-// Create another process network
+// Update using the modeler instance:
 
-modeler.updateLink(link, {
-  source: anotherProcessNetwork,
+modeler.updateSbpmLink(link, {
+  source: 'anotherProcessNetwork',
+});
+
+// Update using the link instance:
+link.update({
+  source: 'anotherProcessNetwork',
 });
 ```
 

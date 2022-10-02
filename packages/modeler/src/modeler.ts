@@ -31,22 +31,21 @@ export default class SbpmModeler {
   /**
    * Create a new element.
    *
-   * @remark
-   * The options will be automatically inferred based on the passed type.
-   *
-   * @param type The element type.
-   * @param options The options for the element.
+   * @param item The item options.
    * @returns The element instance.
    *
    * @example
    * Here is an example for a ProcessNetwork element:
    * ```
-   * const element = modeler.createElement('ProcessNetwork', {
-   *  label: 'Test',
-   *  position: {
-   *    x: 100,
-   *    y: 80,
-   *  },
+   * const element = modeler.createSbpmElement({
+   *   type: 'ProcessNetwork',
+   *   properties: {
+   *     label: 'Test process network',
+   *     position: {
+   *       x: 100,
+   *       y: 100,
+   *     },
+   *   },
    * });
    * ```
    */
@@ -59,24 +58,22 @@ export default class SbpmModeler {
   /**
    * Create a new link.
    *
-   * @remark
-   * The options will be automatically inferred based on the passed type.
-   *
-   * @param type The link type.
-   * @param options The options for the link.
+   * @param item The link options.
    * @returns The link instance.
    *
    * @example
    * Here is an example for a ProcessTransition link:
    * ```
-   * const link = modeler.createLink('ProcessTransition', {
-   *  source: processNetwork,
-   *  target: processModel,
+   * const link = modeler.createSbpmLink({
+   *   type: 'ProcessTransition',
+   *   properties: {
+   *     source: 'processNetwork',
+   *     target: 'processModel',
+   *   },
    * });
    * ```
    */
   public createSbpmLink<Type extends SbpmLinkType = SbpmLinkType>({ type, properties }: SbpmLinkItem<Type>) {
-    // validateLinkOptions(type, options);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     return new linkTypeToLinkClassMapping[type](properties, this.#options) as LinkTypeToLinkClassMapping[Type];
@@ -94,20 +91,23 @@ export default class SbpmModeler {
    * @example
    * Here is an example for a ProcessNetwork element:
    * ```
-   * const element = modeler.createElement('ProcessNetwork', {
-   *  label: 'Test',
-   *  position: {
-   *    x: 100,
-   *    y: 80,
-   *  },
+   * const element = modeler.createSbpmElement({
+   *   type: 'ProcessNetwork',
+   *   properties: {
+   *     label: 'Test process network',
+   *     position: {
+   *       x: 100,
+   *       y: 100,
+   *     },
+   *   },
    * });
    *
-   * modeler.updateElement(element, {
+   * modeler.updateSbpmElement(element, {
    *  label: 'New label'
    * });
    * ```
    */
-  public updateElement<T extends SbpmElement>(element: T, options: GetSbpmElementUpdateOptions<T>) {
+  public updateSbpmElement<T extends SbpmElement>(element: T, options: GetSbpmElementUpdateOptions<T>) {
     element.update(options);
   }
 
@@ -123,39 +123,41 @@ export default class SbpmModeler {
    * @example
    * Here is an example for a ProcessNetwork element:
    * ```
-   * const link = modeler.createLink('ProcessTransition', {
-   *  source: processNetwork,
-   *  target: processModel,
+   * const link = modeler.createSbpmLink({
+   *   type: 'ProcessTransition',
+   *   properties: {
+   *     source: 'processNetwork',
+   *     target: 'processModel',
+   *   },
    * });
    *
-   * modeler.updateLink(link, {
+   * modeler.updateSbpmLink(link, {
    *  source: anotherProcessNetwork,
    * });
    * ```
    */
-  public updateLink<T extends SbpmLink>(link: T, options: GetSbpmLinkUpdateOptions<T>) {
+  public updateSbpmLink<T extends SbpmLink>(link: T, options: GetSbpmLinkUpdateOptions<T>) {
     link.update(options);
   }
 
   /**
    * Create a new element and add it to the canvas.
    *
-   * @remark
-   * The options will be automatically inferred based on the passed type.
-   *
-   * @param type The element type.
-   * @param options The options for the element.
+   * @param item The item options.
    * @returns The element instance.
    *
    * @example
    * Here is an example for a ProcessNetwork element:
    * ```
-   * const element = modeler.addElement('ProcessNetwork', {
-   *  label: 'Test',
-   *  position: {
-   *    x: 100,
-   *    y: 80,
-   *  },
+   * const element = modeler.addSbpmElement({
+   *   type: 'ProcessNetwork',
+   *   properties: {
+   *     label: 'Test process network',
+   *     position: {
+   *       x: 100,
+   *       y: 100,
+   *     },
+   *   },
    * });
    * ```
    */
@@ -168,19 +170,18 @@ export default class SbpmModeler {
   /**
    * Create a new link and add it to the canvas.
    *
-   * @remark
-   * The options will be automatically inferred based on the passed type.
-   *
-   * @param type The link type.
-   * @param options The options for the link.
+   * @param item The link options.
    * @returns The link instance.
    *
    * @example
    * Here is an example for a ProcessTransition link:
    * ```
-   * const link = modeler.addLink('ProcessTransition', {
-   *  source: processNetwork,
-   *  target: processModel,
+   * const link = modeler.addSbpmLink({
+   *   type: 'ProcessTransition',
+   *   properties: {
+   *     source: 'processNetwork',
+   *     target: 'processModel',
+   *   },
    * });
    * ```
    */
@@ -190,6 +191,11 @@ export default class SbpmModeler {
     return link;
   }
 
+  /**
+   * Creates elements and links and adds them to the canvas.
+   *
+   * @param view A collection of items (elements and links).
+   */
   public restoreView<Type extends SbpmShapeType = SbpmShapeType>(view: SbpmProcessItemGroup<Type>) {
     this.#canvas.clear();
     const elements = view.filter(({ type }) => !isSbpmLinkType(type));
