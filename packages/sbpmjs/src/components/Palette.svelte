@@ -1,5 +1,5 @@
 <script>
-  import { activePaletteItems } from '../manager';
+  import { activePaletteItems } from '../core/svelte-stores/activePaletteItems';
   import Frame from './ui/Frame.svelte';
 
   const dragStart = (event) => {

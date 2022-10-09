@@ -1,9 +1,11 @@
 <script>
   import { isSbpmLinkType } from '@sbpmjs/shared';
-  import { currentlySelectedSbpmShape, uiVisible, handleOnUpdate, optionsContainer } from '../manager';
-  import { optionsMapping } from '../manager/options-mapping';
+  import { optionsMapping } from '../core/options-mapping';
   import Frame from './ui/Frame.svelte';
   import Input from './ui/Input.svelte';
+  import { currentlySelectedSbpmShape } from '../core/svelte-stores/currentlySelectedSbpmShape';
+  import { optionsContainer } from '../core/svelte-stores/optionsContainer';
+  import { handleOnUpdate } from '../core/handlers';
 
   $: type = $currentlySelectedSbpmShape.type;
 

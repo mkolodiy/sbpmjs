@@ -1,6 +1,6 @@
 import type { SbpmProcessItemGroup } from '@sbpmjs/shared';
 import Main from './components/Main.svelte';
-import { loadProcess } from './manager';
+import { loadProcess } from './core/manager';
 
 type SbpmOptions = {
   container: HTMLElement;

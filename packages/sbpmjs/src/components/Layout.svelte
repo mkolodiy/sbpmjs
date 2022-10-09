@@ -1,5 +1,6 @@
 <script>
-  import { showProperties, uiVisible } from '../manager';
+  import { uiVisible } from '../core/svelte-stores/uiVisible';
+  import { showProperties } from '../core/svelte-stores/showProperties';
   import BottomControls from './BottomControls.svelte';
   import ElementNavigator from './ElementNavigator.svelte';
   import Palette from './Palette.svelte';

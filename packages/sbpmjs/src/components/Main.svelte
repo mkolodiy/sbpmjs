@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
-  import { initModeler, handleOnDrop } from '../manager';
+  import { handleOnDrop } from '../core/handlers';
+  import { initModeler } from '../core/manager';
   import Layout from './Layout.svelte';
 
   const drop = (event) => {

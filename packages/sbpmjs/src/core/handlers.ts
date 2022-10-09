@@ -1,29 +1,20 @@
 import type { SbpmElementType, Coordinates, SbpmProcessItem } from '@sbpmjs/shared';
 import { get } from 'svelte/store';
+import { addSbpmElement, reset, clear, restoreView } from './manager';
+import { addItem, getItemById, getItems, updateItemById } from './store';
+import { updateActivePaletteItems } from './svelte-stores/activePaletteItems';
+import { updateCurrentlySelectedSbpmShape, currentlySelectedSbpmShape } from './svelte-stores/currentlySelectedSbpmShape';
+import { currentlySelectedNavigatorItem, updateCurrentlySelectedNavigatorItem } from './svelte-stores/elementNavigatorItems';
+import type { OptionsContainer } from './svelte-stores/optionsContainer';
+import { showProperties } from './svelte-stores/showProperties';
 import {
-  addSbpmElement,
-  updateCurrentlySelectedSbpmShape,
-  reset,
-  clear,
-  restoreView,
-  updateActivePaletteItems,
-  getPreviousViewBreadcrumb,
-  addViewBreadcrumb,
   getLastViewBreadcrumb,
-  removeLastViewBreadcrumb,
   defaultViewBreadcrumb,
-  addItem,
-  updateView,
-  currentlySelectedNavigatorItem,
-  getItems,
-  getViews,
-  currentlySelectedSbpmShape,
-  updateItem,
-  updateCurrentlySelectedNavigatorItem,
-  getItemById,
-  type OptionsContainer,
-  showProperties,
-} from '../manager';
+  addViewBreadcrumb,
+  getPreviousViewBreadcrumb,
+  removeLastViewBreadcrumb,
+} from './svelte-stores/viewBreadcrumbs';
+import { updateView, getViews } from './views';
 
 export function handleOnDrop(type: SbpmElementType, position: Coordinates) {
   showProperties.update(() => false);
@@ -97,5 +88,5 @@ export function handleOnUpdate(optionsContainer: OptionsContainer) {
   const { id, ...restOptions } = optionsContainer;
   const shape = get(currentlySelectedSbpmShape);
   shape.update(restOptions);
-  updateItem(id, restOptions);
+  updateItemById(id, restOptions);
 }

@@ -1,6 +1,6 @@
 <script>
   import Frame from './ui/Frame.svelte';
-  import { handleOnReset, handleOnClear } from '../manager';
+  import { handleOnReset, handleOnClear } from '../core/handlers';
   import { centerFocusStrongIcon, clearIcon, zoomInIcon, zoomOutIcon } from '../icons';
   import IconButton from './ui/IconButton.svelte';
 </script>

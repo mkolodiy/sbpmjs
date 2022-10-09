@@ -1,12 +1,13 @@
 <script>
   import Button from './ui/Button.svelte';
   import Frame from './ui/Frame.svelte';
-  import { handleGoHome, handleGoBack, handleOnReset, uiVisible } from '../manager';
+  import { handleGoHome, handleGoBack, handleOnReset } from '../core/handlers';
+  import { uiVisible, toggleUiVisible } from '../core/svelte-stores/uiVisible';
   import { arrowBackIcon, centerFocusStrongIcon, homeIcon, visibilityIcon, visibilityOffIcon } from '../icons';
   import IconButton from './ui/IconButton.svelte';
 
   const toggleVisibility = () => {
-    uiVisible.update((prevUiVisible) => !prevUiVisible);
+    toggleUiVisible();
   };
 </script>
 

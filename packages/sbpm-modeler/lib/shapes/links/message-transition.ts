@@ -2,7 +2,7 @@ import {
   LabelBasedLinkToolsOptions,
   MessageTransitionOptions,
   LinkCreationOptions,
-  MessageTransitionUpdateOptions
+  MessageTransitionUpdateOptions,
 } from '../../common/types';
 import { createIcon } from '../../common/utils';
 import { ShapeType } from '../../common/constants';
@@ -21,7 +21,7 @@ export const createMessageTransitionOptions = (
     options,
     iconLabel: iconLabel(isBidirectional),
     type: ShapeType.MESSAGE_TRANSITION,
-    labelBasedLinkToolsOptions
+    labelBasedLinkToolsOptions,
   };
 };
 
@@ -35,9 +35,9 @@ export const createMessageTransitionUpdateOptions = (
 const jointOptions = {
   attrs: {
     wrapper: {
-      pointerEvents: 'none'
-    }
-  }
+      pointerEvents: 'none',
+    },
+  },
 };
 
 /**
@@ -46,16 +46,16 @@ const jointOptions = {
 const labelBasedLinkToolsOptions: LabelBasedLinkToolsOptions = {
   selectionLabelOptions: {
     width: 100,
-    height: 70
+    height: 70,
   },
   removeLabelOptions: {
     xAlignment: 52.5,
-    yAlignment: -40
+    yAlignment: -40,
   },
   removeVerticesLabelOptions: {
     xAlignment: 77.5,
-    yAlignment: -40
-  }
+    yAlignment: -40,
+  },
 };
 
 const iconLabel = (isBidirectional: boolean) => {
@@ -66,8 +66,8 @@ const iconLabel = (isBidirectional: boolean) => {
     markup: [
       {
         tagName: 'image',
-        selector: 'iconLabel'
-      }
+        selector: 'iconLabel',
+      },
     ],
     attrs: {
       iconLabel: {
@@ -76,9 +76,9 @@ const iconLabel = (isBidirectional: boolean) => {
         width: 85,
         height: 55,
         xAlignment: 'middle',
-        yAlignment: 'middle'
-      }
-    }
+        yAlignment: 'middle',
+      },
+    },
   };
 };
 

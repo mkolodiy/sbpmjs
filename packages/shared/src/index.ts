@@ -158,7 +158,7 @@ export type SbpmLinkItem<Type extends SbpmLinkType = SbpmLinkType> = {
   properties: GetSbpmLink<Type>;
 };
 
-export type SbpmProcessItem<T> = T extends SbpmGeneralEntityType
+export type SbpmProcessItem<T = SbpmType> = T extends SbpmGeneralEntityType
   ? SbpmGeneralEntityItem<T>
   : T extends SbpmElementType
   ? SbpmElementItem<T>
@@ -166,7 +166,7 @@ export type SbpmProcessItem<T> = T extends SbpmGeneralEntityType
   ? SbpmLinkItem<T>
   : undefined;
 
-export type SbpmProcessItemGroup<T> = SbpmProcessItem<T>[];
+export type SbpmProcessItemGroup<T = SbpmType> = SbpmProcessItem<T>[];
 
 export function createSbpmGeneralEntityItem<Type extends SbpmGeneralEntityType = SbpmGeneralEntityType>(item: SbpmGeneralEntityItem<Type>) {
   return item;

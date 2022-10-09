@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { SbpmProcessItem } from '@sbpmjs/shared';
   import Input from './ui/Input.svelte';
-  import { elementNavigatorItems, handleOnSelectNavigationItem, currentlySelectedNavigatorItem, updateCurrentlySelectedNavigatorItem } from '../manager';
+  import { elementNavigatorItems, currentlySelectedNavigatorItem, updateCurrentlySelectedNavigatorItem } from '../core/svelte-stores/elementNavigatorItems';
+  import { handleOnSelectNavigationItem } from '../core/handlers';
 
   let value = '';
   let isFocused = false;

@@ -1,6 +1,5 @@
-import type { SbpmElementType, SbpmLinkType, SbpmLink as SbpmLinkOptions } from '@sbpmjs/shared';
+import type { SbpmElementType } from '@sbpmjs/shared';
 import { elementTypeToLinkClassMapping } from './mappings';
-import { SbpmProcessNetwork } from './process-network';
 import { SbpmProcessModel } from './process-model';
 import { SbpmSubject } from './subject';
 import { SbpmSendState } from './send-state';
