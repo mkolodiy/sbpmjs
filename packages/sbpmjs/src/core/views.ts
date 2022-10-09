@@ -1,7 +1,11 @@
-const views: Record<string, string[]> = {};
+let views: Record<string, string[]> = {};
 
 export function getViews() {
   return views;
+}
+
+export function resetViews() {
+  views = {};
 }
 
 export function getOrCreateView(view: string) {

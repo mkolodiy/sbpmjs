@@ -1,6 +1,6 @@
 import type { SbpmProcessItem } from '@sbpmjs/shared';
 
-const store: Record<string, SbpmProcessItem> = {};
+let store: Record<string, SbpmProcessItem> = {};
 
 export function getItemById(id: string) {
   return store[id];
@@ -8,6 +8,10 @@ export function getItemById(id: string) {
 
 export function getItems() {
   return store;
+}
+
+export function resetItems() {
+  store = {};
 }
 
 export function getItemsByIds(ids: string[]) {

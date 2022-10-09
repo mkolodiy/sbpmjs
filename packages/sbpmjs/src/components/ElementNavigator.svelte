@@ -13,6 +13,10 @@
     return actual.toLowerCase().includes(expected.toLocaleLowerCase());
   };
 
+  const compareIds = (actual: string, expected: string) => {
+    return actual === expected;
+  };
+
   $: filteredItems = $elementNavigatorItems?.filter((item) => compareLabels(item.properties.label, value.toLocaleLowerCase()));
 
   const onFocus = () => (isFocused = true);
@@ -50,7 +54,7 @@
         {#each filteredItems as item}
           <div
             class="select-item"
-            class:select-item-selected={compareLabels(item.properties.label, $currentlySelectedNavigatorItem.properties.label)}
+            class:select-item-selected={compareIds(item.properties.id, $currentlySelectedNavigatorItem.properties.id)}
             on:click={onSelectItem(item)}
           >
             {item.properties.label} ({item.properties.id})

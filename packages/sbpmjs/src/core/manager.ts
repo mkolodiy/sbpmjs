@@ -2,13 +2,25 @@ import SbpmModeler from '@sbpmjs/modeler';
 import { createSbpmElementItem, type Coordinates, type SbpmElementType, type SbpmProcessItem, type SbpmProcessItemGroup } from '@sbpmjs/shared';
 import { get } from 'svelte/store';
 import { createRandomUUID } from '../common/utils';
-import { addItem, getItemById, getItems, getItemsByIds } from './store';
+import { defaultProcess, defaultProcessNetwork } from './common';
+import { addItem, getItemById, getItems, getItemsByIds, resetItems } from './store';
 import { updateActivePaletteItems } from './svelte-stores/activePaletteItems';
 import { updateCurrentlySelectedSbpmShape } from './svelte-stores/currentlySelectedSbpmShape';
 import { updateCurrentlySelectedNavigatorItem, initElementNavigatorItems, currentlySelectedNavigatorItem } from './svelte-stores/elementNavigatorItems';
 import { showProperties } from './svelte-stores/showProperties';
 import { updateDefaultViewBreadcrumb, addViewBreadcrumb } from './svelte-stores/viewBreadcrumbs';
-import { updateView, getViews, getOrCreateView } from './views';
+import { updateView, getViews, getOrCreateView, resetViews } from './views';
+
+function init(process: SbpmProcessItem<'Process'>) {
+  restoreView(process.properties.id);
+  updateDefaultViewBreadcrumb(process);
+  addViewBreadcrumb({
+    type: process.type,
+    id: process.properties.id,
+  });
+  updateCurrentlySelectedNavigatorItem(process);
+  initElementNavigatorItems();
+}
 
 export function loadProcess(processItemGroup: SbpmProcessItemGroup) {
   processItemGroup.forEach((item) => {
@@ -22,19 +34,12 @@ export function loadProcess(processItemGroup: SbpmProcessItemGroup) {
     }
   });
 
-  const process = processItemGroup.find((item) => item.type === 'Process');
+  const process = processItemGroup.find((item) => item.type === 'Process') as SbpmProcessItem<'Process'>;
   if (!process) {
     throw new Error('Process is not defined in the provided process item group.');
   }
 
-  restoreView(process.properties.id);
-  updateDefaultViewBreadcrumb(process as SbpmProcessItem<'Process'>);
-  addViewBreadcrumb({
-    type: process.type,
-    id: process.properties.id,
-  });
-  updateCurrentlySelectedNavigatorItem(process);
-  initElementNavigatorItems();
+  init(process);
 }
 
 let modeler: SbpmModeler = undefined as unknown as SbpmModeler;
@@ -97,11 +102,10 @@ export function initModeler() {
     },
   });
 
-  addInitialElement();
-}
-
-export function addInitialElement() {
-  addSbpmElement('ProcessNetwork', { x: 400, y: 200 });
+  addItem(defaultProcess);
+  addItem(defaultProcessNetwork);
+  init(defaultProcess);
+  modeler.addSbpmElement(defaultProcessNetwork);
 }
 
 export function restoreView(view: string) {
@@ -144,5 +148,12 @@ export function clear() {
   }
   modeler.canvas.reset();
   modeler.canvas.clear();
-  addInitialElement();
+  resetItems();
+  resetViews();
+  addItem(defaultProcess);
+  addItem(defaultProcessNetwork);
+  init(defaultProcess);
+  updateView(defaultProcess.properties.id, [defaultProcessNetwork.properties.id]);
+  modeler.addSbpmElement(defaultProcessNetwork);
+  console.log(getItems());
 }
