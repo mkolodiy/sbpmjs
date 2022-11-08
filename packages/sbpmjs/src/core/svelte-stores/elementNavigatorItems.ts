@@ -8,6 +8,8 @@ export const elementNavigatorItems = writable<SbpmProcessItem[]>([defaultProcess
 
 export function initElementNavigatorItems() {
   const views = getViews();
+  console.log(views);
+
   const ids = Object.keys(views);
   elementNavigatorItems.update(() => getItemsByIds(ids));
 }

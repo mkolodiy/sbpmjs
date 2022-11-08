@@ -4,7 +4,7 @@ import { addSbpmElement, reset, clear, restoreView } from './manager';
 import { addItem, getItemById, getItems, updateItemById } from './store';
 import { updateActivePaletteItems } from './svelte-stores/activePaletteItems';
 import { updateCurrentlySelectedSbpmShape, currentlySelectedSbpmShape } from './svelte-stores/currentlySelectedSbpmShape';
-import { currentlySelectedNavigatorItem, updateCurrentlySelectedNavigatorItem } from './svelte-stores/elementNavigatorItems';
+import { currentlySelectedNavigatorItem, initElementNavigatorItems, updateCurrentlySelectedNavigatorItem } from './svelte-stores/elementNavigatorItems';
 import type { OptionsContainer } from './svelte-stores/optionsContainer';
 import { showProperties } from './svelte-stores/showProperties';
 import {
@@ -14,7 +14,7 @@ import {
   getPreviousViewBreadcrumb,
   removeLastViewBreadcrumb,
 } from './svelte-stores/viewBreadcrumbs';
-import { updateView, getViews } from './views';
+import { updateView, getViews, getOrCreateView } from './views';
 
 export function handleOnDrop(type: SbpmElementType, position: Coordinates) {
   showProperties.update(() => false);
@@ -30,7 +30,8 @@ export function handleOnDrop(type: SbpmElementType, position: Coordinates) {
     },
   });
   updateView(get(currentlySelectedNavigatorItem).properties.id, [id]);
-
+  getOrCreateView(id);
+  initElementNavigatorItems();
   console.log(getItems());
   console.log(getViews());
 }
@@ -41,6 +42,11 @@ export function handleOnReset() {
 }
 
 export function handleOnClear() {
+  // TODO: Change to use a dialog
+  const confirmation = confirm('This will delete all elements and their children. Proceed?');
+  if (!confirmation) {
+    return;
+  }
   showProperties.update(() => false);
   clear();
 }

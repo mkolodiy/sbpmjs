@@ -111,4 +111,4 @@ const sbpm = new Sbpm({
   container: document.getElementById('container')!,
 });
 
-sbpm.loadProcess(processItemGroup);
+// sbpm.loadProcess(processItemGroup);

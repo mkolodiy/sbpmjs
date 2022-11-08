@@ -1,25 +1,65 @@
-import SbpmModeler from '@sbpmjs/modeler';
-import { createSbpmElementItem, type Coordinates, type SbpmElementType, type SbpmProcessItem, type SbpmProcessItemGroup } from '@sbpmjs/shared';
+import SbpmModeler, { type ElementEventHandlerParams, type LinkEventHandlerParams } from '@sbpmjs/modeler';
+import {
+  createSbpmElementItem,
+  type Coordinates,
+  type SbpmElementType,
+  type SbpmProcessItem,
+  type SbpmProcessItemGroup,
+  type SbpmShapeType,
+} from '@sbpmjs/shared';
 import { get } from 'svelte/store';
 import { createRandomUUID } from '../common/utils';
 import { defaultProcess, defaultProcessNetwork } from './common';
-import { addItem, getItemById, getItems, getItemsByIds, resetItems } from './store';
+import { addItem, getItemById, getItemsByIds, resetItems } from './store';
 import { updateActivePaletteItems } from './svelte-stores/activePaletteItems';
 import { updateCurrentlySelectedSbpmShape } from './svelte-stores/currentlySelectedSbpmShape';
 import { updateCurrentlySelectedNavigatorItem, initElementNavigatorItems, currentlySelectedNavigatorItem } from './svelte-stores/elementNavigatorItems';
-import { showProperties } from './svelte-stores/showProperties';
+import { showProperties, updateShowProperties } from './svelte-stores/showProperties';
 import { updateDefaultViewBreadcrumb, addViewBreadcrumb } from './svelte-stores/viewBreadcrumbs';
-import { updateView, getViews, getOrCreateView, resetViews } from './views';
+import { updateView, getOrCreateView, resetViews } from './views';
 
-function init(process: SbpmProcessItem<'Process'>) {
-  restoreView(process.properties.id);
-  updateDefaultViewBreadcrumb(process);
-  addViewBreadcrumb({
-    type: process.type,
-    id: process.properties.id,
+let modeler: SbpmModeler = undefined as unknown as SbpmModeler;
+
+export function initModeler() {
+  const container = document.querySelector<HTMLElement>('.sbpm-modeler');
+
+  if (!container) {
+    throw new Error('Could not find container element for SbpmModeler');
+  }
+
+  modeler = new SbpmModeler({
+    container,
+    onOpenElement: (element) => {
+      handleOnOpenShape(element.type, String(element.id));
+    },
+    onOpenLink: (link) => {
+      handleOnOpenShape(link.type, String(link.id));
+    },
+    onSelectElement: (element) => {
+      handleOnSelectShape(element);
+    },
+    onSelectLink: (link) => {
+      handleOnSelectShape(link);
+    },
+    onConnectLink: (link) => {
+      const id = link.id;
+      addItem({
+        type: link.type,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        properties: {
+          id: String(id),
+          ...link.getUpdatableOptions(),
+        },
+      });
+      updateView(get(currentlySelectedNavigatorItem).properties.id, [String(id)]);
+    },
+    onClickCanvas: () => {
+      showProperties.update(() => false);
+    },
   });
-  updateCurrentlySelectedNavigatorItem(process);
-  initElementNavigatorItems();
+
+  clear();
 }
 
 export function loadProcess(processItemGroup: SbpmProcessItemGroup) {
@@ -42,69 +82,30 @@ export function loadProcess(processItemGroup: SbpmProcessItemGroup) {
   init(process);
 }
 
-let modeler: SbpmModeler = undefined as unknown as SbpmModeler;
-
-export function initModeler() {
-  const container = document.querySelector<HTMLElement>('.sbpm-modeler');
-
-  if (!container) {
-    throw new Error('Could not find container element for SbpmModeler');
-  }
-
-  modeler = new SbpmModeler({
-    container,
-    onOpenElement: (element) => {
-      updateActivePaletteItems(element.type);
-      addViewBreadcrumb({
-        type: element.type,
-        id: String(element.id),
-      });
-      updateCurrentlySelectedNavigatorItem(getItemById(String(element.id)));
-      restoreView(String(element.id));
-      initElementNavigatorItems();
-    },
-    onOpenLink: (link) => {
-      updateActivePaletteItems(link.type);
-      addViewBreadcrumb({
-        type: link.type,
-        id: String(link.id),
-      });
-      restoreView(String(link.id));
-      initElementNavigatorItems();
-    },
-    onSelectElement: (element) => {
-      updateCurrentlySelectedSbpmShape(element);
-      showProperties.update(() => true);
-    },
-    onSelectLink: (link) => {
-      updateCurrentlySelectedSbpmShape(link);
-      showProperties.update(() => true);
-    },
-    onConnectLink: (link) => {
-      console.log('test', link.getUpdatableOptions());
-      const id = link.id;
-      addItem({
-        type: link.type,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        properties: {
-          id: String(id),
-          ...link.getUpdatableOptions(),
-        },
-      });
-      updateView(get(currentlySelectedNavigatorItem).properties.id, [String(id)]);
-
-      console.log(getViews());
-      console.log(getItems());
-    },
-    onClickCanvas: () => {
-      showProperties.update(() => false);
-    },
+function init(process: SbpmProcessItem<'Process'>) {
+  restoreView(process.properties.id);
+  updateDefaultViewBreadcrumb(process);
+  addViewBreadcrumb({
+    type: process.type,
+    id: process.properties.id,
   });
+  updateCurrentlySelectedNavigatorItem(process);
+  initElementNavigatorItems();
+}
 
+export function reset() {
+  modeler.canvas.reset();
+}
+
+export function clear() {
+  modeler.canvas.reset();
+  modeler.canvas.clear();
+  resetItems();
+  resetViews();
   addItem(defaultProcess);
   addItem(defaultProcessNetwork);
   init(defaultProcess);
+  updateView(defaultProcess.properties.id, [defaultProcessNetwork.properties.id]);
   modeler.addSbpmElement(defaultProcessNetwork);
 }
 
@@ -136,24 +137,19 @@ export function addSbpmElement(type: SbpmElementType, position: Coordinates) {
   return element;
 }
 
-export function reset() {
-  modeler.canvas.reset();
+function handleOnOpenShape(type: SbpmShapeType, id: string) {
+  updateActivePaletteItems(type);
+  addViewBreadcrumb({
+    type,
+    id,
+  });
+  updateCurrentlySelectedNavigatorItem(getItemById(id));
+  restoreView(id);
+  initElementNavigatorItems();
+  updateShowProperties(false);
 }
 
-export function clear() {
-  // TODO: Change to use a dialog
-  const confirmation = confirm('This will delete all elements and their children. Proceed?');
-  if (!confirmation) {
-    return;
-  }
-  modeler.canvas.reset();
-  modeler.canvas.clear();
-  resetItems();
-  resetViews();
-  addItem(defaultProcess);
-  addItem(defaultProcessNetwork);
-  init(defaultProcess);
-  updateView(defaultProcess.properties.id, [defaultProcessNetwork.properties.id]);
-  modeler.addSbpmElement(defaultProcessNetwork);
-  console.log(getItems());
+function handleOnSelectShape(shape: ElementEventHandlerParams | LinkEventHandlerParams) {
+  updateCurrentlySelectedSbpmShape(shape);
+  updateShowProperties(true);
 }
