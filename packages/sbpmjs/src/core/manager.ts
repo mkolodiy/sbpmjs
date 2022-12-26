@@ -10,13 +10,13 @@ import {
 import { get } from 'svelte/store';
 import { createRandomUUID } from '../common/utils';
 import { defaultProcess, defaultProcessNetwork } from './common';
-import { addItem, getItemById, getItemsByIds, resetItems } from './store';
+import { addItem, getItemById, getItemsByIds, resetItems, getItems, removeItemsById, removeItemById, getItemByType } from './store';
 import { updateActivePaletteItems } from './svelte-stores/activePaletteItems';
 import { updateCurrentlySelectedSbpmShape } from './svelte-stores/currentlySelectedSbpmShape';
 import { updateCurrentlySelectedNavigatorItem, initElementNavigatorItems, currentlySelectedNavigatorItem } from './svelte-stores/elementNavigatorItems';
 import { showProperties, updateShowProperties } from './svelte-stores/showProperties';
 import { updateDefaultViewBreadcrumb, addViewBreadcrumb } from './svelte-stores/viewBreadcrumbs';
-import { updateView, getOrCreateView, resetViews } from './views';
+import { updateView, getOrCreateView, resetViews, getViews, removeView, removeViews, removeItemFromView, getAllChildrenForView, removeItem } from './views';
 
 let modeler: SbpmModeler = undefined as unknown as SbpmModeler;
 
@@ -36,6 +36,9 @@ export function initModeler() {
       handleOnOpenShape(link.type, String(link.id));
     },
     onSelectElement: (element) => {
+      console.log(getViews());
+      console.log(getItems());
+
       handleOnSelectShape(element);
     },
     onSelectLink: (link) => {
@@ -56,6 +59,12 @@ export function initModeler() {
     },
     onClickCanvas: () => {
       showProperties.update(() => false);
+    },
+    onDeleteElement: (element) => {
+      handleOnDeleteShape(element);
+    },
+    onDeleteLink: (link) => {
+      handleOnDeleteShape(link);
     },
   });
 
@@ -152,4 +161,16 @@ function handleOnOpenShape(type: SbpmShapeType, id: string) {
 function handleOnSelectShape(shape: ElementEventHandlerParams | LinkEventHandlerParams) {
   updateCurrentlySelectedSbpmShape(shape);
   updateShowProperties(true);
+}
+
+function handleOnDeleteShape(shape: ElementEventHandlerParams | LinkEventHandlerParams) {
+  const id = String(shape.id);
+  const allChildren = getAllChildrenForView(id);
+  removeItemsById(allChildren);
+  removeViews(allChildren);
+  removeItemById(id);
+  removeItem(id);
+  removeView(id);
+  showProperties.update(() => false);
+  initElementNavigatorItems();
 }

@@ -14,7 +14,9 @@ import {
   getPreviousViewBreadcrumb,
   removeLastViewBreadcrumb,
 } from './svelte-stores/viewBreadcrumbs';
-import { updateView, getViews, getOrCreateView } from './views';
+import { updateView, getOrCreateView } from './views';
+
+const allowedViewTypes: SbpmElementType[] = ['ProcessModel', 'Subject'];
 
 export function handleOnDrop(type: SbpmElementType, position: Coordinates) {
   showProperties.update(() => false);
@@ -30,10 +32,10 @@ export function handleOnDrop(type: SbpmElementType, position: Coordinates) {
     },
   });
   updateView(get(currentlySelectedNavigatorItem).properties.id, [id]);
-  getOrCreateView(id);
+  if (allowedViewTypes.includes(type)) {
+    getOrCreateView(id);
+  }
   initElementNavigatorItems();
-  console.log(getItems());
-  console.log(getViews());
 }
 
 export function handleOnReset() {
