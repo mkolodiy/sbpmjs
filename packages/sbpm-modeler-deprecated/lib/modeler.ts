@@ -1,4 +1,4 @@
-import '../node_modules/jointjs/dist/joint.min.css';
+import 'jointjs/dist/joint.min.css';
 
 import Canvas from './canvas';
 import ElementCreator from './creators/element-creator';
