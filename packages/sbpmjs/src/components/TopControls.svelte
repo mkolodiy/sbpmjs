@@ -1,7 +1,7 @@
 <script>
   import Button from './ui/Button.svelte';
   import Frame from './ui/Frame.svelte';
-  import { handleGoHome, handleGoBack, handleOnReset } from '../core/handlers';
+  import { handleGoHome, handleOnReset } from '../core/handlers';
   import { uiVisible, toggleUiVisible } from '../core/svelte-stores/uiVisible';
   import { arrowBackIcon, centerFocusStrongIcon, homeIcon, visibilityIcon, visibilityOffIcon } from '../icons';
   import IconButton from './ui/IconButton.svelte';
@@ -17,7 +17,6 @@
       <div class="frame-content">
         <IconButton src={visibilityIcon} title="Show ui elements" on:click={toggleVisibility} />
         <IconButton src={homeIcon} title="Return to process network" on:click={handleGoHome} />
-        <IconButton src={arrowBackIcon} title="Go back to previous view" on:click={handleGoBack} />
       </div>
     </Frame>
   {:else}

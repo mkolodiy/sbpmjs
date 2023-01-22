@@ -26,8 +26,4 @@
   .sbpm-palette-item {
     cursor: grab;
   }
-
-  .sbpm-palette-item:hover {
-    background-color: var(--sbpm-shade-color);
-  }
 </style>

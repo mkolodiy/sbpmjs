@@ -13,8 +13,4 @@
     height: 32px;
     cursor: pointer;
   }
-
-  .icon-button:hover {
-    background-color: var(--sbpm-shade-color);
-  }
 </style>

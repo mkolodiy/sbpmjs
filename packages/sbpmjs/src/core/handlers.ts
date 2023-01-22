@@ -1,5 +1,6 @@
 import type { SbpmElementType, Coordinates, SbpmProcessItem } from '@sbpmjs/shared';
 import { get } from 'svelte/store';
+import { defaultProcess } from './common';
 import { addSbpmElement, reset, clear, restoreView } from './manager';
 import { addItem, getItemById, getItems, updateItemById } from './store';
 import { updateActivePaletteItems } from './svelte-stores/activePaletteItems';
@@ -7,13 +8,6 @@ import { updateCurrentlySelectedSbpmShape, currentlySelectedSbpmShape } from './
 import { currentlySelectedNavigatorItem, initElementNavigatorItems, updateCurrentlySelectedNavigatorItem } from './svelte-stores/elementNavigatorItems';
 import type { OptionsContainer } from './svelte-stores/optionsContainer';
 import { showProperties } from './svelte-stores/showProperties';
-import {
-  getLastViewBreadcrumb,
-  defaultViewBreadcrumb,
-  addViewBreadcrumb,
-  getPreviousViewBreadcrumb,
-  removeLastViewBreadcrumb,
-} from './svelte-stores/viewBreadcrumbs';
 import { updateView, getOrCreateView } from './views';
 
 const allowedViewTypes: SbpmElementType[] = ['ProcessModel', 'Subject'];
@@ -55,39 +49,13 @@ export function handleOnClear() {
 
 export function handleGoHome() {
   showProperties.update(() => false);
-  const lastViewBreadcrumb = getLastViewBreadcrumb();
-  if (lastViewBreadcrumb.type !== 'Process') {
-    const {
-      type,
-      properties: { id },
-    } = get(defaultViewBreadcrumb);
-    addViewBreadcrumb({
-      type: type,
-      id: id,
-    });
-    restoreView(id);
-    updateActivePaletteItems(type);
-    updateCurrentlySelectedNavigatorItem(get(defaultViewBreadcrumb));
-  }
-}
-
-export function handleGoBack() {
-  showProperties.update(() => false);
-  const previousViewBreadcrumb = getPreviousViewBreadcrumb();
-  if (previousViewBreadcrumb) {
-    restoreView(previousViewBreadcrumb.id);
-    updateActivePaletteItems(previousViewBreadcrumb.type);
-    updateCurrentlySelectedNavigatorItem(getItemById(previousViewBreadcrumb.id));
-    removeLastViewBreadcrumb();
-  }
+  restoreView(defaultProcess.properties.id);
+  updateActivePaletteItems(defaultProcess.type);
+  updateCurrentlySelectedNavigatorItem(defaultProcess);
 }
 
 export function handleOnSelectNavigationItem(item: SbpmProcessItem) {
   showProperties.update(() => false);
-  addViewBreadcrumb({
-    id: item.properties.id,
-    type: item.type,
-  });
   updateActivePaletteItems(item.type);
   restoreView(item.properties.id);
 }

@@ -38,15 +38,9 @@ const jointOptions: joint.shapes.standard.ImageAttributes = {
 
 const toolsOptions: SbpmElementToolsOptions = [
   {
-    type: 'remove',
-    options: {
-      x: 140,
-    },
-  },
-  {
     type: 'connect',
     options: {
-      x: 164,
+      x: 140,
     },
   },
 ];
