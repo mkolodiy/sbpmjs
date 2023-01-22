@@ -37,7 +37,7 @@
   },
   "author": "Maksym Kolodiy",
   "dependencies": {
-    "jointjs": "^3.5.5",
-    "@sbpmjs/shared": "workspace:^"
+    "@sbpmjs/shared": "workspace:^",
+    "jointjs": "^3.6.5"
   }
 }

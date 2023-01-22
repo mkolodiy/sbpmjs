@@ -260,4 +260,20 @@ export class SbpmCanvas {
     this.#graph.clear();
     this.addOrigin();
   }
+
+  /**
+   * Zoom in on the canvas.
+   */
+  public zoomIn() {
+    const scale = this.#paper.scale();
+    this.#paper.scale(scale.sx + 0.1, scale.sx + 0.1);
+  }
+
+  /**
+   * Zoom out on the canvas.
+   */
+  public zoomOut() {
+    const scale = this.#paper.scale();
+    this.#paper.scale(scale.sx - 0.1, scale.sx - 0.1);
+  }
 }

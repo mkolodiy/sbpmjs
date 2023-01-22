@@ -1,8 +1,8 @@
 import type { SbpmElementType, Coordinates, SbpmProcessItem } from '@sbpmjs/shared';
 import { get } from 'svelte/store';
 import { defaultProcess } from './common';
-import { addSbpmElement, reset, clear, restoreView } from './manager';
-import { addItem, getItemById, getItems, updateItemById } from './store';
+import { addSbpmElement, reset, clear, restoreView, zoomIn, zoomOut } from './manager';
+import { addItem, updateItemById } from './store';
 import { updateActivePaletteItems } from './svelte-stores/activePaletteItems';
 import { updateCurrentlySelectedSbpmShape, currentlySelectedSbpmShape } from './svelte-stores/currentlySelectedSbpmShape';
 import { currentlySelectedNavigatorItem, initElementNavigatorItems, updateCurrentlySelectedNavigatorItem } from './svelte-stores/elementNavigatorItems';
@@ -45,6 +45,14 @@ export function handleOnClear() {
   }
   showProperties.update(() => false);
   clear();
+}
+
+export function handleOnZoomIn() {
+  zoomIn();
+}
+
+export function handleOnZoomOut() {
+  zoomOut();
 }
 
 export function handleGoHome() {

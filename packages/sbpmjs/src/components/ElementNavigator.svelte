@@ -52,6 +52,7 @@
         <div class="not-found-item">No elements found</div>
       {:else}
         {#each filteredItems as item}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
           <div
             class="select-item"
             class:select-item-selected={compareIds(item.properties.id, $currentlySelectedNavigatorItem.properties.id)}

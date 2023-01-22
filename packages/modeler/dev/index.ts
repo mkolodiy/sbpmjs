@@ -345,3 +345,11 @@ document.getElementById('restore-view')?.addEventListener('click', () => {
     },
   ]);
 });
+
+document.getElementById('zoom-in')?.addEventListener('click', () => {
+  modeler.canvas.zoomIn();
+});
+
+document.getElementById('zoom-out')?.addEventListener('click', () => {
+  modeler.canvas.zoomOut();
+});

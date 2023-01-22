@@ -1,6 +1,6 @@
 <script>
   import Frame from './ui/Frame.svelte';
-  import { handleOnReset, handleOnClear } from '../core/handlers';
+  import { handleOnReset, handleOnClear, handleOnZoomIn, handleOnZoomOut } from '../core/handlers';
   import { centerFocusStrongIcon, clearIcon, zoomInIcon, zoomOutIcon } from '../icons';
   import IconButton from './ui/IconButton.svelte';
 </script>
@@ -10,8 +10,8 @@
     <div class="frame-content">
       <IconButton src={clearIcon} title="Clear canvas" on:click={handleOnClear} />
       <IconButton src={centerFocusStrongIcon} title="Center canvas" on:click={handleOnReset} />
-      <IconButton src={zoomInIcon} title="Zoom in canvas" />
-      <IconButton src={zoomOutIcon} title="Zoom out canvas" />
+      <IconButton src={zoomInIcon} title="Zoom in canvas" on:click={handleOnZoomIn}/>
+      <IconButton src={zoomOutIcon} title="Zoom out canvas" on:click={handleOnZoomOut}/>
     </div>
   </Frame>
 </div>
