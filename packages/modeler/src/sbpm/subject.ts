@@ -164,4 +164,18 @@ export class SbpmSubject extends SbpmElement {
 
     super.update(restOptions);
   }
+
+  public getUpdatableOptions(): GetUpdateOptions<SbpmSubjectOptions> {
+    const options = super.getUpdatableOptions() as GetUpdateOptions<SbpmSubjectOptions>;
+
+    if (this.attr('image/xlinkHref') === humanTypeJointOptions.attrs?.image?.xlinkHref) {
+      options.representation = 'human';
+    }
+
+    if (this.attr('image/xlinkHref') === machineTypeJointOptions.attrs?.image?.xlinkHref) {
+      options.representation = 'machine';
+    }
+
+    return options;
+  }
 }

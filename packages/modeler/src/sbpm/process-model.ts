@@ -114,6 +114,20 @@ export class SbpmProcessModel extends SbpmElement {
 
     super.update(restOptions);
   }
+
+  public getUpdatableOptions(): GetUpdateOptions<SbpmProcessModelOptions> {
+    const options = super.getUpdatableOptions() as GetUpdateOptions<SbpmProcessModelOptions>;
+
+    if (this.attr('image/xlinkHref') === singleProcessIcon) {
+      options.role = 'single';
+    }
+
+    if (this.attr('image/xlinkHref') === multiProcessIcon) {
+      options.role = 'multi';
+    }
+
+    return options;
+  }
 }
 
 function getIcon(role: SbpmProcessModelOptions['role']) {

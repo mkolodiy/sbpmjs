@@ -43,15 +43,17 @@ export function initModeler() {
     onSelectLink: (link) => {
       handleOnSelectShape(link);
     },
-    onConnectLink: (link) => {
-      const id = link.id;
+    onAddShape: (shape) => {
+      console.log(shape);
+
+      const id = shape.id;
       addItem({
-        type: link.type,
+        type: shape.type,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         properties: {
           id: String(id),
-          ...link.getUpdatableOptions(),
+          ...shape.getUpdatableOptions(),
         },
       });
       updateView(get(currentlySelectedNavigatorItem).properties.id, [String(id)]);
@@ -108,7 +110,7 @@ export function clear() {
   addItem(defaultProcess);
   addItem(defaultProcessNetwork);
   init(defaultProcess);
-  updateView(defaultProcess.properties.id, [defaultProcessNetwork.properties.id]);
+  // updateView(defaultProcess.properties.id, [defaultProcessNetwork.properties.id]);
   modeler.addSbpmElement(defaultProcessNetwork);
 }
 

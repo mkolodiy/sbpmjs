@@ -138,6 +138,14 @@ export class SbpmMessageTransition extends SbpmLink {
     super.update(restOptions);
   }
 
+  public getUpdatableOptions(): GetUpdateOptions<SbpmMessageTransitionOptions> {
+    const options = super.getUpdatableOptions() as GetUpdateOptions<SbpmMessageTransitionOptions>;
+
+    options.role = this.attr('line/sourceMarker') ? 'unidirectional' : 'bidirectional';
+
+    return options;
+  }
+
   public select() {
     super.select();
     this.appendLabel(createSelectionLabel(selectionLabel));

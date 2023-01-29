@@ -86,6 +86,7 @@ export type SbpmModelerOptions = {
   onOpenElement?: ElementEventHandler;
   onOpenLink?: LinkEventHandler;
   onConnectLink?: LinkEventHandler;
+  onAddShape?: (shape: ElementEventHandlerParams | LinkEventHandlerParams) => void;
   onClickCanvas?: () => void;
 };
 
@@ -109,6 +110,7 @@ export class SbpmCanvas {
     this.addOrigin();
     this.addDragging(options);
     this.registerPaperEvents(options);
+    this.registerGraphEvents(options);
     this.registerElementEvents(options);
     this.registerLinkEvents(options);
   }
@@ -196,6 +198,14 @@ export class SbpmCanvas {
       this.#paper.$el.css('cursor', 'grab');
       this.deselect();
       onClickCanvas?.();
+    });
+  }
+
+  private registerGraphEvents({ onAddShape }: SbpmModelerOptions) {
+    this.#graph.on('add', (shape: SbpmElement | SbpmLink) => {
+      if (shape instanceof SbpmElement || shape instanceof SbpmLink) {
+        onAddShape?.(shape);
+      }
     });
   }
 

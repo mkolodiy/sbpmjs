@@ -46,6 +46,8 @@ export class SbpmState<
 
     if (role !== 'none') {
       this.attr('stateModifier/opacity', 0.5);
+    } else {
+      this.attr('stateModifier/opacity', 0);
     }
 
     if (role === 'start') {
@@ -57,6 +59,24 @@ export class SbpmState<
     }
 
     super.update(options);
+  }
+
+  public getUpdatableOptions(): GetUpdateOptions<SbpmStateOptions> {
+    const options = super.getUpdatableOptions() as GetUpdateOptions<SbpmStateOptions>;
+
+    if (this.attr('stateModifier/opacity') === '0') {
+      options.role = 'none';
+    }
+
+    if (this.attr('stateModifier/xlinkHref') === blueDotIcon) {
+      options.role = 'start';
+    }
+
+    if (this.attr('stateModifier/xlinkHref') === redDotIcon) {
+      options.role = 'end';
+    }
+
+    return options;
   }
 }
 
