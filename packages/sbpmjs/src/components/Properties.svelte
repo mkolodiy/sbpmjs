@@ -30,7 +30,15 @@
   <Frame title="properties">
     <div class="content">
       {#each Object.entries(optionsMapping[type]) as option}
-        <Input label={option[1].label} disabled={option[1].disabled} bind:value={$optionsContainer[option[0]]} />
+        {#if option[1].type === 'input'}
+          <Input label={option[1].label} disabled={option[1].disabled} bind:value={$optionsContainer[option[0]]} />
+        {:else if option[1].type === 'select'}
+          <select bind:value={$optionsContainer[option[0]]}>
+            {#each option[1].selectValues as selectValue}
+              <option value={selectValue}>{selectValue}</option>
+            {/each}
+          </select>
+        {/if}
       {/each}
     </div>
   </Frame>

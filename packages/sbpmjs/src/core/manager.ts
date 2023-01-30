@@ -1,6 +1,7 @@
 import SbpmModeler, { type ElementEventHandlerParams, type LinkEventHandlerParams } from '@sbpmjs/modeler';
 import {
   createSbpmElementItem,
+  isSbpmLinkType,
   type Coordinates,
   type SbpmElementType,
   type SbpmProcessItem,
@@ -10,7 +11,7 @@ import {
 import { get } from 'svelte/store';
 import { createRandomUUID } from '../common/utils';
 import { defaultProcess, defaultProcessNetwork } from './common';
-import { addItem, getItemById, getItemsByIds, resetItems, getItems, removeItemsById, removeItemById } from './store';
+import { addItem, getItemById, getItemsByIds, resetItems, getItems, removeItemsById, removeItemById, updateItemById } from './store';
 import { updateActivePaletteItems } from './svelte-stores/activePaletteItems';
 import { updateCurrentlySelectedSbpmShape } from './svelte-stores/currentlySelectedSbpmShape';
 import { updateCurrentlySelectedNavigatorItem, initElementNavigatorItems, currentlySelectedNavigatorItem } from './svelte-stores/elementNavigatorItems';
@@ -44,19 +45,12 @@ export function initModeler() {
       handleOnSelectShape(link);
     },
     onAddShape: (shape) => {
-      console.log(shape);
-
-      const id = shape.id;
-      addItem({
-        type: shape.type,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        properties: {
-          id: String(id),
-          ...shape.getUpdatableOptions(),
-        },
-      });
-      updateView(get(currentlySelectedNavigatorItem).properties.id, [String(id)]);
+      if (!isSbpmLinkType(shape.type)) {
+        addShape(shape);
+      }
+    },
+    onConnectLink: (link) => {
+      addShape(link);
     },
     onClickCanvas: () => {
       showProperties.update(() => false);
@@ -173,4 +167,18 @@ function handleOnDeleteShape(shape: ElementEventHandlerParams | LinkEventHandler
   removeView(id);
   showProperties.update(() => false);
   initElementNavigatorItems();
+}
+
+function addShape(shape: ElementEventHandlerParams | LinkEventHandlerParams) {
+  const id = shape.id;
+  addItem({
+    type: shape.type,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    properties: {
+      id: String(id),
+      ...shape.getUpdatableOptions(),
+    },
+  });
+  updateView(get(currentlySelectedNavigatorItem).properties.id, [String(id)]);
 }

@@ -1,9 +1,13 @@
 import type { SbpmProcessItem, SbpmType } from '@sbpmjs/shared';
 
-let store: Record<string, SbpmProcessItem> = {};
+const store: Map<string, SbpmProcessItem> = new Map();
 
 export function getItemById(id: string) {
-  return store[id];
+  const item = store.get(id);
+  if (item) {
+    return item;
+  }
+  throw new Error('Could not get item from store.');
 }
 
 export function getItems() {
@@ -11,20 +15,24 @@ export function getItems() {
 }
 
 export function resetItems() {
-  store = {};
+  store.clear();
 }
 
 export function getItemsByIds(ids: string[]) {
-  return ids.map((id) => store[id]);
+  const items: SbpmProcessItem[] = [];
+  ids.forEach((id) => {
+    items.push(getItemById(id));
+  });
+  return items;
 }
 
 export function addItem(item: SbpmProcessItem) {
   const id = item.properties.id;
-  store[id] = item;
+  store.set(id, item);
 }
 
 export function updateItemById(id: string, optionsContainer: Record<string, unknown>) {
-  const item = store[id];
+  const item = getItemById(id);
 
   for (const key of Object.keys(optionsContainer)) {
     const value = optionsContainer[key];
@@ -37,9 +45,7 @@ export function updateItemById(id: string, optionsContainer: Record<string, unkn
 }
 
 export function removeItemById(id: string) {
-  if (id in store) {
-    delete store[id];
-  }
+  store.delete(id);
 }
 
 export function removeItemsById(ids: string[]) {
@@ -47,7 +53,7 @@ export function removeItemsById(ids: string[]) {
 }
 
 export function getItemByType(type: SbpmType) {
-  const item = Object.values(store).find((item) => item.type === type);
+  const item = [...store.values()].find((item) => item.type === type);
   if (!item) {
     throw new Error('Could not find item.');
   }
