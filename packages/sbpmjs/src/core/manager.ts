@@ -11,7 +11,7 @@ import {
 import { get } from 'svelte/store';
 import { createRandomUUID } from '../common/utils';
 import { defaultProcess, defaultProcessNetwork } from './common';
-import { addItem, getItemById, getItemsByIds, resetItems, getItems, removeItemsById, removeItemById, updateItemById } from './store';
+import { addItem, getItemById, getItemsByIds, resetItems, getItems, removeItemsById, removeItemById } from './store';
 import { updateActivePaletteItems } from './svelte-stores/activePaletteItems';
 import { updateCurrentlySelectedSbpmShape } from './svelte-stores/currentlySelectedSbpmShape';
 import { updateCurrentlySelectedNavigatorItem, initElementNavigatorItems, currentlySelectedNavigatorItem } from './svelte-stores/elementNavigatorItems';
@@ -30,6 +30,8 @@ export function initModeler() {
   modeler = new SbpmModeler({
     container,
     onOpenElement: (element) => {
+      console.log('test');
+
       handleOnOpenShape(element.type, String(element.id));
     },
     onOpenLink: (link) => {
@@ -145,6 +147,8 @@ export function addSbpmElement(type: SbpmElementType, position: Coordinates) {
 }
 
 function handleOnOpenShape(type: SbpmShapeType, id: string) {
+  console.log('Test');
+
   updateActivePaletteItems(type);
   updateCurrentlySelectedNavigatorItem(getItemById(id));
   restoreView(id);

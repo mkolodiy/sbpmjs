@@ -75,7 +75,6 @@
   }
 
   .select {
-    margin-top: 10px;
     border-radius: 3px;
     background-color: #fff;
     box-shadow: 0 2px 3px 0 rgb(0, 129, 167, 0.24);

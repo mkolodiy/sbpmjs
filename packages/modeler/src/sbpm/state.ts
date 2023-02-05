@@ -63,10 +63,7 @@ export class SbpmState<
 
   public getUpdatableOptions(): GetUpdateOptions<SbpmStateOptions> {
     const options = super.getUpdatableOptions() as GetUpdateOptions<SbpmStateOptions>;
-
-    if (this.attr('stateModifier/opacity') === '0') {
-      options.role = 'none';
-    }
+    options.role = 'none';
 
     if (this.attr('stateModifier/xlinkHref') === blueDotIcon) {
       options.role = 'start';

@@ -3,6 +3,7 @@ import type { SbpmElementType, SbpmElement as SbpmElementOptions } from '@sbpmjs
 import { CustomEvent } from '../common';
 import type { GetUpdateOptions, SbpmShapeAttributes } from '../common';
 import type { SbpmElementToolsOptions } from './element-tools';
+import { SbpmModelerOptions } from '../canvas';
 
 const attrs = {
   image: {
@@ -35,6 +36,7 @@ export type SbpmElementAttributes = joint.dia.Element.GenericAttributes<joint.sh
 
 export class SbpmElement extends joint.dia.Element<SbpmElementAttributes> {
   type: SbpmElementType = undefined as unknown as SbpmElementType;
+  modelerOptions: SbpmModelerOptions = undefined as unknown as SbpmModelerOptions;
 
   defaults() {
     return {

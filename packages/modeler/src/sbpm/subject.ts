@@ -141,12 +141,16 @@ export class SbpmSubject extends SbpmElement {
     }) as SbpmElementAttributes;
 
     super(attributes);
+
+    this.modelerOptions = modelerOptions;
   }
 
   public update(options: GetUpdateOptions<SbpmSubjectOptions>) {
     const { representation, ...restOptions } = options;
 
     if (representation) {
+      console.log('test', this.graph.attributes);
+
       const jointOptions = representation === 'human' ? humanTypeJointOptions : machineTypeJointOptions;
       const toolsOptions = representation === 'human' ? humanToolsOptions : machineToolsOptions;
 
@@ -159,7 +163,7 @@ export class SbpmSubject extends SbpmElement {
       this.attr('image/width', jointOptions.attrs?.image?.width);
       this.attr('image/height', jointOptions.attrs?.image?.height);
       this.attr('image/height', jointOptions.attrs?.image?.height);
-      this.prop('toolsOptions', toolsOptions);
+      this.prop('toolsOptions', addActionsToElementToolsOptions(toolsOptions, this.modelerOptions));
     }
 
     super.update(restOptions);

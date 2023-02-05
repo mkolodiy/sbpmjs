@@ -6,20 +6,20 @@
   import { currentlySelectedSbpmShape } from '../core/svelte-stores/currentlySelectedSbpmShape';
   import { optionsContainer } from '../core/svelte-stores/optionsContainer';
   import { handleOnUpdate } from '../core/handlers';
+  import { getItemById } from '../core/store';
+  import Select from './ui/Select.svelte';
 
   $: type = $currentlySelectedSbpmShape.type;
 
   currentlySelectedSbpmShape.subscribe((value) => {
-    const updatableOptions = value.getUpdatableOptions();
-
-    for (const key of Object.keys($optionsContainer)) {
-      $optionsContainer[key] = updatableOptions[key];
-    }
-
-    $optionsContainer.id = value.id;
+    const properties = structuredClone(getItemById(value.id).properties);
+    optionsContainer.update(() => properties);
 
     value.on('change', (shape) => {
-      $optionsContainer.position = { ...shape.position() };
+      optionsContainer.update((prevOptionsContainer) => ({
+        ...prevOptionsContainer,
+        position: { ...shape.position() },
+      }));
     });
   });
 
@@ -33,11 +33,7 @@
         {#if option[1].type === 'input'}
           <Input label={option[1].label} disabled={option[1].disabled} bind:value={$optionsContainer[option[0]]} />
         {:else if option[1].type === 'select'}
-          <select bind:value={$optionsContainer[option[0]]}>
-            {#each option[1].selectValues as selectValue}
-              <option value={selectValue}>{selectValue}</option>
-            {/each}
-          </select>
+          <Select label={option[1].label} options={option[1].selectValues} bind:value={$optionsContainer[option[0]]} />
         {/if}
       {/each}
     </div>

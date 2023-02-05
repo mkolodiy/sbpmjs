@@ -141,7 +141,7 @@ export class SbpmMessageTransition extends SbpmLink {
   public getUpdatableOptions(): GetUpdateOptions<SbpmMessageTransitionOptions> {
     const options = super.getUpdatableOptions() as GetUpdateOptions<SbpmMessageTransitionOptions>;
 
-    options.role = this.attr('line/sourceMarker') ? 'unidirectional' : 'bidirectional';
+    options.role = this.attr('line/sourceMarker') ? 'bidirectional' : 'unidirectional';
 
     return options;
   }

@@ -49,18 +49,42 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
   ...createOptions('Subject', {
     id: { ...id },
     label: { ...label },
+    representation: {
+      label: 'Representation:',
+      disabled: false,
+      type: 'select',
+      selectValues: ['human', 'machine'],
+    },
   }),
   ...createOptions('SendState', {
     id: { ...id },
     label: { ...label },
+    role: {
+      label: 'Role:',
+      disabled: false,
+      type: 'select',
+      selectValues: ['start', 'end', 'none'],
+    },
   }),
   ...createOptions('ReceiveState', {
     id: { ...id },
     label: { ...label },
+    role: {
+      label: 'Role:',
+      disabled: false,
+      type: 'select',
+      selectValues: ['start', 'end', 'none'],
+    },
   }),
   ...createOptions('FunctionState', {
     id: { ...id },
     label: { ...label },
+    role: {
+      label: 'Role:',
+      disabled: false,
+      type: 'select',
+      selectValues: ['start', 'end', 'none'],
+    },
   }),
   ...createOptions('ProcessTransition', {
     id: { ...id },
@@ -68,6 +92,12 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
   ...createOptions('MessageTransition', {
     id: { ...id },
     label: { ...label },
+    role: {
+      label: 'Role:',
+      disabled: false,
+      type: 'select',
+      selectValues: ['unidirectional', 'bidirectional'],
+    },
   }),
   ...createOptions('FunctionStateTransition', {
     id: { ...id },

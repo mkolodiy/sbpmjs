@@ -57,9 +57,9 @@ export function handleOnZoomOut() {
 
 export function handleGoHome() {
   showProperties.update(() => false);
-  restoreView(defaultProcess.properties.id);
   updateActivePaletteItems(defaultProcess.type);
   updateCurrentlySelectedNavigatorItem(defaultProcess);
+  restoreView(defaultProcess.properties.id);
 }
 
 export function handleOnSelectNavigationItem(item: SbpmProcessItem) {
@@ -71,6 +71,13 @@ export function handleOnSelectNavigationItem(item: SbpmProcessItem) {
 export function handleOnUpdate(optionsContainer: OptionsContainer) {
   const { id, ...restOptions } = optionsContainer;
   const shape = get(currentlySelectedSbpmShape);
-  shape.update(restOptions);
+  const updatableOptions = shape.getUpdatableOptions();
+  const updatedOptions = {};
+  for (const key of Object.keys(updatableOptions)) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    updatedOptions[key] = restOptions[key];
+  }
+  shape.update(updatedOptions);
   updateItemById(id, restOptions);
 }
