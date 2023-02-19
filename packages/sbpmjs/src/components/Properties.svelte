@@ -44,7 +44,11 @@
         {:else if option[1].type === 'select' && Array.isArray(option[1].selectOptions)}
           <Select label={option[1].label} options={option[1].selectOptions} bind:value={$optionsContainer[option[0]]} />
         {:else if option[1].type === 'select'}
-          <Select label={option[1].label} options={option[1].selectOptions()} bind:value={$optionsContainer[option[0]]} />
+          <Select
+            label={option[1].label}
+            options={option[1].selectOptions($optionsContainer[option[1].dependency])}
+            bind:value={$optionsContainer[option[0]]}
+          />
         {/if}
       {/each}
     </div>

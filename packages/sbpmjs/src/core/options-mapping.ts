@@ -1,6 +1,6 @@
 import type { SbpmShapeType, SbpmProcessItem } from '@sbpmjs/shared';
 import type { SelectOption } from '../common/types';
-import { getReceiverSubjects, getReceiveTransitions, getSenderSubjects, getSenderTransitions } from './manager';
+import { getMessages, getReceiverSubjects, getReceiveTransitions, getSenderSubjects, getSenderTransitions } from './manager';
 import { activeProcessModelId, activeSubjectId, currentlySelectedSbpmShape } from './svelte-stores/currentlySelectedSbpmShape';
 import { currentlySelectedNavigatorItem } from './svelte-stores/elementNavigatorItems';
 import { get } from 'svelte/store';
@@ -9,7 +9,7 @@ type Option = {
   label: string;
   disabled: boolean;
   type: 'input' | 'select';
-  selectOptions?: SelectOption[] | (() => SelectOption[]);
+  selectOptions?: SelectOption[] | ((dependency?: string) => SelectOption[]);
   dependency?: string;
 };
 
@@ -186,7 +186,7 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
       disabled: false,
       type: 'select',
       selectOptions() {
-        const subjects = getSenderSubjects(getSenderTransitions(get(activeProcessModelId), get(activeSubjectId)));
+        const subjects = getSenderSubjects(getSenderTransitions(get(activeProcessModelId), get(activeSubjectId)), get(activeSubjectId));
         return subjects.map((subject) => ({
           id: subject.properties.id,
           label: subject.properties.label,
@@ -197,7 +197,20 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
       label: 'Message:',
       disabled: false,
       type: 'select',
-      selectOptions() {
+      dependency: 'subject',
+      selectOptions: (subjectId?: string) => {
+        const transitions = getSenderTransitions(get(activeProcessModelId), get(activeSubjectId));
+        const transition = transitions.find(
+          (transition) =>
+            (transition.properties.source === subjectId && transition.properties.target === get(activeSubjectId)) ||
+            (transition.properties.target === subjectId && transition.properties.source === get(activeSubjectId))
+        );
+        if (!transition) {
+          return [];
+        }
+
+        console.log(transition);
+
         return [
           {
             id: 'm test',
@@ -214,7 +227,7 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
       disabled: false,
       type: 'select',
       selectOptions() {
-        const subjects = getReceiverSubjects(getReceiveTransitions(get(activeProcessModelId), get(activeSubjectId)));
+        const subjects = getReceiverSubjects(getReceiveTransitions(get(activeProcessModelId), get(activeSubjectId)), get(activeSubjectId));
         return subjects.map((subject) => ({
           id: subject.properties.id,
           label: subject.properties.label,
@@ -225,13 +238,23 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
       label: 'Message:',
       disabled: false,
       type: 'select',
-      selectOptions() {
-        return [
-          {
-            id: 'm test',
-            label: 'm test',
-          },
-        ];
+      dependency: 'subject',
+      selectOptions(subjectId?: string) {
+        const transitions = getReceiveTransitions(get(activeProcessModelId), get(activeSubjectId));
+        const transition = transitions.find(
+          (transition) =>
+            (transition.properties.source === subjectId && transition.properties.target === get(activeSubjectId)) ||
+            (transition.properties.target === subjectId && transition.properties.source === get(activeSubjectId))
+        );
+        if (!transition) {
+          return [];
+        }
+
+        const messages = getMessages(transition.properties.id);
+        return messages.map((message) => ({
+          id: message.properties.id,
+          label: message.properties.label,
+        }));
       },
     },
   }),

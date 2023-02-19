@@ -209,19 +209,25 @@ export function getReceiveTransitions(parentId: string, childId: string) {
 }
 
 export function getMessages(transitionId: string) {
-  return getItemsByIds(getOrCreateView(transitionId));
+  return getItemsByIds(getOrCreateView(transitionId)) as SbpmElementItem<'Message'>[];
 }
 
-function getSubjects(transitions: SbpmLinkItem<'MessageTransition'>[], key: 'source' | 'target') {
+function getSubjects(transitions: SbpmLinkItem<'MessageTransition'>[], key: 'source' | 'target', childId: string) {
   const oppositeKey = key === 'source' ? 'target' : 'source';
-  const ids = transitions.map((item) => (item.properties.role === 'bidirectional' ? item.properties[key] : item.properties[oppositeKey]));
+  const ids = transitions.map((item) => {
+    if (item.properties.role === 'bidirectional' && item.properties[oppositeKey] === childId) {
+      return item.properties[key];
+    }
+
+    return item.properties[oppositeKey];
+  });
   return getItemsByIds(ids) as SbpmElementItem<'Subject'>[];
 }
 
-export function getSenderSubjects(transitions: SbpmLinkItem<'MessageTransition'>[]) {
-  return getSubjects(transitions, 'source');
+export function getSenderSubjects(transitions: SbpmLinkItem<'MessageTransition'>[], childId: string) {
+  return getSubjects(transitions, 'source', childId);
 }
 
-export function getReceiverSubjects(transitions: SbpmLinkItem<'MessageTransition'>[]) {
-  return getSubjects(transitions, 'target');
+export function getReceiverSubjects(transitions: SbpmLinkItem<'MessageTransition'>[], childId: string) {
+  return getSubjects(transitions, 'target', childId);
 }
