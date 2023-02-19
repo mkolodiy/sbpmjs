@@ -1,6 +1,8 @@
-<script>
-  export let options = [];
-  export let label = undefined;
+<script lang="ts">
+  import type { SelectOption } from '../../common/types';
+
+  export let options: SelectOption[] = [];
+  export let label: string | undefined = undefined;
   export let value = '';
 
   const { name, disabled = false, ...restProps } = $$restProps;
@@ -12,7 +14,7 @@
   {/if}
   <select class="select" bind:value {name} {...restProps}>
     {#each options as option}
-      <option value={option}>{option}</option>
+      <option value={option.id}>{option.label}</option>
     {/each}
   </select>
 </span>

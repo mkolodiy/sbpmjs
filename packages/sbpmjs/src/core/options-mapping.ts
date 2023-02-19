@@ -1,10 +1,16 @@
 import type { SbpmShapeType, SbpmProcessItem } from '@sbpmjs/shared';
+import type { SelectOption } from '../common/types';
+import { getReceiverSubjects, getReceiveTransitions, getSenderSubjects, getSenderTransitions } from './manager';
+import { activeProcessModelId, activeSubjectId, currentlySelectedSbpmShape } from './svelte-stores/currentlySelectedSbpmShape';
+import { currentlySelectedNavigatorItem } from './svelte-stores/elementNavigatorItems';
+import { get } from 'svelte/store';
 
 type Option = {
   label: string;
   disabled: boolean;
   type: 'input' | 'select';
-  selectValues?: string[];
+  selectOptions?: SelectOption[] | (() => SelectOption[]);
+  dependency?: string;
 };
 
 const id: Option = {
@@ -39,7 +45,16 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
       label: 'Role:',
       disabled: false,
       type: 'select',
-      selectValues: ['single', 'multi'],
+      selectOptions: [
+        {
+          id: 'single',
+          label: 'single',
+        },
+        {
+          id: 'multi',
+          label: 'multi',
+        },
+      ],
     },
   }),
   ...createOptions('Message', {
@@ -53,7 +68,16 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
       label: 'Representation:',
       disabled: false,
       type: 'select',
-      selectValues: ['human', 'machine'],
+      selectOptions: [
+        {
+          id: 'human',
+          label: 'human',
+        },
+        {
+          id: 'machine',
+          label: 'machine',
+        },
+      ],
     },
   }),
   ...createOptions('SendState', {
@@ -63,7 +87,20 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
       label: 'Role:',
       disabled: false,
       type: 'select',
-      selectValues: ['start', 'end', 'none'],
+      selectOptions: [
+        {
+          id: 'start',
+          label: 'start',
+        },
+        {
+          id: 'end',
+          label: 'end',
+        },
+        {
+          id: 'none',
+          label: 'none',
+        },
+      ],
     },
   }),
   ...createOptions('ReceiveState', {
@@ -73,7 +110,20 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
       label: 'Role:',
       disabled: false,
       type: 'select',
-      selectValues: ['start', 'end', 'none'],
+      selectOptions: [
+        {
+          id: 'start',
+          label: 'start',
+        },
+        {
+          id: 'end',
+          label: 'end',
+        },
+        {
+          id: 'none',
+          label: 'none',
+        },
+      ],
     },
   }),
   ...createOptions('FunctionState', {
@@ -83,7 +133,20 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
       label: 'Role:',
       disabled: false,
       type: 'select',
-      selectValues: ['start', 'end', 'none'],
+      selectOptions: [
+        {
+          id: 'start',
+          label: 'start',
+        },
+        {
+          id: 'end',
+          label: 'end',
+        },
+        {
+          id: 'none',
+          label: 'none',
+        },
+      ],
     },
   }),
   ...createOptions('ProcessTransition', {
@@ -96,7 +159,16 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
       label: 'Role:',
       disabled: false,
       type: 'select',
-      selectValues: ['unidirectional', 'bidirectional'],
+      selectOptions: [
+        {
+          id: 'unidirectional',
+          label: 'unidirectional',
+        },
+        {
+          id: 'bidirectional',
+          label: 'bidirectional',
+        },
+      ],
     },
   }),
   ...createOptions('FunctionStateTransition', {
@@ -109,18 +181,58 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
   }),
   ...createOptions('SendStateTransition', {
     id: { ...id },
+    subject: {
+      label: 'Subject:',
+      disabled: false,
+      type: 'select',
+      selectOptions() {
+        const subjects = getSenderSubjects(getSenderTransitions(get(activeProcessModelId), get(activeSubjectId)));
+        return subjects.map((subject) => ({
+          id: subject.properties.id,
+          label: subject.properties.label,
+        }));
+      },
+    },
     message: {
       label: 'Message:',
       disabled: false,
       type: 'select',
+      selectOptions() {
+        return [
+          {
+            id: 'm test',
+            label: 'm test',
+          },
+        ];
+      },
     },
   }),
   ...createOptions('ReceiveStateTransition', {
     id: { ...id },
+    subject: {
+      label: 'Subject:',
+      disabled: false,
+      type: 'select',
+      selectOptions() {
+        const subjects = getReceiverSubjects(getReceiveTransitions(get(activeProcessModelId), get(activeSubjectId)));
+        return subjects.map((subject) => ({
+          id: subject.properties.id,
+          label: subject.properties.label,
+        }));
+      },
+    },
     message: {
       label: 'Message:',
       disabled: false,
       type: 'select',
+      selectOptions() {
+        return [
+          {
+            id: 'm test',
+            label: 'm test',
+          },
+        ];
+      },
     },
   }),
 };

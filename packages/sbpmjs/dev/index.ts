@@ -32,7 +32,7 @@ const processModel01 = createSbpmElementItem({
       x: 900,
       y: 100,
     },
-    contains: ['subject01', 'subject02', 'messageTransition01'],
+    contains: ['subject01', 'subject02', 'subject03', 'messageTransition01', 'messageTransition02'],
   },
 });
 
@@ -70,6 +70,18 @@ const subject02 = createSbpmElementItem({
   },
 });
 
+const subject03 = createSbpmElementItem({
+  type: 'Subject',
+  properties: {
+    id: 'subject03',
+    label: 'Subject 3',
+    position: {
+      x: 100,
+      y: 500,
+    },
+  },
+});
+
 const message01 = createSbpmElementItem({
   type: 'Message',
   properties: {
@@ -93,6 +105,17 @@ const messageTransition01 = createSbpmLinkItem({
   },
 });
 
+const messageTransition02 = createSbpmLinkItem({
+  type: 'MessageTransition',
+  properties: {
+    id: 'messageTransition02',
+    label: 'Message transition',
+    source: 'subject03',
+    target: 'subject02',
+    role: 'bidirectional',
+  },
+});
+
 // export const process = [processNetwork01, processModel01, processTransition01, subject01, subject02, messageTransition01];
 
 const processItemGroup = createSbpmProcessItemGroup([
@@ -102,8 +125,10 @@ const processItemGroup = createSbpmProcessItemGroup([
   processTransition01,
   subject01,
   subject02,
+  subject03,
   message01,
   messageTransition01,
+  messageTransition02,
 ]);
 
 const sbpm = new Sbpm({
@@ -111,4 +136,4 @@ const sbpm = new Sbpm({
   container: document.getElementById('container')!,
 });
 
-// sbpm.loadProcess(processItemGroup);
+sbpm.loadProcess(processItemGroup);

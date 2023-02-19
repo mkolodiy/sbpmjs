@@ -4,12 +4,21 @@
   import Frame from './ui/Frame.svelte';
   import Input from './ui/Input.svelte';
   import { currentlySelectedSbpmShape } from '../core/svelte-stores/currentlySelectedSbpmShape';
+  import { currentlySelectedNavigatorItem } from '../core/svelte-stores/elementNavigatorItems';
   import { optionsContainer } from '../core/svelte-stores/optionsContainer';
   import { handleOnUpdate } from '../core/handlers';
   import { getItemById } from '../core/store';
   import Select from './ui/Select.svelte';
 
+  import { getSenderTransitions, getReceiveTransitions, getSenderSubjects, getReceiverSubjects } from '../core/manager';
+
   $: type = $currentlySelectedSbpmShape.type;
+
+  $: console.log($currentlySelectedNavigatorItem);
+  $: console.log(getSenderTransitions($currentlySelectedNavigatorItem.properties.id, String($currentlySelectedSbpmShape.id)));
+  $: console.log(getReceiveTransitions($currentlySelectedNavigatorItem.properties.id, String($currentlySelectedSbpmShape.id)));
+  $: console.log(getSenderSubjects(getSenderTransitions($currentlySelectedNavigatorItem.properties.id, String($currentlySelectedSbpmShape.id))));
+  $: console.log(getReceiverSubjects(getReceiveTransitions($currentlySelectedNavigatorItem.properties.id, String($currentlySelectedSbpmShape.id))));
 
   currentlySelectedSbpmShape.subscribe((value) => {
     const properties = structuredClone(getItemById(value.id).properties);
@@ -32,8 +41,10 @@
       {#each Object.entries(optionsMapping[type]) as option}
         {#if option[1].type === 'input'}
           <Input label={option[1].label} disabled={option[1].disabled} bind:value={$optionsContainer[option[0]]} />
+        {:else if option[1].type === 'select' && Array.isArray(option[1].selectOptions)}
+          <Select label={option[1].label} options={option[1].selectOptions} bind:value={$optionsContainer[option[0]]} />
         {:else if option[1].type === 'select'}
-          <Select label={option[1].label} options={option[1].selectValues} bind:value={$optionsContainer[option[0]]} />
+          <Select label={option[1].label} options={option[1].selectOptions()} bind:value={$optionsContainer[option[0]]} />
         {/if}
       {/each}
     </div>

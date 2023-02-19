@@ -3,7 +3,9 @@ import {
   createSbpmElementItem,
   isSbpmLinkType,
   type Coordinates,
+  type SbpmElementItem,
   type SbpmElementType,
+  type SbpmLinkItem,
   type SbpmProcessItem,
   type SbpmProcessItemGroup,
   type SbpmShapeType,
@@ -185,4 +187,41 @@ function addShape(shape: ElementEventHandlerParams | LinkEventHandlerParams) {
     },
   });
   updateView(get(currentlySelectedNavigatorItem).properties.id, [String(id)]);
+}
+
+function getTransitions(parentId: string, childId: string, key: 'source' | 'target') {
+  const children = getOrCreateView(parentId);
+  const items = getItemsByIds(children);
+  const oppositeKey = key === 'source' ? 'target' : 'source';
+  return items.filter(
+    (item) =>
+      item.type === 'MessageTransition' &&
+      (item.properties[key] === childId || (item.properties[oppositeKey] === childId && item.properties.role === 'bidirectional'))
+  ) as SbpmLinkItem<'MessageTransition'>[];
+}
+
+export function getSenderTransitions(parentId: string, childId: string) {
+  return getTransitions(parentId, childId, 'source');
+}
+
+export function getReceiveTransitions(parentId: string, childId: string) {
+  return getTransitions(parentId, childId, 'target');
+}
+
+export function getMessages(transitionId: string) {
+  return getItemsByIds(getOrCreateView(transitionId));
+}
+
+function getSubjects(transitions: SbpmLinkItem<'MessageTransition'>[], key: 'source' | 'target') {
+  const oppositeKey = key === 'source' ? 'target' : 'source';
+  const ids = transitions.map((item) => (item.properties.role === 'bidirectional' ? item.properties[key] : item.properties[oppositeKey]));
+  return getItemsByIds(ids) as SbpmElementItem<'Subject'>[];
+}
+
+export function getSenderSubjects(transitions: SbpmLinkItem<'MessageTransition'>[]) {
+  return getSubjects(transitions, 'source');
+}
+
+export function getReceiverSubjects(transitions: SbpmLinkItem<'MessageTransition'>[]) {
+  return getSubjects(transitions, 'target');
 }
