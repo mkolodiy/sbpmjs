@@ -176,7 +176,7 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
     message: {
       label: 'Message:',
       disabled: false,
-      type: 'select',
+      type: 'input',
     },
   }),
   ...createOptions('SendStateTransition', {
@@ -209,14 +209,13 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
           return [];
         }
 
-        console.log(transition);
+        const messages = getMessages(transition.properties.id);
+        console.log(messages);
 
-        return [
-          {
-            id: 'm test',
-            label: 'm test',
-          },
-        ];
+        return messages.map((message) => ({
+          id: message.properties.id,
+          label: message.properties.label,
+        }));
       },
     },
   }),
@@ -251,6 +250,8 @@ export const optionsMapping: Record<SbpmShapeType, Options> = {
         }
 
         const messages = getMessages(transition.properties.id);
+        console.log(messages);
+
         return messages.map((message) => ({
           id: message.properties.id,
           label: message.properties.label,

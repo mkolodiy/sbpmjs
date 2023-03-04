@@ -17,6 +17,7 @@ import { addItem, getItemById, getItemsByIds, resetItems, getItems, removeItemsB
 import { updateActivePaletteItems } from './svelte-stores/activePaletteItems';
 import { updateCurrentlySelectedSbpmShape } from './svelte-stores/currentlySelectedSbpmShape';
 import { updateCurrentlySelectedNavigatorItem, initElementNavigatorItems, currentlySelectedNavigatorItem } from './svelte-stores/elementNavigatorItems';
+import { isRestoring, updateIsRestoring } from './svelte-stores/isRestoring';
 import { showProperties, updateShowProperties } from './svelte-stores/showProperties';
 import { updateView, getOrCreateView, resetViews, getViews, removeView, removeViews, getAllChildrenForView, removeItem } from './views';
 
@@ -49,7 +50,7 @@ export function initModeler() {
       handleOnSelectShape(link);
     },
     onAddShape: (shape) => {
-      if (!isSbpmLinkType(shape.type)) {
+      if (!isSbpmLinkType(shape.type) && !get(isRestoring)) {
         addShape(shape);
       }
     },
@@ -121,12 +122,14 @@ export function zoomOut() {
 }
 
 export function restoreView(view: string) {
+  updateIsRestoring(true);
   const ids = getOrCreateView(view);
   const items = getItemsByIds(ids);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   modeler.restoreView(items);
+  updateIsRestoring(false);
 }
 
 export function addSbpmElement(type: SbpmElementType, position: Coordinates) {

@@ -14,11 +14,11 @@
 
   $: type = $currentlySelectedSbpmShape.type;
 
-  $: console.log($currentlySelectedNavigatorItem);
-  $: console.log(getSenderTransitions($currentlySelectedNavigatorItem.properties.id, String($currentlySelectedSbpmShape.id)));
-  $: console.log(getReceiveTransitions($currentlySelectedNavigatorItem.properties.id, String($currentlySelectedSbpmShape.id)));
-  $: console.log(getSenderSubjects(getSenderTransitions($currentlySelectedNavigatorItem.properties.id, String($currentlySelectedSbpmShape.id))));
-  $: console.log(getReceiverSubjects(getReceiveTransitions($currentlySelectedNavigatorItem.properties.id, String($currentlySelectedSbpmShape.id))));
+  // $: console.log($currentlySelectedNavigatorItem);
+  // $: console.log(getSenderTransitions($currentlySelectedNavigatorItem.properties.id, String($currentlySelectedSbpmShape.id)));
+  // $: console.log(getReceiveTransitions($currentlySelectedNavigatorItem.properties.id, String($currentlySelectedSbpmShape.id)));
+  // $: console.log(getSenderSubjects(getSenderTransitions($currentlySelectedNavigatorItem.properties.id, String($currentlySelectedSbpmShape.id))));
+  // $: console.log(getReceiverSubjects(getReceiveTransitions($currentlySelectedNavigatorItem.properties.id, String($currentlySelectedSbpmShape.id))));
 
   currentlySelectedSbpmShape.subscribe((value) => {
     const properties = structuredClone(getItemById(value.id).properties);

@@ -17,6 +17,8 @@ export function getOrCreateView(view: string) {
 }
 
 export function updateView(view: string, items: string[]) {
+  console.log('update', view, items);
+
   views[view] = [...(views[view] ?? []), ...items];
 }
 
