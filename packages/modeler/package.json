@@ -38,6 +38,6 @@
   "author": "Maksym Kolodiy",
   "dependencies": {
     "@sbpmjs/shared": "workspace:^",
-    "jointjs": "^3.6.5"
+    "jointjs": "^3.7.6"
   }
 }
