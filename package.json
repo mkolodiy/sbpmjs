@@ -15,6 +15,7 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "2.4.6",
     "@testing-library/svelte": "^4.0.4",
+    "@tsconfig/svelte": "^5.0.2",
     "@types/backbone": "^1.4.17",
     "@types/chai": "^4.3.9",
     "@types/lodash": "^4.14.200",
@@ -31,7 +32,6 @@
     "rimraf": "^5.0.5",
     "svelte": "^4.2.2",
     "svelte-check": "^3.5.2",
-    "svelte-preprocess": "^5.0.4",
     "tslib": "^2.6.2",
     "turbo": "^1.10.16",
     "typescript": "^5.2.2",

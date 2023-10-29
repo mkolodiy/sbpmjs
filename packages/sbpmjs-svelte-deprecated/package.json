@@ -1,6 +1,5 @@
 {
   "name": "@sbpmjs/sbpmjs",
-  "type": "module",
   "version": "0.1.0",
   "description": "A library for managing SBPM processes.",
   "keywords": [
@@ -16,11 +15,27 @@
       "default": "./dist/index.js"
     }
   },
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "package.json",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "dev": "vite --config vite.config.ts ./dev",
     "build": "vite build && tsc",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "test": "vite --config vite.config.ts ./test",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --list-different .",
+    "format:fix": "prettier --write .",
+    "svelte-check": "svelte-check"
   },
+  "author": "Maksym Kolodiy",
   "dependencies": {
     "@sbpmjs/modeler": "workspace:^",
     "@sbpmjs/shared": "workspace:^"

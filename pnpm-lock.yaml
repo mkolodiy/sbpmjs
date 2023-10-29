@@ -14,6 +14,9 @@ importers:
       '@testing-library/svelte':
         specifier: ^4.0.4
         version: 4.0.4(svelte@4.2.2)
+      '@tsconfig/svelte':
+        specifier: ^5.0.2
+        version: 5.0.2
       '@types/backbone':
         specifier: ^1.4.17
         version: 1.4.17
@@ -62,9 +65,6 @@ importers:
       svelte-check:
         specifier: ^3.5.2
         version: 3.5.2(postcss@8.4.31)(svelte@4.2.2)
-      svelte-preprocess:
-        specifier: ^5.0.4
-        version: 5.0.4(postcss@8.4.31)(svelte@4.2.2)(typescript@5.2.2)
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
@@ -551,6 +551,10 @@ packages:
     dependencies:
       '@testing-library/dom': 9.3.3
       svelte: 4.2.2
+    dev: true
+
+  /@tsconfig/svelte@5.0.2:
+    resolution: {integrity: sha512-BRbo1fOtyVbhfLyuCWw6wAWp+U8UQle+ZXu84MYYWzYSEB28dyfnRBIE99eoG+qdAC0po6L2ScIEivcT07UaMA==}
     dev: true
 
   /@types/aria-query@5.0.3:
