@@ -1,4 +1,4 @@
-import SbpmModeler from '@sbpmjs/modeler';
+import { SbpmModeler } from '@sbpmjs/modeler';
 import {
   createSbpmElementItem,
   createSbpmGeneralEntityItem,
@@ -22,6 +22,7 @@ const defaultProcessNetwork = createSbpmElementItem({
     },
   },
 });
+
 
 const defaultProcess = createSbpmGeneralEntityItem({
   type: 'Process',

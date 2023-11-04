@@ -15,7 +15,8 @@
     "checkJs": true,
     "isolatedModules": true,
     "declarationDir": "dist",
-    "declaration": true
+    "declaration": true,
+    "emitDeclarationOnly": true
   },
   "include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte"]
 }

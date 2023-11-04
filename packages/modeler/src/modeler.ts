@@ -7,7 +7,7 @@ import { isSbpmLinkType } from './common/utils';
 import type { GetSbpmElementUpdateOptions, GetSbpmLinkUpdateOptions } from './sbpm/types';
 import { linkTypeToLinkClassMapping, elementTypeToElementClassMapping } from './sbpm/mappings';
 
-export default class SbpmModeler {
+export class SbpmModeler {
   #canvas: SbpmCanvas;
   #options: SbpmModelerOptions;
 

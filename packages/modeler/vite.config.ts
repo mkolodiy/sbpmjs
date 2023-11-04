@@ -7,7 +7,7 @@ export default defineConfig({
       entry: 'src/index.ts',
       name: packageJson.name,
       formats: ['es'],
-      fileName: () => `index.js`,
+      fileName: () => 'index.js',
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
