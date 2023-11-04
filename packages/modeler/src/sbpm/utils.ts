@@ -1,4 +1,3 @@
-import type { SbpmElementType } from '@sbpmjs/shared';
 import { elementTypeToLinkClassMapping } from './mappings';
 import { SbpmProcessModel } from './process-model';
 import { SbpmSubject } from './subject';
@@ -10,6 +9,7 @@ import { SbpmMessageTransition } from './message-transition';
 import { SbpmSendStateTransition } from './send-state-transition';
 import { SbpmReceiveStateTransition } from './receive-state-transition';
 import { SbpmFunctionStateTransition } from './function-state-transition';
+import type { SbpmElementType } from '../common/types';
 
 export function getDefaultLink(type: Exclude<SbpmElementType, 'Message'>) {
   return new elementTypeToLinkClassMapping[type]();

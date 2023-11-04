@@ -1,9 +1,10 @@
 import * as joint from 'jointjs';
-import type { SbpmSendStateTransition as SbpmSendStateTransitionOptions } from '@sbpmjs/shared';
-import { autoRenewIcon, FONT_FAMILY, deleteIcon, CustomEvent } from '../common';
-import type { SbpmLinkLabelToolsOptions } from '../core';
+import type { SbpmSendStateTransition as SbpmSendStateTransitionOptions } from '../common/types';
 import type { SbpmModelerOptions } from '../canvas';
 import { SbpmStateTransition } from './state-transition';
+import { FONT_FAMILY, CustomEvent } from '../common/constants';
+import { deleteIcon, autoRenewIcon } from '../common/icons';
+import type { SbpmLinkLabelToolsOptions } from '../core/link-tools';
 
 const jointOptions: joint.shapes.standard.ImageAttributes = {
   attrs: {

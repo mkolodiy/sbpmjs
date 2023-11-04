@@ -1,21 +1,21 @@
 import * as joint from 'jointjs';
+import type { SbpmModelerOptions } from '../canvas';
 import type {
   SbpmSendStateTransitionType,
   SbpmReceiveStateTransitionType,
   SbpmFunctionStateTransitionType,
+  GetUpdateOptions,
   SbpmStateTransition as SbpmStateTransitionOptions,
-} from '@sbpmjs/shared';
-import { createJointType } from '../common';
-import type { GetUpdateOptions } from '../common';
-import { SbpmLink, createSelectionLabel, createButtonLabel, createIconLabel, handleEndpoint } from '../core';
-import type { SbpmLinkAttributes, SbpmLinkToolsOptions, SbpmLinkLabelToolsOptions } from '../core';
-import type { SbpmModelerOptions } from '../canvas';
+} from '../common/types';
+import { createJointType } from '../common/utils';
+import { SbpmLink, handleEndpoint, type SbpmLinkAttributes } from '../core/link';
+import { type SbpmLinkToolsOptions, type SbpmLinkLabelToolsOptions, createIconLabel, createSelectionLabel, createButtonLabel } from '../core/link-tools';
 
 export class SbpmStateTransition<
   T extends SbpmSendStateTransitionType | SbpmReceiveStateTransitionType | SbpmFunctionStateTransitionType =
     | SbpmSendStateTransitionType
     | SbpmReceiveStateTransitionType
-    | SbpmFunctionStateTransitionType
+    | SbpmFunctionStateTransitionType,
 > extends SbpmLink {
   type: T = undefined as unknown as T;
 
@@ -26,7 +26,7 @@ export class SbpmStateTransition<
     labelToolsOptions: SbpmLinkLabelToolsOptions,
     options: SbpmStateTransitionOptions = {} as SbpmStateTransitionOptions,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions
+    _modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions,
   ) {
     const { source, target, subject, message, ...restOptions } = options;
 

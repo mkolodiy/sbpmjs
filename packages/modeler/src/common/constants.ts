@@ -1,4 +1,4 @@
-export const SbpmShapeNamespace = {
+export const SbpmItemNamespace = {
   COMMON: 'sbpm.common',
   PND: 'sbpm.pnd',
   SID: 'sbpm.sid',

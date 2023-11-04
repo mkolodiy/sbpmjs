@@ -65,6 +65,9 @@ importers:
       svelte-check:
         specifier: ^3.5.2
         version: 3.5.2(postcss@8.4.31)(svelte@4.2.2)
+      svelte-preprocess:
+        specifier: ^5.0.4
+        version: 5.0.4(postcss@8.4.31)(svelte@4.2.2)(typescript@5.2.2)
       tslib:
         specifier: ^2.6.2
         version: 2.6.2
@@ -83,14 +86,20 @@ importers:
 
   packages/modeler:
     dependencies:
-      '@sbpmjs/shared':
-        specifier: workspace:^
-        version: link:../shared
       jointjs:
         specifier: ^3.7.6
         version: 3.7.6
 
   packages/sbpmjs:
+    dependencies:
+      '@sbpmjs/modeler':
+        specifier: workspace:^
+        version: link:../modeler
+      '@sbpmjs/shared':
+        specifier: workspace:^
+        version: link:../shared
+
+  packages/sbpmjs-svelte-deprecated:
     dependencies:
       '@sbpmjs/modeler':
         specifier: workspace:^

@@ -1,4 +1,5 @@
-import App from './App.svelte';
+import App from './components/Main.svelte';
+import { initDefaults } from './sbpm';
 
 type SbpmOptions = {
   container: HTMLElement;
@@ -9,6 +10,8 @@ export class Sbpm {
     if (!options.container) {
       throw new Error('container is required');
     }
+
+    initDefaults();
 
     new App({
       target: options.container,

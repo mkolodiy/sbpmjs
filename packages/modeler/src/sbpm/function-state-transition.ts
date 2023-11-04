@@ -1,9 +1,10 @@
 import * as joint from 'jointjs';
-import type { SbpmFunctionStateTransition as SbpmFunctionStateTransitionOptions } from '@sbpmjs/shared';
-import { autoRenewIcon, FONT_FAMILY, deleteIcon, CustomEvent } from '../common';
-import type { SbpmLinkLabelToolsOptions } from '../core';
+import type { SbpmFunctionStateTransition as SbpmFunctionStateTransitionOptions } from '../common/types';
 import type { SbpmModelerOptions } from '../canvas';
 import { SbpmStateTransition } from './state-transition';
+import { FONT_FAMILY, CustomEvent } from '../common/constants';
+import { deleteIcon, autoRenewIcon } from '../common/icons';
+import { SbpmLinkLabelToolsOptions } from '../core/link-tools';
 
 const jointOptions: joint.shapes.standard.ImageAttributes = {
   attrs: {
@@ -106,8 +107,10 @@ const labelToolsOptions: SbpmLinkLabelToolsOptions = {
 export class SbpmFunctionStateTransition extends SbpmStateTransition<'FunctionStateTransition'> {
   constructor(
     options: SbpmFunctionStateTransitionOptions = {} as SbpmFunctionStateTransitionOptions,
-    modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions
+    modelerOptions: SbpmModelerOptions = {} as SbpmModelerOptions,
   ) {
-    super('FunctionStateTransition', jointOptions, [], labelToolsOptions, options, modelerOptions);
+    // TODO: Fix typings
+    const tmpOptions = { ...options, subject: '' };
+    super('FunctionStateTransition', jointOptions, [], labelToolsOptions, tmpOptions, modelerOptions);
   }
 }

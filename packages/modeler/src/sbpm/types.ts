@@ -11,8 +11,8 @@ import type {
   SbpmSendStateTransition as SbpmSendStateTransitionOptions,
   SbpmReceiveStateTransition as SbpmReceiveStateTransitionOptions,
   SbpmFunctionStateTransition as SbpmFunctionStateTransitionOptions,
-} from '@sbpmjs/shared';
-import type { GetUpdateOptions } from '../common';
+  GetUpdateOptions,
+} from '../common/types';
 import { SbpmProcessNetwork } from './process-network';
 import { SbpmProcessModel } from './process-model';
 import { SbpmMessage } from './message';
@@ -25,7 +25,8 @@ import { SbpmMessageTransition } from './message-transition';
 import { SbpmSendStateTransition } from './send-state-transition';
 import { SbpmFunctionStateTransition } from './function-state-transition';
 import { SbpmReceiveStateTransition } from './receive-state-transition';
-import { SbpmElement, SbpmLink } from '../core';
+import { SbpmElement } from '../core/element';
+import { SbpmLink } from '../core/link';
 
 type GetElementOptionsType<T extends SbpmElement> = T extends SbpmProcessNetwork
   ? SbpmProcessNetworkOptions

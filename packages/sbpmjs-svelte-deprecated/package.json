@@ -1,5 +1,6 @@
 {
-  "name": "@sbpmjs/sbpmjs",
+  "name": "@sbpmjs/sbpmjs-svelte-deprecated",
+  "type": "module",
   "version": "0.1.0",
   "description": "A library for managing SBPM processes.",
   "keywords": [

@@ -1,7 +1,6 @@
 import * as joint from 'jointjs';
-import type { SbpmElementType, SbpmElement as SbpmElementOptions } from '@sbpmjs/shared';
-import { CustomEvent } from '../common';
-import type { GetUpdateOptions, SbpmShapeAttributes } from '../common';
+import type { SbpmElementType, SbpmElement as SbpmElementOptions, GetUpdateOptions, SbpmItemAttributes } from '../common/types';
+import { CustomEvent } from '../common/constants';
 import type { SbpmElementToolsOptions } from './element-tools';
 import { SbpmModelerOptions } from '../canvas';
 
@@ -32,7 +31,7 @@ const markup = [
   },
 ];
 
-export type SbpmElementAttributes = joint.dia.Element.GenericAttributes<joint.shapes.standard.ImageSelectors> & SbpmShapeAttributes<SbpmElementToolsOptions>;
+export type SbpmElementAttributes = joint.dia.Element.GenericAttributes<joint.shapes.standard.ImageSelectors> & SbpmItemAttributes<SbpmElementToolsOptions>;
 
 export class SbpmElement extends joint.dia.Element<SbpmElementAttributes> {
   type: SbpmElementType = undefined as unknown as SbpmElementType;

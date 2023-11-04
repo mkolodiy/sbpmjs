@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import { callMadeIcon, deleteIcon, touchAppIcon } from '../common';
+import { callMadeIcon, deleteIcon, touchAppIcon } from '../common/icons';
 
 const defaultBoundaryOptions: joint.elementTools.Boundary.Options = {
   focusOpacity: 1,

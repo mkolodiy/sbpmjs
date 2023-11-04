@@ -1,13 +1,14 @@
 import * as joint from 'jointjs';
-import type { SbpmSendStateType, SbpmReceiveStateType, SbpmFunctionStateType, SbpmState as SbpmStateOptions } from '@sbpmjs/shared';
-import { blueDotIcon, createJointType, redDotIcon } from '../common';
-import type { GetUpdateOptions } from '../common';
-import { addActionsToElementToolsOptions, SbpmElement } from '../core';
-import type { SbpmElementToolsOptions, SbpmElementAttributes } from '../core';
 import type { SbpmModelerOptions } from '../canvas';
+import { blueDotIcon, redDotIcon } from '../common/icons';
+import type { SbpmSendStateType, SbpmReceiveStateType, SbpmFunctionStateType, GetUpdateOptions, SbpmState as SbpmStateOptions } from '../common/types';
+import { createJointType } from '../common/utils';
+import { SbpmElement, type SbpmElementAttributes } from '../core/element';
+import type { SbpmElementToolsOptions } from '../core/element-tools';
+import { addActionsToElementToolsOptions } from '../core/element-view';
 
 export class SbpmState<
-  T extends SbpmSendStateType | SbpmReceiveStateType | SbpmFunctionStateType = SbpmSendStateType | SbpmReceiveStateType | SbpmFunctionStateType
+  T extends SbpmSendStateType | SbpmReceiveStateType | SbpmFunctionStateType = SbpmSendStateType | SbpmReceiveStateType | SbpmFunctionStateType,
 > extends SbpmElement {
   type: T = undefined as unknown as T;
 
@@ -16,7 +17,7 @@ export class SbpmState<
     jointOptions: joint.shapes.standard.ImageAttributes,
     toolsOptions: SbpmElementToolsOptions,
     options: SbpmStateOptions,
-    modelerOptions: SbpmModelerOptions
+    modelerOptions: SbpmModelerOptions,
   ) {
     const { label, ...restOptions } = options;
 

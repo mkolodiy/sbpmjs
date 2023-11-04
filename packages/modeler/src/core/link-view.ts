@@ -12,6 +12,8 @@ export class SbpmLinkView extends joint.dia.LinkView {
 
   public select() {
     if (this.link.hasTarget()) {
+      
+      
       this.link.select();
       this.addTools(createLinkTools(this.link.toolsOptions));
     }

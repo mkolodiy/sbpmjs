@@ -1,10 +1,11 @@
-import type { SbpmShapeType, SbpmElementType, SbpmLinkType, SbpmElementItem, SbpmLinkItem, SbpmProcessItemGroup } from '@sbpmjs/shared';
-import { isSbpmLinkType } from '@sbpmjs/shared';
-import { SbpmElement, SbpmLink } from './core';
+import { SbpmElement } from './core/element';
+import { SbpmLink } from './core/link';
 import { SbpmCanvas } from './canvas';
 import type { SbpmModelerOptions } from './canvas';
-import { linkTypeToLinkClassMapping, elementTypeToElementClassMapping } from './sbpm';
-import type { GetSbpmElementUpdateOptions, GetSbpmLinkUpdateOptions, ElementTypeToElementClassMapping, LinkTypeToLinkClassMapping } from './sbpm';
+import type { SbpmElementType, SbpmElementItem, SbpmLinkType, SbpmLinkItem, SbpmItemType, SbpmItemGroup } from './common/types';
+import { isSbpmLinkType } from './common/utils';
+import type { GetSbpmElementUpdateOptions, GetSbpmLinkUpdateOptions } from './sbpm/types';
+import { linkTypeToLinkClassMapping, elementTypeToElementClassMapping } from './sbpm/mappings';
 
 export default class SbpmModeler {
   #canvas: SbpmCanvas;
@@ -196,7 +197,7 @@ export default class SbpmModeler {
    *
    * @param view A collection of items (elements and links).
    */
-  public restoreView<Type extends SbpmShapeType = SbpmShapeType>(view: SbpmProcessItemGroup<Type>) {
+  public restoreView<Type extends SbpmItemType = SbpmItemType>(view: SbpmItemGroup<Type>) {
     this.#canvas.clear();
     const elements = view.filter(({ type }) => !isSbpmLinkType(type));
     const links = view.filter(({ type }) => isSbpmLinkType(type));

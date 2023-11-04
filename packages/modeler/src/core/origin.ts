@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import { createJointType } from '../common';
+import { createJointType } from '../common/utils';
 
 export const SbpmCanvasOrigin = joint.shapes.standard.Rectangle.define(
   createJointType('sbpm.common', 'Origin'),
@@ -54,5 +54,5 @@ export const SbpmCanvasOrigin = joint.shapes.standard.Rectangle.define(
         selector: 'text',
       },
     ],
-  }
+  },
 );

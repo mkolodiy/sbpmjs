@@ -1,10 +1,11 @@
 import * as joint from 'jointjs';
-import type { SbpmProcessTransitionType, SbpmProcessTransition as SbpmProcessTransitionOptions } from '@sbpmjs/shared';
-import { autoRenewIcon, createJointType } from '../common';
-import type { GetUpdateOptions } from '../common';
-import { SbpmLink, SbpmLinkView, addActionsToLinkToolsOptions, handleEndpoint } from '../core';
-import type { SbpmLinkAttributes, SbpmLinkToolsOptions } from '../core';
+import type { SbpmProcessTransitionType, SbpmProcessTransition as SbpmProcessTransitionOptions, GetUpdateOptions } from '../common/types';
 import type { SbpmModelerOptions } from '../canvas';
+import { autoRenewIcon } from '../common/icons';
+import { createJointType } from '../common/utils';
+import { SbpmLink, handleEndpoint, SbpmLinkAttributes } from '../core/link';
+import type { SbpmLinkToolsOptions } from '../core/link-tools';
+import { SbpmLinkView, addActionsToLinkToolsOptions } from '../core/link-view';
 
 const toolsOptions: SbpmLinkToolsOptions = [
   {
@@ -53,7 +54,7 @@ export class SbpmProcessTransition extends SbpmLink {
         source: handleEndpoint(source),
         target: handleEndpoint(target),
         ...restOptions,
-      }
+      },
     ) as SbpmLinkAttributes;
 
     super(attributes);

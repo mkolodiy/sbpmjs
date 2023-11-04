@@ -2,3 +2,4 @@ packages:
   - 'packages/shared'
   - 'packages/modeler'
   - 'packages/sbpmjs'
+  - 'packages/sbpmjs-svelte-deprecated'

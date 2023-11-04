@@ -1,5 +1,5 @@
 import * as joint from 'jointjs';
-import { deleteIcon, touchAppIcon } from '../common';
+import { touchAppIcon, deleteIcon } from '../common/icons';
 
 const defaultButtonOptions: joint.linkTools.Button.Options = {
   markup: [

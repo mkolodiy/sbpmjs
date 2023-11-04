@@ -1,8 +1,13 @@
 import * as joint from 'jointjs';
-import type { SbpmElementType } from '@sbpmjs/shared';
-import { SbpmShapeNamespace, CustomEvent, JointEvent, combineStrings, getSbpmShapeType } from './common';
-import { SbpmCanvasOrigin, SbpmElement, SbpmElementView, SbpmLink, SbpmLinkView } from './core';
-import { getDefaultLink, isValidConnection } from './sbpm';
+import { SbpmCanvasOrigin } from './core/origin';
+import { SbpmElement } from './core/element';
+import { SbpmElementView } from './core/element-view';
+import { SbpmLink } from './core/link';
+import { SbpmLinkView } from './core/link-view';
+import { JointEvent, SbpmItemNamespace, CustomEvent } from './common/constants';
+import type { SbpmElementType } from './common/types';
+import { combineStrings, getSbpmItemType } from './common/utils';
+import { getDefaultLink, isValidConnection } from './sbpm/utils';
 
 const paperOptions: joint.dia.Paper.Options = {
   width: '100%',
@@ -39,7 +44,7 @@ function linkView() {
 
 function defaultLink(cellView: joint.dia.CellView) {
   const sbpmElementView = cellView as SbpmElementView;
-  const type = getSbpmShapeType(sbpmElementView.element.get('type')) as Exclude<SbpmElementType, 'Message'>;
+  const type = getSbpmItemType(sbpmElementView.element.get('type')) as Exclude<SbpmElementType, 'Message'>;
   return getDefaultLink(type);
 }
 
@@ -49,7 +54,7 @@ function validateConnection(
   cellViewT: joint.dia.CellView,
   _magnetT: unknown,
   _end: joint.dia.LinkEnd,
-  linkView: joint.dia.LinkView
+  linkView: joint.dia.LinkView,
 ) {
   return isValidConnection(cellViewS, cellViewT, linkView);
 }
@@ -62,7 +67,7 @@ type EventMap = joint.dia.Paper.EventMap & {
     evt: joint.dia.Event,
     newCellView: joint.dia.CellView,
     newCellViewMagnet: SVGElement,
-    arrowhead: joint.dia.LinkEnd
+    arrowhead: joint.dia.LinkEnd,
   ) => void;
 };
 
@@ -140,7 +145,7 @@ export class SbpmCanvas {
           this.#paper.translate(x, y);
         }
       },
-      true
+      true,
     );
   }
 
@@ -234,7 +239,7 @@ export class SbpmCanvas {
    */
   public getElements() {
     const allElements = this.#graph.getElements();
-    return allElements.filter((element: joint.dia.Element) => !element.get('type').includes(SbpmShapeNamespace.COMMON)) as SbpmElement[];
+    return allElements.filter((element: joint.dia.Element) => !element.get('type').includes(SbpmItemNamespace.COMMON)) as SbpmElement[];
   }
 
   /**
@@ -244,7 +249,7 @@ export class SbpmCanvas {
    */
   public getLinks() {
     const allLinks = this.#graph.getLinks();
-    return allLinks.filter((link: joint.dia.Link) => !link.get('type').includes(SbpmShapeNamespace.COMMON)) as SbpmLink[];
+    return allLinks.filter((link: joint.dia.Link) => !link.get('type').includes(SbpmItemNamespace.COMMON)) as SbpmLink[];
   }
 
   /**
