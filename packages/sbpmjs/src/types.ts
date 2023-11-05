@@ -1,17 +1,6 @@
-import type {
-  SbpmBasicItem,
-  SbpmElementItem,
-  SbpmElementType,
-  SbpmLinkItem,
-  SbpmLinkType,
-  SbpmItemType as SbpmItemTypeModeler,
-  SbpmItem as SbpmItemModeler,
-} from '@sbpmjs/modeler';
-import type { SbpmProcessItemGroup } from '@sbpmjs/shared';
+import type { SbpmBasicItem, SbpmItem as SbpmItemModeler, SbpmItemType as SbpmItemTypeModeler } from '@sbpmjs/modeler';
 
 export type SbpmProcessType = 'Process';
-
-export type SbpmItemType = SbpmItemTypeModeler | SbpmProcessType;
 
 export interface SbpmContainerShape {
   contains: string[];
@@ -19,14 +8,10 @@ export interface SbpmContainerShape {
 
 export interface SbpmProcess extends SbpmBasicItem, SbpmContainerShape {}
 
-export type SbpmProcessItem = {
+export interface SbpmProcessItem {
   type: SbpmProcessType;
   properties: SbpmProcess;
-};
-
-export type SbpmItem<T = SbpmItemType> = T extends SbpmProcessType ? SbpmProcess : SbpmItemModeler<T>;
-
-export type SbpmItemGroup<T = SbpmItemType> = Array<SbpmItem<T>>;
+}
 
 declare module '@sbpmjs/modeler' {
   interface SbpmProcessModel extends SbpmContainerShape {}
@@ -34,22 +19,24 @@ declare module '@sbpmjs/modeler' {
   interface SbpmMessageTransition extends SbpmContainerShape {}
 }
 
+type SbpmItemType = SbpmProcessType | SbpmItemTypeModeler;
+
+export type SbpmItem<Type extends SbpmItemType = SbpmItemType> = Type extends SbpmProcessType
+  ? SbpmProcessItem
+  : Type extends SbpmItemTypeModeler
+  ? SbpmItemModeler<Type>
+  : undefined;
+
+export type SbpmItemGroup<Type extends SbpmItemType = SbpmItemType> = Array<SbpmItem<Type>>;
+
 export function createSbpmProcessItem(item: SbpmProcessItem) {
   return item;
 }
 
-export function createSbpmElementItem<Type extends SbpmElementType = SbpmElementType>(item: SbpmElementItem<Type>) {
+export function createSbpmItem<Type extends SbpmItemType = SbpmItemType>(item: SbpmItem<Type>) {
   return item;
 }
 
-export function createSbpmLinkItem<Type extends SbpmLinkType = SbpmLinkType>(item: SbpmLinkItem<Type>) {
-  return item;
-}
-
-export function createSbpmItem<T>(item: SbpmItem<T>) {
-  return item;
-}
-
-export function createSbpmItemGroup<T>(item: SbpmItemGroup<T>) {
+export function createSbpmItemGroup<Type extends SbpmItemType = SbpmItemType>(item: SbpmItemGroup<Type>) {
   return item;
 }

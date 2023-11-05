@@ -1,5 +1,8 @@
+import type { SbpmItemType } from '@sbpmjs/modeler';
 import App from './components/Main.svelte';
 import { initDefaults } from './sbpm';
+
+const test: SbpmItemType = '';
 
 type SbpmOptions = {
   container: HTMLElement;

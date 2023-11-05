@@ -39,3 +39,4 @@ export type {
   SbpmItem,
   SbpmItemGroup,
 } from './common/types';
+export { createSbpmElementItem, createSbpmLinkItem, createSbpmItem, createSbpmItemGroup } from './common/types';

@@ -154,6 +154,26 @@ export interface SbpmLinkItem<Type extends SbpmLinkType = SbpmLinkType> {
   properties: GetSbpmLink<Type>;
 }
 
-export type SbpmItem<T = SbpmItemType> = T extends SbpmElementType ? SbpmElementItem<T> : T extends SbpmLinkType ? SbpmLinkItem<T> : undefined;
+export type SbpmItem<Type extends SbpmItemType = SbpmItemType> = Type extends SbpmElementType
+  ? SbpmElementItem<Type>
+  : Type extends SbpmLinkType
+  ? SbpmLinkItem<Type>
+  : undefined;
 
-export type SbpmItemGroup<T = SbpmItemType> = Array<SbpmItem<T>>;
+export type SbpmItemGroup<Type extends SbpmItemType = SbpmItemType> = Array<SbpmItem<Type>>;
+
+export function createSbpmElementItem<Type extends SbpmElementType = SbpmElementType>(item: SbpmElementItem<Type>) {
+  return item;
+}
+
+export function createSbpmLinkItem<Type extends SbpmLinkType = SbpmLinkType>(item: SbpmLinkItem<Type>) {
+  return item;
+}
+
+export function createSbpmItem<Type extends SbpmItemType = SbpmItemType>(item: SbpmItem<Type>) {
+  return item;
+}
+
+export function createSbpmItemGroup<Type extends SbpmItemType = SbpmItemType>(item: SbpmItemGroup<Type>) {
+  return item;
+}
