@@ -1,6 +1,6 @@
 <script lang="ts">
   import { svelteStores, state } from '../sbpm';
-  import type { SbpmProcessItem } from '@sbpmjs/shared';
+  import type { SbpmProcessItem } from '../types';
   import Input from './ui/Input.svelte';
 
   const viewedSbpmItem = svelteStores.viewedSbpmItem;

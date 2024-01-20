@@ -1,17 +1,10 @@
 import { SbpmModeler } from '@sbpmjs/modeler';
-import {
-  createSbpmElementItem,
-  createSbpmGeneralEntityItem,
-  type Coordinates,
-  type SbpmElementType,
-  type SbpmProcessItem,
-  createSbpmProcessItem,
-} from '@sbpmjs/shared';
-import type { ElementEventHandlerParams, LinkEventHandlerParams } from '@sbpmjs/modeler';
+import type { Coordinates, ElementEventHandlerParams, LinkEventHandlerParams, SbpmElementType } from '@sbpmjs/modeler';
 import { get, writable } from 'svelte/store';
 import { createRandomUUID } from './common/utils';
+import { createSbpmItem, createSbpmProcessItem, type SbpmItem } from './types';
 
-const defaultProcessNetwork = createSbpmElementItem({
+const defaultProcessNetwork = createSbpmItem({
   type: 'ProcessNetwork',
   properties: {
     id: createRandomUUID(),
@@ -23,8 +16,7 @@ const defaultProcessNetwork = createSbpmElementItem({
   },
 });
 
-
-const defaultProcess = createSbpmGeneralEntityItem({
+const defaultProcess = createSbpmProcessItem({
   type: 'Process',
   properties: {
     id: createRandomUUID(),
@@ -34,9 +26,9 @@ const defaultProcess = createSbpmGeneralEntityItem({
 });
 
 function useState() {
-  const items: Map<string, SbpmProcessItem> = new Map();
+  const items: Map<string, SbpmItem> = new Map();
 
-  const addItem = (item: SbpmProcessItem) => {
+  const addItem = (item: SbpmItem) => {
     const id = item.properties.id;
     items.set(id, item);
   };
@@ -80,11 +72,11 @@ function useState() {
 }
 
 function useSvelteStores() {
-  const viewedSbpmItem = writable<SbpmProcessItem>();
+  const viewedSbpmItem = writable<SbpmItem>();
   const selectedSbpmItem = writable<ElementEventHandlerParams | LinkEventHandlerParams>();
   const uiVisible = writable(true);
 
-  const updateViewedSbpmItem = (item: SbpmProcessItem) => {
+  const updateViewedSbpmItem = (item: SbpmItem) => {
     viewedSbpmItem.update(() => item);
   };
 
@@ -116,6 +108,16 @@ function useModeler(state: ReturnType<typeof useState>, svelteStores: ReturnType
 
     modeler = new SbpmModeler({
       container,
+      onConnectLink: (link) => {
+        const item = {
+          type: link.type,
+          properties: {
+            id: String(link.id),
+            ...link.getUpdatableOptions(),
+          },
+        } as SbpmItem;
+        state.addItem(item);
+      },
     });
 
     svelteStores.updateSelectedSbpmItem(modeler.addSbpmElement(defaultProcessNetwork));
@@ -132,12 +134,13 @@ function useModeler(state: ReturnType<typeof useState>, svelteStores: ReturnType
 function useHandlers(modeler: ReturnType<typeof useModeler>, svelteStores: ReturnType<typeof useSvelteStores>) {
   const drop = (type: SbpmElementType, position: Coordinates) => {
     const viewedSbpmItem = get(svelteStores.viewedSbpmItem);
-    const item = createSbpmElementItem({
-      type: 'ProcessModel',
+    const item = createSbpmItem({
+      type: type,
       properties: {
         id: createRandomUUID(),
         position,
         label: 'New element',
+
       },
     });
     state.addItem(item);

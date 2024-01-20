@@ -24,8 +24,8 @@ type SbpmItemType = SbpmProcessType | SbpmItemTypeModeler;
 export type SbpmItem<Type extends SbpmItemType = SbpmItemType> = Type extends SbpmProcessType
   ? SbpmProcessItem
   : Type extends SbpmItemTypeModeler
-  ? SbpmItemModeler<Type>
-  : undefined;
+    ? SbpmItemModeler<Type>
+    : undefined;
 
 export type SbpmItemGroup<Type extends SbpmItemType = SbpmItemType> = Array<SbpmItem<Type>>;
 

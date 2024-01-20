@@ -35,6 +35,6 @@
   },
   "author": "Maksym Kolodiy",
   "dependencies": {
-    "jointjs": "^3.7.6"
+    "jointjs": "^3.7.7"
   }
 }

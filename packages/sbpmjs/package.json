@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@sbpmjs/modeler": "workspace:^",
-    "@sbpmjs/shared": "workspace:^"
+    "@sbpmjs/shared": "workspace:^",
+    "immer": "^10.0.3"
   }
 }
