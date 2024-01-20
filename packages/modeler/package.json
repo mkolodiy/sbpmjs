@@ -27,7 +27,6 @@
   "scripts": {
     "dev": "vite --config vite.config.ts ./dev",
     "build": "vite build && tsc",
-    "test": "vite --config vite.config.ts ./test",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --list-different .",

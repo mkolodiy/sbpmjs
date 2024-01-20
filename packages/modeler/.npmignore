@@ -1,7 +1,6 @@
+assets
 dev
 test
 .eslintrc.json
-.prettierignore
-.prettierrc.json
 tsconfig.json
 vite.config.ts
