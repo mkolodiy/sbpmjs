@@ -1,13 +1,13 @@
-import * as joint from "jointjs";
+import * as joint from "@joint/core";
 import type { SbpmModelerOptions } from "../canvas";
 import type { SbpmElement } from "./element";
 import { createElementTools } from "./element-tools";
 import type { SbpmElementToolsOptions } from "./element-tools";
 
-export class SbpmElementView extends joint.dia.ElementView {
+export class SbpmElementView extends joint.dia.ElementView<SbpmElement> {
 	// Workaround to have all custom properties and methods on the model
 	public get element() {
-		return this.model as SbpmElement;
+		return this.model;
 	}
 
 	public select() {

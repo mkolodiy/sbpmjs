@@ -1,4 +1,4 @@
-import * as joint from "jointjs";
+import * as joint from "@joint/core";
 import { CustomEvent, JointEvent, SbpmItemNamespace } from "./common/constants";
 import type { SbpmElementType } from "./common/types";
 import { combineStrings, getSbpmItemType } from "./common/utils";
@@ -9,7 +9,17 @@ import { SbpmLinkView } from "./core/link-view";
 import { SbpmCanvasOrigin } from "./core/origin";
 import { getDefaultLink, isValidConnection } from "./sbpm/utils";
 
-const paperOptions: joint.dia.Paper.Options = {
+type PaperOptions = Omit<
+	joint.dia.Paper.Options,
+	"elementView" | "linkView"
+> & {
+	elementView?:
+		| typeof SbpmElementView
+		| ((element: SbpmElement) => typeof SbpmElementView);
+	linkView?: typeof SbpmLinkView | ((link: SbpmLink) => typeof SbpmLinkView);
+};
+
+const paperOptions: PaperOptions = {
 	width: "100%",
 	height: "100%",
 	gridSize: 1,
@@ -28,19 +38,11 @@ const paperOptions: joint.dia.Paper.Options = {
 			offset: 10,
 		},
 	},
-	elementView,
-	linkView,
+	elementView: SbpmElementView,
+	linkView: SbpmLinkView,
 	defaultLink,
 	validateConnection,
 };
-
-function elementView() {
-	return SbpmElementView;
-}
-
-function linkView() {
-	return SbpmLinkView;
-}
 
 function defaultLink(cellView: joint.dia.CellView) {
 	const sbpmElementView = cellView as SbpmElementView;
@@ -125,7 +127,8 @@ export class SbpmCanvas {
 			model: this.#graph,
 			defaultRouter: { name: "normal" },
 		});
-		this.#paper.$el.css("cursor", "grab");
+		// this.#paper.$el.css("cursor", "grab");
+		this.#paper.el.style.cursor = "grab";
 
 		this.addOrigin();
 		this.addDragging(options);

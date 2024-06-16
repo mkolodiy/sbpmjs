@@ -1,4 +1,4 @@
-import * as joint from "jointjs";
+import * as joint from "@joint/core";
 import { createJointType } from "../common/utils";
 
 export const SbpmCanvasOrigin = joint.shapes.standard.Rectangle.define(

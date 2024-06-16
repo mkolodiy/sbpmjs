@@ -1,4 +1,4 @@
-import * as joint from "jointjs";
+import * as joint from "@joint/core";
 import type { SbpmModelerOptions } from "../canvas";
 import { CustomEvent, FONT_FAMILY } from "../common/constants";
 import { autoRenewIcon, deleteIcon, openInNew } from "../common/icons";

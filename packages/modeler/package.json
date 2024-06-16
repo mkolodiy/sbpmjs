@@ -3,7 +3,10 @@
 	"type": "module",
 	"version": "1.0.2",
 	"description": "A library for working with SBPM constructs.",
-	"keywords": ["sbpm", "modeler"],
+	"keywords": [
+		"sbpm",
+		"modeler"
+	],
 	"license": "MIT",
 	"main": "./dist/index.js",
 	"module": "./dist/index.js",
@@ -14,7 +17,13 @@
 			"default": "./dist/index.js"
 		}
 	},
-	"files": ["dist", "src", "LICENSE", "package.json", "README.md"],
+	"files": [
+		"dist",
+		"src",
+		"LICENSE",
+		"package.json",
+		"README.md"
+	],
 	"scripts": {
 		"dev": "vite --config vite.config.ts ./dev",
 		"build": "vite build && tsc",
@@ -28,6 +37,6 @@
 	},
 	"author": "Maksym Kolodiy",
 	"dependencies": {
-		"jointjs": "^3.7.7"
+		"@joint/core": "^4.0.4"
 	}
 }

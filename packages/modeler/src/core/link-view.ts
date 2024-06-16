@@ -1,4 +1,4 @@
-import * as joint from "jointjs";
+import * as joint from "@joint/core";
 import type { SbpmModelerOptions } from "../canvas";
 import type { SbpmLink } from "./link";
 import { createLinkTools } from "./link-tools";

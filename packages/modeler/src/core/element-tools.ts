@@ -1,4 +1,4 @@
-import * as joint from "jointjs";
+import * as joint from "@joint/core";
 import { callMadeIcon, deleteIcon, touchAppIcon } from "../common/icons";
 
 const defaultBoundaryOptions: joint.elementTools.Boundary.Options = {

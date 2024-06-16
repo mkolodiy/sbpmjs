@@ -1,4 +1,4 @@
-import * as joint from "jointjs";
+import * as joint from "@joint/core";
 import type { SbpmModelerOptions } from "../canvas";
 import { CustomEvent } from "../common/constants";
 import type {
@@ -45,14 +45,14 @@ export class SbpmElement extends joint.dia.Element<SbpmElementAttributes> {
 	modelerOptions: SbpmModelerOptions =
 		undefined as unknown as SbpmModelerOptions;
 
-	defaults() {
+	override defaults() {
 		return {
 			...super.defaults,
 			attrs,
 		};
 	}
 
-	markup = markup;
+	override markup = markup;
 
 	public get toolsOptions() {
 		return this.attributes.toolsOptions as SbpmElementToolsOptions;
