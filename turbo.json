@@ -6,7 +6,13 @@
       "outputs": ["dist/**"]
     },
     "check": {
-        "dependsOn": ["^check"]
+        "dependsOn": []
+    },
+    "check:fix": {
+        "dependsOn": []
+    },
+    "check-types": {
+        "dependsOn": []
     },
     "dev": {
       "dependsOn": ["^build"]
