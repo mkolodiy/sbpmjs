@@ -1,64 +1,68 @@
 import * as joint from "@joint/core";
-import type { SbpmModelerOptions } from "../canvas";
-import { CustomEvent } from "../common/constants";
+import { CustomEvent } from "../common/constants.js";
 import type {
 	GetUpdateOptions,
-	SbpmElement as SbpmElementOptions,
-	SbpmElementType,
+	SbpmItemOptions,
 	SbpmItemAttributes,
-} from "../common/types";
-import type { SbpmElementToolsOptions } from "./element-tools";
+} from "../types/internal.js";
+import type { SbpmElementToolsOptions } from "./element-tools.js";
 
-const attrs = {
-	image: {
-		refWidth: "100%",
-		refHeight: "100%",
-	},
-	label: {
-		textVerticalAnchor: "top",
-		textAnchor: "middle",
-		refX: "50%",
-		refY: "100%",
-		refY2: 10,
-		fontSize: 14,
-		fill: "#333333",
-	},
-};
-
-const markup = [
-	{
-		tagName: "image",
-		selector: "image",
-	},
-	{
-		tagName: "text",
-		selector: "label",
-	},
-];
-
-export type SbpmElementAttributes =
+type SbpmElementAttributes<TType extends string = string> =
 	joint.dia.Element.GenericAttributes<joint.shapes.standard.ImageSelectors> &
-		SbpmItemAttributes<SbpmElementToolsOptions>;
+		SbpmItemAttributes<TType, SbpmElementToolsOptions>;
 
-export class SbpmElement extends joint.dia.Element<SbpmElementAttributes> {
-	type: SbpmElementType = undefined as unknown as SbpmElementType;
-	modelerOptions: SbpmModelerOptions =
-		undefined as unknown as SbpmModelerOptions;
+export interface SbpmElementOptions extends SbpmItemOptions {
+	position: joint.dia.Point;
+}
 
-	override defaults() {
+export class SbpmElement<TType extends string = string> extends joint.dia
+	.Element<SbpmElementAttributes<TType>> {
+	override preinitialize(): void {
+		this.markup = joint.util
+			.svg`<image @selector="image"/><text @selector="label"/>`;
+	}
+
+	override defaults(): Partial<SbpmElementAttributes<TType>> {
 		return {
 			...super.defaults,
-			attrs,
+			attrs: {
+				image: {
+					refWidth: "100%",
+					refHeight: "100%",
+				},
+				label: {
+					textVerticalAnchor: "top",
+					textAnchor: "middle",
+					refX: "50%",
+					refY: "100%",
+					refY2: 10,
+					fontSize: 14,
+					fill: "#333333",
+				},
+			},
 		};
 	}
 
-	override markup = markup;
-
-	public get toolsOptions() {
-		return this.attributes.toolsOptions as SbpmElementToolsOptions;
+	public get toolsOptions(): SbpmElementToolsOptions {
+		const toolsOptions = this.attributes.data?.toolsOptions;
+		if (!toolsOptions) {
+			throw new Error(
+				`toolsOptions not defined for element with id ${this.id} and type ${this.attributes.type} `,
+			);
+		}
+		return toolsOptions;
 	}
 
-	public update(options: GetUpdateOptions<SbpmElementOptions>) {
+	public select(): void {
+		this.attr("image/cursor", "move");
+		this.toFront();
+	}
+
+	public deselect(): void {
+		this.attr("image/cursor", "pointer");
+	}
+
+	protected update(options: GetUpdateOptions<SbpmElementOptions>) {
 		const { label, position } = options;
 
 		if (label) {
@@ -70,21 +74,5 @@ export class SbpmElement extends joint.dia.Element<SbpmElementAttributes> {
 		}
 
 		this.trigger(CustomEvent.ELEMENT_UPDATED, this);
-	}
-
-	public select() {
-		this.attr("image/cursor", "move");
-		this.toFront();
-	}
-
-	public deselect() {
-		this.attr("image/cursor", "pointer");
-	}
-
-	public getUpdatableOptions(): GetUpdateOptions<SbpmElementOptions> {
-		return {
-			label: this.attr("label/textWrap/text"),
-			position: this.position(),
-		};
 	}
 }

@@ -1,5 +1,5 @@
 {
-	"name": "@sbpmjs/modeler-jointjs-v4",
+	"name": "@sbpmjs/modeler-legacy",
 	"type": "module",
 	"version": "1.0.2",
 	"description": "A library for working with SBPM constructs.",
@@ -33,10 +33,7 @@
 		"format:fix": "biome format --write .",
 		"check-types": "tsc --noEmit",
 		"check": "biome check .",
-		"check:fix": "biome check --write .",
-		"test:dev": "vite --config vite.config.ts ./tests/dev",
-		"test": "playwright test --ui",
-		"test:report": "playwright show-report"
+		"check:fix": "biome check --write ."
 	},
 	"author": "Maksym Kolodiy",
 	"dependencies": {

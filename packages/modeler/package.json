@@ -25,15 +25,18 @@
 		"README.md"
 	],
 	"scripts": {
-		"dev": "vite --config vite.config.ts ./dev",
-		"build": "vite build && tsc",
+		"dev": "vite ./dev",
+		"build": "tsup",
 		"lint": "biome lint .",
 		"lint:fix": "biome --write .",
 		"format": "biome format .",
 		"format:fix": "biome format --write .",
 		"check-types": "tsc --noEmit",
 		"check": "biome check .",
-		"check:fix": "biome check --write ."
+		"check:fix": "biome check --write .",
+		"test:dev": "vite ./tests/dev",
+		"test": "playwright test --ui",
+		"test:report": "playwright show-report"
 	},
 	"author": "Maksym Kolodiy",
 	"dependencies": {

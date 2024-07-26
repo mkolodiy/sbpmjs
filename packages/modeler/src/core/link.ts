@@ -2,119 +2,70 @@ import * as joint from "@joint/core";
 import type {
 	GetUpdateOptions,
 	SbpmItemAttributes,
-	SbpmLink as SbpmLinkOptions,
-	SbpmLinkType,
-} from "../common/types";
+	SbpmItemOptions,
+} from "../types/internal";
+import type { SbpmLinkToolsOptions } from "./link-tools";
 import type { SbpmElement } from "./element";
-import type {
-	SbpmLinkLabelToolsOptions,
-	SbpmLinkToolsOptions,
-} from "./link-tools";
 
-export const attrs = {
-	line: {
-		connection: true,
-		stroke: "#333333",
-		strokeWidth: 2,
-		strokeLinejoin: "round",
-		targetMarker: {
-			type: "path",
-			d: "M 10 -5 0 0 10 5 z",
-		},
-	},
-	wrapper: {
-		connection: true,
-		strokeWidth: 10,
-		strokeLinejoin: "round",
-	},
-};
-
-export const markup = [
-	{
-		tagName: "path",
-		selector: "wrapper",
-		attributes: {
-			fill: "none",
-			cursor: "pointer",
-			stroke: "transparent",
-			"stroke-linecap": "round",
-		},
-	},
-	{
-		tagName: "path",
-		selector: "line",
-		attributes: {
-			fill: "none",
-			"pointer-events": "none",
-		},
-	},
-];
-
-export type SbpmLinkAttributes =
+type SbpmLinkAttributes<TType extends string = string> =
 	joint.dia.Link.GenericAttributes<joint.shapes.standard.LinkSelectors> &
-		SbpmItemAttributes<SbpmLinkToolsOptions>;
+		SbpmItemAttributes<TType, SbpmLinkToolsOptions>;
 
-export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
-	type: SbpmLinkType = undefined as unknown as SbpmLinkType;
+export interface SbpmLinkOptions extends SbpmItemOptions {
+	source: SbpmElement | { id: string };
+	target?: SbpmElement | { id: string };
+}
 
-	defaults() {
+export class SbpmLink<TType extends string = string> extends joint.dia.Link<
+	SbpmLinkAttributes<TType>
+> {
+	override preinitialize(): void {
+		this.markup = joint.util
+			.svg`<path @selector="wrapper" fill="none" cursor="pointer" stroke="transparent" stroke-linecap="round"/><path @selector="line" fill="none" pointer-events="none"/>`;
+	}
+
+	override defaults(): Partial<SbpmLinkAttributes<TType>> {
 		return {
 			...super.defaults,
-			attrs,
+			attrs: {
+				wrapper: {
+					connection: true,
+					strokeWidth: 10,
+					strokeLinejoin: "round",
+				},
+				line: {
+					connection: true,
+					stroke: "#333333",
+					strokeWidth: 2,
+					strokeLinejoin: "round",
+					targetMarker: {
+						type: "path",
+						d: "M 10 -5 0 0 10 5 z",
+					},
+				},
+			},
 		};
 	}
 
-	markup = markup;
-
-	public get toolsOptions() {
-		return this.attributes.toolsOptions as SbpmLinkToolsOptions;
-	}
-
-	public set toolsOptions(newToolsOptions: SbpmLinkToolsOptions) {
-		this.attributes.toolsOptions = newToolsOptions;
-	}
-
-	public get labelToolsOptions() {
-		return this.attributes.labelToolsOptions as SbpmLinkLabelToolsOptions;
-	}
-
-	public hasSource() {
-		return "id" in this.source();
-	}
-
-	public hasTarget() {
-		return "id" in this.target();
-	}
-
-	public update(options: GetUpdateOptions<SbpmLinkOptions>) {
-		const { source, target, label } = options;
-
-		if (source) {
-			this.source(handleEndpoint(source));
+	public get toolsOptions(): SbpmLinkToolsOptions {
+		const toolsOptions = this.attributes.data?.toolsOptions;
+		if (!toolsOptions) {
+			throw new Error(
+				`toolsOptions not defined for link with id ${this.id} and type ${this.attributes.type} `,
+			);
 		}
-
-		if (target) {
-			this.target(handleEndpoint(target));
-		}
-
-		if (label && this.hasLabels()) {
-			this.label(0, {
-				attrs: {
-					text: {
-						textWrap: {
-							text: label,
-						},
-					},
-				},
-			});
-		}
+		return toolsOptions;
 	}
 
-	public select() {
+	public set toolsOptions(toolsOptions: SbpmLinkToolsOptions) {
+		this.set("data/toolsOptions", toolsOptions);
+	}
+
+	public select(): void {
 		this.toFront();
 	}
 
-	public deselect() {
+	public deselect(): void {
 		// Deliberately left empty
 	}
 
@@ -122,34 +73,33 @@ export class SbpmLink extends joint.dia.Link<SbpmLinkAttributes> {
 		this.vertices([]);
 	}
 
-	public getUpdatableOptions(): GetUpdateOptions<SbpmLinkOptions> {
-		const options: GetUpdateOptions<SbpmLinkOptions> = {};
-
-		if (this.hasLabels()) {
-			options.label = this.label(0).attrs?.text?.textWrap?.text;
-		}
-
-		const sourceId = String(this.source().id);
-		const targetId = String(this.target().id);
-
-		if (sourceId) {
-			options.source = sourceId;
-		}
-
-		if (targetId) {
-			options.target = targetId;
-		}
-
-		return options;
-	}
-}
-
-export function handleEndpoint(endpoint: SbpmElement | string) {
-	if (typeof endpoint === "string") {
-		return {
-			id: endpoint,
-		};
+	public hasSource(): boolean {
+		return "id" in this.source();
 	}
 
-	return endpoint;
+	public hasTarget(): boolean {
+		return "id" in this.target();
+	}
+
+	public update(options: GetUpdateOptions<SbpmLinkOptions>): void {
+		const { source, target, label } = options;
+
+		if (source) {
+			this.source(source);
+		}
+
+		if (target) {
+			this.target(target);
+		}
+
+		if (label && this.hasLabels()) {
+			this.label(0, {
+				attrs: {
+					text: {
+						text: label,
+					},
+				},
+			});
+		}
+	}
 }

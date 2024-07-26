@@ -1,68 +1,12 @@
 import * as joint from "@joint/core";
-import { CustomEvent, JointEvent, SbpmItemNamespace } from "./common/constants";
-import type { SbpmElementType } from "./common/types";
-import { combineStrings, getSbpmItemType } from "./common/utils";
+import { CustomEvent, JointEvent } from "./common/constants";
 import { SbpmElement } from "./core/element";
 import { SbpmElementView } from "./core/element-view";
 import { SbpmLink } from "./core/link";
 import { SbpmLinkView } from "./core/link-view";
 import { SbpmCanvasOrigin } from "./core/origin";
-import { getDefaultLink, isValidConnection } from "./sbpm/utils";
-
-type PaperOptions = Omit<
-	joint.dia.Paper.Options,
-	"elementView" | "linkView"
-> & {
-	elementView?:
-		| typeof SbpmElementView
-		| ((element: SbpmElement) => typeof SbpmElementView);
-	linkView?: typeof SbpmLinkView | ((link: SbpmLink) => typeof SbpmLinkView);
-};
-
-const paperOptions: PaperOptions = {
-	width: "100%",
-	height: "100%",
-	gridSize: 1,
-	linkPinning: false,
-	origin: {
-		x: 0,
-		y: 0,
-	},
-	interactive: {
-		linkMove: true,
-		labelMove: false,
-	},
-	defaultConnectionPoint: {
-		name: "bbox",
-		args: {
-			offset: 10,
-		},
-	},
-	elementView: SbpmElementView,
-	linkView: SbpmLinkView,
-	defaultLink,
-	validateConnection,
-};
-
-function defaultLink(cellView: joint.dia.CellView) {
-	const sbpmElementView = cellView as SbpmElementView;
-	const type = getSbpmItemType(sbpmElementView.element.get("type")) as Exclude<
-		SbpmElementType,
-		"Message"
-	>;
-	return getDefaultLink(type);
-}
-
-function validateConnection(
-	cellViewS: joint.dia.CellView,
-	_magnetS: unknown,
-	cellViewT: joint.dia.CellView,
-	_magnetT: unknown,
-	_end: joint.dia.LinkEnd,
-	linkView: joint.dia.LinkView,
-) {
-	return isValidConnection(cellViewS, cellViewT, linkView);
-}
+import { SbpmMessageTransition } from "./sbpm/message-transition";
+import { SbpmSubject, SbpmSubjectType } from "./sbpm/subject";
 
 type EventMap = joint.dia.Paper.EventMap & {
 	[JointEvent.ELEMENT_POINTERDOWN]: (
@@ -94,10 +38,7 @@ export type ElementEventHandler = (element: ElementEventHandlerParams) => void;
 
 export type LinkEventHandler = (link: LinkEventHandlerParams) => void;
 
-export type SbpmModelerOptions = {
-	/**
-	 * A HTML element where the modeler should be rended to.
-	 */
+export interface SbpmCanvasOptions {
 	container: HTMLElement;
 	onSelectElement?: ElementEventHandler;
 	onSelectLink?: LinkEventHandler;
@@ -106,65 +47,94 @@ export type SbpmModelerOptions = {
 	onOpenElement?: ElementEventHandler;
 	onOpenLink?: LinkEventHandler;
 	onConnectLink?: LinkEventHandler;
-	onAddShape?: (
-		shape: ElementEventHandlerParams | LinkEventHandlerParams,
+	onAddItem?: (
+		item: ElementEventHandlerParams | LinkEventHandlerParams,
 	) => void;
 	onClickCanvas?: () => void;
+}
+
+const namespace = {
+	...joint.shapes,
+	"sbpm.common": { SbpmElement },
+	"sbpm.sid": { SbpmSubject },
+};
+
+const defaultOptions: joint.dia.Paper.Options = {
+	width: "100%",
+	height: "100%",
+	gridSize: 1,
+	linkPinning: false,
+	interactive: {
+		labelMove: false,
+	},
+	defaultConnectionPoint: {
+		name: "bbox",
+		args: {
+			offset: 10,
+		},
+	},
+	defaultRouter: { name: "normal" },
+	cellViewNamespace: namespace,
+	// @ts-expect-error The jointjs override is producing error.
+	elementView: SbpmElementView,
+	// @ts-expect-error The jointjs override is producing error.
+	linkView: SbpmLinkView,
+	defaultLink,
+	validateConnection,
 };
 
 export class SbpmCanvas {
 	#graph: joint.dia.Graph;
 	#paper: joint.dia.Paper;
-	#dragStartPosition: joint.dia.Point | undefined;
 
-	constructor(options: SbpmModelerOptions) {
-		const { container } = options;
+	constructor(options: SbpmCanvasOptions) {
+		this.#graph = new joint.dia.Graph({}, { cellNamespace: namespace });
 
-		this.#graph = new joint.dia.Graph();
 		this.#paper = new joint.dia.Paper({
-			...paperOptions,
-			el: container,
+			...defaultOptions,
+			el: options.container,
 			model: this.#graph,
-			defaultRouter: { name: "normal" },
 		});
-		// this.#paper.$el.css("cursor", "grab");
+
 		this.#paper.el.style.cursor = "grab";
 
-		this.addOrigin();
-		this.addDragging(options);
-		this.registerPaperEvents(options);
-		this.registerGraphEvents(options);
-		this.registerElementEvents(options);
-		this.registerLinkEvents(options);
+		this.#addOrigin();
+		this.#addDragging(options);
+		this.#registerPaperEvents(options);
+		this.#registerGraphEvents(options);
+		this.#registerElementEvents(options);
+		this.#registerLinkEvents(options);
 	}
 
-	private addOrigin() {
+	#addOrigin(): void {
 		this.#graph.addCell(new SbpmCanvasOrigin());
 	}
 
-	private addDragging({ container }: SbpmModelerOptions) {
+	#addDragging({ container }: SbpmCanvasOptions): void {
+		let dragStartPosition: joint.dia.Point | undefined;
+
 		this.#paper.on(
 			JointEvent.BLANK_POINTERDOWN,
 			(_evt: joint.dia.Event, x: number, y: number) => {
-				this.#dragStartPosition = { x, y };
+				dragStartPosition = { x, y };
 			},
 		);
 
 		this.#paper.on(
-			combineStrings([JointEvent.CELL_POINTERUP, JointEvent.BLANK_POINTERUP]),
+			[JointEvent.CELL_POINTERUP, JointEvent.BLANK_POINTERUP].join(" "),
 			() => {
-				this.#dragStartPosition = undefined;
+				dragStartPosition = undefined;
 			},
 		);
 
 		container.addEventListener(
 			"mousemove",
 			(evt: MouseEvent) => {
-				if (this.#dragStartPosition !== undefined) {
+				if (dragStartPosition !== undefined) {
 					const scale = this.#paper.scale();
 
-					const x = evt.offsetX - this.#dragStartPosition.x * scale.sx;
-					const y = evt.offsetY - this.#dragStartPosition.y * scale.sy;
+					const x = evt.offsetX - dragStartPosition.x * scale.sx;
+					const y = evt.offsetY - dragStartPosition.y * scale.sy;
 
 					this.#paper.translate(x, y);
 				}
@@ -173,13 +143,33 @@ export class SbpmCanvas {
 		);
 	}
 
-	private registerElementEvents({ onSelectElement }: SbpmModelerOptions) {
+	#registerPaperEvents({ onClickCanvas }: SbpmCanvasOptions): void {
+		this.#paper.on(JointEvent.BLANK_POINTERDOWN, () => {
+			this.#paper.el.style.cursor = "grabbing";
+			this.deselect();
+			onClickCanvas?.();
+		});
+
+		this.#paper.on(JointEvent.BLANK_POINTERUP, () => {
+			this.#paper.el.style.cursor = "grab";
+		});
+	}
+
+	#registerGraphEvents({ onAddItem }: SbpmCanvasOptions) {
+		this.#graph.on("add", (item: SbpmElement | SbpmLink) => {
+			if (item instanceof SbpmElement || item instanceof SbpmLink) {
+				onAddItem?.(item);
+			}
+		});
+	}
+
+	#registerElementEvents({ onSelectElement }: SbpmCanvasOptions): void {
 		this.#paper.on<keyof EventMap>(
 			JointEvent.ELEMENT_POINTERDOWN,
 			(sbpmElementView: SbpmElementView) => {
 				this.deselect();
 				sbpmElementView.select();
-				onSelectElement?.(sbpmElementView.element);
+				onSelectElement?.(sbpmElementView.model);
 			},
 		);
 
@@ -189,19 +179,19 @@ export class SbpmCanvas {
 		});
 	}
 
-	private registerLinkEvents({
+	#registerLinkEvents({
 		onSelectLink,
 		onDeleteLink,
 		onOpenLink,
 		onConnectLink,
-	}: SbpmModelerOptions) {
+	}: SbpmCanvasOptions): void {
 		this.#paper.on<keyof EventMap>(
 			JointEvent.LINK_POINTERDOWN,
 			(linkView: SbpmLinkView) => {
-				if (linkView.link.hasTarget()) {
+				if (linkView.model.hasTarget()) {
 					this.deselect();
 					linkView.select();
-					onSelectLink?.(linkView.link);
+					onSelectLink?.(linkView.model);
 				}
 			},
 		);
@@ -209,7 +199,7 @@ export class SbpmCanvas {
 		this.#paper.on<keyof EventMap>(
 			JointEvent.LINK_CONNECT,
 			(linkView: SbpmLinkView) => {
-				onConnectLink?.(linkView.link);
+				onConnectLink?.(linkView.model);
 			},
 		);
 
@@ -217,8 +207,8 @@ export class SbpmCanvas {
 			CustomEvent.LINK_REMOVE,
 			(linkView: SbpmLinkView, evt: MouseEvent) => {
 				evt.stopPropagation();
-				linkView.link.remove();
-				onDeleteLink?.(linkView.link);
+				linkView.model.remove();
+				onDeleteLink?.(linkView.model);
 			},
 		);
 
@@ -226,7 +216,7 @@ export class SbpmCanvas {
 			CustomEvent.LINK_REMOVE_VERTICES,
 			(linkView: SbpmLinkView, evt: MouseEvent) => {
 				evt.stopPropagation();
-				linkView.link.vertices([]);
+				linkView.model.resetVertices();
 			},
 		);
 
@@ -234,80 +224,38 @@ export class SbpmCanvas {
 			CustomEvent.LINK_OPEN,
 			(linkView: SbpmLinkView, evt: MouseEvent) => {
 				evt.stopPropagation();
-				onOpenLink?.(linkView.link);
+				onOpenLink?.(linkView.model);
 			},
 		);
 	}
 
-	private registerPaperEvents({ onClickCanvas }: SbpmModelerOptions) {
-		this.#paper.on(JointEvent.BLANK_POINTERDOWN, () => {
-			this.#paper.$el.css("cursor", "grabbing");
-			this.deselect();
-			onClickCanvas?.();
-		});
-
-		this.#paper.on(JointEvent.BLANK_POINTERUP, () => {
-			this.#paper.$el.css("cursor", "grab");
-			this.deselect();
-			onClickCanvas?.();
-		});
-	}
-
-	private registerGraphEvents({ onAddShape }: SbpmModelerOptions) {
-		this.#graph.on("add", (shape: SbpmElement | SbpmLink) => {
-			if (shape instanceof SbpmElement || shape instanceof SbpmLink) {
-				onAddShape?.(shape);
-			}
-		});
-	}
-
-	/**
-	 * Get the jointjs paper instance.
-	 *
-	 * @returns The jointjs paper instance.
-	 */
-	public get paper() {
-		return this.#paper;
-	}
-
-	/**
-	 * Get the jointjs graph instance.
-	 *
-	 * @returns The jointjs graph instance.
-	 */
 	public get graph() {
 		return this.#graph;
 	}
 
-	/**
-	 * Get all elements that are present on the canvas.
-	 *
-	 * @returns A list with all elements.
-	 */
-	public getElements() {
+	public addElement(item: SbpmElement) {
+		this.#graph.addCell(item);
+	}
+
+	public addLink(link: SbpmLink) {
+		this.#graph.addCell(link);
+	}
+
+	public getElements(): Array<SbpmElement> {
 		const allElements = this.#graph.getElements();
 		return allElements.filter(
 			(element: joint.dia.Element) =>
-				!element.get("type").includes(SbpmItemNamespace.COMMON),
-		) as SbpmElement[];
+				!element.get("type").includes("sbpm.common."),
+		) as Array<SbpmElement>;
 	}
 
-	/**
-	 * Get all links that are present on the canvas.
-	 *
-	 * @returns A list with all links.
-	 */
-	public getLinks() {
+	public getLinks(): Array<SbpmLink> {
 		const allLinks = this.#graph.getLinks();
 		return allLinks.filter(
-			(link: joint.dia.Link) =>
-				!link.get("type").includes(SbpmItemNamespace.COMMON),
-		) as SbpmLink[];
+			(link: joint.dia.Link) => !link.get("type").includes("sbpm.common."),
+		) as Array<SbpmLink>;
 	}
 
-	/**
-	 * Remove selection from all shapes on the canvas.
-	 */
 	public deselect() {
 		this.#paper.hideTools();
 		for (const element of this.getElements()) {
@@ -317,35 +265,38 @@ export class SbpmCanvas {
 			link.deselect();
 		}
 	}
+}
 
-	/**
-	 * Set the origin to 0/0.
-	 */
-	public reset() {
-		this.#paper.translate(0, 0);
+function defaultLink(view: joint.dia.CellView): SbpmLink | joint.dia.Link {
+	if (view instanceof SbpmElementView) {
+		const type = view.model.get("type");
+		switch (type) {
+			case SbpmSubjectType:
+				return new SbpmMessageTransition({
+					label: "New message transition",
+					source: view.model,
+				});
+			default:
+				return new SbpmLink();
+		}
 	}
+	return new joint.dia.Link();
+}
 
-	/**
-	 * Remove all shapes from the canvas.
-	 */
-	public clear() {
-		this.#graph.clear();
-		this.addOrigin();
-	}
+function validateConnection(
+	cellViewSource: joint.dia.CellView,
+	_magnetS: unknown,
+	cellViewTarget: joint.dia.CellView,
+	_magnetT: unknown,
+	_end: joint.dia.LinkEnd,
+	linkView: joint.dia.LinkView,
+): boolean {
+	const valid =
+		cellViewSource.model.get("id") !== cellViewTarget.model.get("id");
+	const isMessageTransitionValid =
+		cellViewTarget.model.isElement() &&
+		cellViewTarget.model instanceof SbpmSubject &&
+		linkView.model instanceof SbpmMessageTransition;
 
-	/**
-	 * Zoom in on the canvas.
-	 */
-	public zoomIn() {
-		const scale = this.#paper.scale();
-		this.#paper.scale(scale.sx + 0.1, scale.sx + 0.1);
-	}
-
-	/**
-	 * Zoom out on the canvas.
-	 */
-	public zoomOut() {
-		const scale = this.#paper.scale();
-		this.#paper.scale(scale.sx - 0.1, scale.sx - 0.1);
-	}
+	return valid && isMessageTransitionValid;
 }
