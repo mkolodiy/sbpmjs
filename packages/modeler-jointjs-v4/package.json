@@ -1,0 +1,45 @@
+{
+	"name": "@sbpmjs/modeler-jointjs-v4",
+	"type": "module",
+	"version": "1.0.2",
+	"description": "A library for working with SBPM constructs.",
+	"keywords": [
+		"sbpm",
+		"modeler"
+	],
+	"license": "MIT",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist",
+		"src",
+		"LICENSE",
+		"package.json",
+		"README.md"
+	],
+	"scripts": {
+		"dev": "vite --config vite.config.ts ./dev",
+		"build": "vite build && tsc",
+		"lint": "biome lint .",
+		"lint:fix": "biome --write .",
+		"format": "biome format .",
+		"format:fix": "biome format --write .",
+		"check-types": "tsc --noEmit",
+		"check": "biome check .",
+		"check:fix": "biome check --write .",
+		"test:dev": "vite --config vite.config.ts ./tests/dev",
+		"test": "playwright test --ui",
+		"test:report": "playwright show-report"
+	},
+	"author": "Maksym Kolodiy",
+	"dependencies": {
+		"@joint/core": "^4.0.4"
+	}
+}

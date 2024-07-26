@@ -1,2 +1,3 @@
 packages:
   - 'packages/modeler'
+  - 'packages/modeler-jointjs-v4'
