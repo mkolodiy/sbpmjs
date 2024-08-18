@@ -26,7 +26,7 @@
 	],
 	"scripts": {
 		"dev": "vite ./dev",
-		"build": "tsup",
+		"build": "vite build",
 		"lint": "biome lint .",
 		"lint:fix": "biome --write .",
 		"format": "biome format .",

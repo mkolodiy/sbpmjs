@@ -1,11 +1,8 @@
 import * as joint from "@joint/core";
-import { CustomEvent } from "../common/constants.js";
-import type {
-	GetUpdateOptions,
-	SbpmItemOptions,
-	SbpmItemAttributes,
-} from "../types/internal.js";
-import type { SbpmElementToolsOptions } from "./element-tools.js";
+import { CustomEvent } from "../common/constants";
+import type { UpdateOptions, SbpmItemAttributes } from "../types/internal";
+import type { SbpmElementToolsOptions } from "./element-tools";
+import type { SbpmItemOptions } from "../types/external";
 
 type SbpmElementAttributes<TType extends string = string> =
 	joint.dia.Element.GenericAttributes<joint.shapes.standard.ImageSelectors> &
@@ -62,7 +59,7 @@ export class SbpmElement<TType extends string = string> extends joint.dia
 		this.attr("image/cursor", "pointer");
 	}
 
-	protected update(options: GetUpdateOptions<SbpmElementOptions>) {
+	protected update(options: UpdateOptions<SbpmElementOptions>) {
 		const { label, position } = options;
 
 		if (label) {

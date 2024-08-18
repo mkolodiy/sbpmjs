@@ -27,7 +27,8 @@ const jointOptions: joint.shapes.standard.ImageAttributes = {
 			width: 130,
 			height: 130,
 			cursor: "pointer",
-			xlinkHref: icon,
+			xlin
+			kHref: icon,
 		},
 		label: {
 			textWrap: {

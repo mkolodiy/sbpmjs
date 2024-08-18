@@ -99,41 +99,51 @@ export type SbpmElementOpenToolOptions = {
 	options: joint.elementTools.Button.Options;
 };
 
-export type SbpmElementToolsOptions = (
+export type SbpmElementToolsOptions = Array<
 	| SbpmElementBoundaryToolOptions
 	| SbpmElementButtonToolOptions
 	| SbpmElementConnectToolOptions
 	| SbpmElementControlToolOptions
 	| SbpmElementRemoveToolOptions
 	| SbpmElementOpenToolOptions
-)[];
+>;
 
-function createBoundary(options: joint.elementTools.Boundary.Options) {
+function createBoundary(
+	options: joint.elementTools.Boundary.Options,
+): joint.elementTools.Boundary {
 	return new joint.elementTools.Boundary(
 		joint.util.merge(joint.util.cloneDeep(defaultBoundaryOptions), options),
 	);
 }
 
-function createButton(options: joint.elementTools.Button.Options) {
+function createButton(
+	options: joint.elementTools.Button.Options,
+): joint.elementTools.Button {
 	return new joint.elementTools.Button(
 		joint.util.merge(joint.util.cloneDeep(defaultButtonOptions), options),
 	);
 }
 
-function createConnect(options: joint.elementTools.Connect.Options) {
+function createConnect(
+	options: joint.elementTools.Connect.Options,
+): joint.elementTools.Connect {
 	return new joint.elementTools.Connect(
 		joint.util.merge(joint.util.cloneDeep(defaultConnectOptions), options),
 	);
 }
 
-function createRemove(options: joint.elementTools.Button.Options) {
+function createRemove(
+	options: joint.elementTools.Button.Options,
+): joint.elementTools.Remove {
 	return new joint.elementTools.Remove(
 		joint.util.merge(joint.util.cloneDeep(defaultRemoveOptions), options),
 	);
 }
 
-export function createElementTools(toolsOptions: SbpmElementToolsOptions) {
-	const tools = [];
+export function createElementTools(
+	toolsOptions: SbpmElementToolsOptions,
+): joint.dia.ToolsView {
+	const tools: Array<joint.dia.ToolView> = [];
 
 	const boundaryToolOptions =
 		toolsOptions.find((toolOptions) => toolOptions.type === "boundary") ??

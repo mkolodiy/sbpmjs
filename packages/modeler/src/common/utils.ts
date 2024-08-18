@@ -1,9 +1,9 @@
 import { SVG_PREFIX } from "./constants";
 
-export function createIcon(template: string) {
+export function createIcon(template: string): string {
 	return `${SVG_PREFIX}${encodeURIComponent(template)}`;
 }
 
-export function combineStrings(strings: string[], separator = " ") {
+export function combineStrings(strings: Array<string>, separator = " "): string {
 	return strings.join(separator);
 }

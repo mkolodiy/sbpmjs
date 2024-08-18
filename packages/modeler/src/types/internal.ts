@@ -1,7 +1,5 @@
-import type * as joint from "@joint/core";
-
 export type SbpmItemAttributes<
-	TType extends string = string,
+	TType extends string,
 	TToolsOptions extends Array<Record<string, unknown>> = Array<
 		Record<string, unknown>
 	>,
@@ -13,9 +11,4 @@ export type SbpmItemAttributes<
 	};
 };
 
-export interface SbpmItemOptions {
-	id?: joint.dia.Cell.ID;
-	label: string;
-}
-
-export type GetUpdateOptions<T> = Partial<Omit<T, "id">>;
+export type UpdateOptions<T> = Partial<Omit<T, "id">>;

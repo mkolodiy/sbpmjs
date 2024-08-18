@@ -6,25 +6,29 @@ if (container) {
 		container,
 	});
 
-	const sbpmSubject = modeler.addSbpmSubject({
+	const sbpmSubject1 = modeler.addSbpmSubject({
 		id: "test-id",
 		label: "BLABLA",
 		position: { x: 100, y: 100 },
+		customData: {
+			test: ["a"],
+		},
 	});
-	modeler.addSbpmSubject({
+	const sbpmSubject2 = modeler.addSbpmSubject({
 		id: "element-2",
 		label: "test",
 		position: { x: 500, y: 300 },
 	});
+	const sbpmMessageTransition = modeler.createSbpmMessageTransition({
+		label: "TEst message transition",
+		source: sbpmSubject1,
+		target: sbpmSubject2,
+	});
+	modeler.canvas.addLink(sbpmMessageTransition);
 
-	console.log(sbpmSubject);
+	console.log(sbpmMessageTransition);
 
 	// setTimeout(() => {
-	//     sbpmSubject.update({
-	//         position: {
-	//             x: 200,
-	//             y: 200
-	//         }
-	//     })
-	// }, 2000)
+	// 	console.log(modeler.canvas.getLinks());
+	// }, 4000);
 }

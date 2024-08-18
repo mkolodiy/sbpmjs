@@ -164,32 +164,44 @@ export type SbpmLinkLabelToolsOptions = {
 	removeVerticesLabel: joint.dia.Link.Label;
 };
 
-function createButton(options: joint.linkTools.Button.Options) {
+function createButton(
+	options: joint.linkTools.Button.Options,
+): joint.linkTools.Button {
 	return new joint.linkTools.Button(
 		joint.util.merge(joint.util.cloneDeep(defaultButtonOptions), options),
 	);
 }
 
-function createRemove(options: joint.linkTools.Button.Options) {
+function createRemove(
+	options: joint.linkTools.Button.Options,
+): joint.linkTools.Remove {
 	return new joint.linkTools.Remove(
 		joint.util.merge(joint.util.cloneDeep(defaultRemoveOptions), options),
 	);
 }
 
-export function createIconLabel(options: joint.dia.Link.Label) {
+export function createIconLabel(
+	options: joint.dia.Link.Label,
+): joint.dia.Link.Label {
 	return joint.util.merge(joint.util.cloneDeep(defaultIconLabel), options);
 }
 
-export function createSelectionLabel(options: joint.dia.Link.Label) {
+export function createSelectionLabel(
+	options: joint.dia.Link.Label,
+): joint.dia.Link.Label {
 	return joint.util.merge(joint.util.cloneDeep(defaultSelectionLabel), options);
 }
 
-export function createButtonLabel(options: joint.dia.Link.Label) {
+export function createButtonLabel(
+	options: joint.dia.Link.Label,
+): joint.dia.Link.Label {
 	return joint.util.merge(joint.util.cloneDeep(defaultButtonLabel), options);
 }
 
-export function createLinkTools(toolsOptions: SbpmLinkToolsOptions) {
-	const tools = [];
+export function createLinkTools(
+	toolsOptions: SbpmLinkToolsOptions,
+): joint.dia.ToolsView {
+	const tools: Array<joint.dia.ToolView> = [];
 
 	const targetArrowhead = new joint.linkTools.TargetArrowhead();
 	const vertices = new joint.linkTools.Vertices();

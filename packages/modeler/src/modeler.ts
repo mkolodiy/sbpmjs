@@ -1,7 +1,9 @@
 import { SbpmCanvas, type SbpmCanvasOptions } from "./canvas";
-import type { SbpmElement } from "./core/element";
+import {
+	SbpmMessageTransition,
+	type SbpmMessageTransitionOptions,
+} from "./sbpm/message-transition";
 import { SbpmSubject, type SbpmSubjectOptions } from "./sbpm/subject";
-import type { SbpmLink } from "./core/link";
 
 export type SbpmModelerOptions = SbpmCanvasOptions;
 
@@ -9,21 +11,11 @@ export class SbpmModeler {
 	#canvas: SbpmCanvas;
 
 	constructor(options: SbpmModelerOptions) {
-		console.log("Test");
-
 		this.#canvas = new SbpmCanvas(options);
 	}
 
 	public get canvas() {
 		return this.#canvas;
-	}
-
-	public addElement(item: SbpmElement): void {
-		this.#canvas.addElement(item);
-	}
-
-	public addLink(link: SbpmLink): void {
-		this.#canvas.addLink(link);
 	}
 
 	public createSbpmSubject(options: SbpmSubjectOptions): SbpmSubject {
@@ -32,5 +24,17 @@ export class SbpmModeler {
 
 	public addSbpmSubject(options: SbpmSubjectOptions): SbpmSubject {
 		return this.createSbpmSubject(options).addTo(this.#canvas.graph);
+	}
+
+	public createSbpmMessageTransition(
+		options: SbpmMessageTransitionOptions,
+	): SbpmMessageTransition {
+		return new SbpmMessageTransition(options);
+	}
+
+	public addSbpmMessageTransition(
+		options: SbpmMessageTransitionOptions,
+	): SbpmMessageTransition {
+		return this.createSbpmMessageTransition(options).addTo(this.#canvas.graph);
 	}
 }

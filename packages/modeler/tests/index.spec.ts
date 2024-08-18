@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import type { SbpmModeler } from "../src/modeler";
+import type { SbpmModeler } from "../dist/index.js";
 
 declare global {
 	interface Window {
@@ -33,13 +33,7 @@ test("has title", async ({ page }) => {
 		await page.evaluate(() => {
 			return window.SbpmModeler.canvas.getElements().length;
 		}),
-	).toBe(2);
-
-	const source = page.locator("[model-id='test-id']");
-	const target = page.locator("[model-id='element-2']");
-
-	console.log(await source.getAttribute("data-type"));
-	console.log(await target.getAttribute("data-type"));
+	).toBe(0);
 
 	// await source.dragTo(target);
 
@@ -51,9 +45,12 @@ test("has title", async ({ page }) => {
 		});
 	});
 
+	const target = page.locator("[model-id='element-3']");
+	console.log(target);
+
 	expect(
 		await page.evaluate(() => {
 			return window.SbpmModeler.canvas.getElements().length;
 		}),
-	).toBe(3);
+	).toBe(1);
 });

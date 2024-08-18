@@ -1,4 +1,4 @@
-import { SbpmModeler } from "../../src";
+import { SbpmModeler } from "../../dist/index.js";
 
 declare global {
 	interface Window {
