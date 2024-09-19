@@ -1,16 +1,20 @@
 import * as joint from "@joint/core";
-import type { UpdateOptions, SbpmItemAttributes } from "../types/internal";
-import type { SbpmLinkToolsOptions } from "./link-tools";
 import type { SbpmElement } from "./element";
-import type { SbpmItemOptions } from "../types/external";
+import type { SbpmLinkToolsOptions } from "./link-tools";
+import type {
+	SbpmItemAttributes,
+	SbpmItemOptions,
+	UpdateOptions,
+} from "./shared/types";
 
-type SbpmLinkAttributes<TType extends string = string> =
+type SbpmLinkAttributes<TType extends string> =
 	joint.dia.Link.GenericAttributes<joint.shapes.standard.LinkSelectors> &
 		SbpmItemAttributes<TType, SbpmLinkToolsOptions>;
 
-export interface SbpmLinkOptions extends SbpmItemOptions {
+export interface SbpmLinkOptions<TType extends string>
+	extends SbpmItemOptions<TType> {
 	source: SbpmElement | { id: string };
-	target?: SbpmElement | { id: string };
+	target: SbpmElement | { id: string };
 }
 
 export class SbpmLink<TType extends string = string> extends joint.dia.Link<
@@ -78,7 +82,7 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 		return "id" in this.target();
 	}
 
-	public update(options: UpdateOptions<SbpmLinkOptions>): void {
+	public update(options: UpdateOptions<SbpmLinkOptions<TType>>): void {
 		const { source, target, label } = options;
 
 		if (source) {

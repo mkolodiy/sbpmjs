@@ -1,5 +1,5 @@
 import * as joint from "@joint/core";
-import { callMadeIcon, deleteIcon, touchAppIcon } from "../common/icons";
+import { callMadeIcon, deleteIcon, touchAppIcon } from "../shared/icons";
 
 const defaultBoundaryOptions: joint.elementTools.Boundary.Options = {
 	focusOpacity: 1,

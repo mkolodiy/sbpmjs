@@ -12,6 +12,5 @@ export const CustomEvent = {
 	LINK_REMOVE_VERTICES: "link:removeVertices",
 	LINK_OPEN: "link:open",
 	ELEMENT_UPDATED: "element:updated",
+	ELEMENT_REMOVE: "element:remove",
 } as const;
-
-export const SVG_PREFIX = "data:image/svg+xml;utf8,";

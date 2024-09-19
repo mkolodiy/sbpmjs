@@ -1,1 +1,1 @@
-export * from "./modeler";
+export * from "./canvas";

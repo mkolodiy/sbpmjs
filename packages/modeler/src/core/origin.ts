@@ -1,5 +1,5 @@
 import * as joint from "@joint/core";
-import type { SbpmItemAttributes } from "../types/internal";
+import type { SbpmItemAttributes } from "./shared/types";
 
 type SbpmCanvasOriginAttributes =
 	joint.dia.Element.GenericAttributes<joint.shapes.standard.ImageSelectors> &
