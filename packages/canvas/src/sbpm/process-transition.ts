@@ -1,8 +1,8 @@
 import type * as joint from "@joint/core";
-import { CustomEvent } from "../shared/constants";
-import { autoRenewIcon } from "../shared/icons";
 import { SbpmLink, type SbpmLinkOptions } from "../core/link";
 import type { UpdateOptions } from "../core/shared/types";
+import { CustomEvent } from "../shared/constants";
+import { autoRenewIcon } from "../shared/icons";
 
 export const SbpmProcessTransitionType = "sbpm.pnd.SbpmProcessTransition";
 

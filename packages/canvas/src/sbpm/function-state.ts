@@ -1,9 +1,9 @@
 import * as joint from "@joint/core";
+import { SbpmElement, type SbpmElementOptions } from "../core/element";
+import type { UpdateOptions } from "../core/shared/types";
 import { CustomEvent } from "../shared/constants";
 import { blueDotIcon, redDotIcon } from "../shared/icons";
 import { createIcon } from "../shared/utils";
-import { SbpmElement, type SbpmElementOptions } from "../core/element";
-import type { UpdateOptions } from "../core/shared/types";
 import { getStateModifierOptions } from "./shared/utils";
 
 const functionStateIconTemplate = `

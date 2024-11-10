@@ -1,6 +1,4 @@
 import type * as joint from "@joint/core";
-import { CustomEvent } from "../shared/constants";
-import { autoRenewIcon, deleteIcon } from "../shared/icons";
 import { SbpmLink, type SbpmLinkOptions } from "../core/link";
 import {
 	createButtonLabel,
@@ -8,6 +6,8 @@ import {
 	createSelectionLabel,
 } from "../core/link-tools";
 import type { UpdateOptions } from "../core/shared/types";
+import { CustomEvent } from "../shared/constants";
+import { autoRenewIcon, deleteIcon } from "../shared/icons";
 import { getIconLabel } from "./shared/utils";
 
 const iconLabel: joint.dia.Link.Label = {
@@ -15,6 +15,14 @@ const iconLabel: joint.dia.Link.Label = {
 		{
 			tagName: "rect",
 			selector: "body",
+		},
+		{
+			tagName: "rect",
+			selector: "header",
+		},
+		{
+			tagName: "text",
+			selector: "headerText",
 		},
 		{
 			tagName: "text",
@@ -32,12 +40,34 @@ const iconLabel: joint.dia.Link.Label = {
 			yAlignment: "middle",
 			cursor: "pointer",
 		},
-		bodyText: {
+		header: {
+			width: 180,
+			height: 30,
+			strokeWidth: 2,
+			stroke: "#b3b3b3ff",
+			fill: "#FFFFFF",
 			xAlignment: "middle",
-			yAlignment: "middle",
+			yAlignment: -30,
+			cursor: "pointer",
+		},
+		headerText: {
+			xAlignment: "middle",
+			yAlignment: -25,
 			textWrap: {
 				width: 180,
-				height: 60,
+				height: 30,
+			},
+			cursor: "pointer",
+			textVerticalAnchor: "middle",
+			textAnchor: "middle",
+			fontSize: 14,
+		},
+		bodyText: {
+			xAlignment: "middle",
+			yAlignment: 5,
+			textWrap: {
+				width: 180,
+				height: 30,
 			},
 			cursor: "pointer",
 			textVerticalAnchor: "middle",
@@ -91,22 +121,23 @@ const removeVerticesLabel: joint.dia.Link.Label = {
 	},
 };
 
-export const SbpmFunctionStateTransitionType =
-	"sbpm.pnd.SbpmFunctionStateTransition";
+export const SbpmReceiveStateTransitionType =
+	"sbpm.pnd.SbpmReceiveStateTransition";
 
-export interface SbpmFunctionStateTransitionOptions
+export interface SbpmReceiveStateTransitionOptions
 	extends Omit<
-		SbpmLinkOptions<typeof SbpmFunctionStateTransitionType>,
+		SbpmLinkOptions<typeof SbpmReceiveStateTransitionType>,
 		"label"
 	> {
+	subject: string;
 	message: string;
 }
 
-export class SbpmFunctionStateTransition extends SbpmLink<
-	typeof SbpmFunctionStateTransitionType
+export class SbpmReceiveStateTransition extends SbpmLink<
+	typeof SbpmReceiveStateTransitionType
 > {
-	constructor(options: SbpmFunctionStateTransitionOptions) {
-		const { message, source, customData, id, target } = options;
+	constructor(options: SbpmReceiveStateTransitionOptions) {
+		const { message, source, subject, customData, id, target } = options;
 
 		super({
 			attrs: {
@@ -114,7 +145,7 @@ export class SbpmFunctionStateTransition extends SbpmLink<
 					pointerEvents: "none",
 				},
 			},
-			type: SbpmFunctionStateTransitionType,
+			type: SbpmReceiveStateTransitionType,
 			source: source,
 			target: target,
 			data: {
@@ -124,7 +155,7 @@ export class SbpmFunctionStateTransition extends SbpmLink<
 		});
 
 		this.appendLabel(
-			createIconLabel(getIconLabel(iconLabel, undefined, message)),
+			createIconLabel(getIconLabel(iconLabel, subject, message)),
 		);
 
 		if (id) {
@@ -133,11 +164,11 @@ export class SbpmFunctionStateTransition extends SbpmLink<
 	}
 
 	public override update(
-		options: UpdateOptions<SbpmFunctionStateTransitionOptions>,
+		options: UpdateOptions<SbpmReceiveStateTransitionOptions>,
 	) {
-		const { message, ...restOptions } = options;
+		const { subject, message, ...restOptions } = options;
 
-		const updatedIconLabel = getIconLabel(this.label(0), undefined, message);
+		const updatedIconLabel = getIconLabel(this.label(0), subject, message);
 		this.removeLabel(0);
 		this.insertLabel(0, updatedIconLabel);
 		super.update(restOptions);

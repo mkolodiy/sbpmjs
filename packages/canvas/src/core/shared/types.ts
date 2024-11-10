@@ -1,8 +1,10 @@
 import type * as joint from "@joint/core";
 
+export type SbpmItemId = joint.dia.Cell.ID;
+
 export interface SbpmItemOptions<TType extends string> {
 	type: TType;
-	id?: joint.dia.Cell.ID;
+	id: SbpmItemId;
 	label: string;
 	customData?: {
 		[key: string]: unknown;

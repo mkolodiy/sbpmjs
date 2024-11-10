@@ -1,6 +1,4 @@
 import type * as joint from "@joint/core";
-import { CustomEvent } from "../shared/constants";
-import { autoRenewIcon, deleteIcon } from "../shared/icons";
 import { SbpmLink, type SbpmLinkOptions } from "../core/link";
 import {
 	createButtonLabel,
@@ -8,6 +6,8 @@ import {
 	createSelectionLabel,
 } from "../core/link-tools";
 import type { UpdateOptions } from "../core/shared/types";
+import { CustomEvent } from "../shared/constants";
+import { autoRenewIcon, deleteIcon } from "../shared/icons";
 import { getIconLabel } from "./shared/utils";
 
 const iconLabel: joint.dia.Link.Label = {
