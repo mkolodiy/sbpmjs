@@ -1,4 +1,4 @@
-import type * as joint from "@joint/core";
+import * as joint from "@joint/core";
 import { SbpmElement, type SbpmElementOptions } from "../core/element";
 import type { UpdateOptions } from "../core/shared/types";
 import { CustomEvent } from "../shared/constants";
@@ -52,54 +52,53 @@ export class SbpmProcessModel extends SbpmElement<typeof SbpmProcessModelType> {
 			},
 			position: position,
 			type: SbpmProcessModelType,
-			data: {
-				toolsOptions: [
-					{
-						type: "remove",
-						options: {
-							x: 140,
-							action: (
-								evt: joint.dia.Event,
-								elementView: joint.dia.ElementView,
-							) => {
-								elementView.paper?.trigger(
-									CustomEvent.ELEMENT_REMOVE,
-									elementView,
-									evt,
-								);
+			toolsOptions: [
+				{
+					type: "remove",
+					options: {
+						x: 140,
+						action: (
+							evt: joint.dia.Event,
+							elementView: joint.dia.ElementView,
+						) => {
+							elementView.paper?.trigger(
+								CustomEvent.ELEMENT_REMOVE,
+								elementView,
+								evt,
+							);
+						},
+					},
+				},
+				{
+					type: "connect",
+					options: {
+						x: 164,
+					},
+				},
+				{
+					type: "open",
+					options: {
+						x: 188,
+						markup: [
+							{
+								tagName: "rect",
 							},
-						},
-					},
-					{
-						type: "connect",
-						options: {
-							x: 164,
-						},
-					},
-					{
-						type: "open",
-						options: {
-							x: 188,
-							markup: [
-								{
-									tagName: "rect",
+							{
+								tagName: "image",
+								attributes: {
+									href: openInNew,
 								},
-								{
-									tagName: "image",
-									attributes: {
-										href: openInNew,
-									},
-								},
-								{
-									tagName: "title",
-									textContent: "Open",
-								},
-							],
-						},
+							},
+							{
+								tagName: "title",
+								textContent: "Open",
+							},
+						],
 					},
-				],
-				...customData,
-			},
+				},
+			],
+			customData,
+			role,
 		});
 
 		if (id) {
@@ -119,8 +118,16 @@ export class SbpmProcessModel extends SbpmElement<typeof SbpmProcessModelType> {
 
 		super.update(restOptions);
 	}
+
+	public override options(): SbpmProcessModelOptions {
+		const options: SbpmProcessModelOptions = joint.util.cloneDeep(
+			super.options(),
+		);
+		options.role = this.prop("role");
+		return options;
+	}
 }
 
-function getIcon(role: SbpmProcessModelOptions["role"]) {
+function getIcon(role: SbpmProcessModelOptions["role"]): string {
 	return role === "single" ? singleProcessIcon : multiProcessIcon;
 }

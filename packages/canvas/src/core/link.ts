@@ -3,6 +3,7 @@ import type { SbpmElement } from "./element";
 import type { SbpmLinkToolsOptions } from "./link-tools";
 import type {
 	SbpmItemAttributes,
+	SbpmItemId,
 	SbpmItemOptions,
 	UpdateOptions,
 } from "./shared/types";
@@ -13,8 +14,8 @@ type SbpmLinkAttributes<TType extends string> =
 
 export interface SbpmLinkOptions<TType extends string>
 	extends SbpmItemOptions<TType> {
-	source: SbpmElement | { id: string };
-	target: SbpmElement | { id: string };
+	source: SbpmElement | { id: SbpmItemId };
+	target: SbpmElement | { id: SbpmItemId };
 }
 
 export class SbpmLink<TType extends string = string> extends joint.dia.Link<
@@ -48,7 +49,7 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 		};
 	}
 
-	public get toolsOptions(): SbpmLinkToolsOptions {
+	public getToolsOptions(): SbpmLinkToolsOptions {
 		const toolsOptions = this.attributes.data?.toolsOptions;
 		if (!toolsOptions) {
 			throw new Error(
@@ -58,7 +59,7 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 		return toolsOptions;
 	}
 
-	public set toolsOptions(toolsOptions: SbpmLinkToolsOptions) {
+	public setToolsOptions(toolsOptions: SbpmLinkToolsOptions) {
 		this.prop("data/toolsOptions", toolsOptions);
 	}
 
@@ -83,7 +84,7 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 	}
 
 	public update(options: UpdateOptions<SbpmLinkOptions<TType>>): void {
-		const { source, target, label } = options;
+		const { source, target } = options;
 
 		if (source) {
 			this.source(source);
@@ -92,15 +93,31 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 		if (target) {
 			this.target(target);
 		}
+	}
 
-		if (label && this.hasLabels()) {
-			this.label(0, {
-				attrs: {
-					text: {
-						text: label,
-					},
-				},
-			});
+	public options(): SbpmLinkOptions<TType> {
+		const sourceId = this.source()?.id;
+		if (!sourceId) {
+			throw new Error("Could not get the source id.");
 		}
+		const targetId = this.source()?.id;
+		if (!targetId) {
+			throw new Error("Could not get the source id.");
+		}
+		const options: SbpmLinkOptions<TType> = {
+			id: this.id,
+			type: this.prop("type"),
+			source: {
+				id: sourceId,
+			},
+			target: {
+				id: targetId,
+			},
+		};
+		const customData = this.prop("customData");
+		if (customData) {
+			options.customData = customData;
+		}
+		return options;
 	}
 }

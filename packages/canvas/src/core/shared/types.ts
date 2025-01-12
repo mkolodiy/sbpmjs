@@ -5,7 +5,6 @@ export type SbpmItemId = joint.dia.Cell.ID;
 export interface SbpmItemOptions<TType extends string> {
 	type: TType;
 	id: SbpmItemId;
-	label: string;
 	customData?: {
 		[key: string]: unknown;
 	};
@@ -18,10 +17,8 @@ export type SbpmItemAttributes<
 	>,
 > = {
 	type: TType;
-	data: {
-		toolsOptions: TToolsOptions;
-		[key: string]: unknown;
-	};
+	toolsOptions: TToolsOptions;
+	[key: string]: unknown;
 };
 
-export type UpdateOptions<T> = Partial<Omit<T, "id">>;
+export type UpdateOptions<T> = Partial<Omit<T, "id" | "type">>;

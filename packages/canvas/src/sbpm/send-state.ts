@@ -59,33 +59,31 @@ export class SbpmSendState extends SbpmElement<typeof SbpmSendStateType> {
 			},
 			position: position,
 			type: SbpmSendStateType,
-			data: {
-				toolsOptions: [
-					{
-						type: "remove",
-						options: {
-							x: 150,
-							action: (
-								evt: joint.dia.Event,
-								elementView: joint.dia.ElementView,
-							) => {
-								elementView.paper?.trigger(
-									CustomEvent.ELEMENT_REMOVE,
-									elementView,
-									evt,
-								);
-							},
+			toolsOptions: [
+				{
+					type: "remove",
+					options: {
+						x: 150,
+						action: (
+							evt: joint.dia.Event,
+							elementView: joint.dia.ElementView,
+						) => {
+							elementView.paper?.trigger(
+								CustomEvent.ELEMENT_REMOVE,
+								elementView,
+								evt,
+							);
 						},
 					},
-					{
-						type: "connect",
-						options: {
-							x: 175,
-						},
+				},
+				{
+					type: "connect",
+					options: {
+						x: 175,
 					},
-				],
-				...customData,
-			},
+				},
+			],
+			customData,
 		});
 
 		if (id) {
@@ -93,7 +91,7 @@ export class SbpmSendState extends SbpmElement<typeof SbpmSendStateType> {
 		}
 	}
 
-	public update(options: UpdateOptions<SbpmSendStateOptions>) {
+	public override update(options: UpdateOptions<SbpmSendStateOptions>): void {
 		const { role = "none" } = options;
 
 		if (role !== "none") {
@@ -111,5 +109,11 @@ export class SbpmSendState extends SbpmElement<typeof SbpmSendStateType> {
 		}
 
 		super.update(options);
+	}
+
+	public override options(): SbpmSendStateOptions {
+		const options: SbpmSendStateOptions = joint.util.cloneDeep(super.options());
+		options.role = this.prop("role");
+		return options;
 	}
 }

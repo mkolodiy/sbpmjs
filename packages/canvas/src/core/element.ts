@@ -14,6 +14,7 @@ type SbpmElementAttributes<TType extends string> =
 export interface SbpmElementOptions<TType extends string>
 	extends SbpmItemOptions<TType> {
 	position: joint.dia.Point;
+	label: string;
 }
 
 export class SbpmElement<TType extends string = string> extends joint.dia
@@ -44,11 +45,11 @@ export class SbpmElement<TType extends string = string> extends joint.dia
 		};
 	}
 
-	public get toolsOptions(): SbpmElementToolsOptions {
+	public getToolsOptions(): SbpmElementToolsOptions {
 		const toolsOptions = this.attributes.data?.toolsOptions;
 		if (!toolsOptions) {
 			throw new Error(
-				`toolsOptions not defined for element with id ${this.id} and type ${this.attributes.type} `,
+				`toolsOptions not defined for element with id ${this.id} and type ${this.prop("type")} `,
 			);
 		}
 		return toolsOptions;
@@ -63,11 +64,11 @@ export class SbpmElement<TType extends string = string> extends joint.dia
 		this.attr("image/cursor", "pointer");
 	}
 
-	protected update(options: UpdateOptions<SbpmElementOptions<TType>>) {
+	public update(options: UpdateOptions<SbpmElementOptions<TType>>) {
 		const { label, position } = options;
 
 		if (label) {
-			this.attr("label/textWrap/text", label);
+			this.attr("label/text", label);
 		}
 
 		if (position) {
@@ -75,5 +76,19 @@ export class SbpmElement<TType extends string = string> extends joint.dia
 		}
 
 		this.trigger(CustomEvent.ELEMENT_UPDATED, this);
+	}
+
+	public options(): SbpmElementOptions<TType> {
+		const options: SbpmElementOptions<TType> = {
+			id: this.id,
+			type: this.prop("type"),
+			label: this.attr("label/text"),
+			position: this.position(),
+		};
+		const customData = this.prop("customData");
+		if (customData) {
+			options.customData = customData;
+		}
+		return options;
 	}
 }

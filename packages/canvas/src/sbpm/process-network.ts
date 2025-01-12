@@ -1,3 +1,4 @@
+import * as joint from "@joint/core";
 import { SbpmElement, type SbpmElementOptions } from "../core/element";
 import type { UpdateOptions } from "../core/shared/types";
 import { createIcon } from "../shared/utils";
@@ -41,17 +42,15 @@ export class SbpmProcessNetwork extends SbpmElement<
 			},
 			position: position,
 			type: SbpmProcessNetworkType,
-			data: {
-				toolsOptions: [
-					{
-						type: "connect",
-						options: {
-							x: 140,
-						},
+			toolsOptions: [
+				{
+					type: "connect",
+					options: {
+						x: 140,
 					},
-				],
-				...customData,
-			},
+				},
+			],
+			customData,
 		});
 
 		if (id) {
@@ -63,5 +62,9 @@ export class SbpmProcessNetwork extends SbpmElement<
 		options: UpdateOptions<SbpmProcessNetworkOptions>,
 	): void {
 		super.update(options);
+	}
+
+	public override options(): SbpmProcessNetworkOptions {
+		return joint.util.cloneDeep(super.options());
 	}
 }

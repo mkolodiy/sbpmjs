@@ -6,7 +6,7 @@ export class SbpmLinkView extends joint.dia.LinkView<SbpmLink> {
 	public select(): void {
 		if (this.model.hasTarget()) {
 			this.model.select();
-			this.addTools(createLinkTools(this.model.toolsOptions));
+			this.addTools(createLinkTools(this.model.getToolsOptions()));
 		}
 	}
 }

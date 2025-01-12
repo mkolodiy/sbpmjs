@@ -110,6 +110,7 @@ export const SbpmMessageTransitionType = "sbpm.sid.SbpmMessageTransition";
 export interface SbpmMessageTransitionOptions
 	extends SbpmLinkOptions<typeof SbpmMessageTransitionType> {
 	role?: "unidirectional" | "bidirectional";
+	label: string;
 }
 
 export class SbpmMessageTransition extends SbpmLink<
@@ -129,10 +130,9 @@ export class SbpmMessageTransition extends SbpmLink<
 			type: SbpmMessageTransitionType,
 			source: source,
 			target: target,
-			data: {
-				toolsOptions: role === "unidirectional" ? [] : toolsOptions,
-				...customData,
-			},
+			toolsOptions: role === "unidirectional" ? [] : toolsOptions,
+			customData,
+			role,
 		});
 
 		this.appendLabel(
@@ -155,14 +155,44 @@ export class SbpmMessageTransition extends SbpmLink<
 	public override update(
 		options: UpdateOptions<SbpmMessageTransitionOptions>,
 	): void {
-		const { role, ...restOptions } = options;
+		const { role, label, ...restOptions } = options;
 		if (role) {
 			handleRole(this, role);
+		}
+		if (label && this.hasLabels()) {
+			this.label(0, {
+				attrs: {
+					text: {
+						text: label,
+					},
+				},
+			});
 		}
 		super.update(restOptions);
 	}
 
-	public override select() {
+	public override options(): SbpmMessageTransitionOptions {
+		const options: SbpmMessageTransitionOptions = {
+			...joint.util.cloneDeep(super.options()),
+			label: "",
+		};
+		const iconLabel = this.label(0);
+		let label: string | undefined = undefined;
+		if (iconLabel) {
+			label = iconLabel.attrs?.text?.text;
+			if (!label) {
+				throw new Error("Could not get label.");
+			}
+			options.label = label;
+		} else {
+			throw new Error("Could not get icon label.");
+		}
+		options.role = this.prop("role");
+		options.label = label;
+		return options;
+	}
+
+	public override select(): void {
 		super.select();
 		this.appendLabel(createSelectionLabel(selectionLabel));
 		this.appendLabel(createButtonLabel(removeLabel));
@@ -170,7 +200,7 @@ export class SbpmMessageTransition extends SbpmLink<
 		this.appendLabel(createButtonLabel(openLabel));
 	}
 
-	public override deselect() {
+	public override deselect(): void {
 		super.deselect();
 		for (const _label of this.labels().slice(1)) {
 			this.removeLabel(-1);
@@ -181,15 +211,15 @@ export class SbpmMessageTransition extends SbpmLink<
 function handleRole(
 	link: SbpmMessageTransition,
 	role: SbpmMessageTransitionOptions["role"],
-) {
+): void {
 	if (role === "unidirectional") {
 		link.removeAttr("line/sourceMarker");
-		link.toolsOptions = [];
+		link.setToolsOptions([]);
 	} else {
 		link.attr("line/sourceMarker", {
 			role: "path",
 			d: "M 10 -5 0 0 10 5 z",
 		});
-		link.toolsOptions = toolsOptions;
+		link.setToolsOptions(toolsOptions);
 	}
 }

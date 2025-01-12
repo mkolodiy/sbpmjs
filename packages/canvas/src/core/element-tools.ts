@@ -1,4 +1,5 @@
 import * as joint from "@joint/core";
+import { CustomEvent } from "../shared/constants";
 import { callMadeIcon, deleteIcon, touchAppIcon } from "../shared/icons";
 
 const defaultBoundaryOptions: joint.elementTools.Boundary.Options = {
@@ -151,8 +152,26 @@ export function createElementTools(
 	tools.push(createBoundary(boundaryToolOptions.options));
 
 	for (const toolOptions of toolsOptions) {
-		if (toolOptions.type === "button" || toolOptions.type === "open") {
+		if (toolOptions.type === "button") {
 			tools.push(createButton(toolOptions.options));
+		}
+
+		if (toolOptions.type === "open") {
+			tools.push(
+				createButton({
+					...toolOptions.options,
+					action: (
+						evt: joint.dia.Event,
+						elementView: joint.dia.ElementView,
+					) => {
+						elementView.paper?.trigger(
+							CustomEvent.ELEMENT_OPEN,
+							elementView,
+							evt,
+						);
+					},
+				}),
+			);
 		}
 
 		if (toolOptions.type === "connect") {

@@ -1,4 +1,4 @@
-import type * as joint from "@joint/core";
+import * as joint from "@joint/core";
 import { SbpmLink, type SbpmLinkOptions } from "../core/link";
 import {
 	createButtonLabel,
@@ -121,10 +121,10 @@ const removeVerticesLabel: joint.dia.Link.Label = {
 	},
 };
 
-export const SbpmSendStateTransitionType = "sbpm.pnd.SbpmSendStateTransition";
+export const SbpmSendStateTransitionType = "sbpm.sbd.SbpmSendStateTransition";
 
 export interface SbpmSendStateTransitionOptions
-	extends Omit<SbpmLinkOptions<typeof SbpmSendStateTransitionType>, "label"> {
+	extends SbpmLinkOptions<typeof SbpmSendStateTransitionType> {
 	subject: string;
 	message: string;
 }
@@ -144,10 +144,8 @@ export class SbpmSendStateTransition extends SbpmLink<
 			type: SbpmSendStateTransitionType,
 			source: source,
 			target: target,
-			data: {
-				toolsOptions: [],
-				...customData,
-			},
+			toolsOptions: [],
+			customData,
 		});
 
 		this.appendLabel(
@@ -170,14 +168,40 @@ export class SbpmSendStateTransition extends SbpmLink<
 		super.update(restOptions);
 	}
 
-	public override select() {
+	public override options(): SbpmSendStateTransitionOptions {
+		const options: SbpmSendStateTransitionOptions = {
+			...joint.util.cloneDeep(super.options()),
+			message: "",
+			subject: "",
+		};
+		const iconLabel = this.label(0);
+		let message: string | undefined = undefined;
+		let subject: string | undefined = undefined;
+		if (iconLabel) {
+			message = iconLabel.attrs?.bodyText?.text;
+			subject = iconLabel.attrs?.headerText?.text;
+			if (!message) {
+				throw new Error("Could not get message.");
+			}
+			if (!subject) {
+				throw new Error("Could not get subject.");
+			}
+			options.message = message;
+			options.subject = subject;
+		} else {
+			throw new Error("Could not get icon label.");
+		}
+		return options;
+	}
+
+	public override select(): void {
 		super.select();
 		this.appendLabel(createSelectionLabel(selectionLabel));
 		this.appendLabel(createButtonLabel(removeLabel));
 		this.appendLabel(createButtonLabel(removeVerticesLabel));
 	}
 
-	public override deselect() {
+	public override deselect(): void {
 		super.deselect();
 		for (const _label of this.labels().slice(1)) {
 			this.removeLabel(-1);

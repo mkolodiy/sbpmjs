@@ -1,4 +1,4 @@
-import type * as joint from "@joint/core";
+import * as joint from "@joint/core";
 import { SbpmLink, type SbpmLinkOptions } from "../core/link";
 import type { UpdateOptions } from "../core/shared/types";
 import { CustomEvent } from "../shared/constants";
@@ -7,7 +7,7 @@ import { autoRenewIcon } from "../shared/icons";
 export const SbpmProcessTransitionType = "sbpm.pnd.SbpmProcessTransition";
 
 export interface SbpmProcessTransitionOptions
-	extends Omit<SbpmLinkOptions<typeof SbpmProcessTransitionType>, "label"> {}
+	extends SbpmLinkOptions<typeof SbpmProcessTransitionType> {}
 
 export class SbpmProcessTransition extends SbpmLink<
 	typeof SbpmProcessTransitionType
@@ -19,48 +19,46 @@ export class SbpmProcessTransition extends SbpmLink<
 			type: SbpmProcessTransitionType,
 			source: source,
 			target: target,
-			data: {
-				toolsOptions: [
-					{
-						type: "remove",
-						options: {
-							distance: 60,
-							action: (evt: joint.dia.Event, linkView: joint.dia.LinkView) => {
-								linkView.paper?.trigger(CustomEvent.LINK_REMOVE, linkView, evt);
-							},
+			toolsOptions: [
+				{
+					type: "remove",
+					options: {
+						distance: 60,
+						action: (evt: joint.dia.Event, linkView: joint.dia.LinkView) => {
+							linkView.paper?.trigger(CustomEvent.LINK_REMOVE, linkView, evt);
 						},
 					},
-					{
-						type: "reset-vertices",
-						options: {
-							distance: 84,
-							action: (evt: joint.dia.Event, linkView: joint.dia.LinkView) => {
-								linkView.paper?.trigger(
-									CustomEvent.LINK_REMOVE_VERTICES,
-									linkView,
-									evt,
-								);
-							},
-							markup: [
-								{
-									tagName: "rect",
-								},
-								{
-									tagName: "image",
-									attributes: {
-										"xlink:href": autoRenewIcon,
-									},
-								},
-								{
-									tagName: "title",
-									textContent: "Reset vertices",
-								},
-							],
+				},
+				{
+					type: "reset-vertices",
+					options: {
+						distance: 84,
+						action: (evt: joint.dia.Event, linkView: joint.dia.LinkView) => {
+							linkView.paper?.trigger(
+								CustomEvent.LINK_REMOVE_VERTICES,
+								linkView,
+								evt,
+							);
 						},
+						markup: [
+							{
+								tagName: "rect",
+							},
+							{
+								tagName: "image",
+								attributes: {
+									"xlink:href": autoRenewIcon,
+								},
+							},
+							{
+								tagName: "title",
+								textContent: "Reset vertices",
+							},
+						],
 					},
-				],
-				...customData,
-			},
+				},
+			],
+			customData,
 		});
 
 		if (id) {
@@ -68,7 +66,11 @@ export class SbpmProcessTransition extends SbpmLink<
 		}
 	}
 
-	public update(options: UpdateOptions<SbpmProcessTransitionOptions>) {
+	public update(options: UpdateOptions<SbpmProcessTransitionOptions>): void {
 		super.update(options);
+	}
+
+	public override options(): SbpmProcessTransitionOptions {
+		return joint.util.cloneDeep(super.options());
 	}
 }

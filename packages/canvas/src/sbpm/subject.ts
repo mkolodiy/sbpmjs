@@ -1,4 +1,4 @@
-import type * as joint from "@joint/core";
+import * as joint from "@joint/core";
 import { SbpmElement, type SbpmElementOptions } from "../core/element";
 import type { UpdateOptions } from "../core/shared/types";
 import { CustomEvent } from "../shared/constants";
@@ -42,54 +42,52 @@ export class SbpmSubject extends SbpmElement<typeof SbpmSubjectType> {
 			},
 			position: position,
 			type: SbpmSubjectType,
-			data: {
-				toolsOptions: [
-					{
-						type: "remove",
-						options: {
-							x: 95,
-							action: (
-								evt: joint.dia.Event,
-								elementView: joint.dia.ElementView,
-							) => {
-								elementView.paper?.trigger(
-									CustomEvent.ELEMENT_REMOVE,
-									elementView,
-									evt,
-								);
+			toolsOptions: [
+				{
+					type: "remove",
+					options: {
+						x: 95,
+						action: (
+							evt: joint.dia.Event,
+							elementView: joint.dia.ElementView,
+						) => {
+							elementView.paper?.trigger(
+								CustomEvent.ELEMENT_REMOVE,
+								elementView,
+								evt,
+							);
+						},
+					},
+				},
+				{
+					type: "connect",
+					options: {
+						x: 119,
+					},
+				},
+				{
+					type: "open",
+					options: {
+						x: 143,
+						markup: [
+							{
+								tagName: "rect",
 							},
-						},
-					},
-					{
-						type: "connect",
-						options: {
-							x: 119,
-						},
-					},
-					{
-						type: "open",
-						options: {
-							x: 143,
-							markup: [
-								{
-									tagName: "rect",
+							{
+								tagName: "image",
+								attributes: {
+									"xlink:href": openInNew,
 								},
-								{
-									tagName: "image",
-									attributes: {
-										"xlink:href": openInNew,
-									},
-								},
-								{
-									tagName: "title",
-									textContent: "Open",
-								},
-							],
-						},
+							},
+							{
+								tagName: "title",
+								textContent: "Open",
+							},
+						],
 					},
-				],
-				...customData,
-			},
+				},
+			],
+			customData,
 		});
 
 		if (id) {
@@ -99,5 +97,9 @@ export class SbpmSubject extends SbpmElement<typeof SbpmSubjectType> {
 
 	public override update(options: UpdateOptions<SbpmSubjectOptions>): void {
 		super.update(options);
+	}
+
+	public override options(): SbpmSubjectOptions {
+		return joint.util.cloneDeep(super.options());
 	}
 }

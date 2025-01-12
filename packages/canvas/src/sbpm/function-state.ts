@@ -61,33 +61,32 @@ export class SbpmFunctionState extends SbpmElement<
 			},
 			position: position,
 			type: SbpmFunctionStateType,
-			data: {
-				toolsOptions: [
-					{
-						type: "remove",
-						options: {
-							x: 100,
-							action: (
-								evt: joint.dia.Event,
-								elementView: joint.dia.ElementView,
-							) => {
-								elementView.paper?.trigger(
-									CustomEvent.ELEMENT_REMOVE,
-									elementView,
-									evt,
-								);
-							},
+			toolsOptions: [
+				{
+					type: "remove",
+					options: {
+						x: 100,
+						action: (
+							evt: joint.dia.Event,
+							elementView: joint.dia.ElementView,
+						) => {
+							elementView.paper?.trigger(
+								CustomEvent.ELEMENT_REMOVE,
+								elementView,
+								evt,
+							);
 						},
 					},
-					{
-						type: "connect",
-						options: {
-							x: 125,
-						},
+				},
+				{
+					type: "connect",
+					options: {
+						x: 125,
 					},
-				],
-				...customData,
-			},
+				},
+			],
+			customData,
+			role,
 		});
 
 		if (id) {
@@ -95,7 +94,7 @@ export class SbpmFunctionState extends SbpmElement<
 		}
 	}
 
-	public update(options: UpdateOptions<SbpmFunctionStateOptions>) {
+	public update(options: UpdateOptions<SbpmFunctionStateOptions>): void {
 		const { role = "none" } = options;
 
 		if (role !== "none") {
@@ -113,5 +112,13 @@ export class SbpmFunctionState extends SbpmElement<
 		}
 
 		super.update(options);
+	}
+
+	public override options(): SbpmFunctionStateOptions {
+		const options: SbpmFunctionStateOptions = joint.util.cloneDeep(
+			super.options(),
+		);
+		options.role = this.prop("role");
+		return options;
 	}
 }

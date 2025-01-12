@@ -4,6 +4,7 @@ import { SbpmElementView } from "./core/element-view";
 import { SbpmLink } from "./core/link";
 import { SbpmLinkView } from "./core/link-view";
 import { SbpmCanvasOrigin } from "./core/origin";
+import type { SbpmItemId, UpdateOptions } from "./core/shared/types";
 import {
 	SbpmFunctionState,
 	type SbpmFunctionStateOptions,
@@ -14,6 +15,11 @@ import {
 	type SbpmFunctionStateTransitionOptions,
 	SbpmFunctionStateTransitionType,
 } from "./sbpm/function-state-transition";
+import {
+	SbpmMessage,
+	type SbpmMessageOptions,
+	SbpmMessageType,
+} from "./sbpm/message";
 import {
 	SbpmMessageTransition,
 	type SbpmMessageTransitionOptions,
@@ -60,7 +66,6 @@ import {
 	SbpmSubjectType,
 } from "./sbpm/subject";
 import { CustomEvent, JointEvent } from "./shared/constants";
-import { isSbpmLinkType } from "./shared/utils";
 
 type EventMap = joint.dia.Paper.EventMap & {
 	[JointEvent.ELEMENT_POINTERDOWN]: (
@@ -105,10 +110,7 @@ export interface SbpmCanvasOptions {
 		item: ElementEventHandlerParams | LinkEventHandlerParams,
 	) => void;
 	onClickCanvas?: () => void;
-	onChangePositionElement?: (
-		element: SbpmElement,
-		position: joint.dia.Point,
-	) => void;
+	onChangeItem?: (element: SbpmElement | SbpmLink) => void;
 }
 
 const namespace = {
@@ -144,6 +146,7 @@ const defaultOptions: joint.dia.Paper.Options = {
 export class SbpmCanvas {
 	#graph: joint.dia.Graph;
 	#paper: joint.dia.Paper;
+	public cleanup: () => void;
 
 	constructor(options: SbpmCanvasOptions) {
 		this.#graph = new joint.dia.Graph({}, { cellNamespace: namespace });
@@ -157,18 +160,24 @@ export class SbpmCanvas {
 		this.#paper.el.style.cursor = "grab";
 
 		this.#addOrigin();
-		this.#addDragging(options);
+		const listener = this.#addDragging(options);
 		this.#registerPaperEvents(options);
 		this.#registerGraphEvents(options);
 		this.#registerElementEvents(options);
 		this.#registerLinkEvents(options);
+
+		this.cleanup = () => {
+			options.container.removeEventListener("mousemove", listener, true);
+			this.#graph.off();
+			this.#paper.off();
+		};
 	}
 
 	#addOrigin(): void {
 		this.#graph.addCell(new SbpmCanvasOrigin());
 	}
 
-	#addDragging({ container }: SbpmCanvasOptions): void {
+	#addDragging({ container }: SbpmCanvasOptions): (event: MouseEvent) => void {
 		let dragStartPosition: joint.dia.Point | undefined;
 
 		this.#paper.on(
@@ -185,20 +194,19 @@ export class SbpmCanvas {
 			},
 		);
 
-		container.addEventListener(
-			"mousemove",
-			(evt: MouseEvent) => {
-				if (dragStartPosition !== undefined) {
-					const scale = this.#paper.scale();
+		const listener = (evt: MouseEvent) => {
+			if (dragStartPosition !== undefined) {
+				const scale = this.#paper.scale();
 
-					const x = evt.offsetX - dragStartPosition.x * scale.sx;
-					const y = evt.offsetY - dragStartPosition.y * scale.sy;
+				const x = evt.offsetX - dragStartPosition.x * scale.sx;
+				const y = evt.offsetY - dragStartPosition.y * scale.sy;
 
-					this.#paper.translate(x, y);
-				}
-			},
-			true,
-		);
+				this.#paper.translate(x, y);
+			}
+		};
+
+		container.addEventListener("mousemove", listener, true);
+		return listener;
 	}
 
 	#registerPaperEvents({ onClickCanvas }: SbpmCanvasOptions): void {
@@ -214,24 +222,26 @@ export class SbpmCanvas {
 	}
 
 	#registerGraphEvents({ onAddItem }: SbpmCanvasOptions) {
-		this.#graph.on("add", (item: SbpmElement | SbpmLink) => {
-			if (item instanceof SbpmElement || item instanceof SbpmLink) {
-				onAddItem?.(item);
-			}
-		});
+		if (onAddItem) {
+			this.#graph.on("add", (item: SbpmElement | SbpmLink) => {
+				if (item instanceof SbpmElement || item instanceof SbpmLink) {
+					onAddItem(item);
+				}
+			});
+		}
 	}
 
 	#registerElementEvents({
 		onSelectElement,
 		onDeleteElement,
-		onChangePositionElement,
+		onChangeItem,
+		onOpenElement,
 	}: SbpmCanvasOptions): void {
-		this.#graph.on(
-			"change:position",
-			(model: SbpmElement, options: joint.dia.Point) => {
-				onChangePositionElement?.(model, options);
-			},
-		);
+		if (onChangeItem) {
+			this.#graph.on("change", (model: SbpmElement | SbpmLink) => {
+				onChangeItem(model);
+			});
+		}
 
 		this.#paper.on<keyof EventMap>(
 			JointEvent.ELEMENT_POINTERDOWN,
@@ -255,6 +265,14 @@ export class SbpmCanvas {
 				onDeleteElement?.(elementView.model);
 			},
 		);
+
+		this.#paper.on(
+			CustomEvent.ELEMENT_OPEN,
+			(elementView: SbpmElementView, evt: MouseEvent) => {
+				evt.stopPropagation();
+				onOpenElement?.(elementView.model);
+			},
+		);
 	}
 
 	#registerLinkEvents({
@@ -274,12 +292,14 @@ export class SbpmCanvas {
 			},
 		);
 
-		this.#paper.on<keyof EventMap>(
-			JointEvent.LINK_CONNECT,
-			(linkView: SbpmLinkView) => {
-				onConnectLink?.(linkView.model);
-			},
-		);
+		if (onConnectLink) {
+			this.#paper.on<keyof EventMap>(
+				JointEvent.LINK_CONNECT,
+				(linkView: SbpmLinkView) => {
+					onConnectLink(linkView.model);
+				},
+			);
+		}
 
 		this.#paper.on(
 			CustomEvent.LINK_REMOVE,
@@ -298,20 +318,22 @@ export class SbpmCanvas {
 			},
 		);
 
-		this.#paper.on(
-			CustomEvent.LINK_OPEN,
-			(linkView: SbpmLinkView, evt: MouseEvent) => {
-				evt.stopPropagation();
-				onOpenLink?.(linkView.model);
-			},
-		);
+		if (onOpenLink) {
+			this.#paper.on(
+				CustomEvent.LINK_OPEN,
+				(linkView: SbpmLinkView, evt: MouseEvent) => {
+					evt.stopPropagation();
+					onOpenLink(linkView.model);
+				},
+			);
+		}
 	}
 
-	public get paper() {
+	public get paper(): joint.dia.Paper {
 		return this.#paper;
 	}
 
-	public get graph() {
+	public get graph(): joint.dia.Graph {
 		return this.#graph;
 	}
 
@@ -330,242 +352,171 @@ export class SbpmCanvas {
 		) as Array<SbpmLink>;
 	}
 
-	public getElement<TType extends SbpmElement>(id: joint.dia.Cell.ID): TType {
+	public getElement<TType extends SbpmElement = SbpmElement>(
+		id: SbpmItemId,
+	): TType {
 		const element = this.getElements().find((element) => element.id === id);
 		if (!element) {
-			throw new Error();
+			throw new Error(`Could not find element with the id: ${id}`);
 		}
 		return element as TType;
 	}
 
-	public updateElement<
-		TOptions extends SbpmProcessNetworkOptions | SbpmProcessModelOptions,
-	>(options: TOptions): void {
-		switch (options.type) {
+	public getLink<TType extends SbpmLink = SbpmLink>(id: SbpmItemId): TType {
+		const link = this.getLinks().find((link) => link.id === id);
+		if (!link) {
+			throw new Error(`Could not find link with the id: ${id}`);
+		}
+		return link as TType;
+	}
+
+	public getItems(): Array<SbpmElement | SbpmLink> {
+		return [...this.getElements(), ...this.getLinks()];
+	}
+
+	public updateItem<
+		TOptions extends
+			| SbpmProcessNetworkOptions
+			| SbpmProcessModelOptions
+			| SbpmSubjectOptions
+			| SbpmSendStateOptions
+			| SbpmReceiveStateOptions
+			| SbpmFunctionStateOptions
+			| SbpmMessageOptions
+			| SbpmProcessTransitionOptions
+			| SbpmMessageTransitionOptions
+			| SbpmSendStateTransitionOptions
+			| SbpmReceiveStateTransitionOptions
+			| SbpmFunctionStateTransitionOptions,
+	>(
+		options: UpdateOptions<TOptions> & {
+			id: TOptions["id"];
+			type: TOptions["type"];
+		},
+	): void {
+		const { id, type, ...restOptions } = options;
+		switch (type) {
 			case SbpmProcessNetworkType:
-				this.getElement<SbpmProcessNetwork>(options.id).update(options);
+				this.getElement<SbpmProcessNetwork>(id).update(restOptions);
 				break;
 			case SbpmProcessModelType:
-				this.getElement<SbpmProcessModel>(options.id).update(options);
+				this.getElement<SbpmProcessModel>(id).update(restOptions);
+				break;
+			case SbpmProcessTransitionType:
+				this.getLink<SbpmProcessTransition>(id).update(restOptions);
+				break;
+			case SbpmSubjectType:
+				this.getElement<SbpmSubject>(id).update(restOptions);
+				break;
+			case SbpmMessageTransitionType:
+				this.getLink<SbpmMessageTransition>(id).update(restOptions);
+				break;
+			case SbpmSendStateType:
+				this.getElement<SbpmSendState>(id).update(restOptions);
+				break;
+			case SbpmMessageType:
+				this.getElement<SbpmMessage>(id).update(restOptions);
+				break;
+			case SbpmSendStateTransitionType:
+				this.getLink<SbpmSendStateTransition>(id).update(restOptions);
+				break;
+			case SbpmReceiveStateType:
+				this.getElement<SbpmReceiveState>(id).update(restOptions);
+				break;
+			case SbpmReceiveStateTransitionType:
+				this.getLink<SbpmReceiveStateTransition>(id).update(restOptions);
+				break;
+			case SbpmFunctionStateType:
+				this.getElement<SbpmFunctionState>(id).update(restOptions);
+				break;
+			case SbpmFunctionStateTransitionType:
+				this.getLink<SbpmFunctionStateTransition>(id).update(restOptions);
 				break;
 			default:
 				throw new Error("Provided type is not supported.");
 		}
 	}
 
-	public createSbpmProcessNetwork(
-		options: Omit<SbpmProcessNetworkOptions, "type">,
-	): SbpmProcessNetwork {
-		return new SbpmProcessNetwork({
-			type: "sbpm.pnd.SbpmProcessNetwork",
-			...options,
-		});
-	}
-
-	public addSbpmProcessNetwork(
-		options: Omit<SbpmProcessNetworkOptions, "type">,
-	): SbpmProcessNetwork {
-		return this.createSbpmProcessNetwork(options).addTo(this.#graph);
-	}
-
-	public createSbpmProcessModel(
-		options: SbpmProcessModelOptions,
-	): SbpmProcessModel {
-		return new SbpmProcessModel(options);
-	}
-
-	public addSbpmProcessModel(
-		options: SbpmProcessModelOptions,
-	): SbpmProcessModel {
-		return this.createSbpmProcessModel(options).addTo(this.#graph);
-	}
-
-	public createSbpmSubject(options: SbpmSubjectOptions): SbpmSubject {
-		return new SbpmSubject(options);
-	}
-
-	public addSbpmSubject(options: SbpmSubjectOptions): SbpmSubject {
-		return this.createSbpmSubject(options).addTo(this.#graph);
-	}
-
-	public createSbpmMessageTransition(
-		options: SbpmMessageTransitionOptions,
-	): SbpmMessageTransition {
-		return new SbpmMessageTransition(options);
-	}
-
-	public addSbpmMessageTransition(
-		options: SbpmMessageTransitionOptions,
-	): SbpmMessageTransition {
-		return this.createSbpmMessageTransition(options).addTo(this.#graph);
-	}
-
-	public createSbpmSendState(options: SbpmSendStateOptions): SbpmSendState {
-		return new SbpmSendState(options);
-	}
-
-	public addSbpmSendState(options: SbpmSendStateOptions): SbpmSendState {
-		return this.createSbpmSendState(options).addTo(this.#graph);
-	}
-
-	public createSbpmReceiveState(
-		options: SbpmReceiveStateOptions,
-	): SbpmReceiveState {
-		return new SbpmReceiveState(options);
-	}
-
-	public addSbpmReceiveState(
-		options: SbpmReceiveStateOptions,
-	): SbpmReceiveState {
-		return this.createSbpmReceiveState(options).addTo(this.#graph);
-	}
-
-	public createSbpmFunctionState(
-		options: SbpmFunctionStateOptions,
-	): SbpmFunctionState {
-		return new SbpmFunctionState(options);
-	}
-
-	public addSbpmFunctionState(
-		options: SbpmFunctionStateOptions,
-	): SbpmFunctionState {
-		return this.createSbpmFunctionState(options).addTo(this.#graph);
-	}
-
-	public createSbpmSendStateTransition(
-		options: SbpmSendStateTransitionOptions,
-	): SbpmSendStateTransition {
-		return new SbpmSendStateTransition(options);
-	}
-
-	public addSbpmSendStateTransition(
-		options: SbpmSendStateTransitionOptions,
-	): SbpmSendStateTransition {
-		return this.createSbpmSendStateTransition(options).addTo(this.#graph);
-	}
-
-	public createSbpmReceiveStateTransition(
-		options: SbpmReceiveStateTransitionOptions,
-	): SbpmReceiveStateTransition {
-		return new SbpmReceiveStateTransition(options);
-	}
-
-	public addSbpmReceiveStateTransition(
-		options: SbpmReceiveStateTransitionOptions,
-	): SbpmReceiveStateTransition {
-		return this.createSbpmReceiveStateTransition(options).addTo(this.#graph);
-	}
-
-	public createSbpmFunctionStateTransition(
-		options: SbpmFunctionStateTransitionOptions,
-	): SbpmFunctionStateTransition {
-		return new SbpmFunctionStateTransition(options);
-	}
-
-	public addSbpmFunctionStateTransition(
-		options: SbpmFunctionStateTransitionOptions,
-	): SbpmFunctionStateTransition {
-		return this.createSbpmFunctionStateTransition(options).addTo(this.#graph);
-	}
-
-	public addSbpmElement(
-		element:
+	public addItem(
+		item:
 			| SbpmProcessNetworkOptions
 			| SbpmProcessModelOptions
-			| SbpmSubjectOptions
-			| SbpmSendStateOptions
-			| SbpmReceiveStateOptions
-			| SbpmFunctionStateOptions
 			| SbpmProcessTransitionOptions
+			| SbpmSubjectOptions
 			| SbpmMessageTransitionOptions
+			| SbpmMessageOptions
+			| SbpmSendStateOptions
 			| SbpmSendStateTransitionOptions
+			| SbpmReceiveStateOptions
 			| SbpmReceiveStateTransitionOptions
+			| SbpmFunctionStateOptions
 			| SbpmFunctionStateTransitionOptions,
 	): void {
-		switch (element.type) {
+		switch (item.type) {
 			case SbpmProcessNetworkType:
-				new SbpmProcessNetwork(element).addTo(this.#graph);
+				new SbpmProcessNetwork(item).addTo(this.#graph);
 				break;
 			case SbpmProcessModelType:
-				new SbpmProcessModel(element).addTo(this.#graph);
+				new SbpmProcessModel(item).addTo(this.#graph);
+				break;
+			case SbpmProcessTransitionType:
+				new SbpmProcessTransition(item).addTo(this.#graph);
 				break;
 			case SbpmSubjectType:
-				new SbpmSubject(element).addTo(this.#graph);
+				new SbpmSubject(item).addTo(this.#graph);
+				break;
+			case SbpmMessageTransitionType:
+				new SbpmMessageTransition(item).addTo(this.#graph);
+				break;
+			case SbpmMessageType:
+				new SbpmMessage(item).addTo(this.#graph);
 				break;
 			case SbpmSendStateType:
-				new SbpmSendState(element).addTo(this.#graph);
+				new SbpmSendState(item).addTo(this.#graph);
+				break;
+			case SbpmSendStateTransitionType:
+				new SbpmSendStateTransition(item).addTo(this.#graph);
 				break;
 			case SbpmReceiveStateType:
-				new SbpmReceiveState(element).addTo(this.#graph);
+				new SbpmReceiveState(item).addTo(this.#graph);
+				break;
+			case SbpmReceiveStateTransitionType:
+				new SbpmReceiveStateTransition(item).addTo(this.#graph);
 				break;
 			case SbpmFunctionStateType:
-				new SbpmFunctionState(element).addTo(this.#graph);
+				new SbpmFunctionState(item).addTo(this.#graph);
 				break;
+			case SbpmFunctionStateTransitionType:
+				new SbpmFunctionStateTransition(item).addTo(this.#graph);
+				break;
+			default:
+				throw new Error("Provided type is not supported.");
 		}
 	}
 
-	public addSbpmItems(
+	public addItems(
 		items: Array<
 			| SbpmProcessNetworkOptions
 			| SbpmProcessModelOptions
-			| SbpmSubjectOptions
-			| SbpmSendStateOptions
-			| SbpmReceiveStateOptions
-			| SbpmFunctionStateOptions
 			| SbpmProcessTransitionOptions
+			| SbpmSubjectOptions
 			| SbpmMessageTransitionOptions
+			| SbpmMessageOptions
+			| SbpmSendStateOptions
 			| SbpmSendStateTransitionOptions
+			| SbpmReceiveStateOptions
 			| SbpmReceiveStateTransitionOptions
+			| SbpmFunctionStateOptions
 			| SbpmFunctionStateTransitionOptions
 		>,
 	): void {
 		this.clear();
-		const elements = items.filter(({ type }) => !isSbpmLinkType(type));
-		const links = items.filter(({ type }) => isSbpmLinkType(type));
-		for (const element of elements) {
-			switch (element.type) {
-				case SbpmProcessNetworkType:
-					new SbpmProcessNetwork(element).addTo(this.#graph);
-					break;
-				case SbpmProcessModelType:
-					new SbpmProcessModel(element).addTo(this.#graph);
-					break;
-				case SbpmSubjectType:
-					new SbpmSubject(element).addTo(this.#graph);
-					break;
-				case SbpmSendStateType:
-					new SbpmSendState(element).addTo(this.#graph);
-					break;
-				case SbpmReceiveStateType:
-					new SbpmReceiveState(element).addTo(this.#graph);
-					break;
-				case SbpmFunctionStateType:
-					new SbpmFunctionState(element).addTo(this.#graph);
-					break;
-			}
-		}
-		for (const link of links) {
-			switch (link.type) {
-				case SbpmProcessTransitionType:
-					new SbpmProcessTransition(link).addTo(this.#graph);
-					break;
-				case SbpmMessageTransitionType:
-					new SbpmMessageTransition(link).addTo(this.#graph);
-					break;
-				case SbpmSendStateTransitionType:
-					new SbpmSendStateTransition(link).addTo(this.#graph);
-					break;
-				case SbpmReceiveStateTransitionType:
-					new SbpmReceiveStateTransition(link).addTo(this.#graph);
-					break;
-				case SbpmFunctionStateTransitionType:
-					new SbpmFunctionStateTransition(link).addTo(this.#graph);
-					break;
-			}
+		for (const item of items) {
+			this.addItem(item);
 		}
 	}
 
-	public deselect() {
+	public deselect(): void {
 		this.#paper.hideTools();
 		for (const element of this.getElements()) {
 			element.deselect();
@@ -575,27 +526,27 @@ export class SbpmCanvas {
 		}
 	}
 
-	public reset() {
+	public reset(): void {
 		this.#paper.translate(0, 0);
 	}
 
-	public clear() {
+	public clear(): void {
 		this.#graph.clear();
 		this.#addOrigin();
 	}
 
-	public zoomIn() {
+	public zoomIn(): void {
 		const scale = this.#paper.scale();
 		this.#paper.scale(scale.sx + 0.1, scale.sx + 0.1);
 	}
 
-	public zoomOut() {
+	public zoomOut(): void {
 		const scale = this.#paper.scale();
 		this.#paper.scale(scale.sx - 0.1, scale.sx - 0.1);
 	}
 }
 
-function defaultLink(view: joint.dia.CellView): SbpmLink | joint.dia.Link {
+function defaultLink(view: joint.dia.CellView): SbpmLink {
 	if (view instanceof SbpmElementView) {
 		const type = view.model.get("type");
 		switch (type) {
@@ -618,7 +569,7 @@ function defaultLink(view: joint.dia.CellView): SbpmLink | joint.dia.Link {
 			case SbpmSendStateType:
 				return new SbpmSendStateTransition({
 					id: crypto.randomUUID(),
-					type: "sbpm.pnd.SbpmSendStateTransition",
+					type: "sbpm.sbd.SbpmSendStateTransition",
 					subject: "To some [Subject]",
 					message: "a [Message]",
 					source: view.model,
@@ -627,7 +578,7 @@ function defaultLink(view: joint.dia.CellView): SbpmLink | joint.dia.Link {
 			case SbpmReceiveStateType:
 				return new SbpmReceiveStateTransition({
 					id: crypto.randomUUID(),
-					type: "sbpm.pnd.SbpmReceiveStateTransition",
+					type: "sbpm.sbd.SbpmReceiveStateTransition",
 					subject: "From some [Subject]",
 					message: "a [Message]",
 					source: view.model,
@@ -636,16 +587,16 @@ function defaultLink(view: joint.dia.CellView): SbpmLink | joint.dia.Link {
 			case SbpmFunctionStateType:
 				return new SbpmFunctionStateTransition({
 					id: crypto.randomUUID(),
-					type: "sbpm.pnd.SbpmFunctionStateTransition",
+					type: "sbpm.sbd.SbpmFunctionStateTransition",
 					message: "Do something",
 					source: view.model,
 					target: { id: "" },
 				});
 			default:
-				return new SbpmLink();
+				throw new Error("Provided type is not supported.");
 		}
 	}
-	return new joint.dia.Link();
+	throw new Error("Provided view is not an instance of SbpmElementView.");
 }
 
 function validateConnection(

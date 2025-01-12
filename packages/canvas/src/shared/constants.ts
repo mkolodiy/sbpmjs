@@ -13,4 +13,5 @@ export const CustomEvent = {
 	LINK_OPEN: "link:open",
 	ELEMENT_UPDATED: "element:updated",
 	ELEMENT_REMOVE: "element:remove",
+	ELEMENT_OPEN: "element:open",
 } as const;

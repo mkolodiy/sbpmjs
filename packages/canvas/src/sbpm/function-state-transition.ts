@@ -1,4 +1,4 @@
-import type * as joint from "@joint/core";
+import * as joint from "@joint/core";
 import { SbpmLink, type SbpmLinkOptions } from "../core/link";
 import {
 	createButtonLabel,
@@ -92,13 +92,10 @@ const removeVerticesLabel: joint.dia.Link.Label = {
 };
 
 export const SbpmFunctionStateTransitionType =
-	"sbpm.pnd.SbpmFunctionStateTransition";
+	"sbpm.sbd.SbpmFunctionStateTransition";
 
 export interface SbpmFunctionStateTransitionOptions
-	extends Omit<
-		SbpmLinkOptions<typeof SbpmFunctionStateTransitionType>,
-		"label"
-	> {
+	extends SbpmLinkOptions<typeof SbpmFunctionStateTransitionType> {
 	message: string;
 }
 
@@ -117,10 +114,8 @@ export class SbpmFunctionStateTransition extends SbpmLink<
 			type: SbpmFunctionStateTransitionType,
 			source: source,
 			target: target,
-			data: {
-				toolsOptions: [],
-				...customData,
-			},
+			toolsOptions: [],
+			...customData,
 		});
 
 		this.appendLabel(
@@ -134,7 +129,7 @@ export class SbpmFunctionStateTransition extends SbpmLink<
 
 	public override update(
 		options: UpdateOptions<SbpmFunctionStateTransitionOptions>,
-	) {
+	): void {
 		const { message, ...restOptions } = options;
 
 		const updatedIconLabel = getIconLabel(this.label(0), undefined, message);
@@ -143,14 +138,33 @@ export class SbpmFunctionStateTransition extends SbpmLink<
 		super.update(restOptions);
 	}
 
-	public override select() {
+	public options(): SbpmFunctionStateTransitionOptions {
+		const options: SbpmFunctionStateTransitionOptions = {
+			...joint.util.cloneDeep(super.options()),
+			message: "",
+		};
+		const iconLabel = this.label(0);
+		let message: string | undefined = undefined;
+		if (iconLabel) {
+			message = iconLabel.attrs?.bodyText?.text;
+			if (!message) {
+				throw new Error("Could not get message.");
+			}
+			options.message = message;
+		} else {
+			throw new Error("Could not get icon label.");
+		}
+		return options;
+	}
+
+	public override select(): void {
 		super.select();
 		this.appendLabel(createSelectionLabel(selectionLabel));
 		this.appendLabel(createButtonLabel(removeLabel));
 		this.appendLabel(createButtonLabel(removeVerticesLabel));
 	}
 
-	public override deselect() {
+	public override deselect(): void {
 		super.deselect();
 		for (const _label of this.labels().slice(1)) {
 			this.removeLabel(-1);
