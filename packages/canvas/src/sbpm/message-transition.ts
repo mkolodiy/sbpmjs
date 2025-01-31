@@ -214,6 +214,8 @@ function handleRole(
 ): void {
 	if (role === "unidirectional") {
 		link.removeAttr("line/sourceMarker");
+		console.log("here");
+
 		link.setToolsOptions([]);
 	} else {
 		link.attr("line/sourceMarker", {

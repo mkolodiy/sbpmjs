@@ -46,7 +46,7 @@ export class SbpmElement<TType extends string = string> extends joint.dia
 	}
 
 	public getToolsOptions(): SbpmElementToolsOptions {
-		const toolsOptions = this.attributes.data?.toolsOptions;
+		const toolsOptions = this.prop("toolsOptions");
 		if (!toolsOptions) {
 			throw new Error(
 				`toolsOptions not defined for element with id ${this.id} and type ${this.prop("type")} `,

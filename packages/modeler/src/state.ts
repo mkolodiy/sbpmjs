@@ -1,65 +1,45 @@
-import type {
-	SbpmProcessNetworkOptions,
-	SbpmProcessModelOptions,
-	SbpmItemId,
-} from "@sbpmjs/canvas";
-import { dispatchItemUpdatedEvent } from "./custom-events";
+import type { SbpmItemId, SbpmItemOptions } from "./types";
 
-export type ItemKey = SbpmItemId;
+class StateImpl {
+	#items: Map<SbpmItemId, SbpmItemOptions>;
 
-export type ItemValue = SbpmProcessNetworkOptions | SbpmProcessModelOptions;
+	constructor() {
+		this.#items = new Map();
+	}
 
-interface State {
-	items: Map<ItemKey, ItemValue>;
-	getItem(id: ItemKey): ItemValue;
-	setItem(id: ItemKey, value: ItemValue): void;
-	updateItem(id: ItemKey, value: Partial<Omit<ItemValue, "type">>): ItemValue;
-}
+	public getItems(): Array<SbpmItemOptions> {
+		return Array.from(this.#items.values());
+	}
 
-const items: Map<ItemKey, ItemValue> = new Map();
-
-const state: State = {
-	items: new Proxy(items, {
-		get(target, property) {
-			let ret = Reflect.get(target, property);
-			if (property === "get" && typeof ret === "function") {
-				ret = ret.bind(target);
-				ret = new Proxy(ret, {
-					apply(target, _thisArg, argumentsList) {
-						return target(...argumentsList);
-					},
-				});
-			} else if (typeof ret === "function") {
-				ret = ret.bind(target);
-			}
-
-			return ret;
-		},
-	}),
-	getItem(id: ItemKey): ItemValue {
-		const item = this.items.get(id);
+	public getItem(id: SbpmItemId): SbpmItemOptions {
+		const item = this.#items.get(id);
 		if (!item) {
 			throw new Error(`Could not get item for id: ${id}`);
 		}
 		return item;
-	},
-	setItem(id, value) {
-		this.items.set(id, value);
-		window.dispatchEvent(new CustomEvent("element-added", { detail: id }));
-	},
-	updateItem(id, value) {
+	}
+
+	public setItem(id: SbpmItemId, value: SbpmItemOptions) {
+		this.#items.set(id, value);
+	}
+
+	public updateItem(
+		id: SbpmItemId,
+		value: Partial<Omit<SbpmItemOptions, "id" | "type">>,
+	) {
 		const existingItem = this.getItem(id);
 
-		const newItem: typeof existingItem = {
+		const newItem: SbpmItemOptions = {
 			...existingItem,
 			...value,
 		};
 		this.setItem(id, newItem);
-		dispatchItemUpdatedEvent(newItem);
 		return newItem;
-	},
-};
+	}
 
-export function getState(): State {
-	return state;
+	public clear() {
+		this.#items.clear();
+	}
 }
+
+export const State = new StateImpl();

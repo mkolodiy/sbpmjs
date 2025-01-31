@@ -1,5 +1,4 @@
 import * as joint from "@joint/core";
-import type { SbpmElement } from "./element";
 import type { SbpmLinkToolsOptions } from "./link-tools";
 import type {
 	SbpmItemAttributes,
@@ -14,8 +13,8 @@ type SbpmLinkAttributes<TType extends string> =
 
 export interface SbpmLinkOptions<TType extends string>
 	extends SbpmItemOptions<TType> {
-	source: SbpmElement | { id: SbpmItemId };
-	target: SbpmElement | { id: SbpmItemId };
+	source: { id: SbpmItemId };
+	target: { id: SbpmItemId };
 }
 
 export class SbpmLink<TType extends string = string> extends joint.dia.Link<
@@ -50,7 +49,7 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 	}
 
 	public getToolsOptions(): SbpmLinkToolsOptions {
-		const toolsOptions = this.attributes.data?.toolsOptions;
+		const toolsOptions = this.prop("toolsOptions");
 		if (!toolsOptions) {
 			throw new Error(
 				`toolsOptions not defined for link with id ${this.id} and type ${this.attributes.type} `,
@@ -60,7 +59,7 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 	}
 
 	public setToolsOptions(toolsOptions: SbpmLinkToolsOptions) {
-		this.prop("data/toolsOptions", toolsOptions);
+		this.prop("/toolsOptions", toolsOptions);
 	}
 
 	public select(): void {
@@ -100,7 +99,7 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 		if (!sourceId) {
 			throw new Error("Could not get the source id.");
 		}
-		const targetId = this.source()?.id;
+		const targetId = this.target()?.id;
 		if (!targetId) {
 			throw new Error("Could not get the source id.");
 		}

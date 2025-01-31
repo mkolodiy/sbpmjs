@@ -1,20 +1,26 @@
-import { SbpmCanvas, type SbpmProcessNetworkOptions } from "@sbpmjs/canvas";
-import "./components/sbpm-canvas";
-import "./components/sbpm-modeler";
-import "./components/sbpm-properties";
-import "./components/sbpm-item-selector";
-import { getState } from "./state";
 import {
-	ElementSelectedEvent,
-	listenForItemUpdatedEvent,
-} from "./custom-events";
+	SbpmCanvas,
+	SbpmMessageTransitionType,
+	SbpmProcessNetworkType,
+	isSbpmLinkType,
+	isValidSbpmItem,
+} from "@sbpmjs/canvas";
 import { html, render } from "lit-html";
-
-declare module "@sbpmjs/canvas" {
-	interface SbpmProcessNetworkOptions {
-		contains: Array<unknown>;
-	}
-}
+import "./components/sbpm-item-selector";
+import "./components/sbpm-palette";
+import "./components/sbpm-properties";
+import { EventBus } from "./event-bus";
+import { State } from "./state";
+import {
+	type SbpmItemId,
+	type SbpmItemOptions,
+	SbpmProcessType,
+} from "./types";
+import {
+	getDefaultElementOptions,
+	isContainerItem,
+	isValidSbpmElementType,
+} from "./utils";
 
 export interface SbpmModelerOptions {
 	container: HTMLElement;
@@ -22,111 +28,182 @@ export interface SbpmModelerOptions {
 
 export class SbpmModeler {
 	#canvas: SbpmCanvas;
+	#openedItemId: SbpmItemId;
 
 	constructor(options: SbpmModelerOptions) {
-		// const sbpmModelerComponent = document.createElement("sbpm-modeler");
-		// options.container.appendChild(sbpmModelerComponent);
+		this.#openedItemId = "";
 
-		// const sbpmItemSelectorComponent =
-		// document.createElement("sbpm-item-selector");
-		// options.container.appendChild(sbpmItemSelectorComponent);
-
-		// const sbpmPropertiesComponent = document.createElement("sbpm-properties");
-		// options.container.appendChild(sbpmPropertiesComponent);
-
-		// const divEl = document.createElement("div");
-		// options.container.appendChild(sbpmCanvasComponent);
-
-		const template = html`<div id="sbpm-canvas-container"></div><sbpm-canvas></sbpm-canvas>`;
+		const template = html`
+			<style>
+				.sbpm-container {
+					width: 100%;
+					position: absolute;
+					display: grid;
+					grid-template-columns: 1fr 3fr 1fr;
+    				gap: 10px;
+					z-index: 1;
+					pointer-events: none;
+				}
+			</style>
+			<div class="sbpm-container">
+				<sbpm-palette></sbpm-palette>
+				<sbpm-item-selector></sbpm-item-selector>
+				<sbpm-properties></sbpm-properties>
+			</div>
+			<div id="sbpm-canvas" @drop="${this.#onDrop}" @dragover="${this.#onAllowDrop}"></div>`;
 		render(template, options.container);
 
-		// const sbpmCanvasComponent =
-		// 	options.container.getElementsByTagName("sbpm-canvas");
-		// console.log(
-		// 	sbpmCanvasComponent.item(0)?.shadowRoot?.getElementById("sbpm-canvas"),
-		// );
-		// sbpmCanvasComponent.item(0)?.shadowRoot?.appendChild(divEl);
-
-		// if (!sbpmCanvasComponent) {
-		// 	throw new Error("sbpm-canvas not present");
-		// }
-		const divEl = document.getElementById("sbpm-canvas-container");
+		const canvasContainer =
+			options.container.querySelector<HTMLElement>("#sbpm-canvas");
+		if (!canvasContainer) {
+			throw new Error("Could not find the canvas container element.");
+		}
 
 		this.#canvas = new SbpmCanvas({
-			container: divEl,
-			onSelectElement: (element) => {
-				console.log(element.id);
-
-				window.dispatchEvent(new ElementSelectedEvent({ id: element.id }));
+			container: canvasContainer,
+			onOpenElement: (element) => {
+				EventBus.trigger("item:deselected", undefined);
+				EventBus.trigger("item:opened", { id: element.id });
 			},
-			onChangePositionElement: (element, position) => {
-				console.log("exec");
-
-				getState().updateItem(element.id as string, {
-					position,
+			onOpenLink: (link) => {
+				EventBus.trigger("item:deselected", undefined);
+				EventBus.trigger("item:opened", { id: link.id });
+			},
+			onSelectElement: (element) => {
+				EventBus.trigger("item:selected", {
+					id: element.id,
 				});
 			},
+			onSelectLink: (link) => {
+				EventBus.trigger("item:selected", { id: link.id });
+			},
+			onChangeItem: (item) => {
+				if (item.isElement()) {
+					State.updateItem(item.id, {
+						position: item.position(),
+					});
+				}
+			},
 			onClickCanvas: () => {
-				// this.#canvas.deselect();
-				window.dispatchEvent(new CustomEvent("element-deselected"));
+				EventBus.trigger("item:deselected", undefined);
+			},
+			onConnectLink: (link) => {
+				const item = link.options();
+				if (isValidSbpmItem(item)) {
+					if (item.type === SbpmMessageTransitionType) {
+						item.contains = [];
+					}
+					const parentItem = State.getItem(this.#openedItemId);
+					if (!isContainerItem(parentItem)) {
+						throw new Error(
+							"Could not add element to parent item because it can't contain child items.",
+						);
+					}
+
+					State.setItem(item.id, item);
+
+					console.log(item);
+
+					State.updateItem(this.#openedItemId, {
+						contains: [...parentItem.contains, item.id],
+					});
+				}
 			},
 		});
 
-		const processNetworkId = crypto.randomUUID();
-		const processNetworkOptions: SbpmProcessNetworkOptions = {
-			contains: [],
-			label: "Test",
-			position: { x: 100, y: 100 },
-			type: "sbpm.pnd.SbpmProcessNetwork",
-			id: processNetworkId,
-		};
-
-		this.#canvas.addSbpmProcessModel({
-			id: crypto.randomUUID(),
-			label: "Model",
-			position: {
-				x: 600,
-				y: 200,
-			},
-			type: "sbpm.pnd.SbpmProcessModel",
-		});
-
-		getState().setItem(processNetworkId, processNetworkOptions);
-
-		this.#canvas.addSbpmProcessNetwork(processNetworkOptions);
-
-		listenForItemUpdatedEvent((event) => {
-			const newItem = event.detail;
-			// const newItem = getState().updateItem(detail.id, {
-			// 	label: detail.label,
-			// });
-			// Pass all options to the updateElement function.
-			// Only the relevant options will be updated.
-			this.#canvas.updateElement(newItem);
-		});
-
-		// window.addEventListener("element-label-changed", (event) => {
-		// 	if (event instanceof ElementLabelChangedEvent) {
-		// 		const detail = event.detail;
-		// 		const newItem = getState().updateItem(detail.id, {
-		// 			label: detail.newLabel,
-		// 		});
-		// 		// Pass all options to the updateElement function.
-		// 		// Only the relevant options will be updated.
-		// 		this.#canvas.updateElement(newItem);
-		// 	}
-		// });
-
-		window.addEventListener("element-added", (event) => {
-			if (event instanceof CustomEvent) {
-				const detail = event.detail;
-				const item = getState().getItem(detail);
-				this.#canvas.addSbpmElement(item);
+		EventBus.on("item:updated", (data) => {
+			const item = State.getItem(data.id);
+			if (isValidSbpmItem(item)) {
+				this.#canvas.updateItem(item);
 			}
 		});
 
-		setInterval(() => {
-			console.log(Array.from(getState().items.entries()));
-		}, 10000);
+		EventBus.on("item:opened", (data) => {
+			this.#openedItemId = data.id;
+			const item = State.getItem(data.id);
+			if (isContainerItem(item)) {
+				const children = item.contains.map((id) => State.getItem(id));
+				const shouldAddItems = children.every(isValidSbpmItem);
+				if (shouldAddItems) {
+					this.#canvas.addItems(children);
+				}
+			}
+		});
+
+		this.#init();
+	}
+
+	#init(): void {
+		const processNetworkOptions = getDefaultElementOptions(
+			SbpmProcessNetworkType,
+		);
+		processNetworkOptions.position = { x: 100, y: 100 };
+		State.setItem(processNetworkOptions.id, processNetworkOptions);
+
+		const processOptions = getDefaultElementOptions(SbpmProcessType);
+		processOptions.contains.push(processNetworkOptions.id);
+		State.setItem(processOptions.id, processOptions);
+
+		EventBus.trigger("item:opened", { id: processOptions.id });
+	}
+
+	#onDrop = (event: DragEvent) => {
+		event.preventDefault();
+
+		const type = event.dataTransfer?.getData("type");
+		if (!isValidSbpmElementType(type)) {
+			throw new Error("Element type not provided.");
+		}
+
+		const parentItem = State.getItem(this.#openedItemId);
+		if (!isContainerItem(parentItem)) {
+			throw new Error(
+				"Could not add element to parent item because it can't contain child items.",
+			);
+		}
+
+		const newItem = getDefaultElementOptions(type);
+		if ("position" in newItem) {
+			const translate = this.#canvas.paper.translate();
+			newItem.position = {
+				x: event.offsetX - translate.tx,
+				y: event.offsetY - translate.ty,
+			};
+		}
+		State.setItem(newItem.id, newItem);
+
+		State.updateItem(this.#openedItemId, {
+			contains: [...parentItem.contains, newItem.id],
+		});
+
+		if (isValidSbpmItem(newItem)) {
+			this.#canvas.addItem(newItem);
+		}
+	};
+
+	#onAllowDrop(event: DragEvent) {
+		event.preventDefault();
+	}
+
+	public addItems(items: Array<SbpmItemOptions>): void {
+		State.clear();
+		const process = items.find((item) => item.type === SbpmProcessType);
+		if (!process) {
+			throw new Error(
+				`Please provide an item with the type: ${SbpmProcessType}`,
+			);
+		}
+		const links = items
+			.filter((item) => isSbpmLinkType(item.type))
+			.map((item) => item.id);
+		for (const item of items) {
+			if (isContainerItem(item)) {
+				item.contains.sort((itemAId) => (links.includes(itemAId) ? 1 : -1));
+			}
+		}
+		for (const item of items) {
+			State.setItem(item.id, item);
+		}
+		EventBus.trigger("item:opened", { id: process.id });
 	}
 }

@@ -327,6 +327,11 @@ export class SbpmCanvas {
 				},
 			);
 		}
+
+		this.#graph.on(CustomEvent.LINK_UPDATED, (link: SbpmLink) => {
+			const linkView = this.#paper.findViewByModel<SbpmLinkView>(link);
+			linkView.refresh();
+		});
 	}
 
 	public get paper(): joint.dia.Paper {
@@ -555,7 +560,7 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 				return new SbpmProcessTransition({
 					id: crypto.randomUUID(),
 					type: "sbpm.pnd.SbpmProcessTransition",
-					source: view.model,
+					source: { id: view.model.id },
 					target: { id: "" },
 				});
 			case SbpmSubjectType:
@@ -563,7 +568,7 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 					id: crypto.randomUUID(),
 					type: "sbpm.sid.SbpmMessageTransition",
 					label: "New message transition",
-					source: view.model,
+					source: { id: view.model.id },
 					target: { id: "" },
 				});
 			case SbpmSendStateType:
@@ -572,7 +577,7 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 					type: "sbpm.sbd.SbpmSendStateTransition",
 					subject: "To some [Subject]",
 					message: "a [Message]",
-					source: view.model,
+					source: { id: view.model.id },
 					target: { id: "" },
 				});
 			case SbpmReceiveStateType:
@@ -581,7 +586,7 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 					type: "sbpm.sbd.SbpmReceiveStateTransition",
 					subject: "From some [Subject]",
 					message: "a [Message]",
-					source: view.model,
+					source: { id: view.model.id },
 					target: { id: "" },
 				});
 			case SbpmFunctionStateType:
@@ -589,7 +594,7 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 					id: crypto.randomUUID(),
 					type: "sbpm.sbd.SbpmFunctionStateTransition",
 					message: "Do something",
-					source: view.model,
+					source: { id: view.model.id },
 					target: { id: "" },
 				});
 			default:

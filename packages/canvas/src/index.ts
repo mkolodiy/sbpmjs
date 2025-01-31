@@ -102,4 +102,5 @@ export {
 	SbpmSubjectType,
 };
 export { isValidSbpmItem } from "./utils";
+export { isSbpmLinkType } from "./shared/utils";
 export * from "./canvas";

@@ -38,7 +38,7 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				preserveModules: true,
-			},
+			}
 		},
 	},
 });

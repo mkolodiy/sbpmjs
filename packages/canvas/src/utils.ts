@@ -6,6 +6,7 @@ import {
 	type SbpmFunctionStateTransitionOptions,
 	SbpmFunctionStateTransitionType,
 } from "./sbpm/function-state-transition";
+import { type SbpmMessageOptions, SbpmMessageType } from "./sbpm/message";
 import {
 	type SbpmMessageTransitionOptions,
 	SbpmMessageTransitionType,
@@ -53,7 +54,8 @@ export function isValidSbpmItem(
 	| SbpmReceiveStateTransitionOptions
 	| SbpmSendStateOptions
 	| SbpmSendStateTransitionOptions
-	| SbpmSubjectOptions {
+	| SbpmSubjectOptions
+	| SbpmMessageOptions {
 	return (
 		typeof item === "object" &&
 		item !== null &&
@@ -68,6 +70,7 @@ export function isValidSbpmItem(
 			item.type === SbpmReceiveStateType ||
 			item.type === SbpmReceiveStateTransitionType ||
 			item.type === SbpmFunctionStateType ||
-			item.type === SbpmFunctionStateTransitionType)
+			item.type === SbpmFunctionStateTransitionType ||
+			item.type === SbpmMessageType)
 	);
 }
