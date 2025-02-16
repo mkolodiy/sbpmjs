@@ -8,7 +8,7 @@ import {
 import type { UpdateOptions } from "../core/shared/types";
 import { CustomEvent } from "../shared/constants";
 import { autoRenewIcon, deleteIcon } from "../shared/icons";
-import { getIconLabel } from "./shared/utils";
+import { updateLabelText } from "./shared/utils";
 
 const iconLabel: joint.dia.Link.Label = {
 	markup: [
@@ -96,14 +96,14 @@ export const SbpmFunctionStateTransitionType =
 
 export interface SbpmFunctionStateTransitionOptions
 	extends SbpmLinkOptions<typeof SbpmFunctionStateTransitionType> {
-	message: string;
+	label: string;
 }
 
 export class SbpmFunctionStateTransition extends SbpmLink<
 	typeof SbpmFunctionStateTransitionType
 > {
 	constructor(options: SbpmFunctionStateTransitionOptions) {
-		const { message, source, customData, id, target } = options;
+		const { label, ...restOptions } = options;
 
 		super({
 			attrs: {
@@ -111,49 +111,36 @@ export class SbpmFunctionStateTransition extends SbpmLink<
 					pointerEvents: "none",
 				},
 			},
+			...restOptions,
 			type: SbpmFunctionStateTransitionType,
-			source: source,
-			target: target,
 			toolsOptions: [],
-			...customData,
 		});
 
 		this.appendLabel(
-			createIconLabel(getIconLabel(iconLabel, undefined, message)),
+			createIconLabel(updateLabelText(iconLabel, "bodyText", label)),
 		);
-
-		if (id) {
-			this.set("id", id);
-		}
 	}
 
 	public override update(
 		options: UpdateOptions<SbpmFunctionStateTransitionOptions>,
 	): void {
-		const { message, ...restOptions } = options;
+		const { label, ...restOptions } = options;
 
-		const updatedIconLabel = getIconLabel(this.label(0), undefined, message);
-		this.removeLabel(0);
-		this.insertLabel(0, updatedIconLabel);
+		if (label) {
+			const updatedIconLabel = updateLabelText(iconLabel, "bodyText", label);
+			this.removeLabel(0);
+			this.insertLabel(0, updatedIconLabel);
+			this.prop("label", label);
+		}
+
 		super.update(restOptions);
 	}
 
 	public options(): SbpmFunctionStateTransitionOptions {
 		const options: SbpmFunctionStateTransitionOptions = {
 			...joint.util.cloneDeep(super.options()),
-			message: "",
+			label: this.prop("label"),
 		};
-		const iconLabel = this.label(0);
-		let message: string | undefined = undefined;
-		if (iconLabel) {
-			message = iconLabel.attrs?.bodyText?.text;
-			if (!message) {
-				throw new Error("Could not get message.");
-			}
-			options.message = message;
-		} else {
-			throw new Error("Could not get icon label.");
-		}
 		return options;
 	}
 

@@ -7,6 +7,10 @@ class StateImpl {
 		this.#items = new Map();
 	}
 
+	public exists(id: SbpmItemId): boolean {
+		return State.#items.has(id);
+	}
+
 	public getItems(): Array<SbpmItemOptions> {
 		return Array.from(this.#items.values());
 	}

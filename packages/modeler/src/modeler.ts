@@ -75,12 +75,20 @@ export class SbpmModeler {
 				});
 			},
 			onSelectLink: (link) => {
+				console.log(link.vertices());
 				EventBus.trigger("item:selected", { id: link.id });
 			},
 			onChangeItem: (item) => {
+				if (!State.exists(item.id)) {
+					return;
+				}
 				if (item.isElement()) {
 					State.updateItem(item.id, {
-						position: item.position(),
+						position: item.options().position,
+					});
+				} else {
+					State.updateItem(item.id, {
+						vertices: item.options().vertices,
 					});
 				}
 			},
@@ -102,8 +110,6 @@ export class SbpmModeler {
 
 					State.setItem(item.id, item);
 
-					console.log(item);
-
 					State.updateItem(this.#openedItemId, {
 						contains: [...parentItem.contains, item.id],
 					});
@@ -113,6 +119,8 @@ export class SbpmModeler {
 
 		EventBus.on("item:updated", (data) => {
 			const item = State.getItem(data.id);
+			console.log(item);
+
 			if (isValidSbpmItem(item)) {
 				this.#canvas.updateItem(item);
 			}

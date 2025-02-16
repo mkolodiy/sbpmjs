@@ -44,6 +44,7 @@ if (container) {
 				x: 500,
 				y: 100,
 			},
+			role: "single",
 			contains: [subjectAId, subjectBId, messageTransitionId],
 		},
 		{
@@ -51,6 +52,7 @@ if (container) {
 			id: processTransitionId,
 			source: { id: processNetworkId },
 			target: { id: processModelId },
+			vertices: [{ x: 385, y: 206 }],
 		},
 		{
 			type: "sbpm.sid.SbpmSubject",
@@ -129,8 +131,14 @@ if (container) {
 		{
 			type: "sbpm.sbd.SbpmSendStateTransition",
 			id: sendStateTransitionId,
-			message: "S Message",
-			subject: "S Subject",
+			// message: {
+			// 	id: messageId,
+			// 	label: "Message",
+			// },
+			// subject: {
+			// 	id: subjectBId,
+			// 	label: "Subject B",
+			// },
 			source: {
 				id: sendStateId,
 			},
@@ -141,8 +149,14 @@ if (container) {
 		{
 			type: "sbpm.sbd.SbpmReceiveStateTransition",
 			id: receiveStateTransitionId,
-			message: "R Message",
-			subject: "R Subject",
+			// message: {
+			// 	id: messageId,
+			// 	label: "Message",
+			// },
+			// subject: {
+			// 	id: subjectBId,
+			// 	label: "Subject B",
+			// },
 			source: {
 				id: receiveStateId,
 			},
@@ -153,7 +167,7 @@ if (container) {
 		{
 			type: "sbpm.sbd.SbpmFunctionStateTransition",
 			id: functionStateTransitionId,
-			message: "F Message",
+			label: "F Message",
 			source: { id: functionStateId },
 			target: { id: sendStateId },
 		},

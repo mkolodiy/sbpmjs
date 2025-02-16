@@ -11,7 +11,7 @@ type SbpmElementAttributes<TType extends string> =
 	joint.dia.Element.GenericAttributes<joint.shapes.standard.ImageSelectors> &
 		SbpmItemAttributes<TType, SbpmElementToolsOptions>;
 
-export interface SbpmElementOptions<TType extends string>
+export interface SbpmElementOptions<TType extends string = string>
 	extends SbpmItemOptions<TType> {
 	position: joint.dia.Point;
 	label: string;

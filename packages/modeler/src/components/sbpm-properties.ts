@@ -25,8 +25,13 @@ import {
 import { html, render } from "lit-html";
 import { EventBus } from "../event-bus";
 import { State } from "../state";
-import type { SbpmItemId, SbpmItemOptions, SbpmItemType } from "../types";
-import { isContainerItem, isString } from "../utils";
+import type {
+	SbpmElementShape,
+	SbpmItemId,
+	SbpmItemOptions,
+	SbpmItemType,
+} from "../types";
+import { isContainerItem, isElementShell, isString } from "../utils";
 
 type AllKeys<T> = T extends unknown ? keyof T : never;
 
@@ -35,24 +40,27 @@ type SelectOption<
 	TValue extends string = string,
 > = {
 	label: TLabel;
-	value: TValue;
+	value?: TValue;
 };
 
-interface InputOptions {
-	id?: SbpmItemId;
-	value: string;
-	onChange: (event: Event) => void;
+interface InputOptions<TValue = string> {
+	id: SbpmItemId;
+	value: TValue;
+	onChange: (value: TValue) => void;
 }
 
-interface SelectOptions extends InputOptions {
+interface SelectOptions extends InputOptions<string | SbpmElementShape> {
 	values: () => Array<SelectOption>;
 }
 
-type UpdatableProperties = {
-	[key in AllKeys<SbpmItemOptions>]?: (
-		options: InputOptions | Omit<SelectOptions, "values">,
-	) => ReturnType<typeof html>;
-};
+interface UpdatableProperties {
+	id?: (options: InputOptions) => void;
+	type?: (options: InputOptions) => void;
+	label?: (options: InputOptions) => void;
+	role?: (value: Omit<SelectOptions, "values">) => void;
+	message?: (value: Omit<SelectOptions, "values">) => void;
+	subject?: (value: Omit<SelectOptions, "values">) => void;
+}
 
 type UpdatablePropertiesByType = {
 	[key in SbpmItemType]: UpdatableProperties;
@@ -63,10 +71,16 @@ function createInputTemplate({
 	disabled = false,
 }: { label: string; disabled?: boolean }) {
 	return (options: InputOptions) => {
+		const onChange = (event: Event) => {
+			if (event.target instanceof HTMLInputElement) {
+				options.onChange(event.target.value);
+			}
+		};
+
 		return html`
 <label class="sbpm-properties-label">
 	<span>${label}</span>
-	<input id="id-input" value="${options.value}" ?disabled=${disabled} @input=${options.onChange}/>
+	<input id="id-input" value="${options.value}" ?disabled=${disabled} @input=${onChange}/>
 </label>
 `;
 	};
@@ -75,79 +89,33 @@ function createInputTemplate({
 function createSelectTemplate(label: string) {
 	return (options: SelectOptions) => {
 		const values = options.values();
+		const onChange = (event: Event) => {
+			if (event.target instanceof HTMLSelectElement) {
+				const value = event.target.value;
+				options.onChange(
+					typeof options.value === "string"
+						? value
+						: {
+								id: value,
+								label: values.find((item) => item.value === value)?.label ?? "",
+							},
+				);
+			}
+		};
+		const selectedId =
+			typeof options.value === "string" ? options.value : options.value?.id;
+
 		return html`
 <label class="sbpm-properties-label">
 	<span>${label}</span>
-	<select name="item" id="item" @change=${options.onChange}>
-		${values.map((item) => html`<option value=${item.value} ?selected=${item.value === options.value}>${item.label}</option>`)}
+	<select name="item" id="item" @change=${onChange}>
+		<option disabled ?selected=${!selectedId}>Select on option</option>
+		${values.map((item) => html`<option value=${item.value ?? ""} ?selected=${item.value === selectedId}>${item.label}</option>`)}
 	</select>
 </label>
 `;
 	};
 }
-
-// function idTemplate(options: InputOptions) {
-// 	return html`
-// <label class="sbpm-properties-label">
-// 	<span>Id:</span>
-// 	<input id="id-input" value="${options.value}" disabled/>
-// </label>
-// `;
-// }
-
-// function typeTemplate(options: InputOptions) {
-// 	return html`
-// <label class="sbpm-properties-label">
-// 	<span>Type:</span>
-// 	<input id="type-input" value="${options.value}" disabled/>
-// </label>
-// `;
-// }
-
-// function labelTemplate(options: InputOptions) {
-// 	return html`
-// <label class="sbpm-properties-label">
-// 	<span>Label:</span>
-// 	<input id="label-input" value="${options.value}" @input=${options.onChange}/>
-// </label>
-// `;
-// }
-
-// function roleTemplate(options: SelectOptions): ReturnType<typeof html> {
-// 	const values = options.values();
-// 	return html`
-// <label class="sbpm-properties-label">
-// 	<span>Role:</span>
-// 	<select name="item" id="item" @change=${options.onChange}>
-// 		${values.map((item) => html`<option value=${options.value}>${item.label}</option>`)}
-// 	</select>
-// </label>
-// `;
-// }
-
-// function messageTemplate(options: SelectOptions): ReturnType<typeof html> {
-// 	const values = options.values();
-// 	return html`
-// <label class="sbpm-properties-label">
-// 	<span>Message:</span>
-// 	<select name="item" id="item" @change=${options.onChange}>
-// 		${values.map((item) => html`<option value=${options.value}>${item.label}</option>`)}
-// 	</select>
-// </label>
-// `;
-// }
-
-// function sourceTemplate(options: SelectOptions): ReturnType<typeof html> {
-// 	const values = options.values();
-// 	return html`
-// <label class="sbpm-properties-label">
-// 	<span>Message:</span>
-// 	<select name="item" id="item" @change=${options.onChange}>
-// 		${values.map((item) => html`<option value=${options.value}>${item.label}</option>`)}
-// 	</select>
-// </label>
-// `;
-// }
 
 const idTemplate = createInputTemplate({ label: "Id:", disabled: true });
 const typeTemplate = createInputTemplate({ label: "Type:", disabled: true });
@@ -156,6 +124,7 @@ const labelTemplate = createInputTemplate({
 });
 const roleTemplate = createSelectTemplate("Role:");
 const subjectTemplate = createSelectTemplate("Subject:");
+const messageTemplate = createSelectTemplate("Message:");
 
 const defaultUpdatableProperties: UpdatableProperties = {
 	id: idTemplate,
@@ -165,7 +134,28 @@ const defaultUpdatableProperties: UpdatableProperties = {
 
 const updatablePropertiesByType: UpdatablePropertiesByType = {
 	"sbpm.sbd.SbpmFunctionState": defaultUpdatableProperties,
-	"sbpm.pnd.SbpmProcessModel": defaultUpdatableProperties,
+	"sbpm.pnd.SbpmProcessModel": {
+		...defaultUpdatableProperties,
+		role: (options) =>
+			roleTemplate({
+				...options,
+				values: () => {
+					const values: Array<
+						SelectOption<
+							Required<SbpmProcessModelOptions>["role"],
+							Required<SbpmProcessModelOptions>["role"]
+						>
+					> = [
+						{ label: "single", value: "single" },
+						{
+							label: "multi",
+							value: "multi",
+						},
+					];
+					return values;
+				},
+			}),
+	},
 	"sbpm.pnd.SbpmProcessNetwork": defaultUpdatableProperties,
 	"sbpm.pnd.SbpmMessage": defaultUpdatableProperties,
 	"sbpm.sbd.SbpmReceiveState": defaultUpdatableProperties,
@@ -192,11 +182,128 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 			}),
 	},
 	"sbpm.pnd.SbpmProcessTransition": defaultUpdatableProperties,
-	"sbpm.sbd.SbpmReceiveStateTransition": defaultUpdatableProperties,
-	"sbpm.sbd.SbpmSendStateTransition": {
-		...defaultUpdatableProperties,
-		message: (options) =>
+	"sbpm.sbd.SbpmReceiveStateTransition": {
+		id: defaultUpdatableProperties.id,
+		type: defaultUpdatableProperties.type,
+		subject: (options) =>
 			subjectTemplate({
+				...options,
+				values: () => {
+					const itemId = options.id;
+					if (!itemId) {
+						throw new Error("The item id is undefined.");
+					}
+					const parentId = State.getItems()
+						.filter(isContainerItem)
+						.find((item) => item.contains.includes(itemId))?.id;
+					if (!parentId) {
+						throw new Error("The parent item id is undefined.");
+					}
+					const outgoingTransitions = State.getItems()
+						.filter((item) => item.type === "sbpm.sid.SbpmMessageTransition")
+						.filter(
+							(item) =>
+								item.source.id === parentId && item.role === "bidirectional",
+						);
+					const incomingTransitions = State.getItems()
+						.filter((item) => item.type === "sbpm.sid.SbpmMessageTransition")
+						.filter((item) => item.target.id === parentId);
+
+					const subjects = [
+						...outgoingTransitions.map((transition) =>
+							State.getItem(transition.target.id),
+						),
+						...incomingTransitions.map((transition) =>
+							State.getItem(transition.source.id),
+						),
+					];
+					const values: Array<SelectOption> = subjects.map((subject) => ({
+						label: subject.label,
+						value: subject.id,
+					}));
+					return values;
+				},
+			}),
+		message: (options) =>
+			messageTemplate({
+				...options,
+				values: () => {
+					const itemId = options.id;
+					if (!itemId) {
+						throw new Error("The item id is undefined.");
+					}
+					const parentId = State.getItems()
+						.filter(isContainerItem)
+						.find((item) => item.contains.includes(itemId))?.id;
+					if (!parentId) {
+						throw new Error("The parent item id is undefined.");
+					}
+					const transitions = State.getItems()
+						.filter((item) => item.type === "sbpm.sid.SbpmMessageTransition")
+						.filter(
+							(item) =>
+								item.target.id === parentId ||
+								(item.source.id === parentId && item.role === "bidirectional"),
+						);
+					const ids = transitions.flatMap((transition) => transition.contains);
+
+					const messages = State.getItems()
+						.filter((item) => item.type === "sbpm.pnd.SbpmMessage")
+						.filter((item) => ids.includes(item.id));
+					const values: Array<SelectOption> = messages.map((message) => {
+						return {
+							label: message.label,
+							value: message.id as string,
+						};
+					});
+
+					return values;
+				},
+			}),
+	},
+	"sbpm.sbd.SbpmSendStateTransition": {
+		id: defaultUpdatableProperties.id,
+		type: defaultUpdatableProperties.type,
+		subject: (options) =>
+			subjectTemplate({
+				...options,
+				values: () => {
+					const itemId = options.id;
+					if (!itemId) {
+						throw new Error("The item id is undefined.");
+					}
+					const parentId = State.getItems()
+						.filter(isContainerItem)
+						.find((item) => item.contains.includes(itemId))?.id;
+					if (!parentId) {
+						throw new Error("The parent item id is undefined.");
+					}
+					const outgoingTransitions = State.getItems()
+						.filter((item) => item.type === "sbpm.sid.SbpmMessageTransition")
+						.filter((item) => item.source.id === parentId);
+					const incomingTransitions = State.getItems()
+						.filter((item) => item.type === "sbpm.sid.SbpmMessageTransition")
+						.filter(
+							(item) =>
+								item.target.id === parentId && item.role === "bidirectional",
+						);
+					const subjects = [
+						...outgoingTransitions.map((transition) =>
+							State.getItem(transition.target.id),
+						),
+						...incomingTransitions.map((transition) =>
+							State.getItem(transition.source.id),
+						),
+					];
+					const values: Array<SelectOption> = subjects.map((subject) => ({
+						label: subject.label,
+						value: subject.id,
+					}));
+					return values;
+				},
+			}),
+		message: (options) =>
+			messageTemplate({
 				...options,
 				values: () => {
 					const itemId = options.id;
@@ -216,15 +323,15 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 								item.source.id === parentId ||
 								(item.target.id === parentId && item.role === "bidirectional"),
 						);
-					const messages = transitions.flatMap(
-						(transition) => transition.contains,
-					);
+					const ids = transitions.flatMap((transition) => transition.contains);
 
+					const messages = State.getItems()
+						.filter((item) => item.type === "sbpm.pnd.SbpmMessage")
+						.filter((item) => ids.includes(item.id));
 					const values: Array<SelectOption> = messages.map((message) => {
-						const item = State.getItem(message);
 						return {
-							label: item.label,
-							value: item.id as string,
+							label: message.label,
+							value: message.id as string,
 						};
 					});
 
@@ -311,26 +418,30 @@ class SbpmProperties extends HTMLElement {
 	#render(id: SbpmItemId) {
 		const item = State.getItem(id);
 		const type = item.type;
-		const onChange = (key: string) => (event: Event) => {
-			if (
-				event.target instanceof HTMLInputElement ||
-				event.target instanceof HTMLSelectElement
-			) {
-				State.updateItem(id, {
-					[key]: event.target.value,
-				});
-				EventBus.trigger("item:updated", {
-					id,
-				});
-			}
+		const onChange = (key: string) => (value: unknown) => {
+			State.updateItem(id, {
+				[key]: value,
+			});
+			EventBus.trigger("item:updated", {
+				id,
+			});
 		};
 		const updatableProperties = updatablePropertiesByType[type];
 		const templates: Array<ReturnType<typeof html>> = [];
+		// console.log(updatableProperties);
 		for (const [key, template] of Object.entries(updatableProperties)) {
 			const value = item[key as keyof typeof item];
-			if (isString(value)) {
-				templates.push(template({ value, onChange: onChange(key), id }));
-			}
+			// if (isString(value)) {
+			// 	templates.push(template({ value, onChange: onChange(key), id }));
+			// }
+			// if (isElementShell(value)) {
+			// 	templates.push(
+			// 		template({ value: value.id as string, onChange: onChange(key), id }),
+			// 	);
+			// }
+			// console.log(value);
+
+			templates.push(template({ value, onChange: onChange(key), id }));
 		}
 		render(this.#baseLayout(...templates), this.#shadowRoot);
 	}

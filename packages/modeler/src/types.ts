@@ -2,6 +2,7 @@ import type {
 	SbpmItemType as SbpmCanvasSbpmItemType,
 	SbpmItemOptions as SbpmCanvasSbpmItemOptions,
 	SbpmItemId as SbpmCanvasSbpmItemId,
+	SbpmElementOptions,
 } from "@sbpmjs/canvas";
 
 declare module "@sbpmjs/canvas" {
@@ -30,3 +31,5 @@ export interface SbpmProcessOptions {
 export type SbpmItemOptions = SbpmProcessOptions | SbpmCanvasSbpmItemOptions;
 
 export type SbpmItemId = SbpmCanvasSbpmItemId;
+
+export type SbpmElementShape = Pick<SbpmElementOptions, "id" | "label">;

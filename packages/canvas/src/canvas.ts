@@ -575,8 +575,14 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 				return new SbpmSendStateTransition({
 					id: crypto.randomUUID(),
 					type: "sbpm.sbd.SbpmSendStateTransition",
-					subject: "To some [Subject]",
-					message: "a [Message]",
+					subject: {
+						id: "",
+						label: "To some [Subject]",
+					},
+					message: {
+						id: "",
+						label: "a [Message]",
+					},
 					source: { id: view.model.id },
 					target: { id: "" },
 				});
@@ -584,8 +590,14 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 				return new SbpmReceiveStateTransition({
 					id: crypto.randomUUID(),
 					type: "sbpm.sbd.SbpmReceiveStateTransition",
-					subject: "From some [Subject]",
-					message: "a [Message]",
+					subject: {
+						id: "",
+						label: "From some [Subject]",
+					},
+					message: {
+						id: "",
+						label: "a [Message]",
+					},
 					source: { id: view.model.id },
 					target: { id: "" },
 				});
@@ -593,7 +605,7 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 				return new SbpmFunctionStateTransition({
 					id: crypto.randomUUID(),
 					type: "sbpm.sbd.SbpmFunctionStateTransition",
-					message: "Do something",
+					label: "Do something",
 					source: { id: view.model.id },
 					target: { id: "" },
 				});

@@ -13,7 +13,7 @@ export class SbpmProcessTransition extends SbpmLink<
 	typeof SbpmProcessTransitionType
 > {
 	constructor(options: SbpmProcessTransitionOptions) {
-		const { source, target, id, customData } = options;
+		const { source, target, id, customData, vertices = [] } = options;
 
 		super({
 			type: SbpmProcessTransitionType,
@@ -59,6 +59,7 @@ export class SbpmProcessTransition extends SbpmLink<
 				},
 			],
 			customData,
+			vertices,
 		});
 
 		if (id) {

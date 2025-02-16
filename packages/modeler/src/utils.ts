@@ -16,7 +16,7 @@ import {
 	type SbpmSubjectOptions,
 	SbpmSubjectType,
 } from "@sbpmjs/canvas";
-import { type SbpmProcessOptions, SbpmProcessType } from "./types";
+import { SbpmItemId, type SbpmProcessOptions, SbpmProcessType } from "./types";
 
 export function isContainerItem(
 	item: unknown,
@@ -168,3 +168,14 @@ export function isString(value: unknown): value is string {
 	return typeof value === "string";
 }
 
+export function isElementShell(
+	element: unknown,
+): element is { id: SbpmItemId; label: SbpmItemId } {
+	return (
+		typeof element !== "string" &&
+		typeof element === "object" &&
+		element !== null &&
+		"id" in element &&
+		"label" in element
+	);
+}

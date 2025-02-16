@@ -32,7 +32,7 @@ export function getIconLabel(
 	return updatedIconLabel;
 }
 
-function updateLabelText(
+export function updateLabelText(
 	iconLabel: joint.dia.Link.Label,
 	key: string,
 	text: string,

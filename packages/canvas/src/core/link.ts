@@ -1,4 +1,5 @@
 import * as joint from "@joint/core";
+import { CustomEvent } from "../shared/constants";
 import type { SbpmLinkToolsOptions } from "./link-tools";
 import type {
 	SbpmItemAttributes,
@@ -15,6 +16,7 @@ export interface SbpmLinkOptions<TType extends string>
 	extends SbpmItemOptions<TType> {
 	source: { id: SbpmItemId };
 	target: { id: SbpmItemId };
+	vertices?: Array<joint.dia.Link.Vertex>;
 }
 
 export class SbpmLink<TType extends string = string> extends joint.dia.Link<
@@ -59,7 +61,8 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 	}
 
 	public setToolsOptions(toolsOptions: SbpmLinkToolsOptions) {
-		this.prop("/toolsOptions", toolsOptions);
+		this.removeProp("toolsOptions");
+		this.prop("toolsOptions", toolsOptions);
 	}
 
 	public select(): void {
@@ -83,7 +86,7 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 	}
 
 	public update(options: UpdateOptions<SbpmLinkOptions<TType>>): void {
-		const { source, target } = options;
+		const { source, target, vertices } = options;
 
 		if (source) {
 			this.source(source);
@@ -92,17 +95,17 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 		if (target) {
 			this.target(target);
 		}
+
+		if (vertices) {
+			this.vertices(vertices);
+		}
+
+		this.trigger(CustomEvent.LINK_UPDATED, this);
 	}
 
 	public options(): SbpmLinkOptions<TType> {
-		const sourceId = this.source()?.id;
-		if (!sourceId) {
-			throw new Error("Could not get the source id.");
-		}
-		const targetId = this.target()?.id;
-		if (!targetId) {
-			throw new Error("Could not get the source id.");
-		}
+		const sourceId = this.source()?.id ?? "";
+		const targetId = this.target()?.id ?? "";
 		const options: SbpmLinkOptions<TType> = {
 			id: this.id,
 			type: this.prop("type"),
@@ -112,6 +115,7 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 			target: {
 				id: targetId,
 			},
+			vertices: this.vertices(),
 		};
 		const customData = this.prop("customData");
 		if (customData) {

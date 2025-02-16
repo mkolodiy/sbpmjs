@@ -1,5 +1,6 @@
 import * as joint from "@joint/core";
 import { SbpmLink, type SbpmLinkOptions } from "../core/link";
+import type { SbpmElementOptions } from "../core/element";
 import {
 	createButtonLabel,
 	createIconLabel,
@@ -125,15 +126,15 @@ export const SbpmSendStateTransitionType = "sbpm.sbd.SbpmSendStateTransition";
 
 export interface SbpmSendStateTransitionOptions
 	extends SbpmLinkOptions<typeof SbpmSendStateTransitionType> {
-	subject: string;
-	message: string;
+	subject?: Pick<SbpmElementOptions, "label" | "id">;
+	message?: Pick<SbpmElementOptions, "label" | "id">;
 }
 
 export class SbpmSendStateTransition extends SbpmLink<
 	typeof SbpmSendStateTransitionType
 > {
 	constructor(options: SbpmSendStateTransitionOptions) {
-		const { message, source, subject, customData, id, target } = options;
+		const { id, message, subject, ...restOptions } = options;
 
 		super({
 			attrs: {
@@ -141,15 +142,15 @@ export class SbpmSendStateTransition extends SbpmLink<
 					pointerEvents: "none",
 				},
 			},
+			...restOptions,
 			type: SbpmSendStateTransitionType,
-			source: source,
-			target: target,
 			toolsOptions: [],
-			customData,
+			message,
+			subject,
 		});
 
 		this.appendLabel(
-			createIconLabel(getIconLabel(iconLabel, subject, message)),
+			createIconLabel(getIconLabel(iconLabel, subject?.label, message?.label)),
 		);
 
 		if (id) {
@@ -162,7 +163,13 @@ export class SbpmSendStateTransition extends SbpmLink<
 	) {
 		const { subject, message, ...restOptions } = options;
 
-		const updatedIconLabel = getIconLabel(this.label(0), subject, message);
+		const updatedIconLabel = getIconLabel(
+			this.label(0),
+			subject?.label,
+			message?.label,
+		);
+		this.prop("message", message);
+		this.prop("subject", subject);
 		this.removeLabel(0);
 		this.insertLabel(0, updatedIconLabel);
 		super.update(restOptions);
@@ -171,26 +178,9 @@ export class SbpmSendStateTransition extends SbpmLink<
 	public override options(): SbpmSendStateTransitionOptions {
 		const options: SbpmSendStateTransitionOptions = {
 			...joint.util.cloneDeep(super.options()),
-			message: "",
-			subject: "",
+			message: this.prop("message"),
+			subject: this.prop("subject"),
 		};
-		const iconLabel = this.label(0);
-		let message: string | undefined = undefined;
-		let subject: string | undefined = undefined;
-		if (iconLabel) {
-			message = iconLabel.attrs?.bodyText?.text;
-			subject = iconLabel.attrs?.headerText?.text;
-			if (!message) {
-				throw new Error("Could not get message.");
-			}
-			if (!subject) {
-				throw new Error("Could not get subject.");
-			}
-			options.message = message;
-			options.subject = subject;
-		} else {
-			throw new Error("Could not get icon label.");
-		}
 		return options;
 	}
 

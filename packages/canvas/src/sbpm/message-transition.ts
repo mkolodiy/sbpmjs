@@ -123,6 +123,7 @@ export class SbpmMessageTransition extends SbpmLink<
 			target,
 			id,
 			role = "unidirectional",
+			vertices = [],
 			customData,
 		} = options;
 
@@ -133,6 +134,7 @@ export class SbpmMessageTransition extends SbpmLink<
 			toolsOptions: role === "unidirectional" ? [] : toolsOptions,
 			customData,
 			role,
+			vertices,
 		});
 
 		this.appendLabel(
@@ -156,6 +158,8 @@ export class SbpmMessageTransition extends SbpmLink<
 		options: UpdateOptions<SbpmMessageTransitionOptions>,
 	): void {
 		const { role, label, ...restOptions } = options;
+		console.log(role);
+
 		if (role) {
 			handleRole(this, role);
 		}
@@ -214,8 +218,6 @@ function handleRole(
 ): void {
 	if (role === "unidirectional") {
 		link.removeAttr("line/sourceMarker");
-		console.log("here");
-
 		link.setToolsOptions([]);
 	} else {
 		link.attr("line/sourceMarker", {
