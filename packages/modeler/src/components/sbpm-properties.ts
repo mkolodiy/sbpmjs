@@ -33,7 +33,7 @@ import type {
 } from "../types";
 import { isContainerItem, isElementShell, isString } from "../utils";
 
-type AllKeys<T> = T extends unknown ? keyof T : never;
+// type AllKeys<T> = T extends unknown ? keyof T : never;
 
 type SelectOption<
 	TLabel extends string = string,

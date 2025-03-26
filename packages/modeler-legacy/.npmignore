@@ -1,6 +1,0 @@
-assets
-dev
-test
-.eslintrc.json
-tsconfig.json
-vite.config.ts

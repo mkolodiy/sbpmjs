@@ -112,8 +112,6 @@ export class SbpmProcessModel extends SbpmElement<typeof SbpmProcessModelType> {
 		const { role, ...restOptions } = options;
 
 		if (role) {
-			console.log("test", role);
-
 			const icon = getIcon(role);
 			this.attr("image/href", icon);
 		}
