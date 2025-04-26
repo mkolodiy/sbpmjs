@@ -1,5 +1,5 @@
-import * as joint from "@joint/core";
-import { SbpmLink, type SbpmLinkOptions } from "../core/link";
+import type * as joint from "@joint/core";
+import { SbpmLink } from "../core/link";
 import {
 	createButtonLabel,
 	createIconLabel,
@@ -8,6 +8,7 @@ import {
 import type { UpdateOptions } from "../core/shared/types";
 import { CustomEvent } from "../shared/constants";
 import { autoRenewIcon, deleteIcon } from "../shared/icons";
+import type { SbpmBaseStateTransitionOptions } from "./shared/types";
 import { updateLabelText } from "./shared/utils";
 
 const iconLabel: joint.dia.Link.Label = {
@@ -91,19 +92,13 @@ const removeVerticesLabel: joint.dia.Link.Label = {
 	},
 };
 
-export const SbpmFunctionStateTransitionType =
-	"sbpm.sbd.SbpmFunctionStateTransition";
-
+export type SbpmFunctionStateTransitionType = "sbpm.FunctionStateTransition";
 export interface SbpmFunctionStateTransitionOptions
-	extends SbpmLinkOptions<typeof SbpmFunctionStateTransitionType> {
-	label: string;
-}
+	extends SbpmBaseStateTransitionOptions<SbpmFunctionStateTransitionType> {}
 
-export class SbpmFunctionStateTransition extends SbpmLink<
-	typeof SbpmFunctionStateTransitionType
-> {
+export class SbpmFunctionStateTransition extends SbpmLink<SbpmFunctionStateTransitionType> {
 	constructor(options: SbpmFunctionStateTransitionOptions) {
-		const { label, ...restOptions } = options;
+		const { label, fromElement, toElement, ...restOptions } = options;
 
 		super({
 			attrs: {
@@ -112,7 +107,9 @@ export class SbpmFunctionStateTransition extends SbpmLink<
 				},
 			},
 			...restOptions,
-			type: SbpmFunctionStateTransitionType,
+			type: "sbpm.FunctionStateTransition",
+			source: { id: fromElement },
+			target: { id: toElement },
 			toolsOptions: [],
 		});
 
@@ -137,8 +134,9 @@ export class SbpmFunctionStateTransition extends SbpmLink<
 	}
 
 	public options(): SbpmFunctionStateTransitionOptions {
+		const baseOptions = super.options();
 		const options: SbpmFunctionStateTransitionOptions = {
-			...joint.util.cloneDeep(super.options()),
+			...baseOptions,
 			label: this.prop("label"),
 		};
 		return options;

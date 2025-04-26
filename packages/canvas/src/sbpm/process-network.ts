@@ -1,4 +1,3 @@
-import * as joint from "@joint/core";
 import { SbpmElement, type SbpmElementOptions } from "../core/element";
 import type { UpdateOptions } from "../core/shared/types";
 import { createIcon } from "../shared/utils";
@@ -9,16 +8,13 @@ const sbpmProcessNetworkIconTemplate = `
 
 const sbpmProcessNetworkIcon = createIcon(sbpmProcessNetworkIconTemplate);
 
-export const SbpmProcessNetworkType = "sbpm.pnd.SbpmProcessNetwork";
-
+export type SbpmProcessNetworkType = "sbpm.ProcessNetwork";
 export interface SbpmProcessNetworkOptions
-	extends SbpmElementOptions<typeof SbpmProcessNetworkType> {}
+	extends SbpmElementOptions<SbpmProcessNetworkType> {}
 
-export class SbpmProcessNetwork extends SbpmElement<
-	typeof SbpmProcessNetworkType
-> {
+export class SbpmProcessNetwork extends SbpmElement<SbpmProcessNetworkType> {
 	constructor(options: SbpmProcessNetworkOptions) {
-		const { label, position, customData, id } = options;
+		const { label, position, id } = options;
 		super({
 			size: {
 				width: 130,
@@ -41,7 +37,7 @@ export class SbpmProcessNetwork extends SbpmElement<
 				},
 			},
 			position: position,
-			type: SbpmProcessNetworkType,
+			type: "sbpm.ProcessNetwork",
 			toolsOptions: [
 				{
 					type: "connect",
@@ -50,12 +46,8 @@ export class SbpmProcessNetwork extends SbpmElement<
 					},
 				},
 			],
-			customData,
 		});
-
-		if (id) {
-			this.set("id", id);
-		}
+		this.set("id", id);
 	}
 
 	public override update(
@@ -65,6 +57,6 @@ export class SbpmProcessNetwork extends SbpmElement<
 	}
 
 	public override options(): SbpmProcessNetworkOptions {
-		return joint.util.cloneDeep(super.options());
+		return super.options();
 	}
 }

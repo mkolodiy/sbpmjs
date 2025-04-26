@@ -1,14 +1,14 @@
-import * as joint from "@joint/core";
-import { SbpmLink, type SbpmLinkOptions } from "../core/link";
-import type { SbpmElementOptions } from "../core/element";
+import type * as joint from "@joint/core";
+import { SbpmLink } from "../core/link";
 import {
 	createButtonLabel,
 	createIconLabel,
 	createSelectionLabel,
 } from "../core/link-tools";
-import type { UpdateOptions } from "../core/shared/types";
+import type { SbpmItemId, UpdateOptions } from "../core/shared/types";
 import { CustomEvent } from "../shared/constants";
 import { autoRenewIcon, deleteIcon } from "../shared/icons";
+import type { SbpmBaseStateTransitionOptions } from "./shared/types";
 import { getIconLabel } from "./shared/utils";
 
 const iconLabel: joint.dia.Link.Label = {
@@ -122,20 +122,17 @@ const removeVerticesLabel: joint.dia.Link.Label = {
 	},
 };
 
-export const SbpmSendStateTransitionType = "sbpm.sbd.SbpmSendStateTransition";
-
+export type SbpmSendStateTransitionType = "sbpm.SendStateTransition";
 export interface SbpmSendStateTransitionOptions
-	extends SbpmLinkOptions<typeof SbpmSendStateTransitionType> {
-	subject?: Pick<SbpmElementOptions, "label" | "id">;
-	message?: Pick<SbpmElementOptions, "label" | "id">;
+	extends SbpmBaseStateTransitionOptions<SbpmSendStateTransitionType> {
+	receiverSubject: SbpmItemId | undefined;
+	message: SbpmItemId | undefined;
 }
 
-export class SbpmSendStateTransition extends SbpmLink<
-	typeof SbpmSendStateTransitionType
-> {
+export class SbpmSendStateTransition extends SbpmLink<SbpmSendStateTransitionType> {
 	constructor(options: SbpmSendStateTransitionOptions) {
-		const { id, message, subject, ...restOptions } = options;
-
+		const { message, receiverSubject, fromElement, toElement, ...restOptions } =
+			options;
 		super({
 			attrs: {
 				wrapper: {
@@ -143,43 +140,41 @@ export class SbpmSendStateTransition extends SbpmLink<
 				},
 			},
 			...restOptions,
-			type: SbpmSendStateTransitionType,
+			type: "sbpm.SendStateTransition",
 			toolsOptions: [],
 			message,
-			subject,
+			receiverSubject,
+			source: { id: fromElement },
+			target: { id: toElement },
 		});
-
 		this.appendLabel(
-			createIconLabel(getIconLabel(iconLabel, subject?.label, message?.label)),
+			createIconLabel(getIconLabel(iconLabel, receiverSubject, message)),
 		);
-
-		if (id) {
-			this.set("id", id);
-		}
 	}
 
 	public override update(
 		options: UpdateOptions<SbpmSendStateTransitionOptions>,
 	) {
-		const { subject, message, ...restOptions } = options;
+		const { message, receiverSubject, ...restOptions } = options;
 
 		const updatedIconLabel = getIconLabel(
 			this.label(0),
-			subject?.label,
-			message?.label,
+			receiverSubject,
+			message,
 		);
 		this.prop("message", message);
-		this.prop("subject", subject);
+		this.prop("receiverSubject", receiverSubject);
 		this.removeLabel(0);
 		this.insertLabel(0, updatedIconLabel);
 		super.update(restOptions);
 	}
 
 	public override options(): SbpmSendStateTransitionOptions {
+		const baseOptions = super.options();
 		const options: SbpmSendStateTransitionOptions = {
-			...joint.util.cloneDeep(super.options()),
+			...baseOptions,
 			message: this.prop("message"),
-			subject: this.prop("subject"),
+			receiverSubject: this.prop("receiverSubject"),
 		};
 		return options;
 	}

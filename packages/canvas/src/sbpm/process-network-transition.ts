@@ -4,21 +4,19 @@ import type { UpdateOptions } from "../core/shared/types";
 import { CustomEvent } from "../shared/constants";
 import { autoRenewIcon } from "../shared/icons";
 
-export const SbpmProcessTransitionType = "sbpm.pnd.SbpmProcessTransition";
+export type SbpmProcessNetworkTransitionType = "sbpm.ProcessNetworkTransition";
+export interface SbpmProcessNetworkTransitionOptions
+	extends SbpmLinkOptions<SbpmProcessNetworkTransitionType> {}
 
-export interface SbpmProcessTransitionOptions
-	extends SbpmLinkOptions<typeof SbpmProcessTransitionType> {}
-
-export class SbpmProcessTransition extends SbpmLink<
-	typeof SbpmProcessTransitionType
-> {
-	constructor(options: SbpmProcessTransitionOptions) {
-		const { source, target, id, customData, vertices = [] } = options;
+export class SbpmProcessNetworkTransition extends SbpmLink<SbpmProcessNetworkTransitionType> {
+	constructor(options: SbpmProcessNetworkTransitionOptions) {
+		const { fromElement, toElement, ...restProps } = options;
 
 		super({
-			type: SbpmProcessTransitionType,
-			source: source,
-			target: target,
+			...restProps,
+			type: "sbpm.ProcessNetworkTransition",
+			source: { id: fromElement },
+			target: { id: toElement },
 			toolsOptions: [
 				{
 					type: "remove",
@@ -47,7 +45,7 @@ export class SbpmProcessTransition extends SbpmLink<
 							{
 								tagName: "image",
 								attributes: {
-									"xlink:href": autoRenewIcon,
+									href: autoRenewIcon,
 								},
 							},
 							{
@@ -58,20 +56,16 @@ export class SbpmProcessTransition extends SbpmLink<
 					},
 				},
 			],
-			customData,
-			vertices,
 		});
-
-		if (id) {
-			this.set("id", id);
-		}
 	}
 
-	public update(options: UpdateOptions<SbpmProcessTransitionOptions>): void {
+	public update(
+		options: UpdateOptions<SbpmProcessNetworkTransitionOptions>,
+	): void {
 		super.update(options);
 	}
 
-	public override options(): SbpmProcessTransitionOptions {
+	public override options(): SbpmProcessNetworkTransitionOptions {
 		return joint.util.cloneDeep(super.options());
 	}
 }

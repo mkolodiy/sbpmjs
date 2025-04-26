@@ -15,9 +15,15 @@ if (container) {
 		},
 	});
 
+	// canvas.updateItem({
+	// 	id: "tests",
+	// 	type: "sbpm.StandardSubject",
+
+	// });
+
 	const id = crypto.randomUUID();
 	canvas.addItem({
-		type: "sbpm.pnd.SbpmProcessNetwork",
+		type: "sbpm.ProcessNetwork",
 		id: id,
 		label: "Test 123",
 		position: {
@@ -28,7 +34,7 @@ if (container) {
 
 	const id1 = crypto.randomUUID();
 	canvas.addItem({
-		type: "sbpm.pnd.SbpmProcessModel",
+		type: "sbpm.ProcessModel",
 		id: id1,
 		label: "Process model",
 		position: {
@@ -38,12 +44,11 @@ if (container) {
 	});
 
 	canvas.addItem({
-		type: "sbpm.pnd.SbpmProcessTransition",
+		type: "sbpm.ProcessNetworkTransition",
 		id: crypto.randomUUID(),
-		source: {
-			id: id,
-		},
-		target: { id: id1 },
+		fromElement: id,
+		toElement: id1,
+		label: "Transition",
 	});
 
 	// setTimeout(() => {

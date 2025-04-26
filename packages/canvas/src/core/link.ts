@@ -2,9 +2,10 @@ import * as joint from "@joint/core";
 import { CustomEvent } from "../shared/constants";
 import type { SbpmLinkToolsOptions } from "./link-tools";
 import type {
+	SbpmBaseItemOptions,
 	SbpmItemAttributes,
 	SbpmItemId,
-	SbpmItemOptions,
+	SbpmItemPosition,
 	UpdateOptions,
 } from "./shared/types";
 
@@ -12,11 +13,11 @@ type SbpmLinkAttributes<TType extends string> =
 	joint.dia.Link.GenericAttributes<joint.shapes.standard.LinkSelectors> &
 		SbpmItemAttributes<TType, SbpmLinkToolsOptions>;
 
-export interface SbpmLinkOptions<TType extends string>
-	extends SbpmItemOptions<TType> {
-	source: { id: SbpmItemId };
-	target: { id: SbpmItemId };
-	vertices?: Array<joint.dia.Link.Vertex>;
+export interface SbpmLinkOptions<TType extends string = string>
+	extends SbpmBaseItemOptions<TType> {
+	fromElement: SbpmItemId;
+	toElement: SbpmItemId;
+	vertices?: Array<SbpmItemPosition>;
 }
 
 export class SbpmLink<TType extends string = string> extends joint.dia.Link<
@@ -86,14 +87,14 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 	}
 
 	public update(options: UpdateOptions<SbpmLinkOptions<TType>>): void {
-		const { source, target, vertices } = options;
+		const { fromElement, toElement, vertices } = options;
 
-		if (source) {
-			this.source(source);
+		if (fromElement) {
+			this.source(fromElement);
 		}
 
-		if (target) {
-			this.target(target);
+		if (toElement) {
+			this.target(toElement);
 		}
 
 		if (vertices) {
@@ -104,22 +105,24 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 	}
 
 	public options(): SbpmLinkOptions<TType> {
-		const sourceId = this.source()?.id ?? "";
-		const targetId = this.target()?.id ?? "";
 		const options: SbpmLinkOptions<TType> = {
-			id: this.id,
+			id: String(this.id),
 			type: this.prop("type"),
-			source: {
-				id: sourceId,
-			},
-			target: {
-				id: targetId,
-			},
-			vertices: this.vertices(),
+			label: this.prop("label"),
+			fromElement: "",
+			toElement: "",
 		};
-		const customData = this.prop("customData");
-		if (customData) {
-			options.customData = customData;
+		const sourceId = this.source()?.id;
+		if (sourceId) {
+			options.fromElement = String(sourceId);
+		}
+		const targetId = this.target()?.id;
+		if (targetId) {
+			options.toElement = String(targetId);
+		}
+		const vertices = this.vertices();
+		if (vertices.length > 0) {
+			options.vertices = vertices;
 		}
 		return options;
 	}

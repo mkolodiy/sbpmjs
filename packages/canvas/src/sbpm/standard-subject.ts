@@ -1,4 +1,4 @@
-import * as joint from "@joint/core";
+import type * as joint from "@joint/core";
 import { SbpmElement, type SbpmElementOptions } from "../core/element";
 import type { UpdateOptions } from "../core/shared/types";
 import { CustomEvent } from "../shared/constants";
@@ -11,14 +11,13 @@ const sbpmSubjectIconTemplate = `
 
 const sbpmSubjectIcon = createIcon(sbpmSubjectIconTemplate);
 
-export const SbpmSubjectType = "sbpm.sid.SbpmSubject";
+export type SbpmStandardSubjectType = "sbpm.StandardSubject";
+export interface SbpmStandardSubjectOptions
+	extends SbpmElementOptions<SbpmStandardSubjectType> {}
 
-export interface SbpmSubjectOptions
-	extends SbpmElementOptions<typeof SbpmSubjectType> {}
-
-export class SbpmSubject extends SbpmElement<typeof SbpmSubjectType> {
-	constructor(options: SbpmSubjectOptions) {
-		const { label, position, customData, id } = options;
+export class SbpmStandardSubject extends SbpmElement<SbpmStandardSubjectType> {
+	constructor(options: SbpmStandardSubjectOptions) {
+		const { label, position } = options;
 		super({
 			size: {
 				width: 85,
@@ -41,7 +40,7 @@ export class SbpmSubject extends SbpmElement<typeof SbpmSubjectType> {
 				},
 			},
 			position: position,
-			type: SbpmSubjectType,
+			type: "sbpm.StandardSubject",
 			toolsOptions: [
 				{
 					type: "remove",
@@ -87,19 +86,16 @@ export class SbpmSubject extends SbpmElement<typeof SbpmSubjectType> {
 					},
 				},
 			],
-			customData,
 		});
-
-		if (id) {
-			this.set("id", id);
-		}
 	}
 
-	public override update(options: UpdateOptions<SbpmSubjectOptions>): void {
+	public override update(
+		options: UpdateOptions<SbpmStandardSubjectOptions>,
+	): void {
 		super.update(options);
 	}
 
-	public override options(): SbpmSubjectOptions {
-		return joint.util.cloneDeep(super.options());
+	public override options(): SbpmStandardSubjectOptions {
+		return super.options();
 	}
 }

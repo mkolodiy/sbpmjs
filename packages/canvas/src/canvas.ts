@@ -8,63 +8,68 @@ import type { SbpmItemId, UpdateOptions } from "./core/shared/types";
 import {
 	SbpmFunctionState,
 	type SbpmFunctionStateOptions,
-	SbpmFunctionStateType,
+	type SbpmFunctionStateType,
 } from "./sbpm/function-state";
 import {
 	SbpmFunctionStateTransition,
 	type SbpmFunctionStateTransitionOptions,
-	SbpmFunctionStateTransitionType,
+	type SbpmFunctionStateTransitionType,
 } from "./sbpm/function-state-transition";
 import {
-	SbpmMessage,
-	type SbpmMessageOptions,
-	SbpmMessageType,
-} from "./sbpm/message";
+	SbpmMessageExchange,
+	type SbpmMessageExchangeOptions,
+	type SbpmMessageExchangeType,
+} from "./sbpm/message-exchange";
 import {
-	SbpmMessageTransition,
-	type SbpmMessageTransitionOptions,
-	SbpmMessageTransitionType,
-} from "./sbpm/message-transition";
+	SbpmMessageSpecification,
+	type SbpmMessageSpecificationOptions,
+	type SbpmMessageSpecificationType,
+} from "./sbpm/message-specification";
+import {
+	SbpmMultiProcessModel,
+	type SbpmMultiProcessModelOptions,
+	type SbpmMultiProcessModelType,
+} from "./sbpm/multi-process-model";
 import {
 	SbpmProcessModel,
 	type SbpmProcessModelOptions,
-	SbpmProcessModelType,
+	type SbpmProcessModelType,
 } from "./sbpm/process-model";
 import {
 	SbpmProcessNetwork,
 	type SbpmProcessNetworkOptions,
-	SbpmProcessNetworkType,
+	type SbpmProcessNetworkType,
 } from "./sbpm/process-network";
 import {
-	SbpmProcessTransition,
-	type SbpmProcessTransitionOptions,
-	SbpmProcessTransitionType,
-} from "./sbpm/process-transition";
+	SbpmProcessNetworkTransition,
+	type SbpmProcessNetworkTransitionOptions,
+	type SbpmProcessNetworkTransitionType,
+} from "./sbpm/process-network-transition";
 import {
 	SbpmReceiveState,
 	type SbpmReceiveStateOptions,
-	SbpmReceiveStateType,
+	type SbpmReceiveStateType,
 } from "./sbpm/receive-state";
 import {
 	SbpmReceiveStateTransition,
 	type SbpmReceiveStateTransitionOptions,
-	SbpmReceiveStateTransitionType,
+	type SbpmReceiveStateTransitionType,
 } from "./sbpm/receive-state-transition";
 import {
 	SbpmSendState,
 	type SbpmSendStateOptions,
-	SbpmSendStateType,
+	type SbpmSendStateType,
 } from "./sbpm/send-state";
 import {
 	SbpmSendStateTransition,
 	type SbpmSendStateTransitionOptions,
-	SbpmSendStateTransitionType,
+	type SbpmSendStateTransitionType,
 } from "./sbpm/send-state-transition";
 import {
-	SbpmSubject,
-	type SbpmSubjectOptions,
-	SbpmSubjectType,
-} from "./sbpm/subject";
+	SbpmStandardSubject,
+	type SbpmStandardSubjectOptions,
+	type SbpmStandardSubjectType,
+} from "./sbpm/standard-subject";
 import { CustomEvent, JointEvent } from "./shared/constants";
 
 type EventMap = joint.dia.Paper.EventMap & {
@@ -115,8 +120,22 @@ export interface SbpmCanvasOptions {
 
 const namespace = {
 	...joint.shapes,
-	"sbpm.common": { SbpmElement },
-	"sbpm.sid": { SbpmSubject },
+	"sbpm.internal": { SbpmCanvasOrigin },
+	sbpm: {
+		SbpmFunctionStateTransition,
+		SbpmFunctionState,
+		SbpmMessageExchange,
+		SbpmMessageSpecification,
+		SbpmMultiProcessModel,
+		SbpmProcessModel,
+		SbpmProcessNetworkTransition,
+		SbpmProcessNetwork,
+		SbpmReceiveStateTransition,
+		SbpmReceiveState,
+		SbpmSendStateTransition,
+		SbpmSendState,
+		SbpmStandardSubject,
+	},
 };
 
 const defaultOptions: joint.dia.Paper.Options = {
@@ -380,62 +399,88 @@ export class SbpmCanvas {
 	}
 
 	public updateItem<
-		TOptions extends
-			| SbpmProcessNetworkOptions
-			| SbpmProcessModelOptions
-			| SbpmSubjectOptions
-			| SbpmSendStateOptions
-			| SbpmReceiveStateOptions
-			| SbpmFunctionStateOptions
-			| SbpmMessageOptions
-			| SbpmProcessTransitionOptions
-			| SbpmMessageTransitionOptions
-			| SbpmSendStateTransitionOptions
-			| SbpmReceiveStateTransitionOptions
-			| SbpmFunctionStateTransitionOptions,
-	>(
-		options: UpdateOptions<TOptions> & {
-			id: TOptions["id"];
-			type: TOptions["type"];
-		},
-	): void {
+		TType extends
+			| SbpmFunctionStateTransitionType
+			| SbpmFunctionStateType
+			| SbpmMessageExchangeType
+			| SbpmMessageSpecificationType
+			| SbpmMultiProcessModelType
+			| SbpmProcessModelType
+			| SbpmProcessNetworkTransitionType
+			| SbpmProcessNetworkType
+			| SbpmSendStateTransitionType
+			| SbpmSendStateType
+			| SbpmReceiveStateTransitionType
+			| SbpmReceiveStateType
+			| SbpmStandardSubjectType,
+		TOptions extends TType extends "sbpm.FunctionStateTransition"
+			? SbpmFunctionStateTransitionOptions
+			: TType extends "sbpm.FunctionState"
+				? SbpmFunctionStateOptions
+				: TType extends "sbpm.MessageExchange"
+					? SbpmMessageExchangeOptions
+					: TType extends "sbpm.MessageSpecification"
+						? SbpmMessageSpecificationOptions
+						: TType extends "sbpm.MultiProcessModel"
+							? SbpmMultiProcessModelOptions
+							: TType extends "sbpm.ProcessModel"
+								? SbpmProcessModelOptions
+								: TType extends "sbpm.ProcessNetworkTransition"
+									? SbpmProcessNetworkTransitionOptions
+									: TType extends "sbpm.ProcessNetwork"
+										? SbpmProcessNetworkOptions
+										: TType extends "sbpm.SendStateTransition"
+											? SbpmSendStateTransitionOptions
+											: TType extends "sbpm.SendState"
+												? SbpmSendStateOptions
+												: TType extends "sbpm.ReceiveStateTransition"
+													? SbpmReceiveStateTransitionOptions
+													: TType extends "sbpm.ReceiveState"
+														? SbpmReceiveStateOptions
+														: TType extends "sbpm.StandardSubject"
+															? SbpmStandardSubjectOptions
+															: never,
+	>(options: UpdateOptions<TOptions> & { id: SbpmItemId; type: TType }): void {
 		const { id, type, ...restOptions } = options;
 		switch (type) {
-			case SbpmProcessNetworkType:
-				this.getElement<SbpmProcessNetwork>(id).update(restOptions);
+			case "sbpm.FunctionStateTransition":
+				this.getLink<SbpmFunctionStateTransition>(id).update(restOptions);
 				break;
-			case SbpmProcessModelType:
-				this.getElement<SbpmProcessModel>(id).update(restOptions);
-				break;
-			case SbpmProcessTransitionType:
-				this.getLink<SbpmProcessTransition>(id).update(restOptions);
-				break;
-			case SbpmSubjectType:
-				this.getElement<SbpmSubject>(id).update(restOptions);
-				break;
-			case SbpmMessageTransitionType:
-				this.getLink<SbpmMessageTransition>(id).update(restOptions);
-				break;
-			case SbpmSendStateType:
-				this.getElement<SbpmSendState>(id).update(restOptions);
-				break;
-			case SbpmMessageType:
-				this.getElement<SbpmMessage>(id).update(restOptions);
-				break;
-			case SbpmSendStateTransitionType:
-				this.getLink<SbpmSendStateTransition>(id).update(restOptions);
-				break;
-			case SbpmReceiveStateType:
-				this.getElement<SbpmReceiveState>(id).update(restOptions);
-				break;
-			case SbpmReceiveStateTransitionType:
-				this.getLink<SbpmReceiveStateTransition>(id).update(restOptions);
-				break;
-			case SbpmFunctionStateType:
+			case "sbpm.FunctionState":
 				this.getElement<SbpmFunctionState>(id).update(restOptions);
 				break;
-			case SbpmFunctionStateTransitionType:
-				this.getLink<SbpmFunctionStateTransition>(id).update(restOptions);
+			case "sbpm.MessageExchange":
+				this.getLink<SbpmMessageExchange>(id).update(restOptions);
+				break;
+			case "sbpm.MessageSpecification":
+				this.getElement<SbpmMessageSpecification>(id).update(restOptions);
+				break;
+			case "sbpm.MultiProcessModel":
+				this.getElement<SbpmMultiProcessModel>(id).update(restOptions);
+				break;
+			case "sbpm.ProcessModel":
+				this.getElement<SbpmProcessModel>(id).update(restOptions);
+				break;
+			case "sbpm.ProcessNetworkTransition":
+				this.getLink<SbpmProcessNetworkTransition>(id).update(restOptions);
+				break;
+			case "sbpm.ProcessNetwork":
+				this.getElement<SbpmProcessNetwork>(id).update(restOptions);
+				break;
+			case "sbpm.SendStateTransition":
+				this.getLink<SbpmSendStateTransition>(id).update(restOptions);
+				break;
+			case "sbpm.SendState":
+				this.getElement<SbpmSendState>(id).update(restOptions);
+				break;
+			case "sbpm.ReceiveStateTransition":
+				this.getLink<SbpmReceiveStateTransition>(id).update(restOptions);
+				break;
+			case "sbpm.ReceiveState":
+				this.getElement<SbpmReceiveState>(id).update(restOptions);
+				break;
+			case "sbpm.StandardSubject":
+				this.getElement<SbpmStandardSubject>(id).update(restOptions);
 				break;
 			default:
 				throw new Error("Provided type is not supported.");
@@ -444,55 +489,59 @@ export class SbpmCanvas {
 
 	public addItem(
 		item:
-			| SbpmProcessNetworkOptions
-			| SbpmProcessModelOptions
-			| SbpmProcessTransitionOptions
-			| SbpmSubjectOptions
-			| SbpmMessageTransitionOptions
-			| SbpmMessageOptions
-			| SbpmSendStateOptions
-			| SbpmSendStateTransitionOptions
-			| SbpmReceiveStateOptions
-			| SbpmReceiveStateTransitionOptions
 			| SbpmFunctionStateOptions
-			| SbpmFunctionStateTransitionOptions,
+			| SbpmFunctionStateTransitionOptions
+			| SbpmMessageExchangeOptions
+			| SbpmMessageSpecificationOptions
+			| SbpmMultiProcessModelOptions
+			| SbpmProcessModelOptions
+			| SbpmProcessNetworkTransitionOptions
+			| SbpmProcessNetworkOptions
+			| SbpmSendStateTransitionOptions
+			| SbpmSendStateOptions
+			| SbpmReceiveStateTransitionOptions
+			| SbpmReceiveStateOptions
+			| SbpmStandardSubjectOptions,
 	): void {
 		switch (item.type) {
-			case SbpmProcessNetworkType:
-				new SbpmProcessNetwork(item).addTo(this.#graph);
+			case "sbpm.FunctionStateTransition":
+				new SbpmFunctionStateTransition(item).addTo(this.#graph);
 				break;
-			case SbpmProcessModelType:
-				new SbpmProcessModel(item).addTo(this.#graph);
-				break;
-			case SbpmProcessTransitionType:
-				new SbpmProcessTransition(item).addTo(this.#graph);
-				break;
-			case SbpmSubjectType:
-				new SbpmSubject(item).addTo(this.#graph);
-				break;
-			case SbpmMessageTransitionType:
-				new SbpmMessageTransition(item).addTo(this.#graph);
-				break;
-			case SbpmMessageType:
-				new SbpmMessage(item).addTo(this.#graph);
-				break;
-			case SbpmSendStateType:
-				new SbpmSendState(item).addTo(this.#graph);
-				break;
-			case SbpmSendStateTransitionType:
-				new SbpmSendStateTransition(item).addTo(this.#graph);
-				break;
-			case SbpmReceiveStateType:
-				new SbpmReceiveState(item).addTo(this.#graph);
-				break;
-			case SbpmReceiveStateTransitionType:
-				new SbpmReceiveStateTransition(item).addTo(this.#graph);
-				break;
-			case SbpmFunctionStateType:
+			case "sbpm.FunctionState":
 				new SbpmFunctionState(item).addTo(this.#graph);
 				break;
-			case SbpmFunctionStateTransitionType:
-				new SbpmFunctionStateTransition(item).addTo(this.#graph);
+			case "sbpm.MessageExchange":
+				new SbpmMessageExchange(item).addTo(this.#graph);
+				break;
+			case "sbpm.MessageSpecification":
+				new SbpmMessageSpecification(item).addTo(this.#graph);
+				break;
+			case "sbpm.MultiProcessModel":
+				new SbpmMultiProcessModel(item).addTo(this.#graph);
+				break;
+			case "sbpm.ProcessModel":
+				new SbpmProcessModel(item).addTo(this.#graph);
+				break;
+			case "sbpm.ProcessNetworkTransition":
+				new SbpmProcessNetworkTransition(item).addTo(this.#graph);
+				break;
+			case "sbpm.ProcessNetwork":
+				new SbpmProcessNetwork(item).addTo(this.#graph);
+				break;
+			case "sbpm.SendStateTransition":
+				new SbpmSendStateTransition(item).addTo(this.#graph);
+				break;
+			case "sbpm.SendState":
+				new SbpmSendState(item).addTo(this.#graph);
+				break;
+			case "sbpm.ReceiveStateTransition":
+				new SbpmReceiveStateTransition(item).addTo(this.#graph);
+				break;
+			case "sbpm.ReceiveState":
+				new SbpmReceiveState(item).addTo(this.#graph);
+				break;
+			case "sbpm.StandardSubject":
+				new SbpmStandardSubject(item).addTo(this.#graph);
 				break;
 			default:
 				throw new Error("Provided type is not supported.");
@@ -501,18 +550,19 @@ export class SbpmCanvas {
 
 	public addItems(
 		items: Array<
-			| SbpmProcessNetworkOptions
-			| SbpmProcessModelOptions
-			| SbpmProcessTransitionOptions
-			| SbpmSubjectOptions
-			| SbpmMessageTransitionOptions
-			| SbpmMessageOptions
-			| SbpmSendStateOptions
-			| SbpmSendStateTransitionOptions
-			| SbpmReceiveStateOptions
-			| SbpmReceiveStateTransitionOptions
 			| SbpmFunctionStateOptions
 			| SbpmFunctionStateTransitionOptions
+			| SbpmMessageExchangeOptions
+			| SbpmMessageSpecificationOptions
+			| SbpmMultiProcessModelOptions
+			| SbpmProcessModelOptions
+			| SbpmProcessNetworkTransitionOptions
+			| SbpmProcessNetworkOptions
+			| SbpmSendStateTransitionOptions
+			| SbpmSendStateOptions
+			| SbpmReceiveStateTransitionOptions
+			| SbpmReceiveStateOptions
+			| SbpmStandardSubjectOptions
 		>,
 	): void {
 		this.clear();
@@ -555,59 +605,51 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 	if (view instanceof SbpmElementView) {
 		const type = view.model.get("type");
 		switch (type) {
-			case SbpmProcessNetworkType:
-			case SbpmProcessModelType:
-				return new SbpmProcessTransition({
+			case "sbpm.SbpmProcessNetwork":
+			case "sbpm.SbpmMultiProcessModel":
+			case "sbpm.SbpmProcessModel":
+				return new SbpmProcessNetworkTransition({
 					id: crypto.randomUUID(),
-					type: "sbpm.pnd.SbpmProcessTransition",
-					source: { id: view.model.id },
-					target: { id: "" },
+					type: "sbpm.ProcessNetworkTransition",
+					label: "New process transition",
+					fromElement: view.model.id as SbpmItemId,
+					toElement: "",
 				});
-			case SbpmSubjectType:
-				return new SbpmMessageTransition({
+			case "sbpm.SbpmStandardSubject":
+				return new SbpmMessageExchange({
 					id: crypto.randomUUID(),
-					type: "sbpm.sid.SbpmMessageTransition",
+					type: "sbpm.MessageExchange",
 					label: "New message transition",
-					source: { id: view.model.id },
-					target: { id: "" },
+					fromElement: view.model.id as SbpmItemId,
+					toElement: "",
 				});
-			case SbpmSendStateType:
+			case "sbpm.SbpmSendState":
 				return new SbpmSendStateTransition({
 					id: crypto.randomUUID(),
-					type: "sbpm.sbd.SbpmSendStateTransition",
-					subject: {
-						id: "",
-						label: "To some [Subject]",
-					},
-					message: {
-						id: "",
-						label: "a [Message]",
-					},
-					source: { id: view.model.id },
-					target: { id: "" },
+					type: "sbpm.SendStateTransition",
+					label: "Send state transition",
+					receiverSubject: "",
+					message: "",
+					fromElement: view.model.id as SbpmItemId,
+					toElement: "",
 				});
-			case SbpmReceiveStateType:
+			case "sbpm.SbpmReceiveState":
 				return new SbpmReceiveStateTransition({
 					id: crypto.randomUUID(),
-					type: "sbpm.sbd.SbpmReceiveStateTransition",
-					subject: {
-						id: "",
-						label: "From some [Subject]",
-					},
-					message: {
-						id: "",
-						label: "a [Message]",
-					},
-					source: { id: view.model.id },
-					target: { id: "" },
+					type: "sbpm.ReceiveStateTransition",
+					label: "Receive state transition",
+					senderSubject: "",
+					message: "",
+					fromElement: view.model.id as SbpmItemId,
+					toElement: "",
 				});
-			case SbpmFunctionStateType:
+			case "sbpm.SbpmFunctionState":
 				return new SbpmFunctionStateTransition({
 					id: crypto.randomUUID(),
-					type: "sbpm.sbd.SbpmFunctionStateTransition",
+					type: "sbpm.FunctionStateTransition",
 					label: "Do something",
-					source: { id: view.model.id },
-					target: { id: "" },
+					fromElement: view.model.id as SbpmItemId,
+					toElement: "",
 				});
 			default:
 				throw new Error("Provided type is not supported.");
@@ -629,11 +671,11 @@ function validateConnection(
 	const isProcessTransitionValid =
 		cellViewTarget.model.isElement() &&
 		cellViewTarget.model instanceof SbpmProcessModel &&
-		linkView.model instanceof SbpmProcessTransition;
+		linkView.model instanceof SbpmProcessNetworkTransition;
 	const isMessageTransitionValid =
 		cellViewTarget.model.isElement() &&
-		cellViewTarget.model instanceof SbpmSubject &&
-		linkView.model instanceof SbpmMessageTransition;
+		cellViewTarget.model instanceof SbpmStandardSubject &&
+		linkView.model instanceof SbpmMessageSpecification;
 	const isSendStateTransitionValid =
 		cellViewTarget.model.isElement() &&
 		(cellViewTarget.model instanceof SbpmFunctionState ||

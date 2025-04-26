@@ -2,8 +2,9 @@ import * as joint from "@joint/core";
 import { CustomEvent } from "../shared/constants";
 import type { SbpmElementToolsOptions } from "./element-tools";
 import type {
+	SbpmBaseItemOptions,
 	SbpmItemAttributes,
-	SbpmItemOptions,
+	SbpmItemPosition,
 	UpdateOptions,
 } from "./shared/types";
 
@@ -12,9 +13,8 @@ type SbpmElementAttributes<TType extends string> =
 		SbpmItemAttributes<TType, SbpmElementToolsOptions>;
 
 export interface SbpmElementOptions<TType extends string = string>
-	extends SbpmItemOptions<TType> {
-	position: joint.dia.Point;
-	label: string;
+	extends SbpmBaseItemOptions<TType> {
+	position: SbpmItemPosition;
 }
 
 export class SbpmElement<TType extends string = string> extends joint.dia
@@ -80,15 +80,11 @@ export class SbpmElement<TType extends string = string> extends joint.dia
 
 	public options(): SbpmElementOptions<TType> {
 		const options: SbpmElementOptions<TType> = {
-			id: this.id,
+			id: String(this.id),
 			type: this.prop("type"),
 			label: this.attr("label/text"),
 			position: this.position(),
 		};
-		const customData = this.prop("customData");
-		if (customData) {
-			options.customData = customData;
-		}
 		return options;
 	}
 }

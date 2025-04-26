@@ -1,13 +1,14 @@
-import type * as joint from "@joint/core";
+export type SbpmItemId = string;
 
-export type SbpmItemId = joint.dia.Cell.ID;
+export interface SbpmItemPosition {
+	x: number;
+	y: number;
+}
 
-export interface SbpmItemOptions<TType extends string> {
-	type: TType;
+export interface SbpmBaseItemOptions<TType extends string = string> {
 	id: SbpmItemId;
-	customData?: {
-		[key: string]: unknown;
-	};
+	type: TType;
+	label: string;
 }
 
 export type SbpmItemAttributes<

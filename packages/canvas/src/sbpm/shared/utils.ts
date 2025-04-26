@@ -1,10 +1,18 @@
 import * as joint from "@joint/core";
 import { blueDotIcon, redDotIcon } from "../../shared/icons";
+import type { SbpmStateOptions } from "./types";
 
-export function getStateModifierOptions(stateRole: "start" | "end" | "none") {
-	if (stateRole !== "none") {
+export function getStateModifierOptions(stateRole: SbpmStateOptions["role"]) {
+	if (stateRole === "start") {
 		return {
-			xlinkHref: stateRole === "start" ? blueDotIcon : redDotIcon,
+			href: blueDotIcon,
+			opacity: "0.5",
+		};
+	}
+
+	if (stateRole === "end") {
+		return {
+			href: redDotIcon,
 			opacity: "0.5",
 		};
 	}
