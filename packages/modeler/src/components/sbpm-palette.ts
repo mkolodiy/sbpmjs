@@ -1,16 +1,19 @@
+import type {
+	SbpmMessageExchangeType,
+	SbpmMultiProcessModelType,
+	SbpmProcessModelType,
+	SbpmStandardSubjectType,
+} from "@sbpmjs/canvas";
 import { html, render } from "lit-html";
 import { EventBus } from "../event-bus";
-import { type SbpmItemId, type SbpmItemType, SbpmProcessType } from "../types";
 import { State } from "../state";
-import {
-	SbpmFunctionStateType,
-	SbpmMessageTransitionType,
-	SbpmMessageType,
-	SbpmProcessModelType,
-	SbpmReceiveStateType,
-	SbpmSendStateType,
-	SbpmSubjectType,
-} from "@sbpmjs/canvas";
+import type {
+	SbpmItemId,
+	SbpmItemType,
+	SbpmProcessType,
+	SbpmStandardBehaviorType,
+	SbpmStandardLayerType,
+} from "../types";
 import { isContainerItem } from "../utils";
 
 type PaletteItem = {
@@ -20,40 +23,65 @@ type PaletteItem = {
 
 const paletteItems: {
 	[key in
-		| typeof SbpmProcessType
-		| typeof SbpmProcessModelType
-		| typeof SbpmMessageTransitionType
-		| typeof SbpmSubjectType]: Array<PaletteItem>;
+		| SbpmProcessType
+		| SbpmMultiProcessModelType
+		| SbpmProcessModelType
+		| SbpmStandardLayerType
+		| SbpmMessageExchangeType
+		| SbpmStandardSubjectType
+		| SbpmStandardBehaviorType]: Array<PaletteItem>;
 } = {
-	[SbpmProcessType]: [
+	"sbpm.Process": [
 		{
-			type: SbpmProcessModelType,
+			type: "sbpm.MultiProcessModel",
+			label: "Multi process model",
+		},
+		{
+			type: "sbpm.ProcessModel",
 			label: "Process model",
 		},
 	],
-	[SbpmProcessModelType]: [
+	"sbpm.MultiProcessModel": [
 		{
-			type: SbpmSubjectType,
+			type: "sbpm.StandardLayer",
+			label: "Standard layer",
+		},
+	],
+	"sbpm.ProcessModel": [
+		{
+			type: "sbpm.StandardLayer",
+			label: "Standard layer",
+		},
+	],
+	"sbpm.StandardLayer": [
+		{
+			type: "sbpm.StandardSubject",
 			label: "Subject",
 		},
 	],
-	[SbpmMessageTransitionType]: [
+	"sbpm.MessageExchange": [
 		{
-			type: SbpmMessageType,
+			type: "sbpm.MessageSpecification",
 			label: "Message",
 		},
 	],
-	[SbpmSubjectType]: [
+	"sbpm.StandardSubject": [
 		{
-			type: SbpmSendStateType,
+			type: "sbpm.StandardBehavior",
+			label: "Behavior",
+		},
+	],
+	"sbpm.StandardBehavior": [
+		{
+			type: "sbpm.SendState",
 			label: "Send state",
 		},
 		{
-			type: SbpmReceiveStateType,
+			type: "sbpm.ReceiveState",
 			label: "Receive state",
 		},
 		{
-			type: SbpmFunctionStateType,
+			type: "sbpm.FunctionState",
 			label: "Function state",
 		},
 	],

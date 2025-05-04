@@ -8,7 +8,12 @@ export class SbpmElementView extends joint.dia.ElementView<SbpmElement> {
 		if (this.hasTools()) {
 			this.showTools();
 		} else {
-			this.addTools(createElementTools(this.model.getToolsOptions()));
+			this.addTools(
+				createElementTools(
+					this.model.getToolsOptions(),
+					this.model.graph.icons,
+				),
+			);
 		}
 	}
 

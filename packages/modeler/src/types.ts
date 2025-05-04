@@ -6,7 +6,7 @@ import type {
 } from "@sbpmjs/canvas";
 
 interface SbpmContainerItem {
-	contains: Array<SbpmItemId> | undefined;
+	contains: Array<SbpmItemId>;
 }
 
 export type SbpmItemId = SbpmCanvasSbpmItemId;
@@ -14,8 +14,7 @@ export type SbpmItemId = SbpmCanvasSbpmItemId;
 declare module "@sbpmjs/canvas" {
 	interface SbpmMultiProcessModelOptions extends SbpmContainerItem {}
 	interface SbpmProcessModelOptions extends SbpmContainerItem {}
-	interface SbpmStandardSubject {
-		behavior: SbpmItemId | undefined;
+	interface SbpmStandardSubject extends SbpmContainerItem {
 		implements?: SbpmItemId;
 	}
 	interface SbpmMessageExchangeOptions extends SbpmContainerItem {}
@@ -27,7 +26,8 @@ declare module "@sbpmjs/canvas" {
 	}
 }
 
-export type SbpmStandardLayerType = "sbpm.StandardLayer";
+export const sbpmStandardLayerType = "sbpm.StandardLayer";
+export type SbpmStandardLayerType = typeof sbpmStandardLayerType;
 export interface SbpmStandardLayerOptions
 	extends SbpmElementOptions<SbpmStandardLayerType>,
 		SbpmContainerItem {
@@ -35,7 +35,8 @@ export interface SbpmStandardLayerOptions
 	startSubject: SbpmItemId | undefined;
 }
 
-export type SbpmStandardBehaviorType = "sbpm.StandardBehavior";
+export const sbpmStandardBehaviorType = "sbpm.StandardBehavior";
+export type SbpmStandardBehaviorType = typeof sbpmStandardBehaviorType;
 export interface SbpmStandardBehaviorOptions
 	extends SbpmElementOptions<SbpmStandardBehaviorType>,
 		SbpmContainerItem {
@@ -44,12 +45,21 @@ export interface SbpmStandardBehaviorOptions
 	implements?: SbpmItemId;
 }
 
-export type SbpmProcessType = "sbpm.pnd.SbpmProcess";
+export const sbpmProcessType = "sbpm.Process";
+export type SbpmProcessType = typeof sbpmProcessType;
 export interface SbpmProcessOptions
 	extends SbpmElementOptions<SbpmProcessType>,
 		SbpmContainerItem {}
 
-export type SbpmItemType = SbpmProcessType | SbpmCanvasSbpmItemType;
-export type SbpmItemOptions = SbpmProcessOptions | SbpmCanvasSbpmItemOptions;
+export type SbpmItemType =
+	| SbpmProcessType
+	| SbpmStandardLayerType
+	| SbpmStandardBehaviorType
+	| SbpmCanvasSbpmItemType;
+export type SbpmItemOptions =
+	| SbpmProcessOptions
+	| SbpmStandardLayerOptions
+	| SbpmStandardBehaviorOptions
+	| SbpmCanvasSbpmItemOptions;
 
 export type SbpmElementShape = Pick<SbpmElementOptions, "id" | "label">;

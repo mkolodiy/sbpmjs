@@ -1,8 +1,5 @@
-import type * as joint from "@joint/core";
 import { SbpmElement, type SbpmElementOptions } from "../core/element";
 import type { UpdateOptions } from "../core/shared/types";
-import { CustomEvent } from "../shared/constants";
-import { openInNew } from "../shared/icons";
 import { createIcon } from "../shared/utils";
 
 const sbpmSubjectIconTemplate = `
@@ -11,14 +8,16 @@ const sbpmSubjectIconTemplate = `
 
 const sbpmSubjectIcon = createIcon(sbpmSubjectIconTemplate);
 
-export type SbpmStandardSubjectType = "sbpm.StandardSubject";
+export const sbpmStandardSubjectType = "sbpm.StandardSubject";
+export type SbpmStandardSubjectType = typeof sbpmStandardSubjectType;
 export interface SbpmStandardSubjectOptions
 	extends SbpmElementOptions<SbpmStandardSubjectType> {}
 
 export class SbpmStandardSubject extends SbpmElement<SbpmStandardSubjectType> {
 	constructor(options: SbpmStandardSubjectOptions) {
-		const { label, position } = options;
+		const { label, ...restOptions } = options;
 		super({
+			...restOptions,
 			size: {
 				width: 85,
 				height: 140,
@@ -39,23 +38,12 @@ export class SbpmStandardSubject extends SbpmElement<SbpmStandardSubjectType> {
 					text: label,
 				},
 			},
-			position: position,
 			type: "sbpm.StandardSubject",
 			toolsOptions: [
 				{
 					type: "remove",
 					options: {
 						x: 95,
-						action: (
-							evt: joint.dia.Event,
-							elementView: joint.dia.ElementView,
-						) => {
-							elementView.paper?.trigger(
-								CustomEvent.ELEMENT_REMOVE,
-								elementView,
-								evt,
-							);
-						},
 					},
 				},
 				{
@@ -68,21 +56,6 @@ export class SbpmStandardSubject extends SbpmElement<SbpmStandardSubjectType> {
 					type: "open",
 					options: {
 						x: 143,
-						markup: [
-							{
-								tagName: "rect",
-							},
-							{
-								tagName: "image",
-								attributes: {
-									"xlink:href": openInNew,
-								},
-							},
-							{
-								tagName: "title",
-								textContent: "Open",
-							},
-						],
 					},
 				},
 			],

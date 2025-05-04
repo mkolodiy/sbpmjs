@@ -71,6 +71,24 @@ import {
 	type SbpmStandardSubjectType,
 } from "./sbpm/standard-subject";
 import { CustomEvent, JointEvent } from "./shared/constants";
+import type { Icons } from "./shared/types";
+import {
+	autoRenewIcon,
+	blueDotIcon,
+	callMadeIcon,
+	deleteIcon,
+	openInNew,
+	redDotIcon,
+	touchAppIcon,
+} from "./shared/icons";
+
+declare module "@joint/core" {
+	namespace dia {
+		interface Graph {
+			icons: Icons;
+		}
+	}
+}
 
 type EventMap = joint.dia.Paper.EventMap & {
 	[JointEvent.ELEMENT_POINTERDOWN]: (
@@ -116,6 +134,15 @@ export interface SbpmCanvasOptions {
 	) => void;
 	onClickCanvas?: () => void;
 	onChangeItem?: (element: SbpmElement | SbpmLink) => void;
+	icons?: {
+		deleteIcon?: string;
+		touchAppIcon?: string;
+		callMadeIcon?: string;
+		autoRenewIcon?: string;
+		openInNew?: string;
+		blueDotIcon?: string;
+		redDotIcon?: string;
+	};
 }
 
 const namespace = {
@@ -175,6 +202,16 @@ export class SbpmCanvas {
 			el: options.container,
 			model: this.#graph,
 		});
+
+		this.#graph.icons = {
+			deleteIcon: options.icons?.deleteIcon ?? deleteIcon,
+			touchAppIcon: options.icons?.touchAppIcon ?? touchAppIcon,
+			callMadeIcon: options.icons?.callMadeIcon ?? callMadeIcon,
+			autoRenewIcon: options.icons?.autoRenewIcon ?? autoRenewIcon,
+			openInNew: options.icons?.openInNew ?? openInNew,
+			blueDotIcon: options.icons?.blueDotIcon ?? blueDotIcon,
+			redDotIcon: options.icons?.redDotIcon ?? redDotIcon,
+		};
 
 		this.#paper.el.style.cursor = "grab";
 

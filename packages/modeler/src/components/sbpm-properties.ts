@@ -1,37 +1,8 @@
-import {
-	type SbpmFunctionStateOptions,
-	type SbpmFunctionStateTransitionOptions,
-	SbpmFunctionStateTransitionType,
-	SbpmFunctionStateType,
-	type SbpmMessageOptions,
-	type SbpmMessageTransitionOptions,
-	SbpmMessageTransitionType,
-	SbpmMessageType,
-	type SbpmProcessModelOptions,
-	SbpmProcessModelType,
-	type SbpmProcessNetworkOptions,
-	SbpmProcessNetworkType,
-	type SbpmReceiveStateOptions,
-	type SbpmReceiveStateTransitionOptions,
-	SbpmReceiveStateTransitionType,
-	SbpmReceiveStateType,
-	type SbpmSendStateOptions,
-	type SbpmSendStateTransitionOptions,
-	SbpmSendStateTransitionType,
-	SbpmSendStateType,
-	type SbpmSubjectOptions,
-	SbpmSubjectType,
-} from "@sbpmjs/canvas";
 import { html, render } from "lit-html";
 import { EventBus } from "../event-bus";
 import { State } from "../state";
-import type {
-	SbpmElementShape,
-	SbpmItemId,
-	SbpmItemOptions,
-	SbpmItemType,
-} from "../types";
-import { isContainerItem, isElementShell, isString } from "../utils";
+import type { SbpmElementShape, SbpmItemId, SbpmItemType } from "../types";
+import { isContainerItem } from "../utils";
 
 // type AllKeys<T> = T extends unknown ? keyof T : never;
 
@@ -122,7 +93,6 @@ const typeTemplate = createInputTemplate({ label: "Type:", disabled: true });
 const labelTemplate = createInputTemplate({
 	label: "Label:",
 });
-const roleTemplate = createSelectTemplate("Role:");
 const subjectTemplate = createSelectTemplate("Subject:");
 const messageTemplate = createSelectTemplate("Message:");
 
@@ -133,56 +103,18 @@ const defaultUpdatableProperties: UpdatableProperties = {
 };
 
 const updatablePropertiesByType: UpdatablePropertiesByType = {
-	"sbpm.sbd.SbpmFunctionState": defaultUpdatableProperties,
-	"sbpm.pnd.SbpmProcessModel": {
-		...defaultUpdatableProperties,
-		role: (options) =>
-			roleTemplate({
-				...options,
-				values: () => {
-					const values: Array<
-						SelectOption<
-							Required<SbpmProcessModelOptions>["role"],
-							Required<SbpmProcessModelOptions>["role"]
-						>
-					> = [
-						{ label: "single", value: "single" },
-						{
-							label: "multi",
-							value: "multi",
-						},
-					];
-					return values;
-				},
-			}),
-	},
-	"sbpm.pnd.SbpmProcessNetwork": defaultUpdatableProperties,
-	"sbpm.pnd.SbpmMessage": defaultUpdatableProperties,
-	"sbpm.sbd.SbpmReceiveState": defaultUpdatableProperties,
-	"sbpm.sbd.SbpmSendState": defaultUpdatableProperties,
-	"sbpm.sid.SbpmSubject": defaultUpdatableProperties,
-	"sbpm.sbd.SbpmFunctionStateTransition": defaultUpdatableProperties,
-	"sbpm.sid.SbpmMessageTransition": {
-		...defaultUpdatableProperties,
-		role: (options) =>
-			roleTemplate({
-				...options,
-				values: () => {
-					const values: Array<
-						SelectOption<Required<SbpmMessageTransitionOptions>["role"]>
-					> = [
-						{ label: "bidirectional", value: "bidirectional" },
-						{
-							label: "unidirectional",
-							value: "unidirectional",
-						},
-					];
-					return values;
-				},
-			}),
-	},
-	"sbpm.pnd.SbpmProcessTransition": defaultUpdatableProperties,
-	"sbpm.sbd.SbpmReceiveStateTransition": {
+	"sbpm.FunctionState": defaultUpdatableProperties,
+	"sbpm.MultiProcessModel": defaultUpdatableProperties,
+	"sbpm.ProcessModel": defaultUpdatableProperties,
+	"sbpm.ProcessNetwork": defaultUpdatableProperties,
+	"sbpm.MessageSpecification": defaultUpdatableProperties,
+	"sbpm.ReceiveState": defaultUpdatableProperties,
+	"sbpm.SendState": defaultUpdatableProperties,
+	"sbpm.StandardSubject": defaultUpdatableProperties,
+	"sbpm.FunctionStateTransition": defaultUpdatableProperties,
+	"sbpm.MessageExchange": defaultUpdatableProperties,
+	"sbpm.ProcessNetworkTransition": defaultUpdatableProperties,
+	"sbpm.ReceiveStateTransition": {
 		id: defaultUpdatableProperties.id,
 		type: defaultUpdatableProperties.type,
 		subject: (options) =>
@@ -199,22 +131,22 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 					if (!parentId) {
 						throw new Error("The parent item id is undefined.");
 					}
-					const outgoingTransitions = State.getItems()
-						.filter((item) => item.type === "sbpm.sid.SbpmMessageTransition")
-						.filter(
-							(item) =>
-								item.source.id === parentId && item.role === "bidirectional",
-						);
+					// const outgoingTransitions = State.getItems()
+					// 	.filter((item) => item.type === "sbpm.MessageExchange")
+					// 	.filter(
+					// 		(item) =>
+					// 			item.source.id === parentId && item.role === "bidirectional",
+					// 	);
 					const incomingTransitions = State.getItems()
-						.filter((item) => item.type === "sbpm.sid.SbpmMessageTransition")
-						.filter((item) => item.target.id === parentId);
+						.filter((item) => item.type === "sbpm.MessageExchange")
+						.filter((item) => item.toElement === parentId);
 
 					const subjects = [
-						...outgoingTransitions.map((transition) =>
-							State.getItem(transition.target.id),
-						),
+						// ...outgoingTransitions.map((transition) =>
+						// 	State.getItem(transition.target.id),
+						// ),
 						...incomingTransitions.map((transition) =>
-							State.getItem(transition.source.id),
+							State.getItem(transition.fromElement),
 						),
 					];
 					const values: Array<SelectOption> = subjects.map((subject) => ({
@@ -239,16 +171,15 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 						throw new Error("The parent item id is undefined.");
 					}
 					const transitions = State.getItems()
-						.filter((item) => item.type === "sbpm.sid.SbpmMessageTransition")
+						.filter((item) => item.type === "sbpm.MessageExchange")
 						.filter(
-							(item) =>
-								item.target.id === parentId ||
-								(item.source.id === parentId && item.role === "bidirectional"),
+							(item) => item.toElement === parentId,
+							// (item.source.id === parentId && item.role === "bidirectional"),
 						);
 					const ids = transitions.flatMap((transition) => transition.contains);
 
 					const messages = State.getItems()
-						.filter((item) => item.type === "sbpm.pnd.SbpmMessage")
+						.filter((item) => item.type === "sbpm.MessageSpecification")
 						.filter((item) => ids.includes(item.id));
 					const values: Array<SelectOption> = messages.map((message) => {
 						return {
@@ -261,7 +192,7 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 				},
 			}),
 	},
-	"sbpm.sbd.SbpmSendStateTransition": {
+	"sbpm.SendStateTransition": {
 		id: defaultUpdatableProperties.id,
 		type: defaultUpdatableProperties.type,
 		subject: (options) =>
@@ -279,21 +210,21 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 						throw new Error("The parent item id is undefined.");
 					}
 					const outgoingTransitions = State.getItems()
-						.filter((item) => item.type === "sbpm.sid.SbpmMessageTransition")
-						.filter((item) => item.source.id === parentId);
-					const incomingTransitions = State.getItems()
-						.filter((item) => item.type === "sbpm.sid.SbpmMessageTransition")
-						.filter(
-							(item) =>
-								item.target.id === parentId && item.role === "bidirectional",
-						);
+						.filter((item) => item.type === "sbpm.MessageExchange")
+						.filter((item) => item.fromElement === parentId);
+					// const incomingTransitions = State.getItems()
+					// 	.filter((item) => item.type === "sbpm.MessageExchange")
+					// 	.filter(
+					// 		(item) =>
+					// 			item.target.id === parentId && item.role === "bidirectional",
+					// 	);
 					const subjects = [
 						...outgoingTransitions.map((transition) =>
-							State.getItem(transition.target.id),
+							State.getItem(transition.toElement),
 						),
-						...incomingTransitions.map((transition) =>
-							State.getItem(transition.source.id),
-						),
+						// ...incomingTransitions.map((transition) =>
+						// 	State.getItem(transition.source.id),
+						// ),
 					];
 					const values: Array<SelectOption> = subjects.map((subject) => ({
 						label: subject.label,
@@ -317,16 +248,15 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 						throw new Error("The parent item id is undefined.");
 					}
 					const transitions = State.getItems()
-						.filter((item) => item.type === "sbpm.sid.SbpmMessageTransition")
+						.filter((item) => item.type === "sbpm.MessageExchange")
 						.filter(
-							(item) =>
-								item.source.id === parentId ||
-								(item.target.id === parentId && item.role === "bidirectional"),
+							(item) => item.fromElement === parentId,
+							// (item.target.id === parentId && item.role === "bidirectional"),
 						);
 					const ids = transitions.flatMap((transition) => transition.contains);
 
 					const messages = State.getItems()
-						.filter((item) => item.type === "sbpm.pnd.SbpmMessage")
+						.filter((item) => item.type === "sbpm.MessageSpecification")
 						.filter((item) => ids.includes(item.id));
 					const values: Array<SelectOption> = messages.map((message) => {
 						return {
@@ -339,7 +269,9 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 				},
 			}),
 	},
-	"sbpm.pnd.SbpmProcess": defaultUpdatableProperties,
+	"sbpm.Process": defaultUpdatableProperties,
+	"sbpm.StandardBehavior": defaultUpdatableProperties,
+	"sbpm.StandardLayer": defaultUpdatableProperties,
 };
 
 class SbpmProperties extends HTMLElement {

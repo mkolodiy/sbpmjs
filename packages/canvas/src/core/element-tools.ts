@@ -1,6 +1,6 @@
 import * as joint from "@joint/core";
 import { CustomEvent } from "../shared/constants";
-import { callMadeIcon, deleteIcon, touchAppIcon } from "../shared/icons";
+import type { Icons } from "../shared/types";
 
 const defaultBoundaryOptions: joint.elementTools.Boundary.Options = {
 	focusOpacity: 1,
@@ -8,41 +8,45 @@ const defaultBoundaryOptions: joint.elementTools.Boundary.Options = {
 	padding: 5,
 };
 
-const defaultButtonOptions: joint.elementTools.Button.Options = {
-	y: -5,
-	markup: [
-		{
-			tagName: "rect",
-			attributes: {
-				fill: "white",
-				width: "24px",
-				height: "24px",
-				rx: 1,
-				ry: 1,
+function defaultButtonOptions(icons: Icons): joint.elementTools.Button.Options {
+	return {
+		y: -5,
+		markup: [
+			{
+				tagName: "rect",
+				attributes: {
+					fill: "white",
+					width: "24px",
+					height: "24px",
+					rx: 1,
+					ry: 1,
+				},
 			},
-		},
-		{
-			tagName: "image",
-			attributes: {
-				"xlink:href": touchAppIcon,
-				cursor: "pointer",
+			{
+				tagName: "image",
+				attributes: {
+					href: icons.touchAppIcon,
+					cursor: "pointer",
+				},
 			},
-		},
-		{
-			tagName: "title",
-			textContent: "New button with no action",
-		},
-	],
-};
+			{
+				tagName: "title",
+				textContent: "New button with no action",
+			},
+		],
+	};
+}
 
-const defaultConnectOptions: joint.elementTools.Connect.Options =
-	joint.util.merge(joint.util.cloneDeep(defaultButtonOptions), {
+function defaultConnectOptions(
+	icons: Icons,
+): joint.elementTools.Connect.Options {
+	return joint.util.merge(joint.util.cloneDeep(defaultButtonOptions(icons)), {
 		markup: [
 			{},
 			{
 				tagName: "image",
 				attributes: {
-					"xlink:href": callMadeIcon,
+					href: icons.callMadeIcon,
 				},
 			},
 			{
@@ -52,15 +56,16 @@ const defaultConnectOptions: joint.elementTools.Connect.Options =
 		],
 		focusOpacity: 0,
 	});
+}
 
-const defaultRemoveOptions: joint.elementTools.Button.Options =
-	joint.util.merge(joint.util.cloneDeep(defaultButtonOptions), {
+function defaultRemoveOptions(icons: Icons): joint.elementTools.Button.Options {
+	return joint.util.merge(joint.util.cloneDeep(defaultButtonOptions(icons)), {
 		markup: [
 			{},
 			{
 				tagName: "image",
 				attributes: {
-					"xlink:href": deleteIcon,
+					href: icons.deleteIcon,
 				},
 			},
 			{
@@ -69,6 +74,7 @@ const defaultRemoveOptions: joint.elementTools.Button.Options =
 			},
 		],
 	});
+}
 
 export type SbpmElementBoundaryToolOptions = {
 	type: "boundary";
@@ -119,30 +125,43 @@ function createBoundary(
 
 function createButton(
 	options: joint.elementTools.Button.Options,
+	icons: Icons,
 ): joint.elementTools.Button {
 	return new joint.elementTools.Button(
-		joint.util.merge(joint.util.cloneDeep(defaultButtonOptions), options),
+		joint.util.merge(
+			joint.util.cloneDeep(defaultButtonOptions(icons)),
+			options,
+		),
 	);
 }
 
 function createConnect(
 	options: joint.elementTools.Connect.Options,
+	icons: Icons,
 ): joint.elementTools.Connect {
 	return new joint.elementTools.Connect(
-		joint.util.merge(joint.util.cloneDeep(defaultConnectOptions), options),
+		joint.util.merge(
+			joint.util.cloneDeep(defaultConnectOptions(icons)),
+			options,
+		),
 	);
 }
 
 function createRemove(
 	options: joint.elementTools.Button.Options,
+	icons: Icons,
 ): joint.elementTools.Remove {
 	return new joint.elementTools.Remove(
-		joint.util.merge(joint.util.cloneDeep(defaultRemoveOptions), options),
+		joint.util.merge(
+			joint.util.cloneDeep(defaultRemoveOptions(icons)),
+			options,
+		),
 	);
 }
 
 export function createElementTools(
 	toolsOptions: SbpmElementToolsOptions,
+	icons: Icons,
 ): joint.dia.ToolsView {
 	const tools: Array<joint.dia.ToolView> = [];
 
@@ -153,33 +172,66 @@ export function createElementTools(
 
 	for (const toolOptions of toolsOptions) {
 		if (toolOptions.type === "button") {
-			tools.push(createButton(toolOptions.options));
+			tools.push(createButton(toolOptions.options, icons));
 		}
 
 		if (toolOptions.type === "open") {
 			tools.push(
-				createButton({
-					...toolOptions.options,
-					action: (
-						evt: joint.dia.Event,
-						elementView: joint.dia.ElementView,
-					) => {
-						elementView.paper?.trigger(
-							CustomEvent.ELEMENT_OPEN,
-							elementView,
-							evt,
-						);
-					},
-				}),
+				createButton(
+					joint.util.merge(toolOptions.options, {
+						markup: [
+							{
+								tagName: "rect",
+							},
+							{
+								tagName: "image",
+								attributes: {
+									href: icons.openInNew,
+								},
+							},
+							{
+								tagName: "title",
+								textContent: "Open",
+							},
+						],
+						action: (
+							evt: joint.dia.Event,
+							elementView: joint.dia.ElementView,
+						) => {
+							elementView.paper?.trigger(
+								CustomEvent.ELEMENT_OPEN,
+								elementView,
+								evt,
+							);
+						},
+					}),
+					icons,
+				),
 			);
 		}
 
 		if (toolOptions.type === "connect") {
-			tools.push(createConnect(toolOptions.options));
+			tools.push(createConnect(toolOptions.options, icons));
 		}
 
 		if (toolOptions.type === "remove") {
-			tools.push(createRemove(toolOptions.options));
+			tools.push(
+				createRemove(
+					joint.util.merge(toolOptions.options, {
+						action: (
+							evt: joint.dia.Event,
+							elementView: joint.dia.ElementView,
+						) => {
+							elementView.paper?.trigger(
+								CustomEvent.ELEMENT_REMOVE,
+								elementView,
+								evt,
+							);
+						},
+					}),
+					icons,
+				),
+			);
 		}
 	}
 

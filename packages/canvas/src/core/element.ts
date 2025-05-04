@@ -4,6 +4,7 @@ import type { SbpmElementToolsOptions } from "./element-tools";
 import type {
 	SbpmBaseItemOptions,
 	SbpmItemAttributes,
+	SbpmItemId,
 	SbpmItemPosition,
 	UpdateOptions,
 } from "./shared/types";
@@ -19,6 +20,8 @@ export interface SbpmElementOptions<TType extends string = string>
 
 export class SbpmElement<TType extends string = string> extends joint.dia
 	.Element<SbpmElementAttributes<TType>> {
+	declare id: SbpmItemId;
+
 	override preinitialize(): void {
 		this.markup = joint.util
 			.svg`<image @selector="image"/><text @selector="label"/>`;

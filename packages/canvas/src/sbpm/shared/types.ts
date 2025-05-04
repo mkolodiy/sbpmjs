@@ -6,5 +6,5 @@ export interface SbpmStateOptions<TType extends string = string>
 	role?: "start" | "end";
 }
 
-export interface SbpmBaseStateTransitionOptions<TType extends string = string>
+export interface SbpmStateTransitionOptions<TType extends string = string>
 	extends SbpmLinkOptions<TType> {}

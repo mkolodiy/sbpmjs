@@ -25,6 +25,7 @@ export class SbpmModeler extends HTMLElement {
 
 	#handleChange(event: Event) {
 		if (event.target instanceof HTMLSelectElement) {
+			EventBus.trigger("item:deselected", undefined);
 			EventBus.trigger("item:opened", { id: event.target.value });
 		}
 	}

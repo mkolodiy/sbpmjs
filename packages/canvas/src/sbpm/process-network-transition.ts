@@ -4,16 +4,18 @@ import type { UpdateOptions } from "../core/shared/types";
 import { CustomEvent } from "../shared/constants";
 import { autoRenewIcon } from "../shared/icons";
 
-export type SbpmProcessNetworkTransitionType = "sbpm.ProcessNetworkTransition";
+export const sbpmProcessNetworkTransitionType = "sbpm.ProcessNetworkTransition";
+export type SbpmProcessNetworkTransitionType =
+	typeof sbpmProcessNetworkTransitionType;
 export interface SbpmProcessNetworkTransitionOptions
 	extends SbpmLinkOptions<SbpmProcessNetworkTransitionType> {}
 
 export class SbpmProcessNetworkTransition extends SbpmLink<SbpmProcessNetworkTransitionType> {
 	constructor(options: SbpmProcessNetworkTransitionOptions) {
-		const { fromElement, toElement, ...restProps } = options;
+		const { fromElement, toElement, ...restOptions } = options;
 
 		super({
-			...restProps,
+			...restOptions,
 			type: "sbpm.ProcessNetworkTransition",
 			source: { id: fromElement },
 			target: { id: toElement },

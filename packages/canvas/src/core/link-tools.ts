@@ -1,41 +1,42 @@
 import * as joint from "@joint/core";
-import { deleteIcon, touchAppIcon } from "../shared/icons";
+import type { Icons } from "../shared/types";
 
-const defaultButtonOptions: joint.linkTools.Button.Options = {
-	markup: [
-		{
-			tagName: "rect",
-			attributes: {
-				fill: "white",
-				width: "24px",
-				height: "24px",
-				rx: 1,
-				ry: 1,
+function defaultButtonOptions(icons: Icons): joint.linkTools.Button.Options {
+	return {
+		markup: [
+			{
+				tagName: "rect",
+				attributes: {
+					fill: "white",
+					width: "24px",
+					height: "24px",
+					rx: 1,
+					ry: 1,
+				},
 			},
-		},
-		{
-			tagName: "image",
-			attributes: {
-				"xlink:href": touchAppIcon,
-				cursor: "pointer",
+			{
+				tagName: "image",
+				attributes: {
+					href: icons.touchAppIcon,
+					cursor: "pointer",
+				},
 			},
-		},
-		{
-			tagName: "title",
-			textContent: "New button with no action",
-		},
-	],
-};
+			{
+				tagName: "title",
+				textContent: "New button with no action",
+			},
+		],
+	};
+}
 
-const defaultRemoveOptions: joint.linkTools.Button.Options = joint.util.merge(
-	joint.util.cloneDeep(defaultButtonOptions),
-	{
+function defaultRemoveOptions(icons: Icons): joint.linkTools.Button.Options {
+	return joint.util.merge(joint.util.cloneDeep(defaultButtonOptions(icons)), {
 		markup: [
 			{},
 			{
 				tagName: "image",
 				attributes: {
-					"xlink:href": deleteIcon,
+					href: icons.deleteIcon,
 				},
 			},
 			{
@@ -43,8 +44,8 @@ const defaultRemoveOptions: joint.linkTools.Button.Options = joint.util.merge(
 				textContent: "Remove",
 			},
 		],
-	},
-);
+	});
+}
 
 const defaultIconLabel: joint.dia.Link.Label = {
 	markup: [
@@ -174,9 +175,13 @@ function createButton(
 
 function createRemove(
 	options: joint.linkTools.Button.Options,
+	icons: Icons,
 ): joint.linkTools.Remove {
 	return new joint.linkTools.Remove(
-		joint.util.merge(joint.util.cloneDeep(defaultRemoveOptions), options),
+		joint.util.merge(
+			joint.util.cloneDeep(defaultRemoveOptions(icons)),
+			options,
+		),
 	);
 }
 
@@ -200,6 +205,7 @@ export function createButtonLabel(
 
 export function createLinkTools(
 	toolsOptions: SbpmLinkToolsOptions,
+	icons: Icons,
 ): joint.dia.ToolsView {
 	const tools: Array<joint.dia.ToolView> = [];
 
@@ -213,7 +219,7 @@ export function createLinkTools(
 		}
 
 		if (toolOption.type === "remove") {
-			tools.push(createRemove(toolOption.options));
+			tools.push(createRemove(toolOption.options, icons));
 		}
 
 		if (toolOption.type === "source-arrowhead") {

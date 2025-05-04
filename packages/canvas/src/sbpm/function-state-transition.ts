@@ -7,9 +7,9 @@ import {
 } from "../core/link-tools";
 import type { UpdateOptions } from "../core/shared/types";
 import { CustomEvent } from "../shared/constants";
-import { autoRenewIcon, deleteIcon } from "../shared/icons";
-import type { SbpmBaseStateTransitionOptions } from "./shared/types";
+import type { SbpmStateTransitionOptions } from "./shared/types";
 import { updateLabelText } from "./shared/utils";
+import type { Icons } from "../shared/types";
 
 const iconLabel: joint.dia.Link.Label = {
 	markup: [
@@ -58,43 +58,49 @@ const selectionLabel: joint.dia.Link.Label = {
 	},
 };
 
-const removeLabel: joint.dia.Link.Label = {
-	markup: [],
-	attrs: {
-		background: {
-			xAlignment: 103,
-			yAlignment: -40,
+function removeLabel(icons: Icons): joint.dia.Link.Label {
+	return {
+		markup: [],
+		attrs: {
+			background: {
+				xAlignment: 103,
+				yAlignment: -40,
+			},
+			buttonLabel: {
+				href: icons.deleteIcon,
+				event: CustomEvent.LINK_REMOVE,
+				xAlignment: 103,
+				yAlignment: -40,
+				title: "Remove",
+			},
 		},
-		buttonLabel: {
-			href: deleteIcon,
-			event: CustomEvent.LINK_REMOVE,
-			xAlignment: 103,
-			yAlignment: -40,
-			title: "Remove",
-		},
-	},
-};
+	};
+}
 
-const removeVerticesLabel: joint.dia.Link.Label = {
-	markup: [],
-	attrs: {
-		background: {
-			xAlignment: 128,
-			yAlignment: -40,
+function removeVerticesLabel(icons: Icons): joint.dia.Link.Label {
+	return {
+		markup: [],
+		attrs: {
+			background: {
+				xAlignment: 128,
+				yAlignment: -40,
+			},
+			buttonLabel: {
+				href: icons.autoRenewIcon,
+				event: CustomEvent.LINK_REMOVE_VERTICES,
+				xAlignment: 128,
+				yAlignment: -40,
+				title: "Remove vertices",
+			},
 		},
-		buttonLabel: {
-			href: autoRenewIcon,
-			event: CustomEvent.LINK_REMOVE_VERTICES,
-			xAlignment: 128,
-			yAlignment: -40,
-			title: "Remove vertices",
-		},
-	},
-};
+	};
+}
 
-export type SbpmFunctionStateTransitionType = "sbpm.FunctionStateTransition";
+export const sbpmFunctionStateTransitionType = "sbpm.FunctionStateTransition";
+export type SbpmFunctionStateTransitionType =
+	typeof sbpmFunctionStateTransitionType;
 export interface SbpmFunctionStateTransitionOptions
-	extends SbpmBaseStateTransitionOptions<SbpmFunctionStateTransitionType> {}
+	extends SbpmStateTransitionOptions<SbpmFunctionStateTransitionType> {}
 
 export class SbpmFunctionStateTransition extends SbpmLink<SbpmFunctionStateTransitionType> {
 	constructor(options: SbpmFunctionStateTransitionOptions) {
@@ -145,8 +151,8 @@ export class SbpmFunctionStateTransition extends SbpmLink<SbpmFunctionStateTrans
 	public override select(): void {
 		super.select();
 		this.appendLabel(createSelectionLabel(selectionLabel));
-		this.appendLabel(createButtonLabel(removeLabel));
-		this.appendLabel(createButtonLabel(removeVerticesLabel));
+		this.appendLabel(createButtonLabel(removeLabel(this.graph.icons)));
+		this.appendLabel(createButtonLabel(removeVerticesLabel(this.graph.icons)));
 	}
 
 	public override deselect(): void {

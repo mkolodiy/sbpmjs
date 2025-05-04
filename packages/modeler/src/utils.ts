@@ -1,160 +1,162 @@
 import {
-	type SbpmFunctionStateOptions,
-	SbpmFunctionStateType,
-	type SbpmMessageOptions,
-	type SbpmMessageTransitionOptions,
-	SbpmMessageTransitionType,
-	SbpmMessageType,
 	type SbpmProcessModelOptions,
-	SbpmProcessModelType,
+	sbpmProcessModelType,
+	type SbpmFunctionStateOptions,
 	type SbpmProcessNetworkOptions,
-	SbpmProcessNetworkType,
 	type SbpmReceiveStateOptions,
-	SbpmReceiveStateType,
 	type SbpmSendStateOptions,
-	SbpmSendStateType,
-	type SbpmSubjectOptions,
-	SbpmSubjectType,
+	type SbpmMessageExchangeOptions,
+	sbpmMessageExchangeType,
+	type SbpmMultiProcessModelOptions,
+	sbpmMultiProcessModelType,
+	type SbpmProcessNetworkType,
+	type SbpmProcessModelType,
+	type SbpmStandardSubjectType,
+	type SbpmSendStateType,
+	type SbpmReceiveStateType,
+	type SbpmFunctionStateType,
+	type SbpmMessageSpecificationType,
+	type SbpmStandardSubjectOptions,
+	type SbpmMessageSpecificationOptions,
+	type SbpmMultiProcessModelType,
 } from "@sbpmjs/canvas";
-import { SbpmItemId, type SbpmProcessOptions, SbpmProcessType } from "./types";
+import {
+	type SbpmProcessOptions,
+	type SbpmProcessType,
+	sbpmProcessType,
+	type SbpmStandardBehaviorOptions,
+	sbpmStandardBehaviorType,
+} from "./types";
 
 export function isContainerItem(
 	item: unknown,
 ): item is
 	| SbpmProcessOptions
+	| SbpmMultiProcessModelOptions
 	| SbpmProcessModelOptions
-	| SbpmSubjectOptions
-	| SbpmMessageTransitionOptions {
+	| SbpmStandardBehaviorOptions
+	| SbpmMessageExchangeOptions {
 	return (
 		typeof item === "object" &&
 		item !== null &&
 		"contains" in item &&
 		"type" in item &&
-		(item.type === SbpmProcessType ||
-			item.type === SbpmProcessModelType ||
-			item.type === SbpmSubjectType ||
-			item.type === SbpmMessageTransitionType)
-	);
-}
-
-export function isValidSbpmElementType(
-	type: unknown,
-): type is
-	| typeof SbpmProcessType
-	| typeof SbpmProcessNetworkType
-	| typeof SbpmProcessModelType
-	| typeof SbpmSubjectType
-	| typeof SbpmSendStateType
-	| typeof SbpmReceiveStateType
-	| typeof SbpmFunctionStateType
-	| typeof SbpmMessageType {
-	return (
-		type === SbpmProcessType ||
-		type === SbpmProcessNetworkType ||
-		type === SbpmProcessModelType ||
-		type === SbpmSubjectType ||
-		type === SbpmSendStateType ||
-		type === SbpmReceiveStateType ||
-		type === SbpmFunctionStateType ||
-		type === SbpmMessageType
+		(item.type === sbpmMultiProcessModelType ||
+			item.type === sbpmProcessType ||
+			item.type === sbpmProcessModelType ||
+			item.type === sbpmStandardBehaviorType ||
+			item.type === sbpmMessageExchangeType)
 	);
 }
 
 type ElementOptions<
 	TType extends
-		| typeof SbpmProcessType
-		| typeof SbpmProcessNetworkType
-		| typeof SbpmProcessModelType
-		| typeof SbpmSubjectType
-		| typeof SbpmSendStateType
-		| typeof SbpmReceiveStateType
-		| typeof SbpmFunctionStateType
-		| typeof SbpmMessageType,
-> = TType extends typeof SbpmProcessType
+		| SbpmProcessType
+		| SbpmProcessNetworkType
+		| SbpmMultiProcessModelType
+		| SbpmProcessModelType
+		| SbpmStandardSubjectType
+		| SbpmSendStateType
+		| SbpmReceiveStateType
+		| SbpmFunctionStateType
+		| SbpmMessageSpecificationType,
+> = TType extends SbpmProcessType
 	? SbpmProcessOptions
-	: TType extends typeof SbpmFunctionStateType
+	: TType extends SbpmFunctionStateType
 		? SbpmFunctionStateOptions
-		: TType extends typeof SbpmProcessModelType
-			? SbpmProcessModelOptions
-			: TType extends typeof SbpmProcessNetworkType
-				? SbpmProcessNetworkOptions
-				: TType extends typeof SbpmReceiveStateType
-					? SbpmReceiveStateOptions
-					: TType extends typeof SbpmSendStateType
-						? SbpmSendStateOptions
-						: TType extends typeof SbpmSubjectType
-							? SbpmSubjectOptions
-							: TType extends typeof SbpmMessageType
-								? SbpmMessageOptions
-								: unknown;
+		: TType extends SbpmMultiProcessModelType
+			? SbpmMultiProcessModelOptions
+			: TType extends SbpmProcessModelType
+				? SbpmProcessModelOptions
+				: TType extends SbpmProcessNetworkType
+					? SbpmProcessNetworkOptions
+					: TType extends SbpmReceiveStateType
+						? SbpmReceiveStateOptions
+						: TType extends SbpmSendStateType
+							? SbpmSendStateOptions
+							: TType extends SbpmStandardSubjectType
+								? SbpmStandardSubjectOptions
+								: TType extends SbpmMessageSpecificationType
+									? SbpmMessageSpecificationOptions
+									: unknown;
 
 export function getDefaultElementOptions<
 	TType extends
-		| typeof SbpmProcessType
-		| typeof SbpmProcessNetworkType
-		| typeof SbpmProcessModelType
-		| typeof SbpmSubjectType
-		| typeof SbpmSendStateType
-		| typeof SbpmReceiveStateType
-		| typeof SbpmFunctionStateType
-		| typeof SbpmMessageType,
+		| SbpmProcessType
+		| SbpmProcessNetworkType
+		| SbpmMultiProcessModelType
+		| SbpmProcessModelType
+		| SbpmStandardSubjectType
+		| SbpmSendStateType
+		| SbpmReceiveStateType
+		| SbpmFunctionStateType
+		| SbpmMessageSpecificationType,
 >(type: TType): ElementOptions<TType> {
 	switch (type) {
-		case SbpmProcessType:
+		case "sbpm.Process":
 			return {
-				type: "sbpm.pnd.SbpmProcess",
+				type: "sbpm.Process",
 				id: crypto.randomUUID(),
 				label: "Default process",
 				contains: [],
 			} as ElementOptions<TType>;
-		case SbpmProcessNetworkType:
+		case "sbpm.ProcessNetwork":
 			return {
-				type: "sbpm.pnd.SbpmProcessNetwork",
+				type: "sbpm.ProcessNetwork",
 				id: crypto.randomUUID(),
 				label: "Default process network",
 				position: { x: 0, y: 0 },
 			} as ElementOptions<TType>;
-		case SbpmProcessModelType:
+		case "sbpm.ProcessModel":
 			return {
-				type: "sbpm.pnd.SbpmProcessModel",
+				type: "sbpm.ProcessModel",
 				id: crypto.randomUUID(),
 				label: "Default process model",
 				position: { x: 0, y: 0 },
 				contains: [],
 				customData: { a: "a" },
 			} as ElementOptions<TType>;
-		case SbpmSubjectType:
+		case "sbpm.MultiProcessModel":
 			return {
-				type: "sbpm.sid.SbpmSubject",
+				type: "sbpm.MultiProcessModel",
+				id: crypto.randomUUID(),
+				label: "Default process model",
+				position: { x: 0, y: 0 },
+				contains: [],
+				customData: { a: "a" },
+			} as ElementOptions<TType>;
+		case "sbpm.StandardSubject":
+			return {
+				type: "sbpm.StandardSubject",
 				id: crypto.randomUUID(),
 				label: "Default subject",
 				position: { x: 0, y: 0 },
 				contains: [],
 			} as ElementOptions<TType>;
-		case SbpmSendStateType:
+		case "sbpm.SendState":
 			return {
-				type: "sbpm.sbd.SbpmSendState",
+				type: "sbpm.SendState",
 				id: crypto.randomUUID(),
 				label: "Default send state",
 				position: { x: 0, y: 0 },
 			} as ElementOptions<TType>;
-		case SbpmReceiveStateType:
+		case "sbpm.ReceiveState":
 			return {
-				type: "sbpm.sbd.SbpmReceiveState",
+				type: "sbpm.ReceiveState",
 				id: crypto.randomUUID(),
 				label: "Default receive state",
 				position: { x: 0, y: 0 },
 			} as ElementOptions<TType>;
-		case SbpmFunctionStateType:
+		case "sbpm.FunctionState":
 			return {
-				type: "sbpm.sbd.SbpmFunctionState",
+				type: "sbpm.FunctionState",
 				id: crypto.randomUUID(),
 				label: "Default function state",
 				position: { x: 0, y: 0 },
 			} as ElementOptions<TType>;
-		case SbpmMessageType:
+		case "sbpm.MessageSpecification":
 			return {
-				type: "sbpm.pnd.SbpmMessage",
+				type: "sbpm.MessageSpecification",
 				id: crypto.randomUUID(),
 				label: "Default message",
 				position: { x: 0, y: 0 },
@@ -164,18 +166,18 @@ export function getDefaultElementOptions<
 	}
 }
 
-export function isString(value: unknown): value is string {
-	return typeof value === "string";
-}
+// export function isString(value: unknown): value is string {
+// 	return typeof value === "string";
+// }
 
-export function isElementShell(
-	element: unknown,
-): element is { id: SbpmItemId; label: SbpmItemId } {
-	return (
-		typeof element !== "string" &&
-		typeof element === "object" &&
-		element !== null &&
-		"id" in element &&
-		"label" in element
-	);
-}
+// export function isElementShell(
+// 	element: unknown,
+// ): element is { id: SbpmItemId; label: SbpmItemId } {
+// 	return (
+// 		typeof element !== "string" &&
+// 		typeof element === "object" &&
+// 		element !== null &&
+// 		"id" in element &&
+// 		"label" in element
+// 	);
+// }

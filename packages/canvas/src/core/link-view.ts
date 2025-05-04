@@ -11,7 +11,9 @@ export class SbpmLinkView extends joint.dia.LinkView<SbpmLink> {
 				return;
 			}
 			this.removeTools();
-			this.addTools(createLinkTools(this.model.getToolsOptions()));
+			this.addTools(
+				createLinkTools(this.model.getToolsOptions(), this.model.graph.icons),
+			);
 		}
 	}
 

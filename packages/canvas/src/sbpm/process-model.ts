@@ -1,8 +1,5 @@
-import type * as joint from "@joint/core";
 import { SbpmElement, type SbpmElementOptions } from "../core/element";
 import type { UpdateOptions } from "../core/shared/types";
-import { CustomEvent } from "../shared/constants";
-import { openInNew } from "../shared/icons";
 import { createIcon } from "../shared/utils";
 
 const sbpmProcessIconTemplate = `
@@ -11,14 +8,16 @@ const sbpmProcessIconTemplate = `
 
 const sbpmProcessIcon = createIcon(sbpmProcessIconTemplate);
 
-export type SbpmProcessModelType = "sbpm.ProcessModel";
+export const sbpmProcessModelType = "sbpm.ProcessModel";
+export type SbpmProcessModelType = typeof sbpmProcessModelType;
 export interface SbpmProcessModelOptions
 	extends SbpmElementOptions<SbpmProcessModelType> {}
 
 export class SbpmProcessModel extends SbpmElement<SbpmProcessModelType> {
 	constructor(options: SbpmProcessModelOptions) {
-		const { label, position, id } = options;
+		const { label, ...restOptions } = options;
 		super({
+			...restOptions,
 			size: {
 				width: 130,
 				height: 70,
@@ -39,23 +38,12 @@ export class SbpmProcessModel extends SbpmElement<SbpmProcessModelType> {
 					text: label,
 				},
 			},
-			position: position,
 			type: "sbpm.ProcessModel",
 			toolsOptions: [
 				{
 					type: "remove",
 					options: {
 						x: 140,
-						action: (
-							evt: joint.dia.Event,
-							elementView: joint.dia.ElementView,
-						) => {
-							elementView.paper?.trigger(
-								CustomEvent.ELEMENT_REMOVE,
-								elementView,
-								evt,
-							);
-						},
 					},
 				},
 				{
@@ -68,26 +56,10 @@ export class SbpmProcessModel extends SbpmElement<SbpmProcessModelType> {
 					type: "open",
 					options: {
 						x: 188,
-						markup: [
-							{
-								tagName: "rect",
-							},
-							{
-								tagName: "image",
-								attributes: {
-									href: openInNew,
-								},
-							},
-							{
-								tagName: "title",
-								textContent: "Open",
-							},
-						],
 					},
 				},
 			],
 		});
-		this.set("id", id);
 	}
 
 	public override update(

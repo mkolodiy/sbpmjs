@@ -29,7 +29,8 @@ class StateImpl {
 
 	public updateItem(
 		id: SbpmItemId,
-		value: Partial<Omit<SbpmItemOptions, "id" | "type">>,
+		// value: Partial<Omit<SbpmItemOptions, "id" | "type">>,
+		value: Record<string, unknown>,
 	) {
 		const existingItem = this.getItem(id);
 

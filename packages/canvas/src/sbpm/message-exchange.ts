@@ -7,7 +7,7 @@ import {
 } from "../core/link-tools";
 import type { UpdateOptions } from "../core/shared/types";
 import { CustomEvent } from "../shared/constants";
-import { autoRenewIcon, deleteIcon, openInNew } from "../shared/icons";
+import type { Icons } from "../shared/types";
 import { createIcon } from "../shared/utils";
 
 const sbpmMessageExchangeIconTemplate = `
@@ -46,58 +46,65 @@ const selectionLabel: joint.dia.Link.Label = {
 	},
 };
 
-const removeLabel: joint.dia.Link.Label = {
-	markup: [],
-	attrs: {
-		background: {
-			xAlignment: 52.5,
-			yAlignment: -35,
+function removeLabel(icons: Icons): joint.dia.Link.Label {
+	return {
+		markup: [],
+		attrs: {
+			background: {
+				xAlignment: 52.5,
+				yAlignment: -35,
+			},
+			buttonLabel: {
+				href: icons.deleteIcon,
+				event: CustomEvent.LINK_REMOVE,
+				xAlignment: 52.5,
+				yAlignment: -35,
+				title: "Remove",
+			},
 		},
-		buttonLabel: {
-			href: deleteIcon,
-			event: CustomEvent.LINK_REMOVE,
-			xAlignment: 52.5,
-			yAlignment: -35,
-			title: "Remove",
-		},
-	},
-};
+	};
+}
 
-const removeVerticesLabel: joint.dia.Link.Label = {
-	markup: [],
-	attrs: {
-		background: {
-			xAlignment: 77.5,
-			yAlignment: -35,
+function removeVerticesLabel(icons: Icons): joint.dia.Link.Label {
+	return {
+		markup: [],
+		attrs: {
+			background: {
+				xAlignment: 77.5,
+				yAlignment: -35,
+			},
+			buttonLabel: {
+				href: icons.autoRenewIcon,
+				event: CustomEvent.LINK_REMOVE_VERTICES,
+				xAlignment: 77.5,
+				yAlignment: -35,
+				title: "Remove vertices",
+			},
 		},
-		buttonLabel: {
-			href: autoRenewIcon,
-			event: CustomEvent.LINK_REMOVE_VERTICES,
-			xAlignment: 77.5,
-			yAlignment: -35,
-			title: "Remove vertices",
-		},
-	},
-};
+	};
+}
 
-const openLabel: joint.dia.Link.Label = {
-	markup: [],
-	attrs: {
-		background: {
-			xAlignment: 102.5,
-			yAlignment: -35,
+function openLabel(icons: Icons): joint.dia.Link.Label {
+	return {
+		markup: [],
+		attrs: {
+			background: {
+				xAlignment: 102.5,
+				yAlignment: -35,
+			},
+			buttonLabel: {
+				href: icons.openInNew,
+				event: CustomEvent.LINK_OPEN,
+				xAlignment: 102.5,
+				yAlignment: -35,
+				title: "Open",
+			},
 		},
-		buttonLabel: {
-			href: openInNew,
-			event: CustomEvent.LINK_OPEN,
-			xAlignment: 102.5,
-			yAlignment: -35,
-			title: "Open",
-		},
-	},
-};
+	};
+}
 
-export type SbpmMessageExchangeType = "sbpm.MessageExchange";
+export const sbpmMessageExchangeType = "sbpm.MessageExchange";
+export type SbpmMessageExchangeType = typeof sbpmMessageExchangeType;
 export interface SbpmMessageExchangeOptions
 	extends SbpmLinkOptions<SbpmMessageExchangeType> {}
 
@@ -146,9 +153,9 @@ export class SbpmMessageExchange extends SbpmLink<SbpmMessageExchangeType> {
 	public override select(): void {
 		super.select();
 		this.appendLabel(createSelectionLabel(selectionLabel));
-		this.appendLabel(createButtonLabel(removeLabel));
-		this.appendLabel(createButtonLabel(removeVerticesLabel));
-		this.appendLabel(createButtonLabel(openLabel));
+		this.appendLabel(createButtonLabel(removeLabel(this.graph.icons)));
+		this.appendLabel(createButtonLabel(removeVerticesLabel(this.graph.icons)));
+		this.appendLabel(createButtonLabel(openLabel(this.graph.icons)));
 	}
 
 	public override deselect(): void {

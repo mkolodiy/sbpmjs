@@ -1,7 +1,5 @@
-import type * as joint from "@joint/core";
 import { SbpmElement, type SbpmElementOptions } from "../core/element";
 import type { UpdateOptions } from "../core/shared/types";
-import { CustomEvent } from "../shared/constants";
 import { createIcon } from "../shared/utils";
 
 const sbpmMessageIconTemplate = `
@@ -10,15 +8,16 @@ const sbpmMessageIconTemplate = `
 
 const sbpmMessageIcon = createIcon(sbpmMessageIconTemplate);
 
-export type SbpmMessageSpecificationType = "sbpm.MessageSpecification";
+export const sbpmMessageSpecificationType = "sbpm.MessageSpecification";
+export type SbpmMessageSpecificationType = typeof sbpmMessageSpecificationType;
 export interface SbpmMessageSpecificationOptions
 	extends SbpmElementOptions<SbpmMessageSpecificationType> {}
 
 export class SbpmMessageSpecification extends SbpmElement<SbpmMessageSpecificationType> {
 	constructor(options: SbpmMessageSpecificationOptions) {
-		const { label, ...restProps } = options;
-
+		const { label, ...restOptions } = options;
 		super({
+			...restOptions,
 			size: {
 				width: 120,
 				height: 75,
@@ -39,23 +38,12 @@ export class SbpmMessageSpecification extends SbpmElement<SbpmMessageSpecificati
 					pointerEvents: "none",
 				},
 			},
-			...restProps,
 			type: "sbpm.MessageSpecification",
 			toolsOptions: [
 				{
 					type: "remove",
 					options: {
 						x: 130,
-						action: (
-							evt: joint.dia.Event,
-							elementView: joint.dia.ElementView,
-						) => {
-							elementView.paper?.trigger(
-								CustomEvent.ELEMENT_REMOVE,
-								elementView,
-								evt,
-							);
-						},
 					},
 				},
 			],

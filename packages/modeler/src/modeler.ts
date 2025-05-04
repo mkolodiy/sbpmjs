@@ -1,9 +1,8 @@
 import {
 	SbpmCanvas,
-	SbpmMessageTransitionType,
-	SbpmProcessNetworkType,
-	isSbpmLinkType,
-	isValidSbpmItem,
+	isLinkType,
+	isElementType,
+	isValidItem,
 } from "@sbpmjs/canvas";
 import { html, render } from "lit-html";
 import "./components/sbpm-item-selector";
@@ -14,13 +13,9 @@ import { State } from "./state";
 import {
 	type SbpmItemId,
 	type SbpmItemOptions,
-	SbpmProcessType,
+	sbpmProcessType,
 } from "./types";
-import {
-	getDefaultElementOptions,
-	isContainerItem,
-	isValidSbpmElementType,
-} from "./utils";
+import { getDefaultElementOptions, isContainerItem } from "./utils";
 
 export interface SbpmModelerOptions {
 	container: HTMLElement;
@@ -70,12 +65,13 @@ export class SbpmModeler {
 				EventBus.trigger("item:opened", { id: link.id });
 			},
 			onSelectElement: (element) => {
+				console.log(element.id);
+
 				EventBus.trigger("item:selected", {
 					id: element.id,
 				});
 			},
 			onSelectLink: (link) => {
-				console.log(link.vertices());
 				EventBus.trigger("item:selected", { id: link.id });
 			},
 			onChangeItem: (item) => {
@@ -97,8 +93,8 @@ export class SbpmModeler {
 			},
 			onConnectLink: (link) => {
 				const item = link.options();
-				if (isValidSbpmItem(item)) {
-					if (item.type === SbpmMessageTransitionType) {
+				if (isValidItem(item)) {
+					if (item.type === "sbpm.MessageExchange") {
 						item.contains = [];
 					}
 					const parentItem = State.getItem(this.#openedItemId);
@@ -119,9 +115,7 @@ export class SbpmModeler {
 
 		EventBus.on("item:updated", (data) => {
 			const item = State.getItem(data.id);
-			console.log(item);
-
-			if (isValidSbpmItem(item)) {
+			if (isValidItem(item)) {
 				this.#canvas.updateItem(item);
 			}
 		});
@@ -130,8 +124,11 @@ export class SbpmModeler {
 			this.#openedItemId = data.id;
 			const item = State.getItem(data.id);
 			if (isContainerItem(item)) {
-				const children = item.contains.map((id) => State.getItem(id));
-				const shouldAddItems = children.every(isValidSbpmItem);
+				const children = item.contains
+					.map((id) => State.getItem(id))
+					.filter(isValidItem);
+				this.#canvas.addItems(children);
+				const shouldAddItems = children.every(isValidItem);
 				if (shouldAddItems) {
 					this.#canvas.addItems(children);
 				}
@@ -143,12 +140,12 @@ export class SbpmModeler {
 
 	#init(): void {
 		const processNetworkOptions = getDefaultElementOptions(
-			SbpmProcessNetworkType,
+			"sbpm.ProcessNetwork",
 		);
 		processNetworkOptions.position = { x: 100, y: 100 };
 		State.setItem(processNetworkOptions.id, processNetworkOptions);
 
-		const processOptions = getDefaultElementOptions(SbpmProcessType);
+		const processOptions = getDefaultElementOptions(sbpmProcessType);
 		processOptions.contains.push(processNetworkOptions.id);
 		State.setItem(processOptions.id, processOptions);
 
@@ -159,7 +156,7 @@ export class SbpmModeler {
 		event.preventDefault();
 
 		const type = event.dataTransfer?.getData("type");
-		if (!isValidSbpmElementType(type)) {
+		if (!isElementType(type)) {
 			throw new Error("Element type not provided.");
 		}
 
@@ -180,11 +177,13 @@ export class SbpmModeler {
 		}
 		State.setItem(newItem.id, newItem);
 
+		console.log("onDrop", newItem.id);
+
 		State.updateItem(this.#openedItemId, {
 			contains: [...parentItem.contains, newItem.id],
 		});
 
-		if (isValidSbpmItem(newItem)) {
+		if (isValidItem(newItem)) {
 			this.#canvas.addItem(newItem);
 		}
 	};
@@ -195,14 +194,12 @@ export class SbpmModeler {
 
 	public addItems(items: Array<SbpmItemOptions>): void {
 		State.clear();
-		const process = items.find((item) => item.type === SbpmProcessType);
+		const process = items.find((item) => item.type === "sbpm.Process");
 		if (!process) {
-			throw new Error(
-				`Please provide an item with the type: ${SbpmProcessType}`,
-			);
+			throw new Error("Please provide an item with the type: sbpm.Process");
 		}
 		const links = items
-			.filter((item) => isSbpmLinkType(item.type))
+			.filter((item) => isLinkType(item.type))
 			.map((item) => item.id);
 		for (const item of items) {
 			if (isContainerItem(item)) {

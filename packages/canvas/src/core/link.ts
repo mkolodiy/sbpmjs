@@ -23,6 +23,8 @@ export interface SbpmLinkOptions<TType extends string = string>
 export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 	SbpmLinkAttributes<TType>
 > {
+	declare id: SbpmItemId;
+
 	override preinitialize(): void {
 		this.markup = joint.util
 			.svg`<path @selector="wrapper" fill="none" cursor="pointer" stroke="transparent" stroke-linecap="round"/><path @selector="line" fill="none" pointer-events="none"/>`;

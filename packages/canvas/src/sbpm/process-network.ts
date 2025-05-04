@@ -8,14 +8,16 @@ const sbpmProcessNetworkIconTemplate = `
 
 const sbpmProcessNetworkIcon = createIcon(sbpmProcessNetworkIconTemplate);
 
-export type SbpmProcessNetworkType = "sbpm.ProcessNetwork";
+export const sbpmProcessNetworkType = "sbpm.ProcessNetwork";
+export type SbpmProcessNetworkType = typeof sbpmProcessNetworkType;
 export interface SbpmProcessNetworkOptions
 	extends SbpmElementOptions<SbpmProcessNetworkType> {}
 
 export class SbpmProcessNetwork extends SbpmElement<SbpmProcessNetworkType> {
 	constructor(options: SbpmProcessNetworkOptions) {
-		const { label, position, id } = options;
+		const { label, ...restOptions } = options;
 		super({
+			...restOptions,
 			size: {
 				width: 130,
 				height: 130,
@@ -36,7 +38,6 @@ export class SbpmProcessNetwork extends SbpmElement<SbpmProcessNetworkType> {
 					text: label,
 				},
 			},
-			position: position,
 			type: "sbpm.ProcessNetwork",
 			toolsOptions: [
 				{
@@ -47,7 +48,6 @@ export class SbpmProcessNetwork extends SbpmElement<SbpmProcessNetworkType> {
 				},
 			],
 		});
-		this.set("id", id);
 	}
 
 	public override update(
