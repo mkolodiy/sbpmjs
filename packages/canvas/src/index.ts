@@ -66,6 +66,16 @@ import type {
 	SbpmStateTransitionOptions,
 } from "./sbpm/shared/types";
 import {
+	type SbpmStandardBehaviorOptions,
+	type SbpmStandardBehaviorType,
+	sbpmStandardBehaviorType,
+} from "./sbpm/standard-behavior";
+import {
+	type SbpmStandardLayerOptions,
+	type SbpmStandardLayerType,
+	sbpmStandardLayerType,
+} from "./sbpm/standard-layer";
+import {
 	type SbpmStandardSubjectOptions,
 	type SbpmStandardSubjectType,
 	sbpmStandardSubjectType,
@@ -84,6 +94,8 @@ export type SbpmItemOptions =
 	| SbpmReceiveStateOptions
 	| SbpmSendStateTransitionOptions
 	| SbpmSendStateOptions
+	| SbpmStandardBehaviorOptions
+	| SbpmStandardLayerOptions
 	| SbpmStandardSubjectOptions;
 
 export type SbpmItemType =
@@ -99,41 +111,47 @@ export type SbpmItemType =
 	| SbpmReceiveStateType
 	| SbpmSendStateTransitionType
 	| SbpmSendStateType
+	| SbpmStandardBehaviorType
+	| SbpmStandardLayerType
 	| SbpmStandardSubjectType;
 
 export type {
+	SbpmElementOptions,
+	SbpmFunctionStateOptions,
+	SbpmFunctionStateTransitionOptions,
+	SbpmFunctionStateTransitionType,
+	SbpmFunctionStateType,
 	SbpmItemId,
 	SbpmItemPosition,
-	SbpmElementOptions,
 	SbpmLinkOptions,
+	SbpmMessageExchangeOptions,
+	SbpmMessageExchangeType,
+	SbpmMessageSpecificationOptions,
+	SbpmMessageSpecificationType,
+	SbpmMultiProcessModelOptions,
+	SbpmMultiProcessModelType,
+	SbpmProcessModelOptions,
+	SbpmProcessModelType,
+	SbpmProcessNetworkOptions,
+	SbpmProcessNetworkTransitionOptions,
+	SbpmProcessNetworkTransitionType,
+	SbpmProcessNetworkType,
+	SbpmReceiveStateOptions,
+	SbpmReceiveStateTransitionOptions,
+	SbpmReceiveStateTransitionType,
+	SbpmReceiveStateType,
+	SbpmSendStateOptions,
+	SbpmSendStateTransitionOptions,
+	SbpmSendStateTransitionType,
+	SbpmSendStateType,
+	SbpmStandardBehaviorOptions,
+	SbpmStandardBehaviorType,
+	SbpmStandardLayerOptions,
+	SbpmStandardLayerType,
+	SbpmStandardSubjectOptions,
+	SbpmStandardSubjectType,
 	SbpmStateOptions,
 	SbpmStateTransitionOptions,
-	SbpmFunctionStateType,
-	SbpmFunctionStateOptions,
-	SbpmFunctionStateTransitionType,
-	SbpmFunctionStateTransitionOptions,
-	SbpmMessageExchangeType,
-	SbpmMessageExchangeOptions,
-	SbpmMessageSpecificationType,
-	SbpmMessageSpecificationOptions,
-	SbpmMultiProcessModelType,
-	SbpmMultiProcessModelOptions,
-	SbpmProcessModelType,
-	SbpmProcessModelOptions,
-	SbpmProcessNetworkTransitionType,
-	SbpmProcessNetworkTransitionOptions,
-	SbpmProcessNetworkType,
-	SbpmProcessNetworkOptions,
-	SbpmReceiveStateTransitionType,
-	SbpmReceiveStateTransitionOptions,
-	SbpmReceiveStateType,
-	SbpmReceiveStateOptions,
-	SbpmSendStateTransitionType,
-	SbpmSendStateTransitionOptions,
-	SbpmSendStateType,
-	SbpmSendStateOptions,
-	SbpmStandardSubjectType,
-	SbpmStandardSubjectOptions,
 };
 
 export {
@@ -149,8 +167,10 @@ export {
 	sbpmReceiveStateType,
 	sbpmSendStateTransitionType,
 	sbpmSendStateType,
+	sbpmStandardBehaviorType,
+	sbpmStandardLayerType,
 	sbpmStandardSubjectType,
 };
 
 export * from "./canvas";
-export { isLinkType, isElementType, isValidItem } from "./shared/utils";
+export { isElementType, isLinkType, isValidItem } from "./shared/utils";

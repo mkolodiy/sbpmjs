@@ -59,6 +59,16 @@ import {
 	sbpmSendStateTransitionType,
 } from "../sbpm/send-state-transition";
 import {
+	type SbpmStandardBehaviorOptions,
+	type SbpmStandardBehaviorType,
+	sbpmStandardBehaviorType,
+} from "../sbpm/standard-behavior";
+import {
+	type SbpmStandardLayerOptions,
+	type SbpmStandardLayerType,
+	sbpmStandardLayerType,
+} from "../sbpm/standard-layer";
+import {
 	type SbpmStandardSubjectOptions,
 	type SbpmStandardSubjectType,
 	sbpmStandardSubjectType,
@@ -96,6 +106,8 @@ export function isElementType(
 	| SbpmProcessNetworkType
 	| SbpmReceiveStateType
 	| SbpmSendStateType
+	| SbpmStandardBehaviorType
+	| SbpmStandardLayerType
 	| SbpmStandardSubjectType {
 	return (
 		typeof type === "string" &&
@@ -106,6 +118,8 @@ export function isElementType(
 			type === sbpmProcessNetworkType ||
 			type === sbpmReceiveStateType ||
 			type === sbpmSendStateType ||
+			type === sbpmStandardBehaviorType ||
+			type === sbpmStandardLayerType ||
 			type === sbpmStandardSubjectType)
 	);
 }
@@ -125,6 +139,8 @@ export function isValidItem(options: {
 	| SbpmReceiveStateOptions
 	| SbpmSendStateTransitionOptions
 	| SbpmSendStateOptions
+	| SbpmStandardBehaviorOptions
+	| SbpmStandardLayerOptions
 	| SbpmStandardSubjectOptions {
 	return (
 		options.type === sbpmFunctionStateTransitionType ||
@@ -139,6 +155,8 @@ export function isValidItem(options: {
 		options.type === sbpmReceiveStateType ||
 		options.type === sbpmSendStateTransitionType ||
 		options.type === sbpmSendStateType ||
+		options.type === sbpmStandardBehaviorType ||
+		options.type === sbpmStandardLayerType ||
 		options.type === sbpmStandardSubjectType
 	);
 }

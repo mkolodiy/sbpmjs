@@ -66,12 +66,21 @@ import {
 	type SbpmSendStateTransitionType,
 } from "./sbpm/send-state-transition";
 import {
+	SbpmStandardBehavior,
+	type SbpmStandardBehaviorOptions,
+	type SbpmStandardBehaviorType,
+} from "./sbpm/standard-behavior";
+import {
+	SbpmStandardLayer,
+	type SbpmStandardLayerOptions,
+	type SbpmStandardLayerType,
+} from "./sbpm/standard-layer";
+import {
 	SbpmStandardSubject,
 	type SbpmStandardSubjectOptions,
 	type SbpmStandardSubjectType,
 } from "./sbpm/standard-subject";
 import { CustomEvent, JointEvent } from "./shared/constants";
-import type { Icons } from "./shared/types";
 import {
 	autoRenewIcon,
 	blueDotIcon,
@@ -81,6 +90,8 @@ import {
 	redDotIcon,
 	touchAppIcon,
 } from "./shared/icons";
+import type { Icons } from "./shared/types";
+import { isElementType } from "./shared/utils";
 
 declare module "@joint/core" {
 	namespace dia {
@@ -445,10 +456,12 @@ export class SbpmCanvas {
 			| SbpmProcessModelType
 			| SbpmProcessNetworkTransitionType
 			| SbpmProcessNetworkType
-			| SbpmSendStateTransitionType
-			| SbpmSendStateType
 			| SbpmReceiveStateTransitionType
 			| SbpmReceiveStateType
+			| SbpmSendStateTransitionType
+			| SbpmSendStateType
+			| SbpmStandardBehaviorType
+			| SbpmStandardLayerType
 			| SbpmStandardSubjectType,
 		TOptions extends TType extends "sbpm.FunctionStateTransition"
 			? SbpmFunctionStateTransitionOptions
@@ -466,17 +479,21 @@ export class SbpmCanvas {
 									? SbpmProcessNetworkTransitionOptions
 									: TType extends "sbpm.ProcessNetwork"
 										? SbpmProcessNetworkOptions
-										: TType extends "sbpm.SendStateTransition"
-											? SbpmSendStateTransitionOptions
-											: TType extends "sbpm.SendState"
-												? SbpmSendStateOptions
-												: TType extends "sbpm.ReceiveStateTransition"
-													? SbpmReceiveStateTransitionOptions
-													: TType extends "sbpm.ReceiveState"
-														? SbpmReceiveStateOptions
-														: TType extends "sbpm.StandardSubject"
-															? SbpmStandardSubjectOptions
-															: never,
+										: TType extends "sbpm.ReceiveStateTransition"
+											? SbpmReceiveStateTransitionOptions
+											: TType extends "sbpm.ReceiveState"
+												? SbpmReceiveStateOptions
+												: TType extends "sbpm.SendStateTransition"
+													? SbpmSendStateTransitionOptions
+													: TType extends "sbpm.SendState"
+														? SbpmSendStateOptions
+														: TType extends "sbpm.StandardBehavior"
+															? SbpmStandardBehaviorOptions
+															: TType extends "sbpm.StandardLayer"
+																? SbpmStandardLayerOptions
+																: TType extends "sbpm.StandardSubject"
+																	? SbpmStandardSubjectOptions
+																	: never,
 	>(options: UpdateOptions<TOptions> & { id: SbpmItemId; type: TType }): void {
 		const { id, type, ...restOptions } = options;
 		switch (type) {
@@ -516,6 +533,12 @@ export class SbpmCanvas {
 			case "sbpm.ReceiveState":
 				this.getElement<SbpmReceiveState>(id).update(restOptions);
 				break;
+			case "sbpm.StandardBehavior":
+				this.getElement<SbpmStandardBehavior>(id).update(restOptions);
+				break;
+			case "sbpm.StandardLayer":
+				this.getElement<SbpmStandardLayer>(id).update(restOptions);
+				break;
 			case "sbpm.StandardSubject":
 				this.getElement<SbpmStandardSubject>(id).update(restOptions);
 				break;
@@ -534,10 +557,12 @@ export class SbpmCanvas {
 			| SbpmProcessModelOptions
 			| SbpmProcessNetworkTransitionOptions
 			| SbpmProcessNetworkOptions
-			| SbpmSendStateTransitionOptions
-			| SbpmSendStateOptions
 			| SbpmReceiveStateTransitionOptions
 			| SbpmReceiveStateOptions
+			| SbpmSendStateTransitionOptions
+			| SbpmSendStateOptions
+			| SbpmStandardBehaviorOptions
+			| SbpmStandardLayerOptions
 			| SbpmStandardSubjectOptions,
 	): void {
 		switch (item.type) {
@@ -577,6 +602,12 @@ export class SbpmCanvas {
 			case "sbpm.ReceiveState":
 				new SbpmReceiveState(item).addTo(this.#graph);
 				break;
+			case "sbpm.StandardBehavior":
+				new SbpmStandardBehavior(item).addTo(this.#graph);
+				break;
+			case "sbpm.StandardLayer":
+				new SbpmStandardLayer(item).addTo(this.#graph);
+				break;
 			case "sbpm.StandardSubject":
 				new SbpmStandardSubject(item).addTo(this.#graph);
 				break;
@@ -595,10 +626,12 @@ export class SbpmCanvas {
 			| SbpmProcessModelOptions
 			| SbpmProcessNetworkTransitionOptions
 			| SbpmProcessNetworkOptions
-			| SbpmSendStateTransitionOptions
-			| SbpmSendStateOptions
 			| SbpmReceiveStateTransitionOptions
 			| SbpmReceiveStateOptions
+			| SbpmSendStateTransitionOptions
+			| SbpmSendStateOptions
+			| SbpmStandardBehaviorOptions
+			| SbpmStandardLayerOptions
 			| SbpmStandardSubjectOptions
 		>,
 	): void {
@@ -641,10 +674,13 @@ export class SbpmCanvas {
 function defaultLink(view: joint.dia.CellView): SbpmLink {
 	if (view instanceof SbpmElementView) {
 		const type = view.model.get("type");
+		if (!isElementType(type)) {
+			throw new Error("Invalid element type");
+		}
 		switch (type) {
-			case "sbpm.SbpmProcessNetwork":
-			case "sbpm.SbpmMultiProcessModel":
-			case "sbpm.SbpmProcessModel":
+			case "sbpm.ProcessNetwork":
+			case "sbpm.MultiProcessModel":
+			case "sbpm.ProcessModel":
 				return new SbpmProcessNetworkTransition({
 					id: crypto.randomUUID(),
 					type: "sbpm.ProcessNetworkTransition",
@@ -652,7 +688,7 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 					fromElement: view.model.id as SbpmItemId,
 					toElement: "",
 				});
-			case "sbpm.SbpmStandardSubject":
+			case "sbpm.StandardSubject":
 				return new SbpmMessageExchange({
 					id: crypto.randomUUID(),
 					type: "sbpm.MessageExchange",
@@ -660,7 +696,7 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 					fromElement: view.model.id as SbpmItemId,
 					toElement: "",
 				});
-			case "sbpm.SbpmSendState":
+			case "sbpm.SendState":
 				return new SbpmSendStateTransition({
 					id: crypto.randomUUID(),
 					type: "sbpm.SendStateTransition",
@@ -670,7 +706,7 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 					fromElement: view.model.id as SbpmItemId,
 					toElement: "",
 				});
-			case "sbpm.SbpmReceiveState":
+			case "sbpm.ReceiveState":
 				return new SbpmReceiveStateTransition({
 					id: crypto.randomUUID(),
 					type: "sbpm.ReceiveStateTransition",
@@ -680,7 +716,7 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 					fromElement: view.model.id as SbpmItemId,
 					toElement: "",
 				});
-			case "sbpm.SbpmFunctionState":
+			case "sbpm.FunctionState":
 				return new SbpmFunctionStateTransition({
 					id: crypto.randomUUID(),
 					type: "sbpm.FunctionStateTransition",
@@ -709,10 +745,10 @@ function validateConnection(
 		cellViewTarget.model.isElement() &&
 		cellViewTarget.model instanceof SbpmProcessModel &&
 		linkView.model instanceof SbpmProcessNetworkTransition;
-	const isMessageTransitionValid =
+	const isMessageExchangeValid =
 		cellViewTarget.model.isElement() &&
 		cellViewTarget.model instanceof SbpmStandardSubject &&
-		linkView.model instanceof SbpmMessageSpecification;
+		linkView.model instanceof SbpmMessageExchange;
 	const isSendStateTransitionValid =
 		cellViewTarget.model.isElement() &&
 		(cellViewTarget.model instanceof SbpmFunctionState ||
@@ -732,7 +768,7 @@ function validateConnection(
 	return (
 		valid &&
 		(isProcessTransitionValid ||
-			isMessageTransitionValid ||
+			isMessageExchangeValid ||
 			isSendStateTransitionValid ||
 			isReceiveStateTransitionValid ||
 			isFunctionStateTransitionValid)

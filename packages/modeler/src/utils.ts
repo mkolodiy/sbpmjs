@@ -1,96 +1,113 @@
 import {
-	type SbpmProcessModelOptions,
-	sbpmProcessModelType,
 	type SbpmFunctionStateOptions,
-	type SbpmProcessNetworkOptions,
-	type SbpmReceiveStateOptions,
-	type SbpmSendStateOptions,
-	type SbpmMessageExchangeOptions,
-	sbpmMessageExchangeType,
-	type SbpmMultiProcessModelOptions,
-	sbpmMultiProcessModelType,
-	type SbpmProcessNetworkType,
-	type SbpmProcessModelType,
-	type SbpmStandardSubjectType,
-	type SbpmSendStateType,
-	type SbpmReceiveStateType,
 	type SbpmFunctionStateType,
-	type SbpmMessageSpecificationType,
-	type SbpmStandardSubjectOptions,
+	type SbpmMessageExchangeOptions,
 	type SbpmMessageSpecificationOptions,
+	type SbpmMessageSpecificationType,
+	type SbpmMultiProcessModelOptions,
 	type SbpmMultiProcessModelType,
+	type SbpmProcessModelOptions,
+	type SbpmProcessModelType,
+	type SbpmProcessNetworkOptions,
+	type SbpmProcessNetworkType,
+	type SbpmReceiveStateOptions,
+	type SbpmReceiveStateType,
+	type SbpmSendStateOptions,
+	type SbpmSendStateType,
+	type SbpmStandardBehaviorOptions,
+	type SbpmStandardBehaviorType,
+	type SbpmStandardLayerOptions,
+	type SbpmStandardLayerType,
+	type SbpmStandardSubjectOptions,
+	type SbpmStandardSubjectType,
+	sbpmMessageExchangeType,
+	sbpmMultiProcessModelType,
+	sbpmProcessModelType,
+	sbpmStandardBehaviorType,
+	sbpmStandardLayerType,
+	sbpmStandardSubjectType,
 } from "@sbpmjs/canvas";
 import {
 	type SbpmProcessOptions,
 	type SbpmProcessType,
 	sbpmProcessType,
-	type SbpmStandardBehaviorOptions,
-	sbpmStandardBehaviorType,
 } from "./types";
 
 export function isContainerItem(
 	item: unknown,
 ): item is
 	| SbpmProcessOptions
+	| SbpmMessageExchangeOptions
 	| SbpmMultiProcessModelOptions
 	| SbpmProcessModelOptions
 	| SbpmStandardBehaviorOptions
-	| SbpmMessageExchangeOptions {
+	| SbpmStandardLayerOptions
+	| SbpmStandardSubjectOptions {
 	return (
 		typeof item === "object" &&
 		item !== null &&
 		"contains" in item &&
 		"type" in item &&
-		(item.type === sbpmMultiProcessModelType ||
-			item.type === sbpmProcessType ||
+		(item.type === sbpmProcessType ||
+			item.type === sbpmMessageExchangeType ||
+			item.type === sbpmMultiProcessModelType ||
 			item.type === sbpmProcessModelType ||
 			item.type === sbpmStandardBehaviorType ||
-			item.type === sbpmMessageExchangeType)
+			item.type === sbpmStandardLayerType ||
+			item.type === sbpmStandardSubjectType)
 	);
 }
 
 type ElementOptions<
 	TType extends
 		| SbpmProcessType
-		| SbpmProcessNetworkType
+		| SbpmFunctionStateType
+		| SbpmMessageSpecificationType
 		| SbpmMultiProcessModelType
 		| SbpmProcessModelType
-		| SbpmStandardSubjectType
-		| SbpmSendStateType
+		| SbpmProcessNetworkType
 		| SbpmReceiveStateType
-		| SbpmFunctionStateType
-		| SbpmMessageSpecificationType,
+		| SbpmSendStateType
+		| SbpmStandardBehaviorType
+		| SbpmStandardLayerType
+		| SbpmStandardSubjectType,
 > = TType extends SbpmProcessType
 	? SbpmProcessOptions
 	: TType extends SbpmFunctionStateType
 		? SbpmFunctionStateOptions
-		: TType extends SbpmMultiProcessModelType
-			? SbpmMultiProcessModelOptions
-			: TType extends SbpmProcessModelType
-				? SbpmProcessModelOptions
-				: TType extends SbpmProcessNetworkType
-					? SbpmProcessNetworkOptions
-					: TType extends SbpmReceiveStateType
-						? SbpmReceiveStateOptions
-						: TType extends SbpmSendStateType
-							? SbpmSendStateOptions
-							: TType extends SbpmStandardSubjectType
-								? SbpmStandardSubjectOptions
-								: TType extends SbpmMessageSpecificationType
-									? SbpmMessageSpecificationOptions
-									: unknown;
+		: TType extends SbpmMessageSpecificationType
+			? SbpmMessageSpecificationOptions
+			: TType extends SbpmMultiProcessModelType
+				? SbpmMultiProcessModelOptions
+				: TType extends SbpmProcessModelType
+					? SbpmProcessModelOptions
+					: TType extends SbpmProcessNetworkType
+						? SbpmProcessNetworkOptions
+						: TType extends SbpmReceiveStateType
+							? SbpmReceiveStateOptions
+							: TType extends SbpmSendStateType
+								? SbpmSendStateOptions
+								: TType extends SbpmStandardBehaviorType
+									? SbpmStandardBehaviorOptions
+									: TType extends SbpmStandardLayerType
+										? SbpmStandardLayerOptions
+										: TType extends SbpmStandardSubjectType
+											? SbpmStandardSubjectOptions
+											: unknown;
 
 export function getDefaultElementOptions<
 	TType extends
 		| SbpmProcessType
-		| SbpmProcessNetworkType
+		| SbpmFunctionStateType
+		| SbpmMessageSpecificationType
 		| SbpmMultiProcessModelType
 		| SbpmProcessModelType
-		| SbpmStandardSubjectType
-		| SbpmSendStateType
+		| SbpmProcessNetworkType
 		| SbpmReceiveStateType
-		| SbpmFunctionStateType
-		| SbpmMessageSpecificationType,
+		| SbpmSendStateType
+		| SbpmStandardSubjectType
+		| SbpmStandardBehaviorType
+		| SbpmStandardLayerType,
 >(type: TType): ElementOptions<TType> {
 	switch (type) {
 		case "sbpm.Process":
@@ -100,13 +117,21 @@ export function getDefaultElementOptions<
 				label: "Default process",
 				contains: [],
 			} as ElementOptions<TType>;
-		case "sbpm.ProcessNetwork":
+		case "sbpm.FunctionState":
 			return {
-				type: "sbpm.ProcessNetwork",
+				type: "sbpm.FunctionState",
 				id: crypto.randomUUID(),
-				label: "Default process network",
+				label: "Default function state",
 				position: { x: 0, y: 0 },
 			} as ElementOptions<TType>;
+		case "sbpm.MessageSpecification":
+			return {
+				type: "sbpm.MessageSpecification",
+				id: crypto.randomUUID(),
+				label: "Default message",
+				position: { x: 0, y: 0 },
+			} as ElementOptions<TType>;
+
 		case "sbpm.ProcessModel":
 			return {
 				type: "sbpm.ProcessModel",
@@ -125,6 +150,13 @@ export function getDefaultElementOptions<
 				contains: [],
 				customData: { a: "a" },
 			} as ElementOptions<TType>;
+		case "sbpm.ProcessNetwork":
+			return {
+				type: "sbpm.ProcessNetwork",
+				id: crypto.randomUUID(),
+				label: "Default process network",
+				position: { x: 0, y: 0 },
+			} as ElementOptions<TType>;
 		case "sbpm.StandardSubject":
 			return {
 				type: "sbpm.StandardSubject",
@@ -133,13 +165,6 @@ export function getDefaultElementOptions<
 				position: { x: 0, y: 0 },
 				contains: [],
 			} as ElementOptions<TType>;
-		case "sbpm.SendState":
-			return {
-				type: "sbpm.SendState",
-				id: crypto.randomUUID(),
-				label: "Default send state",
-				position: { x: 0, y: 0 },
-			} as ElementOptions<TType>;
 		case "sbpm.ReceiveState":
 			return {
 				type: "sbpm.ReceiveState",
@@ -147,19 +172,28 @@ export function getDefaultElementOptions<
 				label: "Default receive state",
 				position: { x: 0, y: 0 },
 			} as ElementOptions<TType>;
-		case "sbpm.FunctionState":
+		case "sbpm.SendState":
 			return {
-				type: "sbpm.FunctionState",
+				type: "sbpm.SendState",
 				id: crypto.randomUUID(),
-				label: "Default function state",
+				label: "Default send state",
 				position: { x: 0, y: 0 },
 			} as ElementOptions<TType>;
-		case "sbpm.MessageSpecification":
+		case "sbpm.StandardBehavior":
 			return {
-				type: "sbpm.MessageSpecification",
+				type: "sbpm.StandardBehavior",
 				id: crypto.randomUUID(),
-				label: "Default message",
+				label: "Default standard behavior",
 				position: { x: 0, y: 0 },
+				contains: [],
+			} as ElementOptions<TType>;
+		case "sbpm.StandardLayer":
+			return {
+				type: "sbpm.StandardLayer",
+				id: crypto.randomUUID(),
+				label: "Default standard layer",
+				position: { x: 0, y: 0 },
+				contains: [],
 			} as ElementOptions<TType>;
 		default:
 			throw new Error("Invalid type.");

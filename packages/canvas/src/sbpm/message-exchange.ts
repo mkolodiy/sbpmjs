@@ -117,6 +117,7 @@ export class SbpmMessageExchange extends SbpmLink<SbpmMessageExchangeType> {
 			type: "sbpm.MessageExchange",
 			source: { id: fromElement },
 			target: { id: toElement },
+			toolsOptions: [],
 		});
 
 		this.appendLabel(
