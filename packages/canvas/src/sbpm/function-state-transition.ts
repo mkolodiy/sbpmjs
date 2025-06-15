@@ -117,6 +117,7 @@ export class SbpmFunctionStateTransition extends SbpmLink<SbpmFunctionStateTrans
 			source: { id: fromElement },
 			target: { id: toElement },
 			toolsOptions: [],
+			label,
 		});
 
 		this.appendLabel(

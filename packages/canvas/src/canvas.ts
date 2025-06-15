@@ -288,7 +288,11 @@ export class SbpmCanvas {
 		});
 	}
 
-	#registerGraphEvents({ onAddItem }: SbpmCanvasOptions) {
+	#registerGraphEvents({
+		onAddItem,
+		// onDeleteElement,
+		// onDeleteLink,
+	}: SbpmCanvasOptions) {
 		if (onAddItem) {
 			this.#graph.on("add", (item: SbpmElement | SbpmLink) => {
 				if (item instanceof SbpmElement || item instanceof SbpmLink) {
@@ -296,6 +300,20 @@ export class SbpmCanvas {
 				}
 			});
 		}
+		// if (onDeleteElement) {
+		// 	this.#graph.on("remove", (item: unknown) => {
+		// 		if (item instanceof SbpmElement) {
+		// 			onDeleteElement(item);
+		// 		}
+		// 	});
+		// }
+		// if (onDeleteLink) {
+		// 	this.#graph.on("remove", (item: unknown) => {
+		// 		if (item instanceof SbpmLink) {
+		// 			onDeleteLink(item);
+		// 		}
+		// 	});
+		// }
 	}
 
 	#registerElementEvents({
@@ -652,6 +670,7 @@ export class SbpmCanvas {
 	}
 
 	public reset(): void {
+		this.#paper.scale(1, 1);
 		this.#paper.translate(0, 0);
 	}
 
@@ -701,8 +720,8 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 					id: crypto.randomUUID(),
 					type: "sbpm.SendStateTransition",
 					label: "Send state transition",
-					receiverSubject: "",
-					message: "",
+					receiverSubject: undefined,
+					message: undefined,
 					fromElement: view.model.id as SbpmItemId,
 					toElement: "",
 				});
@@ -711,8 +730,8 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 					id: crypto.randomUUID(),
 					type: "sbpm.ReceiveStateTransition",
 					label: "Receive state transition",
-					senderSubject: "",
-					message: "",
+					senderSubject: undefined,
+					message: undefined,
 					fromElement: view.model.id as SbpmItemId,
 					toElement: "",
 				});
@@ -743,7 +762,8 @@ function validateConnection(
 		cellViewSource.model.get("id") !== cellViewTarget.model.get("id");
 	const isProcessTransitionValid =
 		cellViewTarget.model.isElement() &&
-		cellViewTarget.model instanceof SbpmProcessModel &&
+		(cellViewTarget.model instanceof SbpmProcessModel ||
+			cellViewTarget.model instanceof SbpmMultiProcessModel) &&
 		linkView.model instanceof SbpmProcessNetworkTransition;
 	const isMessageExchangeValid =
 		cellViewTarget.model.isElement() &&

@@ -47,6 +47,7 @@ export class SbpmProcessNetwork extends SbpmElement<SbpmProcessNetworkType> {
 					},
 				},
 			],
+			label,
 		});
 	}
 

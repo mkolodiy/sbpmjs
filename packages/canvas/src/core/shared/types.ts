@@ -5,11 +5,26 @@ export interface SbpmItemPosition {
 	y: number;
 }
 
-export interface SbpmBaseItemOptions<TType extends string = string> {
+interface SbpmItemIdOption {
 	id: SbpmItemId;
+}
+
+interface SbpmItemTypeOption<TType extends string = string> {
 	type: TType;
+}
+
+interface SbpmItemLabelOption {
 	label: string;
 }
+
+export interface SbpmItemReferenceOptions
+	extends SbpmItemIdOption,
+		SbpmItemLabelOption {}
+
+export interface SbpmBaseItemOptions<TType extends string = string>
+	extends SbpmItemIdOption,
+		SbpmItemTypeOption<TType>,
+		SbpmItemLabelOption {}
 
 export type SbpmItemAttributes<
 	TType extends string,

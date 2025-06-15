@@ -18,8 +18,10 @@ export class SbpmModeler extends HTMLElement {
 			this.#openedItemId = data.id;
 			this.#render(data.id);
 		});
-		EventBus.on("item:updated", () => {
-			this.#render(this.#openedItemId);
+		EventBus.on("item:updated", (data) => {
+			if (data.id === this.#openedItemId) {
+				this.#render(data.id);
+			}
 		});
 	}
 
@@ -33,6 +35,7 @@ export class SbpmModeler extends HTMLElement {
 	#render(id: SbpmItemId) {
 		const items = State.getItems().filter((item) => "contains" in item);
 		const openedItem = State.getItem(id);
+
 		const template = html`
 		<style>
 			.sbpm-item-selector {

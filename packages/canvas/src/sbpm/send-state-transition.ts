@@ -5,7 +5,10 @@ import {
 	createIconLabel,
 	createSelectionLabel,
 } from "../core/link-tools";
-import type { SbpmItemId, UpdateOptions } from "../core/shared/types";
+import type {
+	SbpmItemReferenceOptions,
+	UpdateOptions,
+} from "../core/shared/types";
 import { CustomEvent } from "../shared/constants";
 import type { Icons } from "../shared/types";
 import type { SbpmStateTransitionOptions } from "./shared/types";
@@ -130,8 +133,8 @@ export const sbpmSendStateTransitionType = "sbpm.SendStateTransition";
 export type SbpmSendStateTransitionType = typeof sbpmSendStateTransitionType;
 export interface SbpmSendStateTransitionOptions
 	extends SbpmStateTransitionOptions<SbpmSendStateTransitionType> {
-	receiverSubject: SbpmItemId | undefined;
-	message: SbpmItemId | undefined;
+	receiverSubject: SbpmItemReferenceOptions | undefined;
+	message: SbpmItemReferenceOptions | undefined;
 }
 
 export class SbpmSendStateTransition extends SbpmLink<SbpmSendStateTransitionType> {
@@ -153,7 +156,9 @@ export class SbpmSendStateTransition extends SbpmLink<SbpmSendStateTransitionTyp
 			target: { id: toElement },
 		});
 		this.appendLabel(
-			createIconLabel(getIconLabel(iconLabel, receiverSubject, message)),
+			createIconLabel(
+				getIconLabel(iconLabel, receiverSubject?.label, message?.label),
+			),
 		);
 	}
 
@@ -164,8 +169,8 @@ export class SbpmSendStateTransition extends SbpmLink<SbpmSendStateTransitionTyp
 
 		const updatedIconLabel = getIconLabel(
 			this.label(0),
-			receiverSubject,
-			message,
+			receiverSubject?.label,
+			message?.label,
 		);
 		this.prop("message", message);
 		this.prop("receiverSubject", receiverSubject);

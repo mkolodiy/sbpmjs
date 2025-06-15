@@ -71,6 +71,7 @@ export class SbpmReceiveState extends SbpmElement<SbpmReceiveStateType> {
 				},
 			],
 			role,
+			label,
 		});
 		if (role) {
 			this.set("role", role);

@@ -2,23 +2,20 @@ import type {
 	SbpmMessageExchangeType,
 	SbpmMultiProcessModelType,
 	SbpmProcessModelType,
+	SbpmStandardBehaviorType,
+	SbpmStandardLayerType,
 	SbpmStandardSubjectType,
 } from "@sbpmjs/canvas";
 import { html, render } from "lit-html";
 import { EventBus } from "../event-bus";
 import { State } from "../state";
-import type {
-	SbpmItemId,
-	SbpmItemType,
-	SbpmProcessType,
-	SbpmStandardBehaviorType,
-	SbpmStandardLayerType,
-} from "../types";
+import type { SbpmItemId, SbpmItemType, SbpmProcessType } from "../types";
 import { isContainerItem } from "../utils";
 
 type PaletteItem = {
 	type: SbpmItemType;
 	label: string;
+	unique?: boolean;
 };
 
 const paletteItems: {
@@ -45,12 +42,14 @@ const paletteItems: {
 		{
 			type: "sbpm.StandardLayer",
 			label: "Standard layer",
+			unique: true,
 		},
 	],
 	"sbpm.ProcessModel": [
 		{
 			type: "sbpm.StandardLayer",
 			label: "Standard layer",
+			unique: true,
 		},
 	],
 	"sbpm.StandardLayer": [
@@ -69,6 +68,7 @@ const paletteItems: {
 		{
 			type: "sbpm.StandardBehavior",
 			label: "Behavior",
+			unique: true,
 		},
 	],
 	"sbpm.StandardBehavior": [
@@ -89,15 +89,22 @@ const paletteItems: {
 
 export class SbpmPalette extends HTMLElement {
 	#shadowRoot: ShadowRoot;
+	#currentItemId: SbpmItemId | undefined;
 
 	constructor() {
 		super();
 		this.#shadowRoot = this.attachShadow({ mode: "open" });
+		this.#currentItemId = undefined;
 	}
 
 	connectedCallback() {
 		EventBus.on("item:opened", (data) => {
 			this.#render(data.id);
+		});
+		EventBus.on("item:updated", (data) => {
+			if (data.id === this.#currentItemId) {
+				this.#render(data.id);
+			}
 		});
 	}
 
@@ -112,6 +119,13 @@ export class SbpmPalette extends HTMLElement {
 		if (!isContainerItem(item)) {
 			throw new Error("Currently opened item is not a container item.");
 		}
+		this.#currentItemId = id;
+
+		console.log("Rendering palette for item:", item);
+
+		const hasChildItem = (type: string): boolean =>
+			item.contains.some((childId) => State.getItem(childId)?.type === type);
+
 		const template = html`
 		<style>
 			.sbpm-palette-wrapper {
@@ -127,16 +141,22 @@ export class SbpmPalette extends HTMLElement {
 			.sbpm-palette-item:hover {
 				background-color: #ffffff;
 			}
+			.sbpm-palette-item-disabled {
+				opacity: 0.5;
+				pointer-events: none;
+				cursor: not-allowed;
+			}
 		</style>
 		<div class="sbpm-palette-wrapper">
 			<div class="sbpm-palette">
-				${paletteItems[item.type].map(
-					(
-						paletteItem,
-					) => html`<div class="sbpm-palette-item" id="${paletteItem.type}" draggable="true" @dragstart="${this.onDrag}">${paletteItem.label}
-
-				</div>`,
-				)}
+				${paletteItems[item.type].map((paletteItem) => {
+					const classes = ["sbpm-palette-item"];
+					if (paletteItem.unique && hasChildItem(paletteItem.type)) {
+						classes.push("sbpm-palette-item-disabled");
+					}
+					return html`<div class="${classes.join(" ")}" id="${paletteItem.type}" draggable="true" @dragstart="${this.onDrag}">${paletteItem.label}
+					</div>`;
+				})}
 			</div>
 		</div>`;
 		render(template, this.#shadowRoot);

@@ -3,11 +3,14 @@ import {
 	isLinkType,
 	isElementType,
 	isValidItem,
+	isValidLinkItem,
 } from "@sbpmjs/canvas";
 import { html, render } from "lit-html";
 import "./components/sbpm-item-selector";
 import "./components/sbpm-palette";
 import "./components/sbpm-properties";
+import "./components/sbpm-actions-left";
+import "./components/sbpm-actions-right";
 import { EventBus } from "./event-bus";
 import { State } from "./state";
 import {
@@ -30,20 +33,73 @@ export class SbpmModeler {
 
 		const template = html`
 			<style>
-				.sbpm-container {
+				.sbpm-wrapper {
 					width: 100%;
+					height: inherit;
 					position: absolute;
-					display: grid;
-					grid-template-columns: 1fr 3fr 1fr;
-    				gap: 10px;
+					display: flex;
+					flex-direction: column;
 					z-index: 1;
 					pointer-events: none;
 				}
+				.sbpm-container {
+					width: 100%;
+					display: grid;
+					grid-template-columns: 1fr 3fr 1fr;
+    				gap: 10px;
+					flex: auto;
+				}
+				.sbpm-actions {
+					display: flex;
+					justify-content: space-between;
+				}
 			</style>
-			<div class="sbpm-container">
-				<sbpm-palette></sbpm-palette>
-				<sbpm-item-selector></sbpm-item-selector>
-				<sbpm-properties></sbpm-properties>
+			<div class="sbpm-wrapper">
+				<div class="sbpm-container">
+					<sbpm-palette></sbpm-palette>
+					<sbpm-item-selector></sbpm-item-selector>
+					<sbpm-properties></sbpm-properties>
+				</div>
+				<div class="sbpm-actions">
+					<sbpm-actions-left></sbpm-actions-left>
+					<sbpm-actions-right .actions=${{
+						zoomIn: () => this.#canvas.zoomIn(),
+						zoomOut: () => this.#canvas.zoomOut(),
+						resetCanvas: () => this.#canvas.reset(),
+						clearCanvas: () => {
+							const elementIds = this.#canvas
+								.getElements()
+								.filter(
+									(element) => element.get("type") !== "sbpm.ProcessNetwork",
+								)
+								.map((element) => element.id);
+							const linkIds = this.#canvas.getLinks().map((link) => link.id);
+							for (const id of elementIds) {
+								State.deleteItem(id);
+							}
+							for (const id of linkIds) {
+								State.deleteItem(id);
+							}
+							const parentItem = State.getItem(this.#openedItemId);
+							if (!isContainerItem(parentItem)) {
+								throw new Error(
+									"Could not delete element from parent item because it can't contain child items.",
+								);
+							}
+							State.updateItem(this.#openedItemId, {
+								contains: parentItem.contains.filter(
+									(id) => !elementIds.includes(id) && !linkIds.includes(id),
+								),
+							});
+							EventBus.trigger("item:deselected", undefined);
+							this.#canvas.clear();
+							// EventBus.trigger("item:updated", {
+							// 	id: this.#openedItemId,
+							// });
+							EventBus.trigger("item:opened", { id: this.#openedItemId });
+						},
+					}}></sbpm-actions-right>
+				</div>
 			</div>
 			<div id="sbpm-canvas" @drop="${this.#onDrop}" @dragover="${this.#onAllowDrop}"></div>`;
 		render(template, options.container);
@@ -65,8 +121,6 @@ export class SbpmModeler {
 				EventBus.trigger("item:opened", { id: link.id });
 			},
 			onSelectElement: (element) => {
-				console.log(element.id);
-
 				EventBus.trigger("item:selected", {
 					id: element.id,
 				});
@@ -109,14 +163,74 @@ export class SbpmModeler {
 					State.updateItem(this.#openedItemId, {
 						contains: [...parentItem.contains, item.id],
 					});
+
+					EventBus.trigger("item:updated", { id: this.#openedItemId });
 				}
+			},
+			// onDeleteElement: (element) => {
+			// 	console.log("Delete element:", element.id);
+			// },
+			onDeleteElement: (element) => {
+				// console.log(State.getItems());
+
+				// if (!isValidItem({ type: element.prop("type") })) {
+				// 	throw new Error(
+				// 		"Could not delete element because it is not a valid item.",
+				// 	);
+				// }
+				State.deleteItem(element.id);
+				const links = State.getItems()
+					.filter(isValidLinkItem)
+					.filter(
+						(item) =>
+							item.fromElement === element.id || item.toElement === element.id,
+					);
+				for (const link of links) {
+					State.deleteItem(link.id);
+				}
+				const parentItem = State.getItem(this.#openedItemId);
+				if (!isContainerItem(parentItem)) {
+					throw new Error(
+						"Could not delete element from parent item because it can't contain child items.",
+					);
+				}
+
+				State.updateItem(this.#openedItemId, {
+					contains: parentItem.contains
+						.filter((id) => id !== element.id)
+						.filter((id) => !links.map((link) => link.id).includes(id)),
+				});
+				console.log("State items after deletion:", State.getItems());
+
+				EventBus.trigger("item:deselected", undefined);
+				EventBus.trigger("item:updated", {
+					id: this.#openedItemId,
+				});
+			},
+			onDeleteLink: (link) => {
+				State.deleteItem(link.id);
+				const parentItem = State.getItem(this.#openedItemId);
+				if (!isContainerItem(parentItem)) {
+					throw new Error(
+						"Could not delete element from parent item because it can't contain child items.",
+					);
+				}
+				State.updateItem(this.#openedItemId, {
+					contains: parentItem.contains.filter((id) => id !== link.id),
+				});
+				EventBus.trigger("item:deselected", undefined);
+				EventBus.trigger("item:updated", {
+					id: this.#openedItemId,
+				});
 			},
 		});
 
 		EventBus.on("item:updated", (data) => {
-			const item = State.getItem(data.id);
-			if (isValidItem(item)) {
-				this.#canvas.updateItem(item);
+			if (data.id !== this.#openedItemId) {
+				const item = State.getItem(data.id);
+				if (isValidItem(item)) {
+					this.#canvas.updateItem(item);
+				}
 			}
 		});
 
@@ -127,7 +241,7 @@ export class SbpmModeler {
 				const children = item.contains
 					.map((id) => State.getItem(id))
 					.filter(isValidItem);
-				this.#canvas.addItems(children);
+				// this.#canvas.addItems(children);
 				const shouldAddItems = children.every(isValidItem);
 				if (shouldAddItems) {
 					this.#canvas.addItems(children);
@@ -177,11 +291,11 @@ export class SbpmModeler {
 		}
 		State.setItem(newItem.id, newItem);
 
-		console.log("onDrop", newItem.id);
-
 		State.updateItem(this.#openedItemId, {
 			contains: [...parentItem.contains, newItem.id],
 		});
+
+		EventBus.trigger("item:updated", { id: this.#openedItemId });
 
 		if (isValidItem(newItem)) {
 			this.#canvas.addItem(newItem);
@@ -193,6 +307,7 @@ export class SbpmModeler {
 	}
 
 	public addItems(items: Array<SbpmItemOptions>): void {
+		this.#canvas.clear();
 		State.clear();
 		const process = items.find((item) => item.type === "sbpm.Process");
 		if (!process) {
@@ -209,6 +324,9 @@ export class SbpmModeler {
 		for (const item of items) {
 			State.setItem(item.id, item);
 		}
+		console.log("Process id:", process.id);
+
+		EventBus.trigger("item:updated", { id: process.id });
 		EventBus.trigger("item:opened", { id: process.id });
 	}
 }

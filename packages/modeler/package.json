@@ -41,6 +41,7 @@
 	},
 	"author": "Maksym Kolodiy",
 	"dependencies": {
-		"@sbpmjs/canvas": "workspace:*"
+		"@sbpmjs/canvas": "workspace:*",
+		"lit-html": "^3.3.0"
 	}
 }

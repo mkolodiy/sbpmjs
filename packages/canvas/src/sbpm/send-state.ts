@@ -71,6 +71,7 @@ export class SbpmSendState extends SbpmElement<SbpmSendStateType> {
 					},
 				},
 			],
+			label,
 		});
 		if (role) {
 			this.set("role", role);

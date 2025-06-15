@@ -85,7 +85,7 @@ export class SbpmElement<TType extends string = string> extends joint.dia
 		const options: SbpmElementOptions<TType> = {
 			id: String(this.id),
 			type: this.prop("type"),
-			label: this.attr("label/text"),
+			label: this.prop("label"),
 			position: this.position(),
 		};
 		return options;

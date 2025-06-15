@@ -1,8 +1,9 @@
 import { html, render } from "lit-html";
 import { EventBus } from "../event-bus";
 import { State } from "../state";
-import type { SbpmElementShape, SbpmItemId, SbpmItemType } from "../types";
+import type { SbpmItemId, SbpmItemType } from "../types";
 import { isContainerItem } from "../utils";
+import type { SbpmItemReferenceOptions } from "@sbpmjs/canvas";
 
 // type AllKeys<T> = T extends unknown ? keyof T : never;
 
@@ -20,7 +21,8 @@ interface InputOptions<TValue = string> {
 	onChange: (value: TValue) => void;
 }
 
-interface SelectOptions extends InputOptions<string | SbpmElementShape> {
+interface SelectOptions
+	extends InputOptions<string | SbpmItemReferenceOptions> {
 	values: () => Array<SelectOption>;
 }
 
@@ -30,7 +32,8 @@ interface UpdatableProperties {
 	label?: (options: InputOptions) => void;
 	role?: (value: Omit<SelectOptions, "values">) => void;
 	message?: (value: Omit<SelectOptions, "values">) => void;
-	subject?: (value: Omit<SelectOptions, "values">) => void;
+	receiverSubject?: (value: Omit<SelectOptions, "values">) => void;
+	senderSubject?: (value: Omit<SelectOptions, "values">) => void;
 }
 
 type UpdatablePropertiesByType = {
@@ -63,6 +66,8 @@ function createSelectTemplate(label: string) {
 		const onChange = (event: Event) => {
 			if (event.target instanceof HTMLSelectElement) {
 				const value = event.target.value;
+				console.log("onChange", value, options.value, values);
+
 				options.onChange(
 					typeof options.value === "string"
 						? value
@@ -117,7 +122,7 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 	"sbpm.ReceiveStateTransition": {
 		id: defaultUpdatableProperties.id,
 		type: defaultUpdatableProperties.type,
-		subject: (options) =>
+		senderSubject: (options) =>
 			subjectTemplate({
 				...options,
 				values: () => {
@@ -125,22 +130,23 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 					if (!itemId) {
 						throw new Error("The item id is undefined.");
 					}
-					const parentId = State.getItems()
+					const standardBehaviorId = State.getItems()
 						.filter(isContainerItem)
 						.find((item) => item.contains.includes(itemId))?.id;
-					if (!parentId) {
+					if (!standardBehaviorId) {
 						throw new Error("The parent item id is undefined.");
 					}
-					// const outgoingTransitions = State.getItems()
-					// 	.filter((item) => item.type === "sbpm.MessageExchange")
-					// 	.filter(
-					// 		(item) =>
-					// 			item.source.id === parentId && item.role === "bidirectional",
-					// 	);
+					const standardSubjectId = State.getItems()
+						.filter(isContainerItem)
+						.find((item) => item.contains.includes(standardBehaviorId))?.id;
+					if (!standardSubjectId) {
+						throw new Error("The parent item id is undefined.");
+					}
+
 					const incomingTransitions = State.getItems()
 						.filter((item) => item.type === "sbpm.MessageExchange")
-						.filter((item) => item.toElement === parentId);
-
+						.filter((item) => item.toElement === standardSubjectId);
+					console.log("incomingTransitions", incomingTransitions);
 					const subjects = [
 						// ...outgoingTransitions.map((transition) =>
 						// 	State.getItem(transition.target.id),
@@ -164,16 +170,22 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 					if (!itemId) {
 						throw new Error("The item id is undefined.");
 					}
-					const parentId = State.getItems()
+					const standardBehaviorId = State.getItems()
 						.filter(isContainerItem)
 						.find((item) => item.contains.includes(itemId))?.id;
-					if (!parentId) {
+					if (!standardBehaviorId) {
+						throw new Error("The parent item id is undefined.");
+					}
+					const standardSubjectId = State.getItems()
+						.filter(isContainerItem)
+						.find((item) => item.contains.includes(standardBehaviorId))?.id;
+					if (!standardSubjectId) {
 						throw new Error("The parent item id is undefined.");
 					}
 					const transitions = State.getItems()
 						.filter((item) => item.type === "sbpm.MessageExchange")
 						.filter(
-							(item) => item.toElement === parentId,
+							(item) => item.toElement === standardSubjectId,
 							// (item.source.id === parentId && item.role === "bidirectional"),
 						);
 					const ids = transitions.flatMap((transition) => transition.contains);
@@ -195,7 +207,7 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 	"sbpm.SendStateTransition": {
 		id: defaultUpdatableProperties.id,
 		type: defaultUpdatableProperties.type,
-		subject: (options) =>
+		receiverSubject: (options) =>
 			subjectTemplate({
 				...options,
 				values: () => {
@@ -203,15 +215,21 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 					if (!itemId) {
 						throw new Error("The item id is undefined.");
 					}
-					const parentId = State.getItems()
+					const standardBehaviorId = State.getItems()
 						.filter(isContainerItem)
 						.find((item) => item.contains.includes(itemId))?.id;
-					if (!parentId) {
+					if (!standardBehaviorId) {
+						throw new Error("The parent item id is undefined.");
+					}
+					const standardSubjectId = State.getItems()
+						.filter(isContainerItem)
+						.find((item) => item.contains.includes(standardBehaviorId))?.id;
+					if (!standardSubjectId) {
 						throw new Error("The parent item id is undefined.");
 					}
 					const outgoingTransitions = State.getItems()
 						.filter((item) => item.type === "sbpm.MessageExchange")
-						.filter((item) => item.fromElement === parentId);
+						.filter((item) => item.fromElement === standardSubjectId);
 					// const incomingTransitions = State.getItems()
 					// 	.filter((item) => item.type === "sbpm.MessageExchange")
 					// 	.filter(
@@ -241,16 +259,22 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 					if (!itemId) {
 						throw new Error("The item id is undefined.");
 					}
-					const parentId = State.getItems()
+					const standardBehaviorId = State.getItems()
 						.filter(isContainerItem)
 						.find((item) => item.contains.includes(itemId))?.id;
-					if (!parentId) {
+					if (!standardBehaviorId) {
+						throw new Error("The parent item id is undefined.");
+					}
+					const standardSubjectId = State.getItems()
+						.filter(isContainerItem)
+						.find((item) => item.contains.includes(standardBehaviorId))?.id;
+					if (!standardSubjectId) {
 						throw new Error("The parent item id is undefined.");
 					}
 					const transitions = State.getItems()
 						.filter((item) => item.type === "sbpm.MessageExchange")
 						.filter(
-							(item) => item.fromElement === parentId,
+							(item) => item.fromElement === standardSubjectId,
 							// (item.target.id === parentId && item.role === "bidirectional"),
 						);
 					const ids = transitions.flatMap((transition) => transition.contains);
@@ -326,6 +350,7 @@ class SbpmProperties extends HTMLElement {
 				.sbpm-properties {
 					border: 1px solid #ececec;
 					background-color: #f6f6f6;
+					/* min-width: 300px; */
 					width: fit-content;
 					display: flex;
 					padding: 10px;
@@ -351,6 +376,8 @@ class SbpmProperties extends HTMLElement {
 		const item = State.getItem(id);
 		const type = item.type;
 		const onChange = (key: string) => (value: unknown) => {
+			console.log({ key, value });
+
 			State.updateItem(id, {
 				[key]: value,
 			});

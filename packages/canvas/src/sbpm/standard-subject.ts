@@ -59,6 +59,7 @@ export class SbpmStandardSubject extends SbpmElement<SbpmStandardSubjectType> {
 					},
 				},
 			],
+			label,
 		});
 	}
 

@@ -53,6 +53,7 @@ export class SbpmStandardBehavior extends SbpmElement<SbpmStandardBehaviorType> 
 					},
 				},
 			],
+			label,
 		});
 	}
 

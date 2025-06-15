@@ -1,6 +1,10 @@
 import type { SbpmElementOptions } from "./core/element";
 import type { SbpmLinkOptions } from "./core/link";
-import type { SbpmItemId, SbpmItemPosition } from "./core/shared/types";
+import type {
+	SbpmItemId,
+	SbpmItemReferenceOptions,
+	SbpmItemPosition,
+} from "./core/shared/types";
 import {
 	type SbpmFunctionStateOptions,
 	type SbpmFunctionStateType,
@@ -116,6 +120,7 @@ export type SbpmItemType =
 	| SbpmStandardSubjectType;
 
 export type {
+	SbpmItemReferenceOptions,
 	SbpmElementOptions,
 	SbpmFunctionStateOptions,
 	SbpmFunctionStateTransitionOptions,
@@ -173,4 +178,9 @@ export {
 };
 
 export * from "./canvas";
-export { isElementType, isLinkType, isValidItem } from "./shared/utils";
+export {
+	isElementType,
+	isLinkType,
+	isValidItem,
+	isValidLinkItem,
+} from "./shared/utils";

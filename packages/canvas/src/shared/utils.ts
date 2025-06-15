@@ -124,6 +124,23 @@ export function isElementType(
 	);
 }
 
+export function isValidLinkItem(options: {
+	type: unknown;
+}): options is
+	| SbpmFunctionStateTransitionOptions
+	| SbpmMessageExchangeOptions
+	| SbpmProcessNetworkTransitionOptions
+	| SbpmReceiveStateTransitionOptions
+	| SbpmSendStateTransitionOptions {
+	return (
+		options.type === sbpmFunctionStateTransitionType ||
+		options.type === sbpmMessageExchangeType ||
+		options.type === sbpmProcessNetworkTransitionType ||
+		options.type === sbpmReceiveStateTransitionType ||
+		options.type === sbpmSendStateTransitionType
+	);
+}
+
 export function isValidItem(options: {
 	type: unknown;
 }): options is

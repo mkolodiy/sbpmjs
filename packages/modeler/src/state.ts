@@ -1,4 +1,5 @@
 import type { SbpmItemId, SbpmItemOptions } from "./types";
+import { isContainerItem } from "./utils";
 
 class StateImpl {
 	#items: Map<SbpmItemId, SbpmItemOptions>;
@@ -40,6 +41,19 @@ class StateImpl {
 		};
 		this.setItem(id, newItem);
 		return newItem;
+	}
+
+	public deleteItem(id: SbpmItemId) {
+		if (!this.exists(id)) {
+			throw new Error(`Could not delete item for id: ${id}`);
+		}
+		const item = this.getItem(id);
+		if (isContainerItem(item)) {
+			for (const childId of item.contains) {
+				this.deleteItem(childId);
+			}
+		}
+		this.#items.delete(id);
 	}
 
 	public clear() {

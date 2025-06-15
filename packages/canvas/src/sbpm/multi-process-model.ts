@@ -59,6 +59,7 @@ export class SbpmMultiProcessModel extends SbpmElement<SbpmMultiProcessModelType
 					},
 				},
 			],
+			label,
 		});
 	}
 

@@ -92,11 +92,11 @@ export class SbpmLink<TType extends string = string> extends joint.dia.Link<
 		const { fromElement, toElement, vertices } = options;
 
 		if (fromElement) {
-			this.source(fromElement);
+			this.source({ id: fromElement });
 		}
 
 		if (toElement) {
-			this.target(toElement);
+			this.target({ id: toElement });
 		}
 
 		if (vertices) {

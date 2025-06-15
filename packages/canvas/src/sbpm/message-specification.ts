@@ -47,6 +47,7 @@ export class SbpmMessageSpecification extends SbpmElement<SbpmMessageSpecificati
 					},
 				},
 			],
+			label,
 		});
 	}
 

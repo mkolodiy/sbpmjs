@@ -53,6 +53,7 @@ export class SbpmStandardLayer extends SbpmElement<SbpmStandardLayerType> {
 					},
 				},
 			],
+			label,
 		});
 	}
 

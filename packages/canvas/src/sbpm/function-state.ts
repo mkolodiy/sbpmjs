@@ -71,6 +71,7 @@ export class SbpmFunctionState extends SbpmElement<SbpmFunctionStateType> {
 					},
 				},
 			],
+			label,
 		});
 		if (role) {
 			this.set("role", role);

@@ -20,9 +20,6 @@ importers:
       esbuild-plugin-file-path-extensions:
         specifier: ^2.1.4
         version: 2.1.4
-      lit-html:
-        specifier: ^3.3.0
-        version: 3.3.0
       playwright:
         specifier: ^1.52.0
         version: 1.52.0
@@ -53,6 +50,9 @@ importers:
       '@sbpmjs/canvas':
         specifier: workspace:*
         version: link:../canvas
+      lit-html:
+        specifier: ^3.3.0
+        version: 3.3.0
 
   packages/shared: {}
 
