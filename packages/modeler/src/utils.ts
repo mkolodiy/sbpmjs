@@ -1,6 +1,8 @@
 import {
 	type SbpmFunctionStateOptions,
 	type SbpmFunctionStateType,
+	type SbpmInterfaceSubjectOptions,
+	type SbpmInterfaceSubjectType,
 	type SbpmMessageExchangeOptions,
 	type SbpmMessageSpecificationOptions,
 	type SbpmMessageSpecificationType,
@@ -70,7 +72,8 @@ type ElementOptions<
 		| SbpmSendStateType
 		| SbpmStandardBehaviorType
 		| SbpmStandardLayerType
-		| SbpmStandardSubjectType,
+		| SbpmStandardSubjectType
+		| SbpmInterfaceSubjectType,
 > = TType extends SbpmProcessType
 	? SbpmProcessOptions
 	: TType extends SbpmFunctionStateType
@@ -93,11 +96,14 @@ type ElementOptions<
 										? SbpmStandardLayerOptions
 										: TType extends SbpmStandardSubjectType
 											? SbpmStandardSubjectOptions
-											: unknown;
+											: TType extends SbpmInterfaceSubjectType
+												? SbpmInterfaceSubjectOptions
+												: unknown;
 
 export function getDefaultElementOptions<
 	TType extends
 		| SbpmProcessType
+		| SbpmInterfaceSubjectType
 		| SbpmFunctionStateType
 		| SbpmMessageSpecificationType
 		| SbpmMultiProcessModelType
@@ -194,6 +200,14 @@ export function getDefaultElementOptions<
 				label: "Default standard layer",
 				position: { x: 0, y: 0 },
 				contains: [],
+			} as ElementOptions<TType>;
+		case "sbpm.InterfaceSubject":
+			return {
+				type: "sbpm.InterfaceSubject",
+				id: crypto.randomUUID(),
+				label: "Default interface subject",
+				position: { x: 0, y: 0 },
+				references: undefined,
 			} as ElementOptions<TType>;
 		default:
 			throw new Error("Invalid type.");

@@ -55,7 +55,11 @@ const paletteItems: {
 	"sbpm.StandardLayer": [
 		{
 			type: "sbpm.StandardSubject",
-			label: "Subject",
+			label: "Standard Subject",
+		},
+		{
+			type: "sbpm.InterfaceSubject",
+			label: "Interface Subject",
 		},
 	],
 	"sbpm.MessageExchange": [

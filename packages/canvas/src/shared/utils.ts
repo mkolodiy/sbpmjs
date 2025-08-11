@@ -9,6 +9,11 @@ import {
 	sbpmFunctionStateTransitionType,
 } from "../sbpm/function-state-transition";
 import {
+	type SbpmInterfaceSubjectOptions,
+	type SbpmInterfaceSubjectType,
+	sbpmInterfaceSubjectType,
+} from "../sbpm/interface-subject";
+import {
 	type SbpmMessageExchangeOptions,
 	type SbpmMessageExchangeType,
 	sbpmMessageExchangeType,
@@ -100,6 +105,7 @@ export function isElementType(
 	type: unknown,
 ): type is
 	| SbpmFunctionStateType
+	| SbpmInterfaceSubjectType
 	| SbpmMessageSpecificationType
 	| SbpmMultiProcessModelType
 	| SbpmProcessModelType
@@ -112,6 +118,7 @@ export function isElementType(
 	return (
 		typeof type === "string" &&
 		(type === sbpmFunctionStateType ||
+			type === sbpmInterfaceSubjectType ||
 			type === sbpmMessageSpecificationType ||
 			type === sbpmMultiProcessModelType ||
 			type === sbpmProcessModelType ||
@@ -146,6 +153,7 @@ export function isValidItem(options: {
 }): options is
 	| SbpmFunctionStateTransitionOptions
 	| SbpmFunctionStateOptions
+	| SbpmInterfaceSubjectOptions
 	| SbpmMessageExchangeOptions
 	| SbpmMessageSpecificationOptions
 	| SbpmMultiProcessModelOptions
@@ -162,6 +170,7 @@ export function isValidItem(options: {
 	return (
 		options.type === sbpmFunctionStateTransitionType ||
 		options.type === sbpmFunctionStateType ||
+		options.type === sbpmInterfaceSubjectType ||
 		options.type === sbpmMessageExchangeType ||
 		options.type === sbpmMessageSpecificationType ||
 		options.type === sbpmMultiProcessModelType ||

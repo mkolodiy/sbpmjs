@@ -34,6 +34,9 @@ interface UpdatableProperties {
 	message?: (value: Omit<SelectOptions, "values">) => void;
 	receiverSubject?: (value: Omit<SelectOptions, "values">) => void;
 	senderSubject?: (value: Omit<SelectOptions, "values">) => void;
+	references?: (options: InputOptions) => void;
+	startState?: (options: InputOptions) => void;
+	endState?: (options: InputOptions) => void;
 }
 
 type UpdatablePropertiesByType = {
@@ -45,6 +48,9 @@ function createInputTemplate({
 	disabled = false,
 }: { label: string; disabled?: boolean }) {
 	return (options: InputOptions) => {
+		console.log("createInputTemplate", options);
+		const id = `${options.id}-${label.replace(":", "").toLowerCase()}`;
+
 		const onChange = (event: Event) => {
 			if (event.target instanceof HTMLInputElement) {
 				options.onChange(event.target.value);
@@ -54,27 +60,30 @@ function createInputTemplate({
 		return html`
 <label class="sbpm-properties-label">
 	<span>${label}</span>
-	<input id="id-input" value="${options.value}" ?disabled=${disabled} @input=${onChange}/>
+	<input id=${id} value=${options.value} ?disabled=${disabled} @input=${onChange}/>
 </label>
 `;
 	};
 }
 
-function createSelectTemplate(label: string) {
+function createSelectTemplate({
+	label,
+	isValueAnObject = false,
+}: { label: string; isValueAnObject?: boolean }) {
 	return (options: SelectOptions) => {
 		const values = options.values();
 		const onChange = (event: Event) => {
 			if (event.target instanceof HTMLSelectElement) {
 				const value = event.target.value;
-				console.log("onChange", value, options.value, values);
+				console.log("onChange", value);
 
 				options.onChange(
-					typeof options.value === "string"
-						? value
-						: {
+					isValueAnObject
+						? {
 								id: value,
 								label: values.find((item) => item.value === value)?.label ?? "",
-							},
+							}
+						: value,
 				);
 			}
 		};
@@ -98,8 +107,28 @@ const typeTemplate = createInputTemplate({ label: "Type:", disabled: true });
 const labelTemplate = createInputTemplate({
 	label: "Label:",
 });
-const subjectTemplate = createSelectTemplate("Subject:");
-const messageTemplate = createSelectTemplate("Message:");
+const subjectTemplate = createSelectTemplate({
+	label: "Subject:",
+	isValueAnObject: true,
+});
+const messageTemplate = createSelectTemplate({
+	label: "Message:",
+	isValueAnObject: true,
+});
+const referencesTemplate = createInputTemplate({
+	label: "References:",
+});
+const roleTemplate = createSelectTemplate({
+	label: "Role:",
+});
+const startStateTemplate = createInputTemplate({
+	label: "Start state:",
+	disabled: true,
+});
+const endStateTemplate = createInputTemplate({
+	label: "End state:",
+	disabled: true,
+});
 
 const defaultUpdatableProperties: UpdatableProperties = {
 	id: idTemplate,
@@ -108,13 +137,46 @@ const defaultUpdatableProperties: UpdatableProperties = {
 };
 
 const updatablePropertiesByType: UpdatablePropertiesByType = {
-	"sbpm.FunctionState": defaultUpdatableProperties,
+	"sbpm.FunctionState": {
+		...defaultUpdatableProperties,
+		role: (options) =>
+			roleTemplate({
+				...options,
+				values: () => [
+					{ label: "None", value: undefined },
+					{ label: "Start", value: "start" },
+					{ label: "End", value: "end" },
+				],
+			}),
+	},
 	"sbpm.MultiProcessModel": defaultUpdatableProperties,
 	"sbpm.ProcessModel": defaultUpdatableProperties,
 	"sbpm.ProcessNetwork": defaultUpdatableProperties,
 	"sbpm.MessageSpecification": defaultUpdatableProperties,
-	"sbpm.ReceiveState": defaultUpdatableProperties,
-	"sbpm.SendState": defaultUpdatableProperties,
+	"sbpm.ReceiveState": {
+		...defaultUpdatableProperties,
+		role: (options) =>
+			roleTemplate({
+				...options,
+				values: () => [
+					{ label: "None", value: undefined },
+					{ label: "Start", value: "start" },
+					{ label: "End", value: "end" },
+				],
+			}),
+	},
+	"sbpm.SendState": {
+		...defaultUpdatableProperties,
+		role: (options) =>
+			roleTemplate({
+				...options,
+				values: () => [
+					{ label: "None", value: undefined },
+					{ label: "Start", value: "start" },
+					{ label: "End", value: "end" },
+				],
+			}),
+	},
 	"sbpm.StandardSubject": defaultUpdatableProperties,
 	"sbpm.FunctionStateTransition": defaultUpdatableProperties,
 	"sbpm.MessageExchange": defaultUpdatableProperties,
@@ -294,8 +356,16 @@ const updatablePropertiesByType: UpdatablePropertiesByType = {
 			}),
 	},
 	"sbpm.Process": defaultUpdatableProperties,
-	"sbpm.StandardBehavior": defaultUpdatableProperties,
+	"sbpm.StandardBehavior": {
+		...defaultUpdatableProperties,
+		startState: (options) => startStateTemplate(options),
+		endState: (options) => endStateTemplate(options),
+	},
 	"sbpm.StandardLayer": defaultUpdatableProperties,
+	"sbpm.InterfaceSubject": {
+		...defaultUpdatableProperties,
+		references: referencesTemplate,
+	},
 };
 
 class SbpmProperties extends HTMLElement {
@@ -374,12 +444,12 @@ class SbpmProperties extends HTMLElement {
 
 	#render(id: SbpmItemId) {
 		const item = State.getItem(id);
+		console.log("Rendering properties for item:", item);
+
 		const type = item.type;
 		const onChange = (key: string) => (value: unknown) => {
-			console.log({ key, value });
-
 			State.updateItem(id, {
-				[key]: value,
+				[key]: value === "" ? undefined : value,
 			});
 			EventBus.trigger("item:updated", {
 				id,
@@ -387,19 +457,8 @@ class SbpmProperties extends HTMLElement {
 		};
 		const updatableProperties = updatablePropertiesByType[type];
 		const templates: Array<ReturnType<typeof html>> = [];
-		// console.log(updatableProperties);
 		for (const [key, template] of Object.entries(updatableProperties)) {
 			const value = item[key as keyof typeof item];
-			// if (isString(value)) {
-			// 	templates.push(template({ value, onChange: onChange(key), id }));
-			// }
-			// if (isElementShell(value)) {
-			// 	templates.push(
-			// 		template({ value: value.id as string, onChange: onChange(key), id }),
-			// 	);
-			// }
-			// console.log(value);
-
 			templates.push(template({ value, onChange: onChange(key), id }));
 		}
 		render(this.#baseLayout(...templates), this.#shadowRoot);

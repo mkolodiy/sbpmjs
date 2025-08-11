@@ -228,6 +228,21 @@ export class SbpmModeler {
 		EventBus.on("item:updated", (data) => {
 			if (data.id !== this.#openedItemId) {
 				const item = State.getItem(data.id);
+
+				// Update the behavior item if the item is start/end state
+				if (
+					item.type === "sbpm.SendState" ||
+					item.type === "sbpm.ReceiveState" ||
+					item.type === "sbpm.FunctionState"
+				) {
+					const behaviorItem = State.getItem(this.#openedItemId);
+					State.updateItem(behaviorItem.id, {
+						...behaviorItem,
+						...(item.role === "start" ? { startState: item.id } : {}),
+						...(item.role === "end" ? { endState: item.id } : {}),
+					});
+				}
+
 				if (isValidItem(item)) {
 					this.#canvas.updateItem(item);
 				}

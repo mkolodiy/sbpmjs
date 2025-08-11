@@ -16,6 +16,11 @@ import {
 	type SbpmFunctionStateTransitionType,
 } from "./sbpm/function-state-transition";
 import {
+	SbpmInterfaceSubject,
+	type SbpmInterfaceSubjectOptions,
+	type SbpmInterfaceSubjectType,
+} from "./sbpm/interface-subject";
+import {
 	SbpmMessageExchange,
 	type SbpmMessageExchangeOptions,
 	type SbpmMessageExchangeType,
@@ -162,6 +167,7 @@ const namespace = {
 	sbpm: {
 		SbpmFunctionStateTransition,
 		SbpmFunctionState,
+		SbpmInterfaceSubject,
 		SbpmMessageExchange,
 		SbpmMessageSpecification,
 		SbpmMultiProcessModel,
@@ -172,6 +178,8 @@ const namespace = {
 		SbpmReceiveState,
 		SbpmSendStateTransition,
 		SbpmSendState,
+		SbpmStandardBehavior,
+		SbpmStandardLayer,
 		SbpmStandardSubject,
 	},
 };
@@ -288,11 +296,7 @@ export class SbpmCanvas {
 		});
 	}
 
-	#registerGraphEvents({
-		onAddItem,
-		// onDeleteElement,
-		// onDeleteLink,
-	}: SbpmCanvasOptions) {
+	#registerGraphEvents({ onAddItem }: SbpmCanvasOptions) {
 		if (onAddItem) {
 			this.#graph.on("add", (item: SbpmElement | SbpmLink) => {
 				if (item instanceof SbpmElement || item instanceof SbpmLink) {
@@ -300,20 +304,6 @@ export class SbpmCanvas {
 				}
 			});
 		}
-		// if (onDeleteElement) {
-		// 	this.#graph.on("remove", (item: unknown) => {
-		// 		if (item instanceof SbpmElement) {
-		// 			onDeleteElement(item);
-		// 		}
-		// 	});
-		// }
-		// if (onDeleteLink) {
-		// 	this.#graph.on("remove", (item: unknown) => {
-		// 		if (item instanceof SbpmLink) {
-		// 			onDeleteLink(item);
-		// 		}
-		// 	});
-		// }
 	}
 
 	#registerElementEvents({
@@ -468,6 +458,7 @@ export class SbpmCanvas {
 		TType extends
 			| SbpmFunctionStateTransitionType
 			| SbpmFunctionStateType
+			| SbpmInterfaceSubjectType
 			| SbpmMessageExchangeType
 			| SbpmMessageSpecificationType
 			| SbpmMultiProcessModelType
@@ -485,33 +476,35 @@ export class SbpmCanvas {
 			? SbpmFunctionStateTransitionOptions
 			: TType extends "sbpm.FunctionState"
 				? SbpmFunctionStateOptions
-				: TType extends "sbpm.MessageExchange"
-					? SbpmMessageExchangeOptions
-					: TType extends "sbpm.MessageSpecification"
-						? SbpmMessageSpecificationOptions
-						: TType extends "sbpm.MultiProcessModel"
-							? SbpmMultiProcessModelOptions
-							: TType extends "sbpm.ProcessModel"
-								? SbpmProcessModelOptions
-								: TType extends "sbpm.ProcessNetworkTransition"
-									? SbpmProcessNetworkTransitionOptions
-									: TType extends "sbpm.ProcessNetwork"
-										? SbpmProcessNetworkOptions
-										: TType extends "sbpm.ReceiveStateTransition"
-											? SbpmReceiveStateTransitionOptions
-											: TType extends "sbpm.ReceiveState"
-												? SbpmReceiveStateOptions
-												: TType extends "sbpm.SendStateTransition"
-													? SbpmSendStateTransitionOptions
-													: TType extends "sbpm.SendState"
-														? SbpmSendStateOptions
-														: TType extends "sbpm.StandardBehavior"
-															? SbpmStandardBehaviorOptions
-															: TType extends "sbpm.StandardLayer"
-																? SbpmStandardLayerOptions
-																: TType extends "sbpm.StandardSubject"
-																	? SbpmStandardSubjectOptions
-																	: never,
+				: TType extends "sbpm.InterfaceSubject"
+					? SbpmInterfaceSubjectOptions
+					: TType extends "sbpm.MessageExchange"
+						? SbpmMessageExchangeOptions
+						: TType extends "sbpm.MessageSpecification"
+							? SbpmMessageSpecificationOptions
+							: TType extends "sbpm.MultiProcessModel"
+								? SbpmMultiProcessModelOptions
+								: TType extends "sbpm.ProcessModel"
+									? SbpmProcessModelOptions
+									: TType extends "sbpm.ProcessNetworkTransition"
+										? SbpmProcessNetworkTransitionOptions
+										: TType extends "sbpm.ProcessNetwork"
+											? SbpmProcessNetworkOptions
+											: TType extends "sbpm.ReceiveStateTransition"
+												? SbpmReceiveStateTransitionOptions
+												: TType extends "sbpm.ReceiveState"
+													? SbpmReceiveStateOptions
+													: TType extends "sbpm.SendStateTransition"
+														? SbpmSendStateTransitionOptions
+														: TType extends "sbpm.SendState"
+															? SbpmSendStateOptions
+															: TType extends "sbpm.StandardBehavior"
+																? SbpmStandardBehaviorOptions
+																: TType extends "sbpm.StandardLayer"
+																	? SbpmStandardLayerOptions
+																	: TType extends "sbpm.StandardSubject"
+																		? SbpmStandardSubjectOptions
+																		: never,
 	>(options: UpdateOptions<TOptions> & { id: SbpmItemId; type: TType }): void {
 		const { id, type, ...restOptions } = options;
 		switch (type) {
@@ -520,6 +513,9 @@ export class SbpmCanvas {
 				break;
 			case "sbpm.FunctionState":
 				this.getElement<SbpmFunctionState>(id).update(restOptions);
+				break;
+			case "sbpm.InterfaceSubject":
+				this.getElement<SbpmInterfaceSubject>(id).update(restOptions);
 				break;
 			case "sbpm.MessageExchange":
 				this.getLink<SbpmMessageExchange>(id).update(restOptions);
@@ -567,8 +563,9 @@ export class SbpmCanvas {
 
 	public addItem(
 		item:
-			| SbpmFunctionStateOptions
 			| SbpmFunctionStateTransitionOptions
+			| SbpmFunctionStateOptions
+			| SbpmInterfaceSubjectOptions
 			| SbpmMessageExchangeOptions
 			| SbpmMessageSpecificationOptions
 			| SbpmMultiProcessModelOptions
@@ -590,6 +587,9 @@ export class SbpmCanvas {
 			case "sbpm.FunctionState":
 				new SbpmFunctionState(item).addTo(this.#graph);
 				break;
+			case "sbpm.InterfaceSubject":
+				new SbpmInterfaceSubject(item).addTo(this.#graph);
+				break;
 			case "sbpm.MessageExchange":
 				new SbpmMessageExchange(item).addTo(this.#graph);
 				break;
@@ -608,17 +608,17 @@ export class SbpmCanvas {
 			case "sbpm.ProcessNetwork":
 				new SbpmProcessNetwork(item).addTo(this.#graph);
 				break;
-			case "sbpm.SendStateTransition":
-				new SbpmSendStateTransition(item).addTo(this.#graph);
-				break;
-			case "sbpm.SendState":
-				new SbpmSendState(item).addTo(this.#graph);
-				break;
 			case "sbpm.ReceiveStateTransition":
 				new SbpmReceiveStateTransition(item).addTo(this.#graph);
 				break;
 			case "sbpm.ReceiveState":
 				new SbpmReceiveState(item).addTo(this.#graph);
+				break;
+			case "sbpm.SendStateTransition":
+				new SbpmSendStateTransition(item).addTo(this.#graph);
+				break;
+			case "sbpm.SendState":
+				new SbpmSendState(item).addTo(this.#graph);
 				break;
 			case "sbpm.StandardBehavior":
 				new SbpmStandardBehavior(item).addTo(this.#graph);
@@ -636,8 +636,9 @@ export class SbpmCanvas {
 
 	public addItems(
 		items: Array<
-			| SbpmFunctionStateOptions
 			| SbpmFunctionStateTransitionOptions
+			| SbpmFunctionStateOptions
+			| SbpmInterfaceSubjectOptions
 			| SbpmMessageExchangeOptions
 			| SbpmMessageSpecificationOptions
 			| SbpmMultiProcessModelOptions
@@ -715,6 +716,14 @@ function defaultLink(view: joint.dia.CellView): SbpmLink {
 					fromElement: view.model.id as SbpmItemId,
 					toElement: "",
 				});
+			case "sbpm.InterfaceSubject":
+				return new SbpmMessageExchange({
+					id: crypto.randomUUID(),
+					type: "sbpm.MessageExchange",
+					label: "New message transition",
+					fromElement: view.model.id as SbpmItemId,
+					toElement: "",
+				});
 			case "sbpm.SendState":
 				return new SbpmSendStateTransition({
 					id: crypto.randomUUID(),
@@ -767,21 +776,25 @@ function validateConnection(
 		linkView.model instanceof SbpmProcessNetworkTransition;
 	const isMessageExchangeValid =
 		cellViewTarget.model.isElement() &&
-		cellViewTarget.model instanceof SbpmStandardSubject &&
+		(cellViewTarget.model instanceof SbpmStandardSubject ||
+			cellViewTarget.model instanceof SbpmInterfaceSubject) &&
 		linkView.model instanceof SbpmMessageExchange;
 	const isSendStateTransitionValid =
 		cellViewTarget.model.isElement() &&
-		(cellViewTarget.model instanceof SbpmFunctionState ||
+		(cellViewTarget.model instanceof SbpmSendState ||
+			cellViewTarget.model instanceof SbpmFunctionState ||
 			cellViewTarget.model instanceof SbpmReceiveState) &&
 		linkView.model instanceof SbpmSendStateTransition;
 	const isReceiveStateTransitionValid =
 		cellViewTarget.model.isElement() &&
-		(cellViewTarget.model instanceof SbpmFunctionState ||
-			cellViewTarget.model instanceof SbpmSendState) &&
+		(cellViewTarget.model instanceof SbpmSendState ||
+			cellViewTarget.model instanceof SbpmFunctionState ||
+			cellViewTarget.model instanceof SbpmReceiveState) &&
 		linkView.model instanceof SbpmReceiveStateTransition;
 	const isFunctionStateTransitionValid =
 		cellViewTarget.model.isElement() &&
 		(cellViewTarget.model instanceof SbpmSendState ||
+			cellViewTarget.model instanceof SbpmFunctionState ||
 			cellViewTarget.model instanceof SbpmReceiveState) &&
 		linkView.model instanceof SbpmFunctionStateTransition;
 

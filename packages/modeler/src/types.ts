@@ -12,6 +12,9 @@ interface SbpmContainerItem {
 export type SbpmItemId = SbpmCanvasSbpmItemId;
 
 declare module "@sbpmjs/canvas" {
+	interface SbpmInterfaceSubjectOptions {
+		references: SbpmItemId | undefined;
+	}
 	interface SbpmMultiProcessModelOptions extends SbpmContainerItem {}
 	interface SbpmProcessModelOptions extends SbpmContainerItem {}
 	interface SbpmStandardSubjectOptions extends SbpmContainerItem {

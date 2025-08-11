@@ -2,8 +2,8 @@ import type { SbpmElementOptions } from "./core/element";
 import type { SbpmLinkOptions } from "./core/link";
 import type {
 	SbpmItemId,
-	SbpmItemReferenceOptions,
 	SbpmItemPosition,
+	SbpmItemReferenceOptions,
 } from "./core/shared/types";
 import {
 	type SbpmFunctionStateOptions,
@@ -15,6 +15,11 @@ import {
 	type SbpmFunctionStateTransitionType,
 	sbpmFunctionStateTransitionType,
 } from "./sbpm/function-state-transition";
+import {
+	type SbpmInterfaceSubjectOptions,
+	type SbpmInterfaceSubjectType,
+	sbpmInterfaceSubjectType,
+} from "./sbpm/interface-subject";
 import {
 	type SbpmMessageExchangeOptions,
 	type SbpmMessageExchangeType,
@@ -88,6 +93,7 @@ import {
 export type SbpmItemOptions =
 	| SbpmFunctionStateTransitionOptions
 	| SbpmFunctionStateOptions
+	| SbpmInterfaceSubjectOptions
 	| SbpmMessageExchangeOptions
 	| SbpmMessageSpecificationOptions
 	| SbpmMultiProcessModelOptions
@@ -105,6 +111,7 @@ export type SbpmItemOptions =
 export type SbpmItemType =
 	| SbpmFunctionStateTransitionType
 	| SbpmFunctionStateType
+	| SbpmInterfaceSubjectType
 	| SbpmMessageExchangeType
 	| SbpmMessageSpecificationType
 	| SbpmMultiProcessModelType
@@ -120,14 +127,16 @@ export type SbpmItemType =
 	| SbpmStandardSubjectType;
 
 export type {
-	SbpmItemReferenceOptions,
 	SbpmElementOptions,
 	SbpmFunctionStateOptions,
 	SbpmFunctionStateTransitionOptions,
 	SbpmFunctionStateTransitionType,
 	SbpmFunctionStateType,
+	SbpmInterfaceSubjectOptions,
+	SbpmInterfaceSubjectType,
 	SbpmItemId,
 	SbpmItemPosition,
+	SbpmItemReferenceOptions,
 	SbpmLinkOptions,
 	SbpmMessageExchangeOptions,
 	SbpmMessageExchangeType,
@@ -162,6 +171,7 @@ export type {
 export {
 	sbpmFunctionStateTransitionType,
 	sbpmFunctionStateType,
+	sbpmInterfaceSubjectType,
 	sbpmMessageExchangeType,
 	sbpmMessageSpecificationType,
 	sbpmMultiProcessModelType,

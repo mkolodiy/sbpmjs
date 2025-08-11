@@ -125,7 +125,7 @@ export class SbpmMessageExchange extends SbpmLink<SbpmMessageExchangeType> {
 			createIconLabel(
 				joint.util.merge(joint.util.cloneDeep(iconLabel), {
 					attrs: {
-						text: { text: label },
+						text: { textWrap: { text: label } },
 					},
 				}),
 			),
@@ -136,13 +136,11 @@ export class SbpmMessageExchange extends SbpmLink<SbpmMessageExchangeType> {
 		options: UpdateOptions<SbpmMessageExchangeOptions>,
 	): void {
 		const { label, ...restOptions } = options;
+		console.log("update message exchange", options);
+
 		if (label && this.hasLabels()) {
 			this.label(0, {
-				attrs: {
-					text: {
-						text: label,
-					},
-				},
+				attrs: { text: { textWrap: { text: label } } },
 			});
 		}
 		super.update(restOptions);
