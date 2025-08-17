@@ -366,6 +366,8 @@ if (container) {
 				"4dfbc975-2805-4e8b-8e80-563d325bf40a",
 				"194c8a0b-189f-482c-a4dc-610244761bf9",
 			],
+			startState: undefined,
+			endState: undefined
 		},
 		{
 			type: "sbpm.FunctionState",

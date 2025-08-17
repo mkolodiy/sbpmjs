@@ -33,10 +33,7 @@
 		"format:fix": "biome format --write .",
 		"check-types": "tsc --noEmit",
 		"check": "biome check .",
-		"check:fix": "biome check --write .",
-		"test:dev": "vite ./tests/dev",
-		"test": "playwright test --ui",
-		"test:report": "playwright show-report"
+		"check:fix": "biome check --write ."
 	},
 	"author": "Maksym Kolodiy",
 	"dependencies": {

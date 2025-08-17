@@ -1,5 +1,5 @@
 {
   "files": {
-    "include": ["src/**/*.ts", "tests/**/*.ts", "dev/**/*.ts", "misc/**/*.ts"]
+    "include": ["src/**/*.ts", "tests/**/*.ts", "dev/**/*.ts"]
   }
 }
