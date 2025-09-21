@@ -10,25 +10,20 @@
       ]
     },
     "check": {
-      "dependsOn": []
+      "dependsOn": [
+        "lint",
+        "format",
+        "typecheck"
+      ]
     },
-    "check:fix": {
-      "dependsOn": []
-    },
-    "check-types": {
-      "dependsOn": []
-    },
+    "lint": {},
+    "format": {},
+    "typecheck": {},
     "dev": {
       "dependsOn": [
         "^build"
       ],
       "persistent": true
-    },
-    "test": {
-      "dependsOn": [
-        "^build"
-      ],
-      "cache": false
     }
   }
 }

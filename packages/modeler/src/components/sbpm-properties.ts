@@ -420,7 +420,7 @@ class SbpmProperties extends HTMLElement {
 				.sbpm-properties {
 					border: 1px solid #ececec;
 					background-color: #f6f6f6;
-					/* min-width: 300px; */
+					min-width: 300px;
 					width: fit-content;
 					display: flex;
 					padding: 10px;

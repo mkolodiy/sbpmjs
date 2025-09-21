@@ -1,41 +1,38 @@
 {
 	"name": "@sbpmjs/canvas",
-	"type": "module",
-	"version": "1.0.2",
+	"version": "0.0.0",
 	"description": "A library for working with SBPM constructs.",
-	"keywords": [
-		"sbpm",
-		"modeler"
-	],
+	"type": "module",
 	"license": "MIT",
+	"homepage": "https://github.com/mkolodiy/sbpmjs/blob/master/packages/canvas/README.md",
+	"bugs": {
+		"url": "https://github.com/mkolodiy/sbpmjs/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mkolodiy/sbpmjs.git"
+	},
+	"author": "Maksym Kolodiy",
+	"files": [
+		"dist"
+	],
 	"main": "./dist/index.js",
 	"module": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"default": "./dist/index.js"
-		}
+		".": "./dist/index.js",
+		"./package.json": "./package.json"
 	},
-	"files": [
-		"dist",
-		"src",
-		"LICENSE",
-		"package.json",
-		"README.md"
-	],
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
+		"build": "tsdown",
 		"dev": "vite ./dev",
-		"build": "vite build",
 		"lint": "biome lint .",
-		"lint:fix": "biome --write .",
 		"format": "biome format .",
-		"format:fix": "biome format --write .",
-		"check-types": "tsc --noEmit",
-		"check": "biome check .",
-		"check:fix": "biome check --write ."
+		"typecheck": "tsc --noEmit"
 	},
-	"author": "Maksym Kolodiy",
 	"dependencies": {
 		"@joint/core": "4.1.3"
 	}

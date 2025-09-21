@@ -1,4 +1,4 @@
-import { SbpmModeler } from "../src";
+import { SbpmModeler } from "../dist";
 
 const uuid = () => crypto.randomUUID();
 
